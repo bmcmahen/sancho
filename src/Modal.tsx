@@ -1,0 +1,136 @@
+/** @jsx jsx */
+import { jsx } from "@emotion/core";
+import * as React from "react";
+import { Text } from "./Text";
+import { CloseButton } from "./IconButton";
+import theme from "./Theme";
+import { useTransition, animated } from "react-spring";
+import { Overlay } from "./Overlay";
+import { useFocusElement } from "./Hooks/focus";
+
+interface Props {
+  isOpen: boolean;
+  title?: string;
+  mobileFullscreen?: boolean;
+  onRequestClose: () => void;
+  children: React.ReactNode;
+}
+
+export const Modal = (props: Props) => {
+  const transitions = useTransition(props.isOpen, null, {
+    from: { opacity: 0, transform: "scale(0.9)" },
+    enter: { opacity: 1, transform: "scale(1)" },
+    leave: { opacity: 0, transform: "scale(0.9)" }
+  });
+
+  const { bind } = useFocusElement(props.isOpen);
+
+  return (
+    <React.Fragment>
+      <Overlay
+        {...bind}
+        onRequestClose={props.onRequestClose}
+        isOpen={props.isOpen}
+      >
+        <React.Fragment>
+          {transitions.map(
+            ({ item, key, props: animationProps }) =>
+              item && (
+                <animated.div
+                  key={key}
+                  aria-modal="true"
+                  {...bind}
+                  tabIndex={-1}
+                  onClick={e => {
+                    e.stopPropagation();
+                  }}
+                  style={{
+                    opacity: animationProps.opacity,
+                    transform: animationProps.transform
+                  }}
+                  css={[
+                    {
+                      background: "white",
+                      boxShadow: theme.shadows.md,
+                      borderRadius: theme.radii.lg,
+                      margin: "16px",
+                      width: "calc(100% - 32px)",
+                      outline: "none",
+                      [theme.breakpoints.sm]: {
+                        maxWidth: "500px",
+                        margin: "30px auto"
+                      },
+                      [theme.breakpoints.lg]: {
+                        maxWidth: "650px",
+                        margin: "30px auto"
+                      }
+                    },
+                    props.mobileFullscreen && {
+                      maxWidth: "none",
+                      margin: 0,
+                      width: "100vw",
+                      height: "100vh",
+                      borderRadius: 0,
+                      boxShadow: "none",
+                      [theme.breakpoints.sm]: {
+                        maxWidth: "none",
+                        margin: "0"
+                      },
+                      [theme.breakpoints.md]: {
+                        maxWidth: "500px",
+                        margin: "30px auto",
+                        height: "auto",
+                        boxShadow: theme.shadows.md,
+                        borderRadius: theme.radii.lg,
+                        width: "calc(100% - 32px)"
+                      }
+                    }
+                  ]}
+                >
+                  <React.Fragment>
+                    {props.title && (
+                      <ModalHeader
+                        css={{
+                          display: "flex",
+                          justifyContent: "space-between",
+
+                          alignItems: "center",
+                          padding: `${theme.spaces.lg} ${theme.spaces.lg} 0 ${
+                            theme.spaces.lg
+                          }`
+                        }}
+                        title={props.title}
+                        onRequestClose={props.onRequestClose}
+                      />
+                    )}
+
+                    {props.children}
+                  </React.Fragment>
+                </animated.div>
+              )
+          )}
+        </React.Fragment>
+      </Overlay>
+    </React.Fragment>
+  );
+};
+
+interface ModalHeaderProps {
+  title: string;
+  onRequestClose?: () => void;
+}
+
+export const ModalHeader = ({
+  title,
+  onRequestClose,
+  ...other
+}: ModalHeaderProps) => (
+  <div {...other}>
+    <Text noWrap variant="h4">
+      {title}
+    </Text>
+    {onRequestClose && <CloseButton onClick={onRequestClose} />}
+  </div>
+);
+
+export default Modal;

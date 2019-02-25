@@ -1,0 +1,149 @@
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
+import * as React from "react";
+import { Positioner, Placements } from "./Positions";
+import { ReferenceChildrenProps } from "react-popper";
+import { Text } from "./Text";
+import theme from "./Theme";
+import { animated } from "react-spring";
+
+interface TooltipProps {
+  content: React.ReactNode;
+  placement?: Placements;
+  children: React.ReactElement<any>;
+}
+
+let idcount = 0;
+
+export function Tooltip({ placement, children, content }: TooltipProps) {
+  const [show, setShow] = React.useState(false);
+  const [id] = React.useState(() => idcount.toString());
+
+  React.useEffect(() => {
+    idcount += 1;
+  }, []);
+
+  function renderTrigger({ ref }: ReferenceChildrenProps) {
+    return React.cloneElement(children, {
+      ref,
+      "aria-describedby": id,
+      onMouseEnter: (e: MouseEvent) => {
+        if (!show) setShow(true);
+      },
+      onMouseLeave: (e: MouseEvent) => {
+        if (show) setShow(false);
+      },
+      onFocus: (e: FocusEvent) => {
+        if (!show) setShow(true);
+      },
+      onBlur: (e: FocusEvent) => {
+        if (show) setShow(false);
+      }
+    });
+  }
+
+  return (
+    <Positioner
+      placement={placement}
+      show={show}
+      duration={200}
+      target={renderTrigger}
+    >
+      {({ placement, ref, style, arrowProps }, state) => (
+        <animated.div
+          id={id}
+          data-placement={placement}
+          role="tooltip"
+          ref={ref}
+          style={{
+            ...style,
+            opacity: state.opacity
+          }}
+          css={{
+            margin: theme.spaces.xs
+          }}
+        >
+          <div
+            data-placement={placement}
+            css={arrowStyles(theme.colors.palette.neutral.dark)}
+            ref={arrowProps.ref}
+            style={arrowProps.style}
+          />
+          <Text
+            variant="body2"
+            css={[
+              {
+                display: "inline-block",
+                margin: 0,
+                boxShadow: theme.shadows.md,
+                borderRadius: theme.radii.sm,
+                padding: `${theme.spaces.xs} ${theme.spaces.md}`,
+                color: "white",
+                background: theme.colors.palette.neutral.dark
+              }
+            ]}
+          >
+            {content}
+          </Text>
+        </animated.div>
+      )}
+    </Positioner>
+  );
+}
+
+export const arrowStyles = (color: string) =>
+  css(`
+  position: absolute;
+  width: 3em;
+  height: 3em;
+  &[data-placement*='bottom'] {
+    bottom: 100%;
+    left: 0;
+    margin-top: 0em;
+    width: 1em;
+    height: 0.25em;
+    &::before {
+      border-width: 0 0.25em 0.25em 0.25em;
+      border-color: transparent transparent ${color} transparent;
+    }
+  }
+  &[data-placement*='top'] {
+    bottom: 0;
+    left: 0;
+    margin-bottom: 0;
+    width: 1em;
+    height: 0.25em;
+    &::before {
+      border-width: 0.25em 0.25em 0 0.25em;
+      border-color: #232323 transparent transparent transparent;
+    }
+  }
+  &[data-placement*='right'] {
+    left: 0;
+    margin-left: -0.9em;
+    height: 3em;
+    width: 1em;
+    &::before {
+      border-width: 1.5em 1em 1.5em 0;
+      border-color: transparent #232323 transparent transparent;
+    }
+  }
+  &[data-placement*='left'] {
+    right: 0;
+    margin-right: -0.9em;
+    height: 3em;
+    width: 1em;
+    &::before {
+      border-width: 1.5em 0 1.5em 1em;
+      border-color: transparent transparent transparent#232323;
+    }
+  }
+  &::before {
+    content: '';
+    margin: auto;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+`);
