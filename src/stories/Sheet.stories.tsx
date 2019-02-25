@@ -12,7 +12,7 @@ export const SheetExamples = storiesOf("Sheet", module)
 
     const examples = positions.map(position => {
       return (
-        <>
+        <React.Fragment>
           <Example position={position} label={position}>
             <div>
               Helloooo world!
@@ -22,7 +22,7 @@ export const SheetExamples = storiesOf("Sheet", module)
               <button>four</button>
             </div>
           </Example>
-        </>
+        </React.Fragment>
       );
     });
 

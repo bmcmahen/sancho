@@ -36,7 +36,6 @@ interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function Collapse({ children, id, show, ...other }: CollapseProps) {
-  const previous = usePrevious(show);
   const { ref, bounds } = useMeasure();
 
   const { height, opacity } = useSpring({
@@ -53,7 +52,7 @@ export function Collapse({ children, id, show, ...other }: CollapseProps) {
         overflow: "hidden",
         willChange: "height, opacity"
       }}
-      style={{ opacity, height: show && previous === show ? "auto" : height }}
+      style={{ opacity, height }}
       {...other}
     >
       <div ref={ref}>{children}</div>
@@ -76,7 +75,7 @@ interface Bounds {
   width: number;
 }
 
-export function useMeasure(update: any = []) {
+export function useMeasure() {
   const ref = React.useRef<HTMLDivElement>(null);
   const [bounds, setBounds] = React.useState<Bounds>({
     left: 0,
@@ -95,7 +94,7 @@ export function useMeasure(update: any = []) {
   React.useEffect(() => {
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [update]);
+  }, []);
 
   return { ref, bounds };
 }

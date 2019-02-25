@@ -2,6 +2,8 @@
   "name": "pants",
   "version": "0.1.0",
   "private": true,
+  "licence": "MIT",
+  "module": "build/index.js",
   "dependencies": {
     "@blueprintjs/icons": "^3.6.0",
     "@emotion/core": "^10.0.7",

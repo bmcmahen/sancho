@@ -1,5 +1,4 @@
-import palette from "./palette";
-import colors from "./colors";
+import colors, { palette } from "./colors";
 
 /**
  * Fills are used in Avatars and Badges.

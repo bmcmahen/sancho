@@ -1,4 +1,4 @@
-import scales from "./scales";
+import { scales } from "./colors";
 
 const borderShadowColor = scales.neutral.N5A; // Used to be colors.neutral['80A'] in v3 and down.
 const blurryShadowColor = scales.neutral.N6A; // Used to be colors.neutral['50A'] in v3 and down.

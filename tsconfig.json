@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": false,
     "declaration": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "outDir": "build"
   },
 
