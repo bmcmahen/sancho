@@ -66,7 +66,7 @@ const styles: { [key: string]: SerializedStyles } = {
     {
       fontWeight: 500,
       display: "inline-flex",
-
+      fontFamily: theme.fonts.base,
       position: "relative",
       borderRadius: theme.radii.sm
     }
