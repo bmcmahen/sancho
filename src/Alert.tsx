@@ -9,7 +9,7 @@ import { IconName } from "@blueprintjs/icons";
 import { CloseButton } from "./IconButton";
 import { LayerElevations } from "./Layer";
 
-const alertVariants = {
+const alertIntentions = {
   info: theme.colors.palette.neutral.base,
   success: theme.colors.palette.green.base,
   question: theme.colors.palette.blue.base,
@@ -17,9 +17,9 @@ const alertVariants = {
   warning: theme.colors.palette.yellow.base
 };
 
-export type AlertVariants = keyof typeof alertVariants;
+export type AlertIntentions = keyof typeof alertIntentions;
 
-const icons: { [key in AlertVariants]: IconName } = {
+const icons: { [key in AlertIntentions]: IconName } = {
   info: "info-sign",
   success: "tick-circle",
   warning: "warning-sign",
@@ -34,7 +34,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   id?: string;
   elevation?: LayerElevations;
   children?: React.ReactNode;
-  variant?: AlertVariants;
+  intent?: AlertIntentions;
   component?: React.ReactType<any>;
   type?: "polite" | "assertive";
 }
@@ -47,13 +47,13 @@ export const Alert = ({
   component,
   elevation = "xs",
   onRequestClose,
-  variant = "info",
+  intent = "info",
   ...other
 }: AlertProps) => {
   const contents = title ? (
     <div css={{ display: "flex", alignItems: "flex-start" }}>
       <div css={{ flex: "0 0 auto", marginTop: "4px" }}>
-        <Icon color={alertVariants[variant]} icon={icons[variant]} />
+        <Icon color={alertIntentions[intent]} icon={icons[intent]} />
       </div>
       <div css={{ marginLeft: theme.spaces.md }}>
         <Text id={id} variant="h6">
@@ -95,7 +95,7 @@ export const Alert = ({
             top: 0,
             left: 0,
             bottom: 0,
-            backgroundColor: alertVariants[variant]
+            backgroundColor: alertIntentions[intent]
           }}
         />
         <div

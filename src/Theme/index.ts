@@ -86,7 +86,7 @@ const shadows = {
     .string()}`
 };
 
-const theme = {
+export const theme = {
   colors: {
     ...colors,
     palette,

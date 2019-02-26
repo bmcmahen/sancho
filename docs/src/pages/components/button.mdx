@@ -1,7 +1,49 @@
+import { Button } from "../../../../src"
+import "./button.css"
+
 # Button
 
-Here's a paragraph.
+Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+
+#### Intent
+
+Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
 
 ```jsx
-<Button>Hello</Button>
+<div className="Button-example">
+  <Button>Default Button</Button>
+  <Button intent="primary">Primary Button</Button>
+  <Button intent="success">Success Button</Button>
+  <Button intent="danger">Danger Button</Button>
+  <Button intent="warning">Warning Button</Button>
+</div>
+```
+
+#### Sizes
+
+```jsx
+<div className="Button-example">
+  <Button size="xs">Extra small</Button>
+  <Button size="sm">Small</Button>
+  <Button size="md">Medium</Button>
+  <Button size="lg">Large</Button>
+  <Button size="xl">Extra large</Button>
+</div>
+```
+
+#### Variants
+
+```jsx
+<div className="Button-example">
+  <Button variant="default">Default variant</Button>
+  <Button variant="ghost">Ghost variant</Button>
+</div>
+```
+
+#### Custom component
+
+```jsx
+<Button component="a" href="http://www.benmcmahen.com">
+  Anchor button
+</Button>
 ```

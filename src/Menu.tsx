@@ -32,6 +32,7 @@ export const MenuList = ({
   const focusableItems = kids.filter(
     kid => focusComponents.indexOf(kid.type as React.ComponentType) > -1
   );
+
   const lastIndex = focusableItems.length - 1;
   const firstIndex = 0;
 

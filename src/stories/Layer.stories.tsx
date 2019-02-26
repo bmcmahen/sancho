@@ -24,34 +24,38 @@ export const LayerStories = storiesOf("Layer", module)
     );
   })
   .add("Loading", () => {
-    const [loading, setLoading] = React.useState(false);
+    return <Loading />;
+  });
 
-    React.useEffect(() => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 4000);
-    }, [loading]);
+function Loading() {
+  const [loading, setLoading] = React.useState(false);
 
-    return (
-      <div
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+  }, [loading]);
+
+  return (
+    <div
+      css={{
+        background: theme.colors.background.tint2,
+        padding: "3rem"
+      }}
+    >
+      <Layer
         css={{
-          background: theme.colors.background.tint2,
-          padding: "3rem"
+          width: "400px",
+          height: "400px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center"
         }}
       >
-        <Layer
-          css={{
-            width: "400px",
-            height: "400px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <Button onClick={() => setLoading(true)}>Trigger loading</Button>
-          <LayerLoading loading={loading} />
-        </Layer>
-      </div>
-    );
-  });
+        <Button onClick={() => setLoading(true)}>Trigger loading</Button>
+        <LayerLoading loading={loading} />
+      </Layer>
+    </div>
+  );
+}

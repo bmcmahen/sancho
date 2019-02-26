@@ -1,5 +1,6 @@
 import * as React from "react"
 import { ComponentMDXProvider } from "./ExamplePreview"
+import Layout from "./layout"
 
 interface ComponentLayoutProps {
   children: React.ReactNode
@@ -10,9 +11,9 @@ export default class ComponentLayout extends React.Component<
 > {
   render() {
     return (
-      <div>
+      <Layout>
         <ComponentMDXProvider>{this.props.children}</ComponentMDXProvider>
-      </div>
+      </Layout>
     )
   }
 }

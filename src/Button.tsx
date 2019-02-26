@@ -64,8 +64,8 @@ const intents = {
     color: neutral.N8,
     background: gradient(theme.colors.scales.neutral.N1, "white"),
     boxShadow: insetShadow(
-      theme.colors.scales.neutral.N2A,
-      theme.colors.scales.neutral.N1A
+      theme.colors.scales.neutral.N3A,
+      theme.colors.scales.neutral.N2A
     ),
     // ":hover": {
     //   background: gradient(theme.colors.scales.neutral.N2, "white")

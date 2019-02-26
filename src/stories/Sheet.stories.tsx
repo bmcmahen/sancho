@@ -12,7 +12,7 @@ export const SheetExamples = storiesOf("Sheet", module)
 
     const examples = positions.map(position => {
       return (
-        <React.Fragment>
+        <React.Fragment key={position}>
           <Example position={position} label={position}>
             <div>
               Helloooo world!
