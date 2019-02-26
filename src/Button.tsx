@@ -211,7 +211,8 @@ const variants = {
     },
     ':active, &[aria-expanded="true"]': {
       color: blue.B10,
-      background: blue.B3A
+      background: blue.B3A,
+      boxShadow: "none"
     }
   })
 };
@@ -269,8 +270,6 @@ export function getButtonStyles({
       fontFamily: theme.fonts.base,
       position: "relative",
       borderRadius: theme.radii.sm,
-      transition:
-        "color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out",
       fontSize: getFontSize(size),
       padding: getPadding(size),
       display: getDisplay(block)

@@ -108,34 +108,32 @@ export const arrowStyles = (color: string) =>
     }
   }
   &[data-placement*='top'] {
-    bottom: 0;
+    top: 100%;
     left: 0;
     margin-bottom: 0;
     width: 1em;
     height: 0.25em;
     &::before {
       border-width: 0.25em 0.25em 0 0.25em;
-      border-color: #232323 transparent transparent transparent;
+      border-color: ${color} transparent transparent transparent;
     }
   }
   &[data-placement*='right'] {
-    left: 0;
-    margin-left: -0.9em;
-    height: 3em;
-    width: 1em;
+    right: 100%;
+    height: 1em;
+    width: 0.25em;
     &::before {
-      border-width: 1.5em 1em 1.5em 0;
-      border-color: transparent #232323 transparent transparent;
+      border-width: 0.25em 0.25em 0.25em 0;
+      border-color: transparent ${color} transparent transparent;
     }
   }
   &[data-placement*='left'] {
-    right: 0;
-    margin-right: -0.9em;
-    height: 3em;
-    width: 1em;
+    left: 100%;
+    height: 1em;
+    width: 0.25em;
     &::before {
-      border-width: 1.5em 0 1.5em 1em;
-      border-color: transparent transparent transparent#232323;
+      border-width: 0.25em 0 0.25em 0.25em;
+      border-color: transparent transparent transparent ${color};
     }
   }
   &::before {

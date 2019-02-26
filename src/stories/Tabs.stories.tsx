@@ -80,82 +80,86 @@ export const TabsExamples = storiesOf("Tabs", module)
     );
   })
   .add("Evenly spaced", () => {
-    const [value, setValue] = React.useState(0);
+    return <EvenlySpaced />;
+  });
 
-    return (
-      <div
+function EvenlySpaced() {
+  const [value, setValue] = React.useState(0);
+
+  return (
+    <div
+      css={{
+        display: "flex",
+        justifyContent: "center",
+        background: theme.colors.background.tint2,
+        padding: "0.5rem"
+      }}
+    >
+      <Layer
+        elevation="sm"
         css={{
-          display: "flex",
-          justifyContent: "center",
-          background: theme.colors.background.tint2,
-          padding: "0.5rem"
+          maxWidth: "600px",
+          maxHeight: "500px",
+          width: "100%",
+          display: "block",
+          boxSizing: "border-box",
+          overflow: "hidden"
         }}
       >
-        <Layer
-          elevation="sm"
+        <div
           css={{
-            maxWidth: "600px",
-            maxHeight: "500px",
-            width: "100%",
-            display: "block",
+            background: theme.colors.background.tint1,
             boxSizing: "border-box",
-            overflow: "hidden"
+            width: "100%",
+            overflow: "hidden",
+            height: "200px"
           }}
         >
           <div
             css={{
-              background: theme.colors.background.tint1,
-              boxSizing: "border-box",
-              width: "100%",
-              overflow: "hidden",
-              height: "200px"
+              background: theme.colors.palette.blue.base
             }}
           >
-            <div
-              css={{
-                background: theme.colors.palette.blue.base
-              }}
-            >
-              <Container>
-                <Text
-                  variant="h5"
-                  css={{
-                    color: "white",
-                    textAlign: "center",
-                    padding: theme.spaces.md
-                  }}
-                >
-                  NHL Hockey
-                </Text>
-              </Container>
-              <Tabs
-                variant="evenly-spaced"
-                dark
-                value={value}
-                onChange={i => setValue(i)}
+            <Container>
+              <Text
+                variant="h5"
+                css={{
+                  color: "white",
+                  textAlign: "center",
+                  padding: theme.spaces.md
+                }}
               >
-                <Tab id="hello">Games</Tab>
-                <Tab id="cool">News</Tab>
-                <Tab id="tables">Tables</Tab>
-                <Tab id="players">Players</Tab>
-              </Tabs>
-            </div>
-            <TabContent value={value} onChange={i => setValue(i)}>
-              <TabPanel id="hello" css={{ padding: "24px" }}>
-                What's up?
-              </TabPanel>
-              <TabPanel id="cool" css={{ padding: "24px" }}>
-                Some breaking news
-              </TabPanel>
-              <TabPanel id="tables" css={{ padding: "24px" }}>
-                Some breaking news
-              </TabPanel>
-              <TabPanel id="players" css={{ padding: "24px" }}>
-                Some player info
-              </TabPanel>
-            </TabContent>
+                NHL Hockey
+              </Text>
+            </Container>
+            <Tabs
+              variant="evenly-spaced"
+              dark
+              value={value}
+              onChange={i => setValue(i)}
+            >
+              <Tab id="hello">Games</Tab>
+              <Tab id="cool">News</Tab>
+              <Tab id="tables">Tables</Tab>
+              <Tab id="players">Players</Tab>
+            </Tabs>
           </div>
-        </Layer>
-      </div>
-    );
-  });
+          <TabContent value={value} onChange={i => setValue(i)}>
+            <TabPanel id="hello" css={{ padding: "24px" }}>
+              What's up?
+            </TabPanel>
+            <TabPanel id="cool" css={{ padding: "24px" }}>
+              Some breaking news
+            </TabPanel>
+            <TabPanel id="tables" css={{ padding: "24px" }}>
+              Some breaking news
+            </TabPanel>
+            <TabPanel id="players" css={{ padding: "24px" }}>
+              Some player info
+            </TabPanel>
+          </TabContent>
+        </div>
+      </Layer>
+    </div>
+  );
+}
