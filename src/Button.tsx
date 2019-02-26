@@ -2,14 +2,7 @@
 import { jsx, css, SerializedStyles } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
-
-export type ButtonType =
-  | "default"
-  | "primary"
-  | "secondary"
-  | "danger"
-  | "ghost"
-  | "link";
+import color from "color";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -43,7 +36,7 @@ function focusShadow(first: string, second: string, third: string) {
   return `0 0 0 3px ${first}, inset 0 0 0 1px ${second}, inset 0 -1px 1px 0 ${third}`;
 }
 
-const { scales } = theme.colors;
+const { scales, palette } = theme.colors;
 const { blue, neutral } = scales;
 
 export const buttonReset = css({
@@ -60,17 +53,12 @@ export const buttonReset = css({
   boxShadow: "none"
 });
 
-const styles: { [key: string]: SerializedStyles } = {
-  base: css([
-    buttonReset,
-    {
-      fontWeight: 500,
-      display: "inline-flex",
-      fontFamily: theme.fonts.base,
-      position: "relative",
-      borderRadius: theme.radii.sm
-    }
-  ]),
+/**
+ * Intent describes the intention of the button
+ * -- eg., does it indicate danger?
+ */
+
+const intents = {
   default: css({
     backgroundColor: "white",
     color: neutral.N8,
@@ -79,9 +67,9 @@ const styles: { [key: string]: SerializedStyles } = {
       theme.colors.scales.neutral.N2A,
       theme.colors.scales.neutral.N1A
     ),
-    ":hover": {
-      background: gradient(theme.colors.scales.neutral.N2, "white")
-    },
+    // ":hover": {
+    //   background: gradient(theme.colors.scales.neutral.N2, "white")
+    // },
     ':active, &[aria-expanded="true"]': {
       background: "none",
       backgroundColor: theme.colors.palette.blue.lightest,
@@ -99,7 +87,7 @@ const styles: { [key: string]: SerializedStyles } = {
   primary: css({
     backgroundColor: blue.B9,
     color: "white",
-    backgroundImage: gradient(blue.B9, blue.B8),
+    backgroundImage: gradient(blue.B9, blue.B7),
     boxShadow: insetShadow(neutral.N4A, neutral.N4A),
     ":focus": {
       zIndex: 2,
@@ -114,13 +102,108 @@ const styles: { [key: string]: SerializedStyles } = {
       backgroundImage: gradient(blue.B10, blue.B9)
     }
   }),
-  secondary: css({}),
-  danger: css({}),
+  success: css({
+    backgroundColor: palette.green.base,
+    color: "white",
+    backgroundImage: gradient(
+      palette.green.base,
+      color(palette.green.base)
+        .lighten(0.4)
+        .toString()
+    ),
+    boxShadow: insetShadow(neutral.N4A, neutral.N4A),
+    ":focus": {
+      zIndex: 2,
+      boxShadow: focusShadow(
+        color(palette.green.base)
+          .alpha(0.4)
+          .toString(),
+        scales.neutral.N3A,
+        scales.neutral.N1A
+      )
+    },
+    ':active, &[aria-expanded="true"]': {
+      boxShadow: insetShadow(neutral.N5A, neutral.N5A),
+      backgroundImage: gradient(
+        color(palette.green.base)
+          .darken(0.4)
+          .toString(),
+        palette.green.base
+      )
+    }
+  }),
+  danger: css({
+    backgroundColor: palette.red.base,
+    color: "white",
+    backgroundImage: gradient(
+      palette.red.base,
+      color(palette.red.base)
+        .lighten(0.2)
+        .toString()
+    ),
+    boxShadow: insetShadow(neutral.N4A, neutral.N4A),
+    ":focus": {
+      zIndex: 2,
+      boxShadow: focusShadow(
+        color(palette.red.base)
+          .alpha(0.4)
+          .toString(),
+        scales.neutral.N4A,
+        scales.neutral.N1A
+      )
+    },
+    ':active, &[aria-expanded="true"]': {
+      boxShadow: insetShadow(neutral.N5A, neutral.N5A),
+      backgroundImage: gradient(
+        color(palette.red.base)
+          .darken(0.2)
+          .toString(),
+        palette.red.base
+      )
+    }
+  }),
+  warning: css({
+    backgroundColor: palette.yellow.base,
+    color: theme.colors.text.default,
+    backgroundImage: gradient(
+      palette.yellow.base,
+      color(palette.yellow.base)
+        .lighten(0.4)
+        .toString()
+    ),
+    boxShadow: insetShadow(neutral.N3A, neutral.N3A),
+    ":focus": {
+      zIndex: 2,
+      boxShadow: focusShadow(
+        color(palette.yellow.base)
+          .alpha(0.4)
+          .toString(),
+        scales.neutral.N2A,
+        scales.neutral.N1A
+      )
+    },
+    ':active, &[aria-expanded="true"]': {
+      boxShadow: insetShadow(neutral.N5A, neutral.N5A),
+      backgroundImage: gradient(
+        color(palette.yellow.base)
+          .darken(0.2)
+          .toString(),
+        palette.yellow.base
+      )
+    }
+  })
+};
+
+export type ButtonIntent = keyof typeof intents;
+
+const variants = {
+  default: css({}),
   ghost: css({
-    backgroundColor: "transparent",
+    background: "transparent",
+    boxShadow: "none",
     color: neutral.N7,
     ":hover": {
-      backgroundColor: neutral.N2A
+      background: neutral.N2A
     },
     ":focus": {
       zIndex: 2,
@@ -128,14 +211,16 @@ const styles: { [key: string]: SerializedStyles } = {
     },
     ':active, &[aria-expanded="true"]': {
       color: blue.B10,
-      backgroundColor: blue.B3A
+      background: blue.B3A
     }
-  }),
-  link: css({})
+  })
 };
 
+export type ButtonVariant = keyof typeof variants;
+
 export interface ButtonStyleProps {
-  variant?: ButtonType;
+  variant?: ButtonVariant;
+  intent?: ButtonIntent;
   block?: boolean;
   size?: ButtonSize;
 }
@@ -155,6 +240,7 @@ export const Button = React.forwardRef(
       size,
       block,
       variant,
+      intent,
       component: Component = "button",
       ...other
     }: ButtonProps,
@@ -163,7 +249,7 @@ export const Button = React.forwardRef(
     return (
       <Component
         ref={ref}
-        css={getButtonStyles({ size, block, variant })}
+        css={getButtonStyles({ size, block, variant, intent })}
         {...other}
       />
     );
@@ -173,15 +259,23 @@ export const Button = React.forwardRef(
 export function getButtonStyles({
   size = "md",
   block = false,
-  variant = "default"
+  variant = "default",
+  intent = "default"
 }: ButtonStyleProps) {
   return css([
-    styles.base,
+    buttonReset,
     {
+      fontWeight: 500,
+      fontFamily: theme.fonts.base,
+      position: "relative",
+      borderRadius: theme.radii.sm,
+      transition:
+        "color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out",
       fontSize: getFontSize(size),
       padding: getPadding(size),
       display: getDisplay(block)
     },
-    styles[variant]
+    intents[intent],
+    variants[variant]
   ]);
 }
