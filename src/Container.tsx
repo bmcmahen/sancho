@@ -15,7 +15,7 @@ export function Container(props: ContainerProps) {
         margin: "0 auto",
         padding: `0 ${theme.spaces.sm}`,
         [theme.breakpoints.lg]: {
-          padding: `0 ${theme.spaces.md}`
+          padding: `0 ${theme.spaces.lg}`
         }
       }}
       {...props}

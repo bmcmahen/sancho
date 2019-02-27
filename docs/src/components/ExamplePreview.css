@@ -8,6 +8,20 @@ Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/b
 
 */
 
+.react-live-error {
+  background: #ec4c47;
+  color: #fff;
+  font-size: small;
+  font-family: Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono",
+    "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono",
+    "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L",
+    "Courier New", Courier, monospace;
+  margin-top: 0.5rem;
+  padding: 20px;
+  padding-bottom: 10px;
+  white-space: pre;
+  border-radius: 0.5rem;
+}
 p code {
   font-family: Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono",
     "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono",

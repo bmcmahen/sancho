@@ -23,12 +23,13 @@ const Layout = ({ children }) => (
       <>
         <Navbar
           css={{
+            boxShadow: theme.shadows.sm,
             background: theme.colors.palette.blue.base,
             boxShadow: "none",
           }}
         >
           <Toolbar>
-            <Text css={{ color: "white" }} variant="h5">
+            <Text css={{ color: "white" }} variant="h4">
               Pants UI
             </Text>
           </Toolbar>
@@ -55,15 +56,7 @@ const Layout = ({ children }) => (
               flex: 1,
             }}
           >
-            <div
-              css={{
-                margin: "0 auto",
-                maxWidth: "650px",
-                padding: theme.spaces.lg,
-              }}
-            >
-              {children}
-            </div>
+            {children}
           </main>
         </div>
       </>
@@ -76,3 +69,15 @@ Layout.propTypes = {
 }
 
 export default Layout
+
+export const Article = ({ children }) => (
+  <div
+    css={{
+      margin: "0 auto",
+      maxWidth: "650px",
+      padding: theme.spaces.lg,
+    }}
+  >
+    {children}
+  </div>
+)

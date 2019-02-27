@@ -126,7 +126,7 @@ export default {
   },
 
   text: {
-    muted: scales.neutral.N5,
+    muted: scales.neutral.N6,
     default: scales.neutral.N8,
     dark: scales.neutral.N10,
     selected: palette.blue.base,
