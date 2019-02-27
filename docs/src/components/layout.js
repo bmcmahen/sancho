@@ -29,7 +29,7 @@ const Layout = ({ children }) => (
         >
           <Toolbar>
             <Text css={{ color: "white" }} variant="h4">
-              Pants UI
+              Sancho
             </Text>
           </Toolbar>
         </Navbar>

@@ -17,13 +17,41 @@ const Wave = () => (
     }}
   >
     <svg
-      css={{ minWidth: "900px", display: "block", transform: "rotate(180deg)" }}
+      id="stamp"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1442 125"
+      version="1.1"
+      width="100%"
+      height="100"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      css={{
+        transform: "rotate(180deg)",
+        fill: "white",
+        display: "block",
+        minWidth: "2000px",
+      }}
     >
       <path
-        fill="#fff"
-        d="M1442 9c-152.5 0-158.66 78.4-514.29 26.08C659 5 489 124.09 333.63 124.09 212 124.09 184.23 49 0 49V0h1442z"
+        d="M0 0 Q 2.5 40 5 0 
+						 Q 7.5 40 10 0
+						 Q 12.5 40 15 0
+						 Q 17.5 40 20 0
+						 Q 22.5 40 25 0
+						 Q 27.5 40 30 0
+						 Q 32.5 40 35 0
+						 Q 37.5 40 40 0
+						 Q 42.5 40 45 0
+						 Q 47.5 40 50 0 
+						 Q 52.5 40 55 0
+						 Q 57.5 40 60 0
+						 Q 62.5 40 65 0
+						 Q 67.5 40 70 0
+						 Q 72.5 40 75 0
+						 Q 77.5 40 80 0
+						 Q 82.5 40 85 0
+						 Q 87.5 40 90 0
+						 Q 92.5 40 95 0
+						 Q 97.5 40 100 0 Z"
       />
     </svg>
   </div>
@@ -37,28 +65,41 @@ const IndexPage = () => (
     />
     <div
       css={{
-        background: "white",
-        borderBottom: `1px solid ${theme.colors.border.default}`,
-        padding: `${theme.spaces.xl} 0`,
+        position: "relative",
+        background: `linear-gradient(to right, #185a9d, #43cea2)`,
+        // background: theme.colors.palette.neutral.dark,
+        padding: `4.5rem 0`,
+        paddingBottom: "5.5rem",
       }}
     >
       <Container>
-        <Text css={{ marginBottom: theme.spaces.md }} variant="display3">
-          Pants UI
-        </Text>
-        <Text css={{ maxWidth: "34rem" }} variant="lead">
-          In laboris aliqua voluptate adipisicing sunt mollit quis voluptate eu
-          laborum amet reprehenderit.
-        </Text>
-        <div css={{ marginTop: theme.spaces.md }}>
-          <Button intent="success" size="md">
-            Learn more
-          </Button>
-          <Button css={{ marginLeft: theme.spaces.sm }} size="md">
-            View on Github
-          </Button>
+        <div
+          css={{
+            maxWidth: "650px",
+            margin: "0 auto",
+          }}
+        >
+          <Text
+            css={{ color: "white", marginBottom: theme.spaces.md }}
+            variant="h1"
+          >
+            Pants UI
+          </Text>
+          <Text css={{ color: "white", maxWidth: "34rem" }} variant="lead">
+            In laboris aliqua voluptate adipisicing sunt mollit quis voluptate
+            eu laborum amet reprehenderit.
+          </Text>
+          <div css={{ marginTop: theme.spaces.md }}>
+            <Button intent="success" size="md">
+              Learn more
+            </Button>
+            <Button css={{ marginLeft: theme.spaces.sm }} size="md">
+              View on Github
+            </Button>
+          </div>
         </div>
       </Container>
+      <Wave />
     </div>
   </Layout>
 )
