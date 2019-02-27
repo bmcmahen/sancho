@@ -1,8 +1,9 @@
 /** @jsx jsx */
-import { jsx, css, SerializedStyles } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
 import color from "color";
+import PropTypes from "prop-types";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -73,14 +74,14 @@ const intents = {
     ':active, &[aria-expanded="true"]': {
       background: "none",
       backgroundColor: theme.colors.palette.blue.lightest,
-      boxShadow: insetShadow(scales.neutral.N4A, scales.neutral.N2A)
+      boxShadow: insetShadow(scales.neutral.N5A, scales.neutral.N3A)
     },
     ":focus": {
       zIndex: 2,
       boxShadow: focusShadow(
         scales.blue.B4A,
-        scales.neutral.N4A,
-        scales.neutral.N2A
+        scales.neutral.N5A,
+        scales.neutral.N3A
       )
     }
   }),
@@ -235,17 +236,13 @@ export interface ButtonProps
   [key: string]: any; // bad hack to permit component injection
 }
 
-export const Button = React.forwardRef(
+export const Button: React.RefForwardingComponent<
+  React.Ref<HTMLButtonElement>,
+  ButtonProps
+> = React.forwardRef(
   (
-    {
-      size,
-      block,
-      variant,
-      intent,
-      component: Component = "button",
-      ...other
-    }: ButtonProps,
-    ref: React.Ref<HTMLButtonElement>
+    { size, block, variant, intent, component: Component = "button", ...other },
+    ref
   ) => {
     return (
       <Component
@@ -256,6 +253,31 @@ export const Button = React.forwardRef(
     );
   }
 );
+
+Button.propTypes = {
+  /**
+   * Controls the basic button style.
+   */
+  variant: PropTypes.oneOf(["default", "ghost"] as ButtonVariant[]),
+  /**
+   * The size of the button.
+   */
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"] as ButtonSize[]),
+  /**
+   * If true, the button will be displayed as a block element instead of inline.
+   */
+  block: PropTypes.bool,
+  /**
+   * Controls the colour of the button.
+   */
+  intent: PropTypes.oneOf([
+    "default",
+    "primary",
+    "success",
+    "warning",
+    "danger"
+  ] as ButtonIntent[])
+};
 
 export function getButtonStyles({
   size = "md",

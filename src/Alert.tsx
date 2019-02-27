@@ -56,13 +56,15 @@ export const Alert = ({
         <Icon color={alertIntentions[intent]} icon={icons[intent]} />
       </div>
       <div css={{ marginLeft: theme.spaces.md }}>
-        <Text id={id} variant="h6">
+        <Text id={id} css={{ margin: 0 }} variant="h6">
           {title}
         </Text>
         {subtitle && (
           <Text
-            variant="subtitle2"
-            css={{ color: theme.colors.text.muted, display: "block" }}
+            muted
+            css={{
+              fontSize: theme.sizes[0]
+            }}
           >
             {subtitle}
           </Text>

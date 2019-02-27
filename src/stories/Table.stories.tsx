@@ -91,10 +91,12 @@ export const TableExamples = storiesOf("Tables", module)
             justifyContent: "space-between"
           }}
         >
-          <Text variant="h4">Ingredients</Text>
+          <Text css={{ margin: 0 }} variant="h4">
+            Ingredients
+          </Text>
 
           <div>
-            <Button variant="primary">Add ingredient</Button>
+            <Button intent="primary">Add ingredient</Button>
           </div>
         </Toolbar>
         <Table minWidth="700px" fixed={["200", "15%", "15%", "15%", "15%"]}>
@@ -157,10 +159,12 @@ export const TableExamples = storiesOf("Tables", module)
             justifyContent: "space-between"
           }}
         >
-          <Text variant="h4">Ingredients</Text>
+          <Text css={{ margin: 0 }} variant="h4">
+            Ingredients
+          </Text>
 
           <div>
-            <Button variant="primary">Add ingredient</Button>
+            <Button intent="primary">Add ingredient</Button>
           </div>
         </Toolbar>
         <Table fixed={["200", "15%", "15%", "15%", "15%"]}>
@@ -185,7 +189,7 @@ export const TableExamples = storiesOf("Tables", module)
                       paddingBottom: 0
                     }}
                   >
-                    <Text variant="body2">
+                    <Text variant="body" css={{ fontSize: theme.sizes[0] }}>
                       Officia laborum deserunt adipisicing reprehenderit esse
                       elit exercitation consectetur ad non. Enim reprehenderit
                       mollit in commodo anim ex consequat magna laboris
@@ -211,7 +215,7 @@ export const TableExamples = storiesOf("Tables", module)
                       >
                         Cancel
                       </Button>
-                      <Button variant="primary">Save</Button>
+                      <Button intent="primary">Save</Button>
                     </div>
                   </div>
                 );

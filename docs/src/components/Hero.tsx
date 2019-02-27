@@ -82,11 +82,12 @@ export const Hero = ({ children }) => (
           </Text>
           <Text css={{ color: "white", maxWidth: "34rem" }} variant="lead">
             In laboris aliqua voluptate adipisicing sunt mollit quis voluptate
-            eu laborum amet reprehenderit.
+            eu laborum amet reprehenderit. Accessibility, mobile friendly,
+            flexible
           </Text>
           <div css={{ marginTop: theme.spaces.md }}>
             <Button intent="success" size="md">
-              Learn more
+              Get started
             </Button>
             <Button css={{ marginLeft: theme.spaces.sm }} size="md">
               View on Github

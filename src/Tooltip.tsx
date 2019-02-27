@@ -70,9 +70,10 @@ export function Tooltip({ placement, children, content }: TooltipProps) {
             style={arrowProps.style}
           />
           <Text
-            variant="body2"
+            variant="body"
             css={[
               {
+                fontSize: theme.sizes[0],
                 display: "inline-block",
                 margin: 0,
                 boxShadow: theme.shadows.md,

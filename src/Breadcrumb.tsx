@@ -45,7 +45,7 @@ export function BreadcrumbItem({ children, ...other }: BreadcrumbItemProps) {
       }}
       {...other}
     >
-      <Text component="div" variant="body2">
+      <Text component="div" variant="body">
         {children}
       </Text>
       {!current && <BreadCrumbDivider />}

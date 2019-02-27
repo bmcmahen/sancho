@@ -77,9 +77,10 @@ export function InputGroup({
           css={{
             display: "block",
             marginTop: theme.spaces.sm,
-            color: theme.colors.text.muted
+            color: theme.colors.text.muted,
+            fontSize: theme.sizes[0]
           }}
-          variant="subtitle2"
+          variant="body"
         >
           {helpText}
         </Text>
@@ -180,7 +181,12 @@ export function Label({ children, hide, ...other }: LabelProps) {
       }}
       {...other}
     >
-      <Text variant={hide ? "srOnly" : "subtitle1"}>{children}</Text>
+      <Text
+        css={{ fontSize: theme.sizes[0] }}
+        variant={hide ? "hidden" : "body"}
+      >
+        {children}
+      </Text>
     </label>
   );
 }

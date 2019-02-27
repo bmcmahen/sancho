@@ -4,61 +4,71 @@ import * as React from "react";
 import theme from "./Theme";
 
 export const variants = {
-  srOnly: css({
+  uppercase: css({
+    textTransform: "uppercase",
+    fontSize: `calc(${theme.sizes[0]} - 0.1rem)`,
+    fontWeight: 600,
+    letterSpacing: "0.07em"
+  }),
+  hidden: css({
     position: "absolute",
     height: 1,
     width: 1,
     overflow: "hidden"
   }),
-  body1: css({
+  body: css({
     fontSize: theme.sizes[1]
   }),
-  body2: css({
-    fontSize: theme.sizes[0]
-  }),
-  subtitle1: css({
+  paragraph: css({
     fontSize: theme.sizes[1],
-    fontWeight: 400,
-    lineHeight: 1.75
+    marginBottom: theme.spaces.md
   }),
-  subtitle2: css({
-    fontWeight: 500,
+  subtitle: css({
     fontSize: theme.sizes[0],
+    fontWeight: 500,
     lineHeight: 1.5
-  }),
-  h6: css({
-    fontWeight: 500,
-    lineHeight: 1.5,
-    fontSize: theme.sizes[1]
-  }),
-  h5: css({
-    fontWeight: 400,
-    fontSize: theme.sizes[2]
-  }),
-  h4: css({
-    fontWeight: 400,
-    fontSize: theme.sizes[3]
-  }),
-  h3: css({
-    fontWeight: 500,
-    fontSize: theme.sizes[4]
-  }),
-  h2: css({
-    fontWeight: 400,
-    fontSize: theme.sizes[5]
-  }),
-  h1: css({
-    fontWeight: 500,
-    fontSize: theme.sizes[6]
   }),
   lead: css({
     fontWeight: 400,
     fontSize: theme.sizes[2]
   }),
+  h6: css({
+    fontWeight: 500,
+    lineHeight: 1.5,
+    fontSize: theme.sizes[1],
+    marginBottom: theme.spaces.sm
+  }),
+  h5: css({
+    fontWeight: 400,
+    fontSize: theme.sizes[2],
+    marginBottom: theme.spaces.sm
+  }),
+  h4: css({
+    fontWeight: 400,
+    fontSize: theme.sizes[3],
+    marginBottom: theme.spaces.sm
+  }),
+  h3: css({
+    fontWeight: 500,
+    fontSize: theme.sizes[4],
+    marginBottom: theme.spaces.sm
+  }),
+  h2: css({
+    fontWeight: 400,
+    fontSize: theme.sizes[5],
+    marginBottom: theme.spaces.sm
+  }),
+  h1: css({
+    fontWeight: 500,
+    fontSize: theme.sizes[6],
+    marginBottom: theme.spaces.sm
+  }),
+
   display3: css({
     fontWeight: 300,
     fontSize: theme.sizes[5],
     lineHeight: 1.2,
+    marginBottom: theme.spaces.sm,
     [theme.breakpoints.md]: {
       fontSize: theme.sizes[6]
     }
@@ -67,6 +77,7 @@ export const variants = {
     fontWeight: 300,
     fontSize: theme.sizes[6],
     lineHeight: 1.2,
+    marginBottom: theme.spaces.sm,
     [theme.breakpoints.md]: {
       fontSize: theme.sizes[7]
     }
@@ -75,6 +86,7 @@ export const variants = {
     fontWeight: 300,
     fontSize: theme.sizes[7],
     lineHeight: 1.2,
+    marginBottom: theme.spaces.sm,
     [theme.breakpoints.md]: {
       fontSize: theme.sizes[8]
     }
@@ -93,11 +105,11 @@ const element: { [key in TextVariants]: string } = {
   h4: "h4",
   h5: "h5",
   h6: "h6",
-  subtitle1: "h6",
-  subtitle2: "h6",
-  body1: "span",
-  body2: "span",
-  srOnly: "span",
+  uppercase: "div",
+  subtitle: "div",
+  body: "span",
+  paragraph: "p",
+  hidden: "span",
   lead: "p"
 };
 
@@ -116,19 +128,23 @@ const styles: { [key: string]: SerializedStyles } = {
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap"
+  }),
+  muted: css({
+    color: theme.colors.text.muted
   })
 };
 
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariants;
   noWrap?: boolean;
-
+  muted?: boolean;
   component?: React.ReactType<TextProps>;
 }
 
 export function Text({
-  variant = "body1",
+  variant = "body",
   noWrap,
+  muted,
   component,
   css,
   ...other
@@ -136,7 +152,12 @@ export function Text({
   const Component = component || element[variant];
   return (
     <Component
-      css={[styles.base, noWrap && styles.noWrap, variants[variant]]}
+      css={[
+        styles.base,
+        noWrap && styles.noWrap,
+        muted && styles.muted,
+        variants[variant]
+      ]}
       {...other}
     />
   );

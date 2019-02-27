@@ -71,15 +71,7 @@ export class ComponentMDXProvider extends React.Component {
               {children}
             </Text>
           ),
-          p: ({ children }) => (
-            <Text
-              css={{ marginBottom: theme.spaces.md }}
-              variant="body1"
-              component="p"
-            >
-              {children}
-            </Text>
-          ),
+          p: ({ children }) => <Text variant="paragraph">{children}</Text>,
         }}
       >
         {this.props.children}

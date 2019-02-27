@@ -3,7 +3,7 @@ import { jsx } from "@emotion/core"
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
-import { Navbar, Toolbar, Text, theme } from "../../../src"
+import { Navbar, Toolbar, Text, theme, IconButton } from "../../../src"
 import Header from "./header"
 import "./layout.css"
 import { ComponentList } from "./ComponentList"
@@ -28,9 +28,12 @@ const Layout = ({ children }) => (
           }}
         >
           <Toolbar>
-            <Text css={{ color: "white" }} variant="h4">
+            <Text css={{ margin: 0, color: "white" }} variant="h4">
               Sancho
             </Text>
+            <div css={{ marginLeft: "auto" }}>
+              <IconButton icon="github" variant="ghost" label="Github" />
+            </div>
           </Toolbar>
         </Navbar>
         <div

@@ -220,15 +220,10 @@ interface MenuLabelProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function MenuLabel(props: MenuLabelProps) {
   return (
     <Text
-      component="div"
+      variant="uppercase"
       css={{
-        display: "block",
         padding: `${theme.spaces.xs} ${theme.spaces.md}`,
-        paddingTop: theme.spaces.md,
-        textTransform: "uppercase",
-        fontSize: "0.75rem",
-        fontWeight: 600,
-        letterSpacing: "0.07em"
+        paddingTop: theme.spaces.md
       }}
       {...props}
     />

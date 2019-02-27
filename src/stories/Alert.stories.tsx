@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import { Alert, AlertVariants } from "../Alert";
+import { Alert, AlertIntentions } from "../Alert";
 import theme from "../Theme";
 import { storiesOf } from "@storybook/react";
 
-const appearances: Array<AlertVariants> = [
+const appearances: Array<AlertIntentions> = [
   "info",
   "success",
   "danger",
@@ -23,7 +23,7 @@ export const AlertStories = storiesOf("Alert", module).add(
             margin: theme.spaces.lg
           }}
           key={key}
-          variant={key}
+          intent={key}
           title={"This is a " + key + " alert"}
           subtitle={
             "Culpa laborum nostrud dolore id duis adipisicing aliqua pariatur veniam. Ad Lorem dolor voluptate reprehenderit ullamco in incididunt eiusmod consectetur cupidatat occaecat incididunt."
