@@ -1,11 +1,10 @@
-import React from "react"
+import * as React from "react"
 import { Link } from "gatsby"
-
-import Layout from "../components/layout"
-import Image from "../components/image"
+import Layout, { Article } from "../components/layout"
 import SEO from "../components/seo"
 import { graphql } from "gatsby"
 import { theme, Text, Container, Button } from "../../../src"
+import { ComponentMDXProvider } from "./ExamplePreview"
 
 const Wave = () => (
   <div
@@ -57,12 +56,8 @@ const Wave = () => (
   </div>
 )
 
-const IndexPage = () => (
+export const Hero = ({ children }) => (
   <Layout>
-    <SEO
-      title="Home"
-      keywords={[`pants`, `design system`, `components`, `react`]}
-    />
     <div
       css={{
         position: "relative",
@@ -81,9 +76,9 @@ const IndexPage = () => (
         >
           <Text
             css={{ color: "white", marginBottom: theme.spaces.md }}
-            variant="h1"
+            variant="display2"
           >
-            Pants UI
+            Sancho UI
           </Text>
           <Text css={{ color: "white", maxWidth: "34rem" }} variant="lead">
             In laboris aliqua voluptate adipisicing sunt mollit quis voluptate
@@ -101,7 +96,10 @@ const IndexPage = () => (
       </Container>
       <Wave />
     </div>
+    <Container>
+      <Article>
+        <ComponentMDXProvider>{children}</ComponentMDXProvider>
+      </Article>
+    </Container>
   </Layout>
 )
-
-export default IndexPage

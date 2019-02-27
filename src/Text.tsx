@@ -52,7 +52,7 @@ export const variants = {
     fontSize: theme.sizes[6]
   }),
   lead: css({
-    fontWeight: 300,
+    fontWeight: 400,
     fontSize: theme.sizes[2]
   }),
   display3: css({

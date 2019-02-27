@@ -5,13 +5,12 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 import { MDXProvider } from "@mdx-js/tag"
 import * as components from "../../../src"
 import "./ExamplePreview.css"
-import { Text, Layer, theme } from "../../../src"
+import { Text, Layer, theme, Link } from "../../../src"
 
 export function ComponentPreview({ className, ...props }) {
-  if (
-    props.children.props.props &&
-    props.children.props.props.className === "language-jsx"
-  ) {
+  const isJSX = props.children.props.props.className === "language-jsx"
+
+  if (props.children.props.props) {
     return (
       <div
         css={{
@@ -19,7 +18,9 @@ export function ComponentPreview({ className, ...props }) {
           padding: theme.spaces.sm,
           background: theme.colors.background.tint1,
           borderRadius: theme.radii.md,
-          marginBottom: ` ${theme.spaces.lg}`,
+          marginBottom: ` ${theme.spaces.md}`,
+          marginLeft: `-${theme.spaces.sm}`,
+          marginRight: `-${theme.spaces.sm}`,
         }}
       >
         <LiveProvider
@@ -29,15 +30,15 @@ export function ComponentPreview({ className, ...props }) {
           mountStylesheet={false}
           code={props.children.props.children}
         >
-          <LivePreview />
+          {isJSX && <LivePreview />}
           <LiveEditor className="language-" />
-          <LiveError />
+          {isJSX && <LiveError />}
         </LiveProvider>
       </div>
     )
   }
 
-  return <pre className="language-" {...props} />
+  return <pre className="language-jsx" {...props} />
 }
 
 export class ComponentMDXProvider extends React.Component {
@@ -51,16 +52,31 @@ export class ComponentMDXProvider extends React.Component {
             </code>
           ),
           pre: ComponentPreview,
+          a: props => <Link {...props} />,
           h1: ({ children }) => <Text variant="h1">{children}</Text>,
           h2: ({ children }) => <Text variant="h2">{children}</Text>,
-          h3: ({ children }) => <Text variant="h3">{children}</Text>,
+          h3: ({ children }) => (
+            <Text css={{ marginTop: theme.spaces.lg }} variant="h3">
+              {children}
+            </Text>
+          ),
           h4: ({ children }) => (
-            <Text css={{ marginTop: theme.spaces.lg }} variant="h4">
+            <Text
+              css={{
+                marginBottom: theme.spaces.sm,
+                marginTop: theme.spaces.lg,
+              }}
+              variant="h4"
+            >
               {children}
             </Text>
           ),
           p: ({ children }) => (
-            <Text variant="body1" component="p">
+            <Text
+              css={{ marginBottom: theme.spaces.md }}
+              variant="body1"
+              component="p"
+            >
               {children}
             </Text>
           ),

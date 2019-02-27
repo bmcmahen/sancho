@@ -134,7 +134,9 @@ export function ComponentList(_props: ComponentListProps) {
         <MenuDivider />
         <ListGroup label="Components">
           {components.map(name => (
-            <MenuLink to={`/components/${name.toLowerCase()}`}>{name}</MenuLink>
+            <MenuLink key={name} to={`/components/${name.toLowerCase()}`}>
+              {name}
+            </MenuLink>
           ))}
         </ListGroup>
       </div>

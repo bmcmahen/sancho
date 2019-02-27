@@ -1,0 +1,52 @@
+import { Hero } from "../components/Hero"
+import SEO from "../components/SEO"
+import { Article } from "../components/layout"
+
+<SEO
+  title="Sancho - A React-based Design System"
+  keywords={[`pants`, `design system`, `components`, `react`]}
+/>
+
+export default Hero
+
+# Getting started
+
+### Installation
+
+Install Sancho into your react application using either Yarn or NPM.
+
+```
+yarn add sancho
+```
+
+And then import whatever components you'd like into your project.
+
+```.jsx
+import { Button } from "sancho"
+
+function Project() {
+  return (
+    <div>
+      <Button>Hello world!</Button>
+    </div>
+  )
+}
+```
+
+### Styling and Themes
+
+Sancho uses [Emotion](https://emotion.sh/docs/introduction) for styling. Irure officia ea ex aute voluptate nisi eu est irure. Excepteur labore quis excepteur magna et sunt mollit. Fugiat culpa officia aliqua veniam velit ad. Cillum ad ex cupidatat in velit sit. Sint irure anim aliqua mollit eu laborum commodo minim reprehenderit sit tempor voluptate pariatur.
+
+```.jsx
+/** @jsx jsx */
+import { jsx } from "@emotion/core"
+import { Button } from 'sancho'
+
+function MyCustomButton() {
+  return (
+    <Button css={{ background: '#08e' }}>
+      I have a blue background!
+    </Button>
+  )
+}
+```

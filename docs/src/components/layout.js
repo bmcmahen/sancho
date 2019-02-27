@@ -79,7 +79,7 @@ export const Article = ({ children }) => (
     css={{
       margin: "0 auto",
       maxWidth: "650px",
-      padding: theme.spaces.lg,
+      padding: `${theme.spaces.xl} ${theme.spaces.lg}`,
     }}
   >
     {children}

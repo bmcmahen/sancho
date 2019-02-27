@@ -34,6 +34,10 @@ p code {
   border-radius: 2px;
 }
 
+.react-live-preview {
+  padding-bottom: 0.5rem;
+}
+
 code[class*="language-"],
 pre[class*="language-"] {
   font-family: Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono",
@@ -86,7 +90,7 @@ code[class*="language-"] ::selection {
 pre[class*="language-"] {
   padding: 1em;
   margin: 0;
-  margin-top: 0.5rem;
+
   overflow: auto;
 }
 

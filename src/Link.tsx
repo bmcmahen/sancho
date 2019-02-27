@@ -42,7 +42,7 @@ export function Link({
       css={[
         {
           textDecoration: "none",
-          color: theme.colors.palette.blue.dark
+          color: theme.colors.palette.blue.base
         },
         Component === "button" && styles.button
       ]}
