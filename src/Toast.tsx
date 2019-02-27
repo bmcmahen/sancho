@@ -3,14 +3,14 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import toaster, { Position } from "toasted-notes";
 import "toasted-notes/lib/index.css";
-import { Alert, AlertVariants } from "./Alert";
+import { Alert, AlertIntentions } from "./Alert";
 
 interface Toast {
   position?: keyof typeof Position;
   duration?: number | null;
   title?: string;
   subtitle?: string;
-  variant?: AlertVariants;
+  intent?: AlertIntentions;
   render?: () => React.ReactNode;
 }
 
@@ -20,7 +20,7 @@ export default ({
   render,
   title,
   subtitle,
-  variant
+  intent
 }: Toast) => {
   const options = {
     position,
@@ -39,7 +39,7 @@ export default ({
         component="div"
         elevation={"md"}
         subtitle={subtitle}
-        variant={variant}
+        intent={intent}
         onRequestClose={onClose}
       />
     ),
