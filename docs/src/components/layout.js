@@ -25,7 +25,6 @@ const Layout = ({ children }) => (
           css={{
             boxShadow: theme.shadows.sm,
             background: theme.colors.palette.blue.base,
-            boxShadow: "none",
           }}
         >
           <Toolbar>
@@ -44,15 +43,20 @@ const Layout = ({ children }) => (
         >
           <div
             css={{
+              display: "none",
               position: "sticky",
               top: "64px",
               height: "calc(100vh - 64px)",
+              [theme.breakpoints.lg]: {
+                display: "block",
+              },
             }}
           >
             <ComponentList />
           </div>
           <main
             css={{
+              overflow: "hidden",
               flex: 1,
             }}
           >

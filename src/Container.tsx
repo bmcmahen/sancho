@@ -13,7 +13,7 @@ export function Container(props: ContainerProps) {
         maxWidth: "1200px",
         boxSizing: "border-box",
         margin: "0 auto",
-        padding: `0 ${theme.spaces.sm}`,
+        padding: `0 ${theme.spaces.md}`,
         [theme.breakpoints.lg]: {
           padding: `0 ${theme.spaces.lg}`
         }
