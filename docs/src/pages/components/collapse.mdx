@@ -1,0 +1,84 @@
+import { Collapse, Button, Divider, Container } from "../../../../src"
+import "./button.css"
+import { Article } from "../../components/Layout"
+import { Props } from "../../components/Props"
+import SEO from "../../components/SEO"
+
+<SEO title="Collapse" />
+
+<Container>
+<Article sidebar={[
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Using hooks', name: 'Using hooks'},
+  { id: 'Props', name: 'Props'}
+]}>
+
+# Collapse
+
+Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+
+#### Basic usage
+
+You can also control the collapse using your own state. You are responsible for providing the `aria` attributes
+yourself. Alternatively, you might want to use the `useCollapse` hook to have the aria attributes managed for you.
+
+```jsx
+<Component initialState={{ show: false }}>
+  {({ state, setState }) => {
+    return (
+      <React.Fragment>
+        <Button
+          aria-controls="collapse"
+          aria-expanded={state.show ? true : false}
+          onClick={() => setState({ show: !state.show })}
+        >
+          Toggle
+        </Button>
+        <Collapse id="collapse" show={state.show}>
+          <Text variant="paragraph">
+            Sint reprehenderit non laboris est in laboris anim mollit anim est
+            mollit. Nostrud enim culpa pariatur deserunt sit irure exercitation
+            aute Lorem id id. Aute eiusmod cillum aute qui laboris consectetur
+            minim adipisicing magna fugiat non duis ut in. Nisi velit in culpa
+            deserunt.
+          </Text>
+        </Collapse>
+      </React.Fragment>
+    )
+  }}
+</Component>
+```
+
+#### Using hooks
+
+The recommended way to control Collapse is by using the `useCollapse` hook, and binding the return
+value to the appropriate elements. This provides the recommended `aria` attributes.
+
+```.jsx
+import { Collapse, useCollapse } from 'sancho'
+
+const Example = () => {
+  const state = useCollapse(false)
+  return (
+    <div>
+      <Button {...state.buttonProps}>
+        Click to {state.show ? 'hide' : 'reveal'}!
+      </Button>
+      <Collapse {...state.collapseProps}>
+         <Text variant="paragraph">
+            Sint reprehenderit non laboris est in laboris anim mollit anim est
+            mollit. Nostrud enim culpa pariatur deserunt sit irure exercitation
+            aute Lorem id id. Aute eiusmod cillum aute qui laboris consectetur
+            minim adipisicing magna fugiat non duis ut in. Nisi velit in culpa
+            deserunt.
+          </Text>
+      </Collapse>
+    </div>
+  )
+}
+```
+
+<Props names={["Collapse"]} />
+
+</Article>
+</Container>

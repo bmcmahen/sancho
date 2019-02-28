@@ -1,0 +1,51 @@
+import { Avatar, Divider, Container } from "../../../../src"
+import "./avatar.css"
+import { Article } from "../../components/Layout"
+import { Props } from "../../components/Props"
+import SEO from "../../components/SEO"
+
+<SEO title="Avatar" />
+
+<Container>
+<Article sidebar={[
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Letters', name: 'Using letters'},
+  { id: 'Sizes', name: 'Sizes options' },
+  { id: 'Props', name: 'Props'}
+]}>
+
+# Avatar
+
+Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+
+#### Basic usage
+
+```jsx
+<Avatar
+  src="https://pbs.twimg.com/profile_images/775452326450475009/MTsFSYGs_400x400.jpg"
+  name="Ben McMahen"
+/>
+```
+
+#### Letters
+
+```jsx
+<Avatar name="Ben McMahen" />
+```
+
+#### Sizes
+
+```jsx
+<div className="Avatar-example">
+  <Avatar size="xs" name="Ben McMahen" />
+  <Avatar size="sm" name="James Bond" />
+  <Avatar size="md" name="Felix Leighter" />
+  <Avatar size="lg" name="Jaws" />
+  <Avatar size="xl" name="Kissy Suzuki" />
+</div>
+```
+
+<Props names={["Avatar"]} />
+
+</Article>
+</Container>

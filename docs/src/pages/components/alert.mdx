@@ -1,5 +1,17 @@
-import { Alert } from "../../../../src"
+import { Alert, Container } from "../../../../src"
 import "./alert.css"
+import { Article } from "../../components/Layout"
+import { Props } from "../../components/Props"
+import SEO from "../../components/SEO"
+
+<SEO title="Alert" />
+
+<Container>
+<Article sidebar={[
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Intent', name: 'Intent options'},
+  { id: 'Props', name: 'Props'}
+]}>
 
 # Alert
 
@@ -47,3 +59,8 @@ Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
   />
 </div>
 ```
+
+<Props names={["Alert"]} />
+
+</Article>
+</Container>

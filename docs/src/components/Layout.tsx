@@ -10,6 +10,7 @@ import {
   IconButton,
   SkipNavLink,
   SkipNavContent,
+  responsiveBodyPadding,
 } from "../../../src"
 import { ComponentList } from "./ComponentList"
 import { SpyList } from "./SpyList"
@@ -60,12 +61,14 @@ const Layout = ({ children }) => (
           </Toolbar>
         </Navbar>
         <div
-          css={{
-            justifyContent: "space-between",
-            padding: 0,
-            paddingTop: "64px",
-            display: "flex",
-          }}
+          css={[
+            {
+              justifyContent: "space-between",
+              padding: 0,
+              display: "flex",
+            },
+            responsiveBodyPadding,
+          ]}
         >
           <div
             css={{

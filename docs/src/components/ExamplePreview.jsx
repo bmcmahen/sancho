@@ -5,6 +5,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 import { MDXProvider } from "@mdx-js/tag"
 import * as components from "../../../src"
 import "./ExamplePreview.css"
+import Component from "react-component-component"
 import { Text, theme, Link } from "../../../src"
 
 export const anchorPadding = css`
@@ -39,11 +40,21 @@ export function ComponentPreview({ className, ...props }) {
         <LiveProvider
           scope={{
             ...components,
+            Component,
           }}
           mountStylesheet={false}
           code={props.children.props.children}
         >
-          {isJSX && <LivePreview />}
+          {isJSX && (
+            <LivePreview
+              css={{
+                padding: theme.spaces.md,
+                background: "white",
+                marginBottom: theme.spaces.sm,
+                borderRadius: theme.radii.sm,
+              }}
+            />
+          )}
           <LiveEditor className="language-" />
           {isJSX && <LiveError />}
         </LiveProvider>

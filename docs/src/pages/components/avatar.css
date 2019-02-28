@@ -1,0 +1,7 @@
+.Avatar-example {
+  display: flex;
+}
+
+.Avatar-example > * {
+  margin-right: 2px;
+}
