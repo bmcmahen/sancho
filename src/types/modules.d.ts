@@ -138,3 +138,8 @@ declare module "@reach/menu-button" {
 declare module "dom-helpers/util/inDOM" {
   return boolean;
 }
+
+declare module "element-in-view" {
+  type IsInView = (el: any) => boolean;
+  export default IsInView;
+}

@@ -4,7 +4,7 @@ import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import theme from "./Theme";
 import { Text } from "./Text";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 const sizes = {
   xs: css({ width: "1.5rem", height: "1.5rem", fontSize: theme.sizes[0] }),
@@ -31,7 +31,7 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
   size = "md",
   srcSet,
   ...other
-}) {
+}) => {
   const img = src || srcSet;
   let initials = getInitials(name);
   if (size === "xs") initials = initials.substring(0, 1);
@@ -85,7 +85,7 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
       )}
     </div>
   );
-}
+};
 
 Avatar.propTypes = {
   // The image source
@@ -96,11 +96,11 @@ Avatar.propTypes = {
   name: PropTypes.string,
 
   // Determine the size of the avatar
-  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl'] as AvatarSizes[]),
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"] as AvatarSizes[]),
 
   // An alternative to setting the src attribute.
   srcSet: PropTypes.string
-}
+};
 
 function getInitials(name: string = "?") {
   return name

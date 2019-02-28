@@ -81,7 +81,7 @@ export const Article = ({ children }) => (
   <div
     css={{
       maxWidth: "650px",
-      margin: "0 auto",
+
       padding: `${theme.spaces.lg} ${theme.spaces.lg}`,
     }}
   >
