@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import * as React from "react"
-import { useScrollSpy } from "../../../src/Hooks/scroll-spy"
-import { Link } from "gatsby"
 import { theme, Text } from "../../../src"
+import { getId } from "./ExamplePreview"
 
 export interface Item {
   id: string
@@ -16,7 +15,7 @@ interface SpyListProps {
 
 export function SpyList({ items }: SpyListProps) {
   const [ids] = React.useState(() => items.map(item => item.id))
-  const { inView } = useScrollSpy(ids)
+  // const { inView } = useScrollSpy(ids)
 
   return (
     <ul
@@ -30,7 +29,9 @@ export function SpyList({ items }: SpyListProps) {
       }}
     >
       {items.map(item => {
-        const active = inView[inView.length - 1] === item.id
+        // const active = inView[inView.length - 1] === item.id
+        const active = false // disable scroll spy for now
+
         return (
           <li
             css={{
@@ -41,7 +42,7 @@ export function SpyList({ items }: SpyListProps) {
             key={item.id}
           >
             <a
-              href={"#" + item.id}
+              href={"#" + getId(item.id)}
               css={{
                 textDecoration: "none",
               }}

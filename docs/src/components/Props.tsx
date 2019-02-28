@@ -8,15 +8,10 @@ import {
   TableCell,
   TableRow,
   TableBody,
-  Layer,
   theme,
-  Toolbar,
   Text,
-  NegativeMarginsContainer,
-  Container,
-  Divider,
 } from "../../../src"
-import { Article } from "./layout.js"
+import { anchorPadding } from "./ExamplePreview.jsx"
 
 // pretty lame
 function getKey(name: string) {
@@ -31,10 +26,13 @@ export function Props({ names }: PropsProps) {
   return (
     <div>
       <div
-        id="Props"
-        css={{
-          marginBottom: theme.spaces.xl,
-        }}
+        id="props"
+        css={[
+          {
+            marginBottom: theme.spaces.xl,
+          },
+          anchorPadding,
+        ]}
       >
         <Text
           css={{ marginBottom: theme.spaces.md, marginTop: theme.spaces.xl }}

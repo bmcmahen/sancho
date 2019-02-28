@@ -1,7 +1,6 @@
 import * as React from "react"
 import { ComponentMDXProvider } from "./ExamplePreview"
-import Layout, { Article } from "./layout"
-import { theme, Container } from "../../../src"
+import Layout from "./Layout"
 
 interface ComponentLayoutProps {
   children: React.ReactNode

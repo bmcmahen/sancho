@@ -24,6 +24,8 @@ export type InputSize = keyof typeof inputSizes;
 interface OptionalInputProps {
   autoFocus?: boolean;
   autoComplete?: string;
+  value?: string;
+  type?: string;
 }
 
 interface InputProps

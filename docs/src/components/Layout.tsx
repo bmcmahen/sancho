@@ -1,7 +1,6 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core"
-import React from "react"
-import PropTypes from "prop-types"
+import { jsx, Global } from "@emotion/core"
+import * as React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import {
   Navbar,
@@ -10,10 +9,8 @@ import {
   theme,
   IconButton,
   SkipNavLink,
-  VisuallyHidden,
   SkipNavContent,
 } from "../../../src"
-import "./layout.css"
 import { ComponentList } from "./ComponentList"
 import { SpyList } from "./SpyList"
 import { SideMenu } from "./SideMenu"
@@ -30,9 +27,22 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <>
+      <React.Fragment>
+        <Global
+          styles={{
+            html: {
+              fontFamily: "sans-serif",
+              textSizeAdjust: "100%",
+            },
+            body: {
+              margin: 0,
+              "-webkit-font-smoothing": "antialiased",
+              "-moz-osx-font-smoothing": "grayscale",
+              background: "white",
+            },
+          }}
+        />
         <SkipNavLink />
-
         <Navbar
           css={{
             boxShadow: theme.shadows.sm,
@@ -42,7 +52,7 @@ const Layout = ({ children }) => (
           <Toolbar>
             <SideMenu />
             <Text css={{ margin: 0, color: "white" }} variant="h4">
-              Sancho
+              {data.site.siteMetadata.title}
             </Text>
             <div css={{ marginLeft: "auto" }}>
               <IconButton icon="github" variant="ghost" label="Github" />
@@ -80,14 +90,10 @@ const Layout = ({ children }) => (
             {children}
           </main>
         </div>
-      </>
+      </React.Fragment>
     )}
   />
 )
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
 
 export default Layout
 
@@ -97,6 +103,9 @@ export const Article = ({ children, sidebar }) => (
       css={{
         minWidth: 0,
         [theme.breakpoints.md]: {
+          padding: `${theme.spaces.md} ${theme.spaces.md}`,
+        },
+        [theme.breakpoints.lg]: {
           padding: `${theme.spaces.lg} ${theme.spaces.lg}`,
         },
       }}

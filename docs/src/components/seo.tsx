@@ -1,5 +1,4 @@
 import * as React from "react"
-import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
 
@@ -11,7 +10,7 @@ interface Props {
   title?: string
 }
 
-function SEO({
+export function SEO({
   description,
   lang = "en",
   meta = [],
