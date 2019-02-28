@@ -7,6 +7,7 @@ import { Navbar, Toolbar, Text, theme, IconButton } from "../../../src"
 import Header from "./header"
 import "./layout.css"
 import { ComponentList } from "./ComponentList"
+import { SpyList } from "./SpyList"
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -59,7 +60,6 @@ const Layout = ({ children }) => (
           </div>
           <main
             css={{
-              overflow: "hidden",
               flex: 1,
             }}
           >
@@ -77,14 +77,20 @@ Layout.propTypes = {
 
 export default Layout
 
-export const Article = ({ children }) => (
-  <div
-    css={{
-      maxWidth: "650px",
-
-      padding: `${theme.spaces.lg} ${theme.spaces.lg}`,
-    }}
-  >
-    {children}
+export const Article = ({ children, sidebar }) => (
+  <div css={{ display: "flex" }}>
+    <div
+      css={{
+        maxWidth: "650px",
+        padding: `${theme.spaces.lg} ${theme.spaces.lg}`,
+      }}
+    >
+      {children}
+    </div>
+    {sidebar && (
+      <div>
+        <SpyList items={sidebar} />
+      </div>
+    )}
   </div>
 )

@@ -2,23 +2,17 @@ import * as React from "react";
 import rafSchedule from "raf-schd";
 import elementInView from "element-in-view";
 
-export function useScrollSpy() {
-  const [map] = React.useState(() => new Map());
-  const [inView, setInView] = React.useState<string[]>([]);
-
-  function bind(id: string) {
-    return (ref: React.Ref<any>) => {
-      map.set(id, ref);
-    };
-  }
+export function useScrollSpy(ids: string[]) {
+  const [map, setMap] = React.useState<(Element | null)[]>(() => []);
+  const [inView, setInView] = React.useState<(string | null)[]>([]);
 
   const onScroll = rafSchedule(() => {
-    const inView: string[] = [];
-    map.forEach((value, key) => {
-      if (elementInView(value)) {
-        inView.push(key);
-      }
-    });
+    const inView = map
+      .filter(el => {
+        if (el) return elementInView(el);
+        return false;
+      })
+      .map(el => el!.getAttribute("id"));
 
     setInView(inView);
   });
@@ -26,10 +20,12 @@ export function useScrollSpy() {
   React.useEffect(() => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  });
+  }, [map]);
 
-  return {
-    bind,
-    inView
-  };
+  React.useEffect(() => {
+    const els = ids.map(id => document.getElementById(id));
+    setMap(els);
+  }, [ids]);
+
+  return { inView };
 }

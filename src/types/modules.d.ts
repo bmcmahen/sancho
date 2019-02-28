@@ -140,6 +140,21 @@ declare module "dom-helpers/util/inDOM" {
 }
 
 declare module "element-in-view" {
-  type IsInView = (el: any) => boolean;
-  export default IsInView;
+  const elementInView: (
+    element: Element,
+    {
+      offset,
+      threshold
+    }?: {
+      offset?: number | undefined;
+      threshold?: number | undefined;
+    }
+  ) => boolean;
+
+  export default elementInView;
+}
+
+declare module "raf-schd" {
+  const rafSchedule: (any) => any;
+  export default rafSchedule;
 }

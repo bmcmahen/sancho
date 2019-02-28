@@ -59,15 +59,28 @@ export class ComponentMDXProvider extends React.Component {
           ),
           pre: ComponentPreview,
           a: props => <Link {...props} />,
-          h1: ({ children }) => <Text variant="h1">{children}</Text>,
-          h2: ({ children }) => <Text variant="h2">{children}</Text>,
+          h1: ({ children }) => (
+            <Text id={children} variant="h1">
+              {children}
+            </Text>
+          ),
+          h2: ({ children }) => (
+            <Text id={children} variant="h2">
+              {children}
+            </Text>
+          ),
           h3: ({ children }) => (
-            <Text css={{ marginTop: theme.spaces.lg }} variant="h3">
+            <Text
+              id={children}
+              css={{ marginTop: theme.spaces.lg }}
+              variant="h3"
+            >
               {children}
             </Text>
           ),
           h4: ({ children }) => (
             <Text
+              id={children}
               css={{
                 marginBottom: theme.spaces.sm,
                 marginTop: theme.spaces.lg,
