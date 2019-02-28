@@ -10,17 +10,18 @@ import VisuallyHidden from "@reach/visually-hidden";
 export interface IconButtonProps extends Partial<ButtonProps> {
   label: string;
   icon: IconName;
+  color?: string;
 }
 
 export const IconButton = React.forwardRef(
   (
-    { label, icon, ...other }: IconButtonProps,
+    { label, icon, color, ...other }: IconButtonProps,
     ref: React.Ref<HTMLButtonElement>
   ) => {
     return (
       <Button ref={ref} css={{ padding: "0.5rem" }} {...other}>
         <VisuallyHidden>{label}</VisuallyHidden>
-        <Icon aria-hidden icon={icon} />
+        <Icon color={color} aria-hidden icon={icon} />
       </Button>
     );
   }
@@ -28,6 +29,7 @@ export const IconButton = React.forwardRef(
 
 interface CloseButtonProps extends Partial<ButtonProps> {
   label?: string;
+  color?: string;
 }
 
 export function CloseButton({ label = "Close", ...other }: CloseButtonProps) {

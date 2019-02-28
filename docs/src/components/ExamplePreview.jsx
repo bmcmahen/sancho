@@ -90,7 +90,11 @@ export class ComponentMDXProvider extends React.Component {
               {children}
             </Text>
           ),
-          p: ({ children }) => <Text variant="paragraph">{children}</Text>,
+          p: ({ children }) => (
+            <Text css={{ maxWidth: "45rem" }} variant="paragraph">
+              {children}
+            </Text>
+          ),
         }}
       >
         {this.props.children}

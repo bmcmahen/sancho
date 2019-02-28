@@ -24,11 +24,13 @@ export function SpyList({ items }: SpyListProps) {
         padding: theme.spaces.lg,
         margin: 0,
         position: "sticky",
+        flex: "0 0 200px",
+        width: "200px",
         top: "64px",
       }}
     >
       {items.map(item => {
-        const active = inView.indexOf(item.id) > -1
+        const active = inView[inView.length - 1] === item.id
         return (
           <li
             css={{
@@ -38,15 +40,18 @@ export function SpyList({ items }: SpyListProps) {
             }}
             key={item.id}
           >
-            <Link
-              to={"#" + item.id}
+            <a
+              href={"#" + item.id}
               css={{
                 textDecoration: "none",
               }}
             >
               <Text
                 css={{
+                  display: "inline-block",
+                  lineHeight: "1.75",
                   fontWeight: active ? 600 : 400,
+                  padding: `${0} ${theme.spaces.lg}`,
                   color: active
                     ? theme.colors.text.default
                     : theme.colors.text.muted,
@@ -55,7 +60,7 @@ export function SpyList({ items }: SpyListProps) {
               >
                 {item.name}
               </Text>
-            </Link>
+            </a>
           </li>
         )
       })}

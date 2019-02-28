@@ -33,7 +33,13 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
 
 export function Table({ children, minWidth, fixed }: TableProps) {
   return (
-    <div css={{ overflowX: minWidth ? "scroll" : "initial" }}>
+    <div
+      css={{
+        width: "100%",
+        display: "block",
+        overflowX: minWidth ? "auto" : "initial"
+      }}
+    >
       <table
         css={[
           tableStyle,
@@ -129,7 +135,6 @@ const tableCellAlignments = {
 
 const tableCellVariants = {
   head: css({
-    background: theme.colors.background.tint1,
     fontWeight: 500,
     fontSize: theme.sizes[0],
     color: theme.colors.text.muted
@@ -177,13 +182,13 @@ export function TableCell({
               ? theme.colors.border.muted
               : theme.colors.border.default,
           display: "table-cell",
-          padding: `${theme.spaces.sm} ${theme.spaces.md}`,
+          padding: `${theme.spaces.xs} ${theme.spaces.sm}`,
           [theme.breakpoints.md]: {
-            paddingLeft: theme.spaces.lg,
-            paddingRight: theme.spaces.lg
+            paddingLeft: theme.spaces.md,
+            paddingRight: theme.spaces.md
           },
           ":last-child": {
-            paddingRight: "24px"
+            paddingRight: theme.spaces.md
           }
         },
         fixed && {

@@ -9,6 +9,7 @@
     "@emotion/core": "^10.0.7",
     "@emotion/css": "^10.0.7",
     "@reach/alert": "^0.1.2",
+    "@reach/skip-nav": "^0.1.2",
     "@reach/visually-hidden": "^0.1.2",
     "@rehooks/window-size": "^1.0.2",
     "@types/color": "^3.0.0",

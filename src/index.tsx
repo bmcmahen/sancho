@@ -31,5 +31,6 @@ export * from "./Toast";
 export * from "./Toolbar";
 export * from "./Tooltip";
 export * from "./Table";
+export * from "./SkipNav";
 
 export * from "./Theme";

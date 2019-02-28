@@ -4,8 +4,8 @@ import * as React from "react";
 import theme from "./Theme";
 
 export interface DividerProps {
-  muted: boolean;
-  children: never;
+  muted?: boolean;
+  children?: never;
 }
 
 export function Divider({ muted, ...other }: DividerProps) {

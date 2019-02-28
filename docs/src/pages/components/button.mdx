@@ -5,8 +5,11 @@ import { Props } from "../../components/Props"
 
 <Container>
 <Article sidebar={[
-  { id: 'Intent', name: 'Examples' },
-  { id: 'Variants', name: 'Variants'}
+  { id: 'Intent', name: 'Button intent' },
+  { id: 'Sizes', name: 'Button sizes'},
+  { id: 'Variants', name: 'Button variants'},
+  { id: 'Custom component', name: 'Custom component'},
+  { id: 'Props', name: 'Props table'}
 ]}>
 
 # Button
@@ -56,7 +59,7 @@ Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
 </Button>
 ```
 
+<Props names={["Button"]} />
+
 </Article>
 </Container>
-
-<Props names={["Button"]} />

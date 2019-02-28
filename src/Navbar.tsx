@@ -33,7 +33,7 @@ export function Navbar({
       css={[
         {
           background: "white",
-          zIndex: 500,
+          zIndex: 20,
           boxShadow: theme.shadows.sm
         },
         styles[position]

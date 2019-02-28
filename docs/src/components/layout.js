@@ -3,11 +3,20 @@ import { jsx } from "@emotion/core"
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
-import { Navbar, Toolbar, Text, theme, IconButton } from "../../../src"
+import {
+  Navbar,
+  Toolbar,
+  Text,
+  theme,
+  IconButton,
+  SkipNavLink,
+  SkipNavContent,
+} from "../../../src"
 import Header from "./header"
 import "./layout.css"
 import { ComponentList } from "./ComponentList"
 import { SpyList } from "./SpyList"
+import { SideMenu } from "./SideMenu"
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -22,6 +31,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <>
+        <SkipNavLink />
         <Navbar
           css={{
             boxShadow: theme.shadows.sm,
@@ -29,6 +39,7 @@ const Layout = ({ children }) => (
           }}
         >
           <Toolbar>
+            <SideMenu />
             <Text css={{ margin: 0, color: "white" }} variant="h4">
               Sancho
             </Text>
@@ -58,9 +69,11 @@ const Layout = ({ children }) => (
           >
             <ComponentList />
           </div>
+          <SkipNavContent />
           <main
             css={{
               flex: 1,
+              minWidth: 0,
             }}
           >
             {children}
@@ -81,14 +94,23 @@ export const Article = ({ children, sidebar }) => (
   <div css={{ display: "flex" }}>
     <div
       css={{
-        maxWidth: "650px",
-        padding: `${theme.spaces.lg} ${theme.spaces.lg}`,
+        minWidth: 0,
+        [theme.breakpoints.md]: {
+          padding: `${theme.spaces.lg} ${theme.spaces.lg}`,
+        },
       }}
     >
       {children}
     </div>
     {sidebar && (
-      <div>
+      <div
+        css={{
+          display: "none",
+          [theme.breakpoints.xl]: {
+            display: "block",
+          },
+        }}
+      >
         <SpyList items={sidebar} />
       </div>
     )}
