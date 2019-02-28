@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import { Button, ButtonProps, ButtonType, ButtonStyleProps } from "./Button";
+import { Button, ButtonProps } from "./Button";
 import { IconName } from "@blueprintjs/icons";
 import { Icon } from "./Icons";
 import theme from "./Theme";

@@ -1,0 +1,57 @@
+{
+  "../build/Button.js": {
+    "description": "@name Button\n@description Your basic button element.",
+    "displayName": "Button",
+    "methods": [],
+    "props": {
+      "variant": {
+        "type": {
+          "name": "enum",
+          "value": [
+            { "value": "\"default\"", "computed": false },
+            { "value": "\"ghost\"", "computed": false }
+          ]
+        },
+        "required": false,
+        "description": "Controls the basic button style."
+      },
+      "size": {
+        "type": {
+          "name": "enum",
+          "value": [
+            { "value": "\"xs\"", "computed": false },
+            { "value": "\"sm\"", "computed": false },
+            { "value": "\"md\"", "computed": false },
+            { "value": "\"lg\"", "computed": false },
+            { "value": "\"xl\"", "computed": false }
+          ]
+        },
+        "required": false,
+        "description": "The size of the button."
+      },
+      "block": {
+        "type": { "name": "bool" },
+        "required": false,
+        "description": "If true, the button will be displayed as a block element instead of inline."
+      },
+      "intent": {
+        "type": {
+          "name": "enum",
+          "value": [
+            { "value": "\"default\"", "computed": false },
+            { "value": "\"primary\"", "computed": false },
+            { "value": "\"success\"", "computed": false },
+            { "value": "\"warning\"", "computed": false },
+            { "value": "\"danger\"", "computed": false }
+          ]
+        },
+        "required": false,
+        "description": "Controls the colour of the button."
+      }
+    }
+  },
+  "../build/IconButton.js": { "description": "", "methods": [] },
+  "../build/Layer.js": { "description": "", "methods": [] },
+  "../build/Overlay.js": { "description": "", "methods": [] },
+  "../build/Tabs.js": { "description": "", "methods": [] }
+}

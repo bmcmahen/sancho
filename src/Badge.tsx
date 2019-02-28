@@ -3,17 +3,21 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import theme from "./Theme";
+import PropTypes from "prop-types";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {}
 
-export function Badge({ children, ...other }: BadgeProps) {
+export const Badge: React.FunctionComponent<BadgeProps> = ({
+  children,
+  ...other
+}) => {
   return (
     <Text
-      variant="subtitle2"
+      variant="body"
       component="span"
       css={{
         color: "white",
-        fontSize: "small",
+        fontSize: theme.sizes[0],
         fontWeight: 500,
         display: "inline-block",
         borderRadius: "32px",
@@ -28,4 +32,8 @@ export function Badge({ children, ...other }: BadgeProps) {
       {children}
     </Text>
   );
-}
+};
+
+Badge.propTypes = {
+  children: PropTypes.node
+};

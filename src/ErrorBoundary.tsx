@@ -38,7 +38,7 @@ export class ErrorBoundary extends React.Component<
         <div css={{ padding: theme.spaces.md }}>
           <Alert
             type="assertive"
-            variant="danger"
+            intent="danger"
             title={this.props.title}
             subtitle={this.props.subtitle}
           />

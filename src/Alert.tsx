@@ -8,6 +8,7 @@ import { Icon } from "./Icons";
 import { IconName } from "@blueprintjs/icons";
 import { CloseButton } from "./IconButton";
 import { LayerElevations } from "./Layer";
+import PropTypes from "prop-types";
 
 const alertIntentions = {
   info: theme.colors.palette.neutral.base,
@@ -39,7 +40,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
   type?: "polite" | "assertive";
 }
 
-export const Alert = ({
+export const Alert: React.FunctionComponent<AlertProps> = ({
   children,
   title,
   id,
@@ -49,7 +50,7 @@ export const Alert = ({
   onRequestClose,
   intent = "info",
   ...other
-}: AlertProps) => {
+}) => {
   const contents = title ? (
     <div css={{ display: "flex", alignItems: "flex-start" }}>
       <div css={{ flex: "0 0 auto", marginTop: "4px" }}>
@@ -118,4 +119,30 @@ export const Alert = ({
       </div>
     </Component>
   );
+};
+
+Alert.propTypes = {
+  // If used, a close button will be attached to the alert box.
+  onRequestClose: PropTypes.func,
+
+  // Secondary text
+  subtitle: PropTypes.string,
+
+  // Primary text
+  title: PropTypes.string,
+
+  // A unique id used for accessibility purposes
+  id: PropTypes.string,
+
+  // Optionally render children if a title is not specified. Used for custom alerts.
+  children: PropTypes.node,
+
+  // Changes the icon and colour of the alert.
+  intent: PropTypes.oneOf([
+    "info",
+    "success",
+    "warning",
+    "danger",
+    "question"
+  ] as AlertIntentions[])
 };

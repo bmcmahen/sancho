@@ -37,7 +37,7 @@ export const NavbarStories = storiesOf("Navbar", module).add(
             >
               Sign up
             </Button>
-            <Button size="md" variant="primary">
+            <Button size="md" intent="primary">
               Login
             </Button>
           </Toolbar>

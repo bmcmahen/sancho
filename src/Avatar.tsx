@@ -4,6 +4,7 @@ import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import theme from "./Theme";
 import { Text } from "./Text";
+import PropTypes from 'prop-types'
 
 const sizes = {
   xs: css({ width: "1.5rem", height: "1.5rem", fontSize: theme.sizes[0] }),
@@ -24,13 +25,13 @@ interface AvatarProps {
 
 const colors = Object.keys(theme.colors.palette);
 
-export function Avatar({
+export const Avatar: React.FunctionComponent<AvatarProps> = ({
   src,
   name,
   size = "md",
   srcSet,
   ...other
-}: AvatarProps) {
+}) {
   const img = src || srcSet;
   let initials = getInitials(name);
   if (size === "xs") initials = initials.substring(0, 1);
@@ -84,6 +85,21 @@ export function Avatar({
       )}
     </div>
   );
+}
+
+Avatar.propTypes = {
+  // The image source
+  src: PropTypes.string,
+
+  // The name of the user. Used as an alt attribute, or used to generate
+  // initials in the absence of an image.
+  name: PropTypes.string,
+
+  // Determine the size of the avatar
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl'] as AvatarSizes[]),
+
+  // An alternative to setting the src attribute.
+  srcSet: PropTypes.string
 }
 
 function getInitials(name: string = "?") {

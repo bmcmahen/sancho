@@ -236,12 +236,23 @@ export interface ButtonProps
   [key: string]: any; // bad hack to permit component injection
 }
 
+/**
+ * Just your usual Button element.
+ */
+
 export const Button: React.RefForwardingComponent<
   React.Ref<HTMLButtonElement>,
   ButtonProps
 > = React.forwardRef(
   (
-    { size, block, variant, intent, component: Component = "button", ...other },
+    {
+      size = "md",
+      block,
+      variant = "default",
+      intent = "default",
+      component: Component = "button",
+      ...other
+    }: ButtonProps,
     ref
   ) => {
     return (
@@ -253,6 +264,8 @@ export const Button: React.RefForwardingComponent<
     );
   }
 );
+
+Button.displayName = "Button";
 
 Button.propTypes = {
   /**

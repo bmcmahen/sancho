@@ -65,15 +65,11 @@ export const Hero = ({ children }) => (
         // background: theme.colors.palette.neutral.dark,
         padding: `4.5rem 0`,
         paddingBottom: "5.5rem",
+        marginBottom: theme.spaces.lg,
       }}
     >
       <Container>
-        <div
-          css={{
-            maxWidth: "650px",
-            margin: "0 auto",
-          }}
-        >
+        <Article>
           <Text
             css={{ color: "white", marginBottom: theme.spaces.md }}
             variant="display2"
@@ -85,15 +81,7 @@ export const Hero = ({ children }) => (
             eu laborum amet reprehenderit. Accessibility, mobile friendly,
             flexible
           </Text>
-          <div css={{ marginTop: theme.spaces.md }}>
-            <Button intent="success" size="md">
-              Get started
-            </Button>
-            <Button css={{ marginLeft: theme.spaces.sm }} size="md">
-              View on Github
-            </Button>
-          </div>
-        </div>
+        </Article>
       </Container>
       <Wave />
     </div>

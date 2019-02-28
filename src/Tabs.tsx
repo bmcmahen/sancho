@@ -215,9 +215,9 @@ export const Tab = React.forwardRef(
         {typeof children === "string" ? (
           <Text
             noWrap
-            variant="subtitle2"
             component="span"
             css={{
+              fontSize: theme.sizes[0],
               color: "inherit"
             }}
           >

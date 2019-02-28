@@ -3,6 +3,7 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import { animated, useSpring } from "react-spring";
 import ResizeObserver from "resize-observer-polyfill";
+import PropTypes from "prop-types";
 
 let count = 0;
 
@@ -35,7 +36,12 @@ interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export function Collapse({ children, id, show, ...other }: CollapseProps) {
+export const Collapse: React.FunctionComponent<CollapseProps> = ({
+  children,
+  id,
+  show,
+  ...other
+}) => {
   const { ref, bounds } = useMeasure();
 
   const { height, opacity } = useSpring({
@@ -58,7 +64,13 @@ export function Collapse({ children, id, show, ...other }: CollapseProps) {
       <div ref={ref}>{children}</div>
     </animated.div>
   );
-}
+};
+
+Collapse.propTypes = {
+  children: PropTypes.node,
+  id: PropTypes.string,
+  show: PropTypes.bool.isRequired
+};
 
 export function usePrevious<T>(value: T) {
   const ref = React.useRef<T | null>(null);

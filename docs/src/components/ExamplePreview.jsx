@@ -5,7 +5,13 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 import { MDXProvider } from "@mdx-js/tag"
 import * as components from "../../../src"
 import "./ExamplePreview.css"
-import { Text, Layer, theme, Link } from "../../../src"
+import {
+  Text,
+  Layer,
+  theme,
+  Link,
+  NegativeMarginsContainer,
+} from "../../../src"
 
 export function ComponentPreview({ className, ...props }) {
   const isJSX = props.children.props.props.className === "language-jsx"
@@ -18,9 +24,9 @@ export function ComponentPreview({ className, ...props }) {
           padding: theme.spaces.sm,
           background: theme.colors.background.tint1,
           borderRadius: theme.radii.md,
+          marginLeft: "-0.5rem",
+          marginRight: "-0.5rem",
           marginBottom: ` ${theme.spaces.md}`,
-          marginLeft: `-${theme.spaces.sm}`,
-          marginRight: `-${theme.spaces.sm}`,
         }}
       >
         <LiveProvider

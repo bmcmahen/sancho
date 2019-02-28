@@ -22,3 +22,19 @@ export function Container(props: ContainerProps) {
     />
   );
 }
+
+export function NegativeMarginsContainer(props: ContainerProps) {
+  return (
+    <div
+      css={{
+        marginLeft: `-${theme.spaces.md}`,
+        marginRight: `-${theme.spaces.md}`,
+        [theme.breakpoints.lg]: {
+          marginLeft: `-${theme.spaces.lg}`,
+          marginRight: `-${theme.spaces.lg}`
+        }
+      }}
+      {...props}
+    />
+  );
+}

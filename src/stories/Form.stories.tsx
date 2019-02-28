@@ -67,7 +67,7 @@ export const FormStories = storiesOf("Forms", module)
             placeholder="Some random placeholder"
           />
           <div css={{ textAlign: "right", marginTop: `${theme.spaces.md}` }}>
-            <Button variant="primary">Submit</Button>
+            <Button intent="primary">Submit</Button>
           </div>
         </form>
       </Layer>

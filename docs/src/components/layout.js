@@ -80,9 +80,9 @@ export default Layout
 export const Article = ({ children }) => (
   <div
     css={{
-      margin: "0 auto",
       maxWidth: "650px",
-      padding: `${theme.spaces.xl} ${theme.spaces.lg}`,
+      margin: "0 auto",
+      padding: `${theme.spaces.lg} ${theme.spaces.lg}`,
     }}
   >
     {children}

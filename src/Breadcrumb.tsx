@@ -3,12 +3,15 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
 import { Text } from "./Text";
+import PropTypes from "prop-types";
 
 interface BreadcrumbProps extends React.OlHTMLAttributes<HTMLOListElement> {
   children: React.ReactElement<BreadcrumbItemProps>[];
 }
 
-export function Breadcrumb({ children }: BreadcrumbProps) {
+export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
+  children
+}) => {
   return (
     <nav aria-label="breadcrumb">
       <ol
@@ -23,7 +26,7 @@ export function Breadcrumb({ children }: BreadcrumbProps) {
         }}
       >
         {React.Children.map(children, (child, i) => {
-          return React.cloneElement(child, {
+          return React.cloneElement(child as any, {
             "aria-current":
               i === React.Children.count(children) - 1 ? "page" : undefined
           });
@@ -31,11 +34,18 @@ export function Breadcrumb({ children }: BreadcrumbProps) {
       </ol>
     </nav>
   );
-}
+};
+
+Breadcrumb.propTypes = {
+  children: PropTypes.element as any
+};
 
 interface BreadcrumbItemProps extends React.LiHTMLAttributes<HTMLLIElement> {}
 
-export function BreadcrumbItem({ children, ...other }: BreadcrumbItemProps) {
+export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
+  children,
+  ...other
+}) => {
   const current = other["aria-current"];
   return (
     <li
@@ -51,9 +61,15 @@ export function BreadcrumbItem({ children, ...other }: BreadcrumbItemProps) {
       {!current && <BreadCrumbDivider />}
     </li>
   );
-}
+};
 
-const BreadCrumbDivider = ({ inverted = false }: { inverted?: Boolean }) => (
+BreadcrumbItem.propTypes = {
+  children: PropTypes.node
+};
+
+const BreadCrumbDivider: React.FunctionComponent<{ inverted?: boolean }> = ({
+  inverted = false
+}) => (
   <div
     aria-hidden
     css={{
@@ -77,3 +93,7 @@ const BreadCrumbDivider = ({ inverted = false }: { inverted?: Boolean }) => (
     </svg>
   </div>
 );
+
+BreadCrumbDivider.propTypes = {
+  inverted: PropTypes.bool
+};

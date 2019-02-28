@@ -38,7 +38,7 @@ function Demo(props: { mobileFullscreen?: boolean }) {
             }}
           >
             <Button variant="ghost">Cancel</Button>
-            <Button css={{ marginLeft: theme.spaces.sm }} variant="primary">
+            <Button css={{ marginLeft: theme.spaces.sm }} intent="primary">
               Save
             </Button>
           </div>

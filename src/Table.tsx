@@ -177,7 +177,11 @@ export function TableCell({
               ? theme.colors.border.muted
               : theme.colors.border.default,
           display: "table-cell",
-          padding: "10px 24px",
+          padding: `${theme.spaces.sm} ${theme.spaces.md}`,
+          [theme.breakpoints.md]: {
+            paddingLeft: theme.spaces.lg,
+            paddingRight: theme.spaces.lg
+          },
           ":last-child": {
             paddingRight: "24px"
           }
