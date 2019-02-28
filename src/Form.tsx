@@ -3,6 +3,7 @@ import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import theme from "./Theme";
+import VisuallyHidden from "@reach/visually-hidden";
 
 const inputSizes = {
   sm: css({
@@ -148,6 +149,8 @@ export function InputBase({
   );
 }
 
+export const Input = InputBase;
+
 export interface TextAreaProps
   extends React.HTMLAttributes<HTMLTextAreaElement> {
   size?: InputSize;
@@ -175,7 +178,7 @@ interface LabelProps extends React.HTMLAttributes<HTMLLabelElement> {
 }
 
 export function Label({ children, hide, ...other }: LabelProps) {
-  return (
+  const child = (
     <label
       css={{
         display: "inline-block",
@@ -183,12 +186,11 @@ export function Label({ children, hide, ...other }: LabelProps) {
       }}
       {...other}
     >
-      <Text
-        css={{ fontSize: theme.sizes[0] }}
-        variant={hide ? "hidden" : "body"}
-      >
+      <Text css={{ fontSize: theme.sizes[0] }} variant={"body"}>
         {children}
       </Text>
     </label>
   );
+
+  return hide ? <VisuallyHidden>{child}</VisuallyHidden> : child;
 }
