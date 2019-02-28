@@ -10,9 +10,9 @@ import {
   theme,
   IconButton,
   SkipNavLink,
+  VisuallyHidden,
   SkipNavContent,
 } from "../../../src"
-import Header from "./header"
 import "./layout.css"
 import { ComponentList } from "./ComponentList"
 import { SpyList } from "./SpyList"
@@ -32,6 +32,7 @@ const Layout = ({ children }) => (
     render={data => (
       <>
         <SkipNavLink />
+
         <Navbar
           css={{
             boxShadow: theme.shadows.sm,

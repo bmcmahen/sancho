@@ -33,7 +33,11 @@ function insetShadow(from: string, to: string) {
   return `inset 0 0 0 1px ${from}, inset 0 -1px 1px 0 ${to}`;
 }
 
-function focusShadow(first: string, second: string, third: string) {
+export function focusShadow(
+  first: string = scales.blue.B4A,
+  second: string = scales.neutral.N5A,
+  third: string = scales.neutral.N3A
+) {
   return `0 0 0 3px ${first}, inset 0 0 0 1px ${second}, inset 0 -1px 1px 0 ${third}`;
 }
 
