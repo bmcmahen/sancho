@@ -60,7 +60,7 @@ const fonts = {
 
 const shadows = {
   xs: `0 0 1px ${color(scales.neutral.N8)
-    .alpha(0.3)
+    .alpha(0.1)
     .hsl()
     .string()},
     0 0 1px 1px ${color(scales.neutral.N8)
@@ -68,22 +68,55 @@ const shadows = {
       .hsl()
       .string()}
   `,
-  sm: `0 1px 2px 0 ${color(scales.neutral.N8)
-    .alpha(0.3)
-    .hsl()
-    .string()}, 0 1px 3px 1px ${color(scales.neutral.N8)
+  sm: `0 1px 8px 0 ${color(scales.neutral.N8)
     .alpha(0.15)
     .hsl()
-    .string()}`,
+    .string()}, 
+    0 1px 3px 0 ${color(scales.neutral.N8)
+      .alpha(0.1)
+      .hsl()
+      .string()},
+    0 2px 3px -2px ${color(scales.neutral.N8)
+      .alpha(0.12)
+      .hsl()
+      .string()}`,
 
-  md: `0 .5rem 1rem ${color(scales.neutral.N10)
-    .alpha(0.25)
+  md: `0 1px 10px 0 ${color(scales.neutral.N8)
+    .alpha(0.15)
     .hsl()
-    .string()}`,
-  lg: `0 1rem 3rem ${color(scales.neutral.N10)
-    .alpha(0.25)
+    .string()}, 
+    0 6px 12px 0 ${color(scales.neutral.N8)
+      .alpha(0.1)
+      .hsl()
+      .string()},
+    0 6px 15px -2px ${color(scales.neutral.N8)
+      .alpha(0.12)
+      .hsl()
+      .string()}`,
+  lg: `0 1px 10px 0 ${color(scales.neutral.N8)
+    .alpha(0.15)
     .hsl()
-    .string()}`
+    .string()}, 
+    0 15px 22px 0 ${color(scales.neutral.N8)
+      .alpha(0.1)
+      .hsl()
+      .string()},
+    0 15px 25px -2px ${color(scales.neutral.N8)
+      .alpha(0.12)
+      .hsl()
+      .string()}`,
+  xl: `0 1px 10px 0 ${color(scales.neutral.N8)
+    .alpha(0.15)
+    .hsl()
+    .string()}, 
+    0 25px 35px 0 ${color(scales.neutral.N8)
+      .alpha(0.1)
+      .hsl()
+      .string()},
+    0 25px 40px -2px ${color(scales.neutral.N8)
+      .alpha(0.12)
+      .hsl()
+      .string()}`
 };
 
 export const theme = {

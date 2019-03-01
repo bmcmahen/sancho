@@ -1,26 +1,33 @@
 import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
+import "./layer.css"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Layer" />
 
 <Container>
 <Article sidebar={[
+  { id: 'Layer', name: 'Layer'},
   { id: 'Basic usage', name: 'Basic usage' }
 ]}>
 
-# Button
+# Layer
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A layer provides the building blocks of many Sancho components. It's useful for highlighting content and distinguishing it from other elements on the screen.
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+The `elevation` prop determines the size of the `box-shadow` and provides a sense of depth.
 
 ```jsx
-<div className="Basic-example" />
+<div className="Layer-example">
+  <Layer elevation="xs">xs</Layer>
+  <Layer elevation="sm">sm</Layer>
+  <Layer elevation="md">md</Layer>
+  <Layer elevation="lg">lg</Layer>
+  <Layer elevation="xl">xl</Layer>
+</div>
 ```
 
 <Props names={["Button"]} />
