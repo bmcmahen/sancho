@@ -2,6 +2,8 @@ import * as React from "react";
 import { IconName, IconSvgPaths16, IconSvgPaths20 } from "@blueprintjs/icons";
 import theme from "./Theme";
 
+export { IconNames, IconName } from "@blueprintjs/icons";
+
 export interface IconProps {
   color?: string;
   icon: IconName | JSX.Element | null;

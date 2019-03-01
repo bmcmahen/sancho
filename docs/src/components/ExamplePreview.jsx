@@ -48,8 +48,8 @@ export function ComponentPreview({ className, ...props }) {
           {isJSX && (
             <LivePreview
               css={{
-                padding: theme.spaces.sm,
-
+                padding: theme.spaces.md,
+                background: "white",
                 marginBottom: theme.spaces.sm,
                 borderRadius: theme.radii.sm,
               }}

@@ -21,7 +21,7 @@ export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
           display: "inline-flex",
           margin: 0,
           padding: `${theme.spaces.sm} ${theme.spaces.md}`,
-          background: "white",
+          background: theme.colors.background.tint1,
           borderRadius: theme.radii.sm
         }}
       >

@@ -31,7 +31,7 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   fixed?: string[];
 }
 
-export function Table({ children, minWidth, fixed }: TableProps) {
+export function Table({ children, minWidth, fixed, ...other }: TableProps) {
   return (
     <div
       css={{
@@ -45,6 +45,7 @@ export function Table({ children, minWidth, fixed }: TableProps) {
           tableStyle,
           { minWidth, tableLayout: fixed ? "fixed" : undefined }
         ]}
+        {...other}
       >
         {fixed && (
           <colgroup>

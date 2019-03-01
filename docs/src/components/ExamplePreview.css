@@ -58,7 +58,7 @@ pre[class*="language-"] {
   -moz-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
-  background: white;
+  /* background: white; */
   margin: 0;
   border-radius: 0.4rem;
   color: #5e6687;
@@ -88,7 +88,7 @@ code[class*="language-"] ::selection {
 
 /* Code blocks */
 pre[class*="language-"] {
-  padding: 1em;
+  padding: 0.75rem;
   margin: 0;
 
   overflow: auto;

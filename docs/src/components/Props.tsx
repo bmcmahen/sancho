@@ -49,12 +49,14 @@ export function Props({ names }: PropsProps) {
                 <Table minWidth="650px">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Name</TableCell>
+                      <TableCell css={{ paddingLeft: "0 !important" }}>
+                        Name
+                      </TableCell>
                       <TableCell>Type</TableCell>
                       <TableCell>Description</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody css={{ background: "white" }}>
+                  <TableBody>
                     {Object.keys(props).map(key => {
                       const row = props[key]
                       const type = row.type.name
@@ -62,7 +64,11 @@ export function Props({ names }: PropsProps) {
                       const { required, description } = row
                       return (
                         <TableRow key={key}>
-                          <TableCell component="th" scope="row">
+                          <TableCell
+                            css={{ paddingLeft: "0 !important" }}
+                            component="th"
+                            scope="row"
+                          >
                             {key}
                             {required ? "*" : ""}
                           </TableCell>

@@ -1,4 +1,4 @@
-import { Button, Divider, Container } from "../../../../src"
+import { IconButton, Divider, Container } from "../../../../src"
 import "./button.css"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
@@ -8,19 +8,37 @@ import SEO from "../../components/SEO"
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'IconButton', name: 'IconButton' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Ghost variant', name: 'Ghost variant' },
+  { id: 'CloseButton', name: 'Close Button'},
+  { id: 'Props', name: 'Props'}
 ]}>
 
-# Button
+# IconButton
 
 Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+The IconButton composes the `Button` component, so it accepts the same props as Button. A `label` prop is required for accessibility purposes.
 
 ```jsx
-<div className="Basic-example" />
+<IconButton icon="menu" label="Menu" />
+```
+
+#### Ghost variant
+
+```jsx
+<IconButton icon="menu" label="Menu" variant="ghost" />
+```
+
+#### CloseButton
+
+We expose a `CloseButton` component which composes the `IconButton` component. This is used throughout Sancho, including the `Modal` component.
+
+```jsx
+<CloseButton onClick={() => alert("Hello")} />
 ```
 
 <Props names={["Button"]} />
