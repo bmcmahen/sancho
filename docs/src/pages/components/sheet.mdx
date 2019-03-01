@@ -4,23 +4,61 @@ import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Sheet" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Sheet', name: 'Sheet' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Different positions', name: 'Different positions'}
 ]}>
 
-# Button
+# Sheet
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A sheet is useful for displaying app based navigation (typically on the left), supplemental information (on the right), or menu options (typically from the bottom on mobile devices). Sheets should not be tied to specific URLs.
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+By default, a sheet will open to the right with its width adjusting to the width of the content.
 
 ```jsx
-<div className="Basic-example" />
+<Component initialState={{ isOpen: false }}>
+  {({ state, setState }) => (
+    <React.Fragment>
+      <Button onClick={() => setState({ isOpen: true })}>Open sheet</Button>
+      <Sheet
+        onRequestClose={() => setState({ isOpen: false })}
+        isOpen={state.isOpen}
+      >
+        <div style={{ padding: "3rem" }}>Hello world</div>
+      </Sheet>
+    </React.Fragment>
+  )}
+</Component>
+```
+
+#### Different positions
+
+You can display sheets from the `left`, `top`, `bottom`, or `right`.
+
+```jsx
+<Component initialState={{ isOpen: false, position: "left" }}>
+  {({ state, setState }) => (
+    <React.Fragment>
+      <Button onClick={() => setState({ isOpen: true, position: "left" })}>
+        Left
+      </Button>
+
+      <Sheet
+        position={state.position}
+        onRequestClose={() => setState({ isOpen: false })}
+        isOpen={state.isOpen}
+      >
+        <div style={{ padding: "3rem" }}>Hello world</div>
+      </Sheet>
+    </React.Fragment>
+  )}
+</Component>
 ```
 
 <Props names={["Button"]} />

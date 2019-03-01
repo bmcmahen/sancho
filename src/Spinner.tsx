@@ -20,10 +20,10 @@ export function Spinner({  }: SpinnerProps) {
       role="status"
       css={css`
         display: inline-block;
-        width: 2rem;
-        height: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
         vertical-align: text-bottom;
-        border: 0.25em solid currentColor;
+        border: 0.2em solid currentColor;
         border-right-color: transparent;
         border-radius: 50%;
         animation: ${spin} 0.75s linear infinite;
