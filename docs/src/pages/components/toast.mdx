@@ -4,23 +4,117 @@ import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Toast" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Toast', name: 'Toast'},
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Altering positions', name: 'Altering positions' },
+  { id: 'Changing the altert intent', name: 'Changing the altert intent' },
+  { id: 'Using a custom element', name: 'Using a custom element' },
+  { id: 'Using a render callback', name: 'Using a render callback' },
+  { id: 'Options', name: 'Custom options'}
 ]}>
 
-# Button
+# Toast
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A toast is used to notify users about a particular event. We built this with an imperative API mostly because it's way easier to invoke in response to API errors or user events. As a result, we export the lowercase `toast` function which you can use to invoke notifications. We use the library [toasted-notes](https://github.com/bmcmahen/toasted-notes) under the hood.
 
-#### Intent
-
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+#### Basic usage
 
 ```jsx
-<div className="Basic-example" />
+<Button
+  onClick={() => {
+    toast({
+      title: "Hello world!",
+      duration: 3000,
+      subtitle:
+        "Quis anim consectetur consectetur ea. Deserunt nulla tempor est et laborum.",
+    })
+  }}
+>
+  Show toast
+</Button>
+```
+
+#### Altering positions
+
+```jsx
+<Button
+  onClick={() => {
+    ;[
+      "top-left",
+      "top",
+      "top-right",
+      "bottom-left",
+      "bottom",
+      "bottom-right",
+    ].map(position => {
+      toast({
+        title: "Hello world!",
+        duration: 3000,
+        position,
+      })
+    })
+  }}
+>
+  Show toast
+</Button>
+```
+
+#### Changing the alert intent
+
+```jsx
+<Button
+  onClick={() => {
+    ;["info", "success", "question", "danger", "warning"].map((intent, i) => {
+      setTimeout(() => {
+        toast({
+          title: intent,
+          duration: 3000,
+          intent,
+          position: "top-left",
+        })
+      }, i * 500)
+    })
+  }}
+>
+  Show toast
+</Button>
+```
+
+#### Using a custom element
+
+```jsx
+<Button
+  onClick={() => {
+    toast({
+      render: () => <div>Hello world!</div>,
+    })
+  }}
+>
+  Show toast
+</Button>
+```
+
+#### Using a render callback
+
+```jsx
+<Button
+  onClick={() => {
+    toast({
+      render: ({ onClose, id }) => (
+        <div id={id}>
+          <Text>Hello world</Text>
+          <Button onClick={onClose}>Close me</Button>
+        </div>
+      ),
+    })
+  }}
+>
+  Show toast
+</Button>
 ```
 
 <Props names={["Button"]} />

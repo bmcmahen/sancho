@@ -9,7 +9,13 @@ import SEO from "../../components/SEO"
 <Container>
 <Article sidebar={[
   { id: 'Tabs', name: 'Tabs' },
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Dark background', name: 'Dark background' },
+  { id: 'Sliding content', name: 'Sliding content' },
+  { id: 'With anchors', name: 'Using anchors' },
+  { id: 'Evenly spaced', name: 'Evenly spaced' },
+  { id: 'With icons', name: 'Using icons' },
+  { id: 'Props', name: 'Props'}
 ]}>
 
 # Tabs
@@ -18,7 +24,7 @@ Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmo
 
 #### Basic usage
 
-For accessibility purposes you should provide a unique `id` to each tab. That id should correspond to the id of the appropriate tab container.
+For accessibility purposes you should provide a unique `id` to each tab. That id should correspond to the id of the appropriate tab container. If the tabs extend beyond the viewport they will scroll horizontally.
 
 ```jsx
 <div className="Tabs-example">
@@ -55,6 +61,8 @@ For accessibility purposes you should provide a unique `id` to each tab. That id
 ```
 
 #### Sliding content
+
+Sliding content is a nice option when working with smaller panels or mobile applications.
 
 ```jsx
 <Layer className="Tabs-sliding">
@@ -96,7 +104,36 @@ For accessibility purposes you should provide a unique `id` to each tab. That id
 </Layer>
 ```
 
+#### With anchors
+
+```jsx
+<div className="Tabs-example dark">
+  <Component initialState={{ value: 0 }}>
+    {({ state, setState }) => (
+      <Tabs
+        dark
+        variant="evenly-spaced"
+        value={state.value}
+        onChange={i => setState({ value: i })}
+      >
+        <Tab component="a" href="#yup">
+          I will
+        </Tab>
+        <Tab component="a" href="#another">
+          Take you places
+        </Tab>
+        <Tab component="a" href="#another">
+          If you touch me
+        </Tab>
+      </Tabs>
+    )}
+  </Component>
+</div>
+```
+
 #### Evenly spaced
+
+The `evenly-spaced` variant is sometimes a nice option and works particularly well when utilizing icons. The tabs will scroll horizontally if overflowing.
 
 ```jsx
 <div className="Tabs-example dark">
@@ -120,6 +157,8 @@ For accessibility purposes you should provide a unique `id` to each tab. That id
 ```
 
 #### With icons
+
+You can use the `TabIcon` component to create mobile style tab bars.
 
 ```jsx
 <div className="Tabs-example icons">

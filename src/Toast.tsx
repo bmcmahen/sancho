@@ -14,7 +14,7 @@ interface Toast {
   render?: () => React.ReactNode;
 }
 
-export default ({
+export const toast = ({
   position,
   duration,
   render,
@@ -46,3 +46,5 @@ export default ({
     options
   );
 };
+
+export default toast;
