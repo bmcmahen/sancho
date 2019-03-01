@@ -1,26 +1,156 @@
-import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
+import { Tabs, Tab, Button, Divider, Container } from "../../../../src"
+import "./tabs.css"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Tabs" />
 
 <Container>
 <Article sidebar={[
+  { id: 'Tabs', name: 'Tabs' },
   { id: 'Basic usage', name: 'Basic usage' }
 ]}>
 
-# Button
+# Tabs
 
 Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+For accessibility purposes you should provide a unique `id` to each tab. That id should correspond to the id of the appropriate tab container.
 
 ```jsx
-<div className="Basic-example" />
+<div className="Tabs-example">
+  <Component initialState={{ value: 0 }}>
+    {({ state, setState }) => (
+      <Tabs value={state.value} onChange={i => setState({ value: i })}>
+        <Tab id="you">For you</Tab>
+        <Tab id="sports">Sports</Tab>
+        <Tab id="entertainment">Entertainment</Tab>
+        <Tab id="news">News</Tab>
+        <Tab id="fun">Fun</Tab>
+      </Tabs>
+    )}
+  </Component>
+</div>
+```
+
+#### Dark background
+
+```jsx
+<div className="Tabs-example dark">
+  <Component initialState={{ value: 0 }}>
+    {({ state, setState }) => (
+      <Tabs dark value={state.value} onChange={i => setState({ value: i })}>
+        <Tab id="you">For you</Tab>
+        <Tab id="sports">Sports</Tab>
+        <Tab id="entertainment">Entertainment</Tab>
+        <Tab id="news">News</Tab>
+        <Tab id="fun">Fun</Tab>
+      </Tabs>
+    )}
+  </Component>
+</div>
+```
+
+#### Sliding content
+
+```jsx
+<Layer className="Tabs-sliding">
+  <Toolbar compressed className="Tabs-toolbar">
+    <Text variant="h5">Twitter</Text>
+  </Toolbar>
+  <Component initialState={{ value: 0 }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <div className="Tabs-example dark">
+          <Tabs dark value={state.value} onChange={i => setState({ value: i })}>
+            <Tab id="you">For you</Tab>
+            <Tab id="sports">Sports</Tab>
+            <Tab id="entertainment">Entertainment</Tab>
+            <Tab id="news">News</Tab>
+            <Tab id="fun">Fun</Tab>
+          </Tabs>
+        </div>
+        <TabContent value={state.value} onChange={i => setState({ value: i })}>
+          <TabPanel id="you" className="Tab-panel">
+            <Text>What's up, you!</Text>
+          </TabPanel>
+          <TabPanel id="sports" className="Tab-panel">
+            <Text>Sport is fun</Text>
+          </TabPanel>
+          <TabPanel id="entertainment" className="Tab-panel">
+            <Text>We don't need no education</Text>
+          </TabPanel>
+          <TabPanel id="news" className="Tab-panel">
+            <Text>No news is good news</Text>
+          </TabPanel>
+          <TabPanel id="fun" className="Tab-panel">
+            <Text>Girls just wanna have it</Text>
+          </TabPanel>
+        </TabContent>
+      </React.Fragment>
+    )}
+  </Component>
+</Layer>
+```
+
+#### Evenly spaced
+
+```jsx
+<div className="Tabs-example dark">
+  <Component initialState={{ value: 0 }}>
+    {({ state, setState }) => (
+      <Tabs
+        dark
+        variant="evenly-spaced"
+        value={state.value}
+        onChange={i => setState({ value: i })}
+      >
+        <Tab>For you</Tab>
+        <Tab>Sports</Tab>
+        <Tab>Entertainment</Tab>
+        <Tab>News</Tab>
+        <Tab>Fun</Tab>
+      </Tabs>
+    )}
+  </Component>
+</div>
+```
+
+#### With icons
+
+```jsx
+<div className="Tabs-example icons">
+  <div />
+  <Component initialState={{ value: 0 }}>
+    {({ state, setState }) => (
+      <Tabs
+        variant="evenly-spaced"
+        value={state.value}
+        slider={false}
+        onChange={i => setState({ value: i })}
+      >
+        <Tab>
+          <TabIcon icon="annotation" label="Annotation" />
+        </Tab>
+        <Tab>
+          <TabIcon icon="chat" label="Chat" />
+        </Tab>
+        <Tab>
+          <TabIcon icon="box" label="Box" />
+        </Tab>
+        <Tab>
+          <TabIcon icon="camera" label="Camera" />
+        </Tab>
+        <Tab>
+          <TabIcon icon="chart" label="Chart" />
+        </Tab>
+      </Tabs>
+    )}
+  </Component>
+</div>
 ```
 
 <Props names={["Button"]} />

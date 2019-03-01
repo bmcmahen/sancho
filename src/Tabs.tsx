@@ -6,6 +6,9 @@ import theme from "./Theme";
 import { buttonReset } from "./Button";
 import useWindowSize from "@rehooks/window-size";
 import { useMeasure } from "./Collapse";
+import { Icon } from "./Icons";
+import VisuallyHidden from "@reach/visually-hidden";
+import { IconName } from "@blueprintjs/icons";
 
 interface SliderPositions {
   right: number | null;
@@ -20,6 +23,7 @@ interface TabsProps {
   };
   value: number;
   dark?: boolean;
+  slider?: boolean;
   variant?: "default" | "evenly-spaced";
   onChange: (value: number) => void;
   children: React.ReactElement<TabProps>[];
@@ -30,6 +34,7 @@ export function Tabs({
   variant = "default",
   dark = false,
   classes = {},
+  slider: enableSlider = true,
   value,
   onChange,
   ...other
@@ -92,7 +97,6 @@ export function Tabs({
           css={[
             {
               display: variant === "evenly-spaced" ? "flex" : "inline-block",
-              overflowX: "hidden",
               position: "relative",
               verticalAlign: "bottom",
               "& button": {
@@ -109,27 +113,20 @@ export function Tabs({
                 refs.current!.set(i, el);
               },
               dark,
+              id: child.props.id,
               onParentSelect: () => {
                 onChange(i);
               }
             });
           })}
-          {slider.left !== null && slider.right !== null && (
+          {enableSlider && slider.left !== null && slider.right !== null && (
             <div
               style={{ left: slider.left + "px", right: slider.right + "px" }}
               css={[
                 {
                   height: "3px",
                   bottom: 0,
-                  // marginRight: `calc(${theme.spaces.sm} - 4px)`,
-                  // marginLeft: `calc(${theme.spaces.sm} - 4px)`,
-                  // [theme.breakpoints.lg]: {
-                  //   marginRight: `calc(${theme.spaces.md} - 4px)`,
-                  //   marginLeft: `calc(${theme.spaces.md} - 4px)`
-                  // },
                   position: "absolute",
-                  // borderTopRightRadius: theme.radii.sm,
-                  // borderTopLeftRadius: theme.radii.sm,
                   background: dark ? "white" : theme.colors.text.selected,
                   transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
                 },
@@ -195,6 +192,9 @@ export const Tab = React.forwardRef(
             cursor: "pointer",
             transition: `background-color .35s cubic-bezier(0.35,0,0.25,1)`,
             color: getTextColor(),
+            "& svg": {
+              fill: getTextColor() + " !important"
+            },
             ":focus": {
               color: dark ? "white" : theme.colors.text.selected
             }
@@ -218,7 +218,9 @@ export const Tab = React.forwardRef(
             component="span"
             css={{
               fontSize: theme.sizes[0],
-              color: "inherit"
+              color: "inherit",
+              fontWeight: 500,
+              transition: "color 0.25s ease"
             }}
           >
             {children}
@@ -243,3 +245,18 @@ interface TabContentProps extends React.HTMLAttributes<HTMLDivElement> {
 export const TabPanel = ({ id, ...other }: TabContentProps) => (
   <div id={id} role="tabpanel" aria-labelledby={id + "-tab"} {...other} />
 );
+
+interface TabIconProps {
+  icon: IconName;
+  label: string;
+  size?: number;
+}
+
+export const TabIcon = ({ icon, label, size = 24 }: TabIconProps) => {
+  return (
+    <React.Fragment>
+      <Icon icon={icon} size={size} />
+      <VisuallyHidden>{label}</VisuallyHidden>
+    </React.Fragment>
+  );
+};

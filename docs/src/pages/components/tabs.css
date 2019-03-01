@@ -1,0 +1,35 @@
+.Tabs-example.dark {
+  background-color: #1070ca;
+  border-radius: 2px;
+}
+
+.Tabs-example {
+  background-color: #fafafa;
+}
+
+.Tab-panel {
+  padding: 32px;
+}
+
+.Tabs-sliding .Tabs-toolbar {
+  background-color: #1070ca;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  padding-top: 1rem;
+}
+
+.Tabs-sliding .Tabs-toolbar h5 {
+  color: white;
+  margin: 0;
+}
+
+.Tabs-example.icons > :first-child {
+  height: 200px;
+  border-bottom: 1px solid #eee;
+  background: white;
+}
+
+.Tabs-example.icons {
+  border: 1px solid #eee;
+  max-width: 500px;
+}

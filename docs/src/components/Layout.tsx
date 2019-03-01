@@ -105,6 +105,7 @@ export const Article = ({ children, sidebar }) => (
     <div
       css={{
         minWidth: 0,
+        padding: `${theme.spaces.md} 0`,
         [theme.breakpoints.md]: {
           padding: `${theme.spaces.md} ${theme.spaces.md}`,
         },

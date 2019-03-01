@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import { Tabs, Tab, TabPanel } from "../Tabs";
+import { Tabs, Tab, TabPanel, TabIcon } from "../Tabs";
 import theme from "../Theme";
 import { Text } from "../Text";
 import { Container } from "../Container";
@@ -9,6 +9,7 @@ import { Badge } from "../Badge";
 import { storiesOf } from "@storybook/react";
 import { Layer } from "../Layer";
 import { TabContent } from "../TabContent";
+import { Icon } from "../Icons";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
@@ -81,6 +82,79 @@ export const TabsExamples = storiesOf("Tabs", module)
   })
   .add("Evenly spaced", () => {
     return <EvenlySpaced />;
+  })
+  .add("Icons", () => {
+    return (
+      <div
+        css={{
+          display: "flex",
+          justifyContent: "center",
+          background: theme.colors.background.tint2,
+          padding: "0.5rem"
+        }}
+      >
+        <Layer
+          elevation="sm"
+          css={{
+            maxWidth: "400px",
+            maxHeight: "500px",
+            width: "100%",
+            display: "block",
+            boxSizing: "border-box",
+            overflow: "hidden"
+          }}
+        >
+          <div
+            css={{
+              background: theme.colors.background.tint1,
+              boxSizing: "border-box",
+              width: "100%",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              height: "200px"
+            }}
+          >
+            <div
+              css={{
+                flex: 1
+              }}
+            >
+              hello
+            </div>
+            <div
+              css={{
+                background: theme.colors.palette.blue.base
+              }}
+            >
+              <Tabs
+                variant="evenly-spaced"
+                dark
+                slider={false}
+                value={0}
+                onChange={i => console.log(i)}
+              >
+                <Tab id="hello">
+                  <TabIcon icon="chat" label="Chat" />
+                </Tab>
+                <Tab id="cool">
+                  <TabIcon icon="annotation" label="Annotation" />
+                </Tab>
+                <Tab id="tables">
+                  <TabIcon icon="application" label="Application" />
+                </Tab>
+                <Tab id="players">
+                  <TabIcon icon="build" label="Build" />
+                </Tab>
+                <Tab id="dsf">
+                  <TabIcon icon="chart" label="Chart" />
+                </Tab>
+              </Tabs>
+            </div>
+          </div>
+        </Layer>
+      </div>
+    );
   });
 
 function EvenlySpaced() {
