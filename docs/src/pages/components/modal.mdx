@@ -1,26 +1,84 @@
 import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
+import "./modal.css"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Modal" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Modal', name: 'Modal' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Fullscreen mobile example', name: 'Fullscreen mobile'},
+  { id: 'Without a title', name: 'Without a title' },
+  { id: 'Props', name: 'Props'}
 ]}>
 
-# Button
+# Modal
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
-
-#### Intent
-
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+#### Basic usage
 
 ```jsx
-<div className="Basic-example" />
+<Component initialState={{ isOpen: false }}>
+  {({ state, setState }) => (
+    <React.Fragment>
+      <Button onClick={() => setState({ isOpen: true })}>Show modal</Button>
+      <Modal
+        isOpen={state.isOpen}
+        onRequestClose={() => setState({ isOpen: false })}
+        title="Hello world!"
+      >
+        <div className="Modal-example">
+          <Text>Hello world</Text>
+        </div>
+      </Modal>
+    </React.Fragment>
+  )}
+</Component>
+```
+
+#### Fullscreen mobile example
+
+```jsx
+<Component initialState={{ isOpen: false }}>
+  {({ state, setState }) => (
+    <React.Fragment>
+      <Button onClick={() => setState({ isOpen: true })}>Show modal</Button>
+      <Modal
+        isOpen={state.isOpen}
+        mobileFullscreen
+        onRequestClose={() => setState({ isOpen: false })}
+        title="Hello world!"
+      >
+        <div className="Modal-example">
+          <Text>Hello world</Text>
+        </div>
+      </Modal>
+    </React.Fragment>
+  )}
+</Component>
+```
+
+#### Without a title
+
+```jsx
+<Component initialState={{ isOpen: false }}>
+  {({ state, setState }) => (
+    <React.Fragment>
+      <Button onClick={() => setState({ isOpen: true })}>Show modal</Button>
+      <Modal
+        isOpen={state.isOpen}
+        onRequestClose={() => setState({ isOpen: false })}
+      >
+        <div className="Modal-example">
+          <Text>Hello world</Text>
+          <Button onClick={() => setState({ isOpen: false })}>Cancel</Button>
+        </div>
+      </Modal>
+    </React.Fragment>
+  )}
+</Component>
 ```
 
 <Props names={["Button"]} />

@@ -4,23 +4,73 @@ import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Popover" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Popover', name: 'Popover'},
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Dropdown menu', name: 'Dropdown menu' },
+  { id: 'ResponsivePopover', name: 'Responsive popover'},
+  { id: 'Props', name: 'Props'}
 ]}>
 
-# Button
+# Popover
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
-
-#### Intent
-
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+#### Basic usage
 
 ```jsx
-<div className="Basic-example" />
+<Popover
+  content={
+    <div style={{ padding: "2rem" }}>
+      <Button>I should focus</Button>
+    </div>
+  }
+>
+  <Button>Hello world!</Button>
+</Popover>
+```
+
+#### Dropdown menu
+
+```jsx
+<Popover
+  content={
+    <MenuList>
+      <MenuItem onSelect={() => alert("Hello 1")}>
+        I will trigger an alert
+      </MenuItem>
+      <MenuItem component="a" href="/bacon">
+        I'm a link
+      </MenuItem>
+      <MenuDivider />
+      <MenuItem>Item three</MenuItem>
+    </MenuList>
+  }
+>
+  <Button>I should trigger popover</Button>
+</Popover>
+```
+
+#### ResponsivePopover
+
+Because dropdown menus often aren't great on mobile devices, this component will use a bottom `Sheet` on smaller screens while continuing to use a `Popover` on larger screens.
+
+```jsx
+<ResponsivePopover
+  content={
+    <MenuList>
+      <MenuItem onSelect={() => alert("Hello 1")}>Drink coffee</MenuItem>
+      <MenuItem>Eat pancakes</MenuItem>
+      <MenuDivider />
+      <MenuItem>Make pizza</MenuItem>
+      <MenuItem>Dance my heart out</MenuItem>
+      <MenuItem>Anything you ask</MenuItem>
+    </MenuList>
+  }
+>
+  <IconButton variant="ghost" icon="more" label="show more" />
+</ResponsivePopover>
 ```
 
 <Props names={["Button"]} />
