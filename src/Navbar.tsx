@@ -2,10 +2,11 @@
 import { jsx, css, SerializedStyles } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
+import PropTypes from "prop-types";
 
 type Positions = "fixed" | "static";
 
-interface NavbarProps {
+export interface NavbarProps {
   children: React.ReactNode;
   position?: Positions;
 }
@@ -23,11 +24,11 @@ const styles: { [key in Positions]: SerializedStyles } = {
   })
 };
 
-export function Navbar({
+export const Navbar: React.FunctionComponent<NavbarProps> = ({
   position = "fixed",
   children,
   ...other
-}: NavbarProps) {
+}) => {
   return (
     <nav
       css={[
@@ -43,4 +44,9 @@ export function Navbar({
       {children}
     </nav>
   );
-}
+};
+
+Navbar.propTypes = {
+  /** The position of the navbar. Eg., 'fixed', 'absolute' */
+  position: PropTypes.oneOf(["fixed", "static"] as Positions[])
+};

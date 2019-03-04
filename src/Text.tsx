@@ -2,6 +2,7 @@
 import { jsx, css, SerializedStyles } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
+import PropTypes from "prop-types";
 
 export const variants = {
   uppercase: css({
@@ -134,21 +135,21 @@ const styles: { [key: string]: SerializedStyles } = {
   })
 };
 
-interface TextProps extends React.HTMLAttributes<HTMLElement> {
+export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariants;
   noWrap?: boolean;
   muted?: boolean;
   component?: React.ReactType<TextProps>;
 }
 
-export function Text({
+export const Text: React.FunctionComponent<TextProps> = ({
   variant = "body",
   noWrap,
   muted,
   component,
   css,
   ...other
-}: TextProps) {
+}) => {
   const Component = component || element[variant];
   return (
     <Component
@@ -161,4 +162,15 @@ export function Text({
       {...other}
     />
   );
-}
+};
+
+Text.propTypes = {
+  /** The text style */
+  variant: PropTypes.oneOf(Object.keys(variants)),
+
+  /** Use text-overflow: ellipsis styling */
+  noWrap: PropTypes.bool,
+
+  /** Use muted colors */
+  muted: PropTypes.bool
+};

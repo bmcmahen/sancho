@@ -2,14 +2,15 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 
-interface PortalProps {
+export interface PortalProps {
   children: React.ReactNode;
 }
 
 let container: Element | null = null;
 
-export const Portal = ({ children }: PortalProps) => {
+export const Portal: React.FunctionComponent<PortalProps> = ({ children }) => {
   const [target] = React.useState<HTMLDivElement>(() => {
     if (!container) {
       container = document.createElement("div");
@@ -30,4 +31,8 @@ export const Portal = ({ children }: PortalProps) => {
   }, []);
 
   return target ? ReactDOM.createPortal(children, target) : null;
+};
+
+Portal.propTypes = {
+  children: PropTypes.node
 };

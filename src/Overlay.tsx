@@ -6,6 +6,7 @@ import theme from "./Theme";
 import { Portal } from "./Portal";
 import { useHideBody } from "./Hooks/hide-body";
 import { mergeRefs } from "./Hooks/merge-refs";
+import PropTypes from "prop-types";
 
 interface OverlayProps {
   isOpen: boolean;
@@ -13,7 +14,10 @@ interface OverlayProps {
   onRequestClose: () => void;
 }
 
-export const Overlay = React.forwardRef(
+export const Overlay: React.RefForwardingComponent<
+  React.Ref<HTMLDivElement>,
+  OverlayProps
+> = React.forwardRef(
   (
     { isOpen, onRequestClose, children }: OverlayProps,
     ref: React.Ref<HTMLDivElement>
@@ -74,3 +78,13 @@ export const Overlay = React.forwardRef(
     );
   }
 );
+
+Overlay.propTypes = {
+  /** Whether the overlay is open */
+  isOpen: PropTypes.bool.isRequired,
+
+  /** Callback to handle closing the overlay */
+  onRequestClose: PropTypes.func.isRequired,
+
+  children: PropTypes.node
+};

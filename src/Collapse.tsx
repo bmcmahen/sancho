@@ -67,8 +67,17 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
 };
 
 Collapse.propTypes = {
+  /**
+   * Any element that you want to reveal
+   */
   children: PropTypes.node,
-  id: PropTypes.string,
+  /**
+   * A unique id required for accessibility purposes
+   */
+  id: PropTypes.string.isRequired,
+  /**
+   * Whether the children should be visible
+   */
   show: PropTypes.bool.isRequired
 };
 

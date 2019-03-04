@@ -1,20 +1,14 @@
 import * as React from "react";
 import { IconName, IconSvgPaths16, IconSvgPaths20 } from "@blueprintjs/icons";
 import theme from "./Theme";
+import PropTypes from "prop-types";
 
 export { IconNames, IconName } from "@blueprintjs/icons";
 
 export interface IconProps {
   color?: string;
   icon: IconName | JSX.Element | null;
-
-  /** Use the icon prop instead */
   children?: never;
-
-  /**
-   * Size of the icon in pixels.
-   * @default Icon.SIZE_STANDARD = 16
-   */
   size: number;
   title?: string;
   style?: React.CSSProperties;
@@ -24,6 +18,17 @@ export class Icon extends React.Component<IconProps> {
   static defaultProps = {
     size: 16,
     color: theme.colors.palette.neutral.dark
+  };
+
+  static propTypes = {
+    /** The icon to render */
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+
+    /** The size of the icon */
+    size: PropTypes.number,
+
+    /** An optional title for the icon */
+    title: PropTypes.string
   };
 
   static readonly SIZE_STANDARD = 16;

@@ -3,6 +3,7 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
 import { Spinner } from "./Spinner";
+import PropTypes from "prop-types";
 
 export type LayerElevations = keyof typeof theme.shadows;
 
@@ -11,7 +12,10 @@ interface LayerProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
 }
 
-export const Layer = React.forwardRef(
+export const Layer: React.RefForwardingComponent<
+  React.Ref<HTMLDivElement>,
+  LayerProps
+> = React.forwardRef(
   (
     { elevation = "md", children, ...other }: LayerProps,
     ref: React.Ref<HTMLDivElement>
@@ -33,11 +37,21 @@ export const Layer = React.forwardRef(
   }
 );
 
+Layer.propTypes = {
+  /** The size of the shadow to use */
+  elevation: PropTypes.oneOf(Object.keys(theme.shadows) as LayerElevations[]),
+
+  children: PropTypes.node
+};
+
 interface LayerLoadingProps {
   loading: boolean;
 }
 
-export const LayerLoading = ({ loading, ...other }: LayerLoadingProps) => {
+export const LayerLoading: React.FunctionComponent<LayerLoadingProps> = ({
+  loading,
+  ...other
+}) => {
   return (
     <div
       css={{
@@ -60,4 +74,9 @@ export const LayerLoading = ({ loading, ...other }: LayerLoadingProps) => {
       <Spinner />
     </div>
   );
+};
+
+LayerLoading.propTypes = {
+  /** Whether the layer is currently loading */
+  loading: PropTypes.bool
 };

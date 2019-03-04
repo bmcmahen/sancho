@@ -2,6 +2,7 @@
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
+import PropTypes from "prop-types";
 
 const styles = {
   button: css({
@@ -31,12 +32,12 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   component?: React.ReactType<LinkProps>;
 }
 
-export function Link({
+export const Link: React.FunctionComponent<LinkProps> = ({
   children,
   component: Component = "a",
   button,
   ...other
-}: LinkProps) {
+}) => {
   return (
     <Component
       css={[
@@ -51,4 +52,15 @@ export function Link({
       {children}
     </Component>
   );
-}
+};
+
+Link.propTypes = {
+  /** Display a link as a button */
+  button: PropTypes.bool,
+
+  /** Use a custom component. E.g., ReactRouter Link */
+  component: PropTypes.string,
+
+  /** The content of the link */
+  children: PropTypes.node
+};

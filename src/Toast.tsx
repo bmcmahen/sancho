@@ -14,6 +14,11 @@ interface Toast {
   render?: () => React.ReactNode;
 }
 
+/**
+ * toast is exported as a singleton which can be called with
+ * various options. By default, it renders an Alert component.
+ */
+
 export const toast = ({
   position,
   duration,

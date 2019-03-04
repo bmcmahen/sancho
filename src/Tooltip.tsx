@@ -6,6 +6,7 @@ import { ReferenceChildrenProps } from "react-popper";
 import { Text } from "./Text";
 import theme from "./Theme";
 import { animated } from "react-spring";
+import PropTypes from "prop-types";
 
 interface TooltipProps {
   content: React.ReactNode;
@@ -15,7 +16,11 @@ interface TooltipProps {
 
 let idcount = 0;
 
-export function Tooltip({ placement, children, content }: TooltipProps) {
+export const Tooltip: React.FunctionComponent<TooltipProps> = ({
+  placement,
+  children,
+  content
+}) => {
   const [show, setShow] = React.useState(false);
   const [id] = React.useState(() => idcount.toString());
 
@@ -90,7 +95,33 @@ export function Tooltip({ placement, children, content }: TooltipProps) {
       )}
     </Positioner>
   );
-}
+};
+
+Tooltip.propTypes = {
+  /** The content of the tooltip */
+  content: PropTypes.node.isRequired,
+
+  /** the target element for the tooltip */
+  children: PropTypes.node.isRequired,
+
+  placement: PropTypes.oneOf([
+    "auto-start",
+    "auto",
+    "auto-end",
+    "top-start",
+    "top",
+    "top-end",
+    "right-start",
+    "right",
+    "right-end",
+    "bottom-end",
+    "bottom",
+    "bottom-start",
+    "left-end",
+    "left",
+    "left-start"
+  ])
+};
 
 export const arrowStyles = (color: string) =>
   css(`

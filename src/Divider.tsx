@@ -2,13 +2,17 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
+import PropTypes from "prop-types";
 
 export interface DividerProps {
   muted?: boolean;
   children?: never;
 }
 
-export function Divider({ muted, ...other }: DividerProps) {
+export const Divider: React.FunctionComponent<DividerProps> = ({
+  muted,
+  ...other
+}) => {
   return (
     <div
       css={{
@@ -23,4 +27,9 @@ export function Divider({ muted, ...other }: DividerProps) {
       {...other}
     />
   );
-}
+};
+
+Divider.propTypes = {
+  /** Use a muted border */
+  muted: PropTypes.bool
+};

@@ -7,8 +7,9 @@ import theme from "./Theme";
 import { useTransition, animated } from "react-spring";
 import { Overlay } from "./Overlay";
 import { useFocusElement } from "./Hooks/focus";
+import PropTypes from "prop-types";
 
-interface Props {
+export interface ModalProps {
   isOpen: boolean;
   title?: string;
   mobileFullscreen?: boolean;
@@ -16,7 +17,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const Modal = (props: Props) => {
+export const Modal: React.FunctionComponent<ModalProps> = props => {
   const transitions = useTransition(props.isOpen, null, {
     from: { opacity: 0, transform: "scale(0.9)" },
     enter: { opacity: 1, transform: "scale(1)" },
@@ -115,16 +116,33 @@ export const Modal = (props: Props) => {
   );
 };
 
+Modal.propTypes = {
+  /** Whether the modal is showing */
+  isOpen: PropTypes.bool.isRequired,
+
+  /** A callback for closing the modal. */
+  onRequestClose: PropTypes.func.isRequired,
+
+  /** An optional title. If set, a header will be added to your dialog. */
+  title: PropTypes.string,
+
+  /** Fill the entire screen on mobile devices */
+  mobileFullscreen: PropTypes.bool,
+
+  /** The contents of the dialog */
+  children: PropTypes.node
+};
+
 interface ModalHeaderProps {
   title: string;
   onRequestClose?: () => void;
 }
 
-export const ModalHeader = ({
+export const ModalHeader: React.FunctionComponent<ModalHeaderProps> = ({
   title,
   onRequestClose,
   ...other
-}: ModalHeaderProps) => (
+}) => (
   <div {...other}>
     <Text noWrap variant="h4">
       {title}
@@ -132,5 +150,13 @@ export const ModalHeader = ({
     {onRequestClose && <CloseButton onClick={onRequestClose} />}
   </div>
 );
+
+ModalHeader.propTypes = {
+  /** The title of the header */
+  title: PropTypes.string.isRequired,
+
+  /** An optional callback for closing the dialog. If set, a close button will be added to the header */
+  onRequestClose: PropTypes.func
+};
 
 export default Modal;

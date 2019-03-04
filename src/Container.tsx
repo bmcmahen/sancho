@@ -2,10 +2,13 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
+import PropTypes from "prop-types";
 
 interface ContainerProps extends React.HTMLAttributes<HTMLElement> {}
 
-export function Container(props: ContainerProps) {
+export const Container: React.FunctionComponent<ContainerProps> = (
+  props: ContainerProps
+) => {
   return (
     <div
       css={{
@@ -21,7 +24,11 @@ export function Container(props: ContainerProps) {
       {...props}
     />
   );
-}
+};
+
+Container.propTypes = {
+  children: PropTypes.node
+};
 
 export function NegativeMarginsContainer(props: ContainerProps) {
   return (

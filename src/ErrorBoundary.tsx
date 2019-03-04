@@ -3,6 +3,7 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
 import { Alert } from "./Alert";
+import PropTypes from "prop-types";
 
 interface ErrorBoundaryProps {
   title?: string;
@@ -19,6 +20,17 @@ export class ErrorBoundary extends React.Component<
 > {
   state = {
     error: null
+  };
+
+  static propTypes = {
+    // The title of the error message.
+    title: PropTypes.string,
+
+    // The subtitle of the error message.
+    subtitle: PropTypes.string,
+
+    // The regular content you want to render. Errors in this tree will be captured.
+    children: PropTypes.node
   };
 
   static defaultProps = {

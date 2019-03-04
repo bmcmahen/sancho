@@ -9,6 +9,11 @@ import { useMeasure } from "./Collapse";
 import { Icon } from "./Icons";
 import VisuallyHidden from "@reach/visually-hidden";
 import { IconName } from "@blueprintjs/icons";
+import PropTypes from "prop-types";
+
+/**
+ * Tab container
+ */
 
 interface SliderPositions {
   right: number | null;
@@ -29,7 +34,7 @@ interface TabsProps {
   children: React.ReactElement<TabProps>[];
 }
 
-export function Tabs({
+export const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
   variant = "default",
   dark = false,
@@ -38,7 +43,7 @@ export function Tabs({
   value,
   onChange,
   ...other
-}: TabsProps) {
+}) => {
   const tablist = React.useRef<HTMLDivElement>(null);
   const refs = React.useRef<Map<number, HTMLButtonElement | null>>(new Map());
   const [slider, setSlider] = React.useState<SliderPositions>({
@@ -138,7 +143,37 @@ export function Tabs({
       </div>
     </div>
   );
-}
+};
+
+Tabs.propTypes = {
+  /** The currently selected index */
+  value: PropTypes.number.isRequired,
+
+  /** Change callback to control which tab is selected */
+  onChange: PropTypes.func,
+
+  /** Whether the tab is on a dark background */
+  dark: PropTypes.bool,
+
+  /** Toggle slider visibiliby */
+  slider: PropTypes.bool,
+
+  /** Whether tabs should be left-aligned or justified */
+  variant: PropTypes.oneOf(["default", "evenly-spaced"]),
+
+  classes: PropTypes.shape({
+    slider: PropTypes.any,
+    root: PropTypes.any,
+    tablist: PropTypes.any
+  }),
+
+  /** Tab elements */
+  children: PropTypes.node
+};
+
+/**
+ * Individual tabs
+ */
 
 interface LocalTabProps {
   ref: React.Ref<HTMLButtonElement>;
@@ -157,7 +192,10 @@ interface TabProps
   [key: string]: any;
 }
 
-export const Tab = React.forwardRef(
+export const Tab: React.RefForwardingComponent<
+  React.Ref<HTMLButtonElement>,
+  TabProps
+> = React.forwardRef(
   (
     {
       onParentSelect,
@@ -238,13 +276,35 @@ export const Tab = React.forwardRef(
   }
 );
 
+Tab.propTypes = {
+  /** The id of the tab to be shared with TabContent */
+  id: PropTypes.string.isRequired,
+
+  /** The text content of the tab */
+  children: PropTypes.node,
+
+  /** An optional badge */
+  badge: PropTypes.node
+};
+
+/**
+ * A TabPanel should be used to wrap tab contents, unless those tabs
+ * are anchors.
+ */
+
 interface TabContentProps extends React.HTMLAttributes<HTMLDivElement> {
   id: string;
 }
 
-export const TabPanel = ({ id, ...other }: TabContentProps) => (
-  <div id={id} role="tabpanel" aria-labelledby={id + "-tab"} {...other} />
-);
+export const TabPanel: React.FunctionComponent<TabContentProps> = ({
+  id,
+  ...other
+}) => <div id={id} role="tabpanel" aria-labelledby={id + "-tab"} {...other} />;
+
+TabPanel.propTypes = {
+  /** The id should correspond to the id given to the associated Tab */
+  id: PropTypes.string.isRequired
+};
 
 interface TabIconProps {
   icon: IconName;
@@ -252,11 +312,21 @@ interface TabIconProps {
   size?: number;
 }
 
-export const TabIcon = ({ icon, label, size = 24 }: TabIconProps) => {
+export const TabIcon: React.FunctionComponent<TabIconProps> = ({
+  icon,
+  label,
+  size = 24
+}) => {
   return (
     <React.Fragment>
       <Icon icon={icon} size={size} />
       <VisuallyHidden>{label}</VisuallyHidden>
     </React.Fragment>
   );
+};
+
+TabIcon.propTypes = {
+  icon: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  size: PropTypes.number
 };

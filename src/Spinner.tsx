@@ -2,6 +2,7 @@
 import { jsx, css, keyframes } from "@emotion/core";
 import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
+import PropTypes from "prop-types";
 
 const spin = keyframes`
   to { 
@@ -16,7 +17,10 @@ interface SpinnerProps {
 // spinner css based on one provided by bootstrap
 // https://getbootstrap.com/docs/4.3/components/spinners/
 
-export function Spinner({ delay = 400, ...other }: SpinnerProps) {
+export const Spinner: React.FunctionComponent<SpinnerProps> = ({
+  delay = 400,
+  ...other
+}) => {
   const [show, setShow] = React.useState(delay === 0 ? true : false);
 
   React.useEffect(() => {
@@ -49,4 +53,9 @@ export function Spinner({ delay = 400, ...other }: SpinnerProps) {
       <VisuallyHidden>Loading...</VisuallyHidden>
     </div>
   );
-}
+};
+
+Spinner.propTypes = {
+  /** The delay (in ms) before the spinner will appear */
+  delay: PropTypes.number
+};

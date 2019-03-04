@@ -12,22 +12,23 @@ import { useFocusElement } from "./Hooks/focus";
 import { animated } from "react-spring";
 import { Sheet } from "./Sheet";
 import { useMedia } from "use-media";
+import PropTypes from "prop-types";
 
 const AnimatedLayer = animated(Layer);
 
 interface PopoverProps {
-  show?: boolean;
+  isOpen?: boolean;
   children: React.ReactElement<ButtonProps | IconButtonProps>;
   content: React.ReactNode;
   closeOnMenuItemClick?: boolean;
 }
 
-export function Popover({
+export const Popover: React.FunctionComponent<PopoverProps> = ({
   content,
   children,
   closeOnMenuItemClick = true,
-  show: defaultShow = false
-}: PopoverProps) {
+  isOpen: defaultShow = false
+}) => {
   const [show, setShow] = React.useState(defaultShow);
   const child = React.Children.only(children);
   const triggerRef = React.useRef<HTMLButtonElement | null>(null);
@@ -150,7 +151,21 @@ export function Popover({
       )}
     </Positioner>
   );
-}
+};
+
+Popover.propTypes = {
+  /** Whether the popover is currently open */
+  isOpen: PropTypes.bool,
+
+  /** The trigger of the popover */
+  children: PropTypes.node,
+
+  /** the content of the popover */
+  content: PropTypes.node,
+
+  /** Whether the menu should close when clicked */
+  closeOnMenuItemClick: PropTypes.bool
+};
 
 /**
  * Display popover contents in a bottom sheet if
@@ -158,7 +173,9 @@ export function Popover({
  * better use experience on smaller screens.
  */
 
-export function ResponsivePopover(props: PopoverProps) {
+export const ResponsivePopover: React.FunctionComponent<PopoverProps> = (
+  props: PopoverProps
+) => {
   const showPopover = useMedia({
     minWidth: "567px"
   });
@@ -185,4 +202,8 @@ export function ResponsivePopover(props: PopoverProps) {
       </Sheet>
     </React.Fragment>
   );
-}
+};
+
+ResponsivePopover.propTypes = {
+  ...Popover.propTypes
+};

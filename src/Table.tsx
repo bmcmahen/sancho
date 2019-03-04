@@ -3,6 +3,7 @@ import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
 import { Layer } from "./Layer";
+import PropTypes from "prop-types";
 
 type SectionTypeVariants = "TableHead" | "TableBody";
 
@@ -26,12 +27,21 @@ const tableStyle = css({
   display: "table"
 });
 
+/**
+ * A Table provides a useful abstraction for managing rows and columns.
+ */
+
 interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   minWidth?: string;
   fixed?: string[];
 }
 
-export function Table({ children, minWidth, fixed, ...other }: TableProps) {
+export const Table: React.FunctionComponent<TableProps> = ({
+  children,
+  minWidth,
+  fixed,
+  ...other
+}) => {
   return (
     <div
       css={{
@@ -60,7 +70,19 @@ export function Table({ children, minWidth, fixed, ...other }: TableProps) {
       </table>
     </div>
   );
-}
+};
+
+Table.propTypes = {
+  /** An optional minimum width for table content. */
+  minWidth: PropTypes.number,
+  /** An optional array of fixed layout widths for each column */
+  fixed: PropTypes.arrayOf(PropTypes.string),
+  children: PropTypes.node
+};
+
+/**
+ * A TableHead is used to render column labels in a table.
+ */
 
 interface TableHeadProps
   extends React.HTMLAttributes<HTMLTableSectionElement> {}
@@ -84,7 +106,11 @@ interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   onClick?: () => void;
 }
 
-export function TableRow({ onClick, children, ...other }: TableRowProps) {
+export const TableRow: React.FunctionComponent<TableRowProps> = ({
+  onClick,
+  children,
+  ...other
+}) => {
   const { type: tableSectionType } = React.useContext(TableSectionContext);
 
   const buttonProps = onClick
@@ -116,7 +142,16 @@ export function TableRow({ onClick, children, ...other }: TableRowProps) {
       {children}
     </tr>
   );
-}
+};
+
+TableRow.propTypes = {
+  /** A callback when a row is selected */
+  onClick: PropTypes.func
+};
+
+/**
+ * TableCell, used for both <td> and <th> elements.
+ */
 
 const tableCellAlignments = {
   right: css({
@@ -156,13 +191,13 @@ interface TableCellProps extends TableCellBaseProps {
   component?: React.ReactType<TableCellBaseProps>;
 }
 
-export function TableCell({
+export const TableCell: React.FunctionComponent<TableCellProps> = ({
   align = "left",
   variant,
   component,
   children,
   ...other
-}: TableCellProps) {
+}) => {
   const { type: tableSectionType } = React.useContext(TableSectionContext);
   const { fixed } = React.useContext(TableContext);
 
@@ -206,7 +241,16 @@ export function TableCell({
       {children}
     </Component>
   );
-}
+};
+
+TableCell.propTypes = {
+  align: PropTypes.oneOf(Object.keys(tableCellAlignments)),
+  variant: PropTypes.oneOf(Object.keys(tableCellVariants))
+};
+
+/**
+ * TableBody - indicates the body (and scrollable) portion of our table.
+ */
 
 interface TableBodyProps
   extends React.HTMLAttributes<HTMLTableSectionElement> {}
@@ -226,12 +270,19 @@ export function TableBody({ children, ...other }: TableBodyProps) {
   );
 }
 
+/**
+ * An ExpandingRow displays additional content about the row when clicked.
+ */
+
 interface ExpandingRowProps {
   content: (close: () => void) => React.ReactNode | React.ReactNode;
   children: React.ReactNode;
 }
 
-export function ExpandingRow({ content, children }: ExpandingRowProps) {
+export const ExpandingRow: React.FunctionComponent<ExpandingRowProps> = ({
+  content,
+  children
+}) => {
   const [selected, setSelected] = React.useState(false);
 
   function close() {
@@ -295,4 +346,9 @@ export function ExpandingRow({ content, children }: ExpandingRowProps) {
       )}
     </TableBody>
   );
-}
+};
+
+ExpandingRow.propTypes = {
+  /** The expanded content to show when the user selects the row */
+  content: PropTypes.node
+};

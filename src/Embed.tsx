@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
+import PropTypes from "prop-types";
 
-interface EmbedProps extends React.HTMLAttributes<Element> {
+export interface EmbedProps extends React.HTMLAttributes<Element> {
   width: number;
   height: number;
 }
@@ -31,6 +32,24 @@ export function getEmbedStyles(width: number, height: number) {
   `;
 }
 
-export function Embed({ width = 4, height = 3, ...other }: EmbedProps) {
+/**
+ * The Embed component maintains the provided aspect ratio determined
+ * by the width and height props. It's useful for avoiding content shifting on image
+ * loading.
+ */
+
+export const Embed: React.FunctionComponent<EmbedProps> = ({
+  width = 4,
+  height = 3,
+  ...other
+}) => {
   return <div css={getEmbedStyles(width, height)} {...other} />;
-}
+};
+
+Embed.propTypes = {
+  /** The relative width of the embed container */
+  width: PropTypes.number,
+
+  /** The relative height of the embed container */
+  height: PropTypes.number
+};

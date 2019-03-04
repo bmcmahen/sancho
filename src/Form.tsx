@@ -4,6 +4,8 @@ import * as React from "react";
 import { Text } from "./Text";
 import theme from "./Theme";
 import VisuallyHidden from "@reach/visually-hidden";
+import PropTypes from "prop-types";
+import uniqueId from "lodash.uniqueId";
 
 const inputSizes = {
   sm: css({
@@ -32,7 +34,7 @@ interface OptionalInputProps {
 interface InputProps
   extends OptionalInputProps,
     React.HTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-  name: string;
+  id?: string;
   label: string;
   type?: string;
   textarea?: boolean;
@@ -41,9 +43,9 @@ interface InputProps
   size?: InputSize;
 }
 
-export function InputGroup({
+export const InputGroup: React.FunctionComponent<InputProps> = ({
   size = "md",
-  name,
+  id = uniqueId(),
   label,
   textarea,
   autoFocus,
@@ -51,7 +53,7 @@ export function InputGroup({
   helpText,
   hideLabel,
   ...other
-}: InputProps) {
+}) => {
   return (
     <div
       css={{
@@ -61,7 +63,7 @@ export function InputGroup({
         }
       }}
     >
-      <Label hide={hideLabel} htmlFor={name}>
+      <Label hide={hideLabel} htmlFor={id}>
         {label}
       </Label>
       {textarea ? (
@@ -71,7 +73,7 @@ export function InputGroup({
           autoFocus={autoFocus}
           autoComplete={autoComplete}
           size={size}
-          id={name}
+          id={id}
           {...other}
         />
       )}
@@ -90,7 +92,24 @@ export function InputGroup({
       )}
     </div>
   );
-}
+};
+
+InputGroup.propTypes = {
+  /** A label is required for accessibility purposes. Use `hideLabel` to hide it. */
+  label: PropTypes.string.isRequired,
+
+  /** Use a textarea instead of an input */
+  textarea: PropTypes.bool,
+
+  /** Visually hide the label. It remains accessible to screen readers. */
+  hideLabel: PropTypes.bool,
+
+  /** Optional help text */
+  helpText: PropTypes.string,
+
+  /** The size of the input element */
+  size: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[])
+};
 
 export const baseStyles = css({
   display: "block",
@@ -133,12 +152,12 @@ export interface InputBaseProps
   size?: InputSize;
 }
 
-export function InputBase({
+export const InputBase: React.FunctionComponent<InputBaseProps> = ({
   autoComplete,
   autoFocus,
   size = "md",
   ...other
-}: InputBaseProps) {
+}) => {
   return (
     <input
       autoComplete={autoComplete}
@@ -147,7 +166,12 @@ export function InputBase({
       {...other}
     />
   );
-}
+};
+
+InputBase.propTypes = {
+  /** The size of the input element */
+  size: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[])
+};
 
 export const Input = InputBase;
 
@@ -156,7 +180,10 @@ export interface TextAreaProps
   size?: InputSize;
 }
 
-export function TextArea({ size = "md", ...other }: TextAreaProps) {
+export const TextArea: React.FunctionComponent<TextAreaProps> = ({
+  size = "md",
+  ...other
+}) => {
   return (
     <textarea
       css={[
@@ -170,14 +197,23 @@ export function TextArea({ size = "md", ...other }: TextAreaProps) {
       {...other}
     />
   );
-}
+};
+
+TextArea.propTypes = {
+  /** The size of the input element */
+  size: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[])
+};
 
 interface LabelProps extends React.HTMLAttributes<HTMLLabelElement> {
   hide?: boolean;
   htmlFor: string;
 }
 
-export function Label({ children, hide, ...other }: LabelProps) {
+export const Label: React.FunctionComponent<LabelProps> = ({
+  children,
+  hide,
+  ...other
+}) => {
   const child = (
     <label
       css={{
@@ -193,4 +229,8 @@ export function Label({ children, hide, ...other }: LabelProps) {
   );
 
   return hide ? <VisuallyHidden>{child}</VisuallyHidden> : child;
-}
+};
+
+Label.propTypes = {
+  hide: PropTypes.bool
+};

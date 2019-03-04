@@ -4,6 +4,7 @@ import * as React from "react";
 import theme from "./Theme";
 import { Text } from "./Text";
 import color from "color";
+import PropTypes from "prop-types";
 
 const KeyCodes = {
   ArrowUp: 38,
@@ -19,11 +20,11 @@ interface MenuListProps extends React.HTMLAttributes<HTMLDivElement> {
   focusableChildren?: React.ComponentType<any>[];
 }
 
-export const MenuList = ({
+export const MenuList: React.FunctionComponent<MenuListProps> = ({
   children,
   focusableChildren = [],
   ...other
-}: MenuListProps) => {
+}) => {
   const disabled = new Map();
   const [focusIndex, setFocusIndex] = React.useState<number | null>(null);
   const kids = React.Children.toArray(children);
@@ -109,6 +110,12 @@ export const MenuList = ({
   );
 };
 
+MenuList.propTypes = {
+  children: PropTypes.node,
+  /** Useful if you are providing your own MenuItem children */
+  focusableChildren: PropTypes.arrayOf(PropTypes.elementType)
+};
+
 export interface MenuRenderProps extends React.HTMLAttributes<Element> {
   ref: React.RefObject<HTMLDivElement>;
 }
@@ -127,7 +134,7 @@ interface MenuItemPropsCloned extends React.HTMLAttributes<Element> {
   [key: string]: any;
 }
 
-export const MenuItem = ({
+export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   focus,
   onFocus,
   onKeyDown,
@@ -138,7 +145,7 @@ export const MenuItem = ({
   children,
   disabled,
   ...other
-}: MenuItemProps) => {
+}) => {
   const localRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -198,6 +205,20 @@ export const MenuItem = ({
   );
 };
 
+MenuItem.propTypes = {
+  /** Called when the menu item is selected. Generally use this instead of onClick. */
+  onSelect: PropTypes.func,
+
+  /** Provide a custom component. Eg., ReactRouter Link */
+  component: PropTypes.string,
+
+  /** Disable this menu item */
+  disabled: PropTypes.bool,
+
+  /** Pass in a string to use standard text styles. Otherwise, pass in any other node. */
+  children: PropTypes.node
+};
+
 interface MenuDividerProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function MenuDivider(props: MenuDividerProps) {
@@ -217,7 +238,7 @@ export function MenuDivider(props: MenuDividerProps) {
 
 interface MenuLabelProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function MenuLabel(props: MenuLabelProps) {
+export const MenuLabel: React.FunctionComponent<MenuLabelProps> = props => {
   return (
     <Text
       variant="uppercase"
@@ -228,4 +249,8 @@ export function MenuLabel(props: MenuLabelProps) {
       {...props}
     />
   );
-}
+};
+
+MenuLabel.propTypes = {
+  children: PropTypes.node
+};

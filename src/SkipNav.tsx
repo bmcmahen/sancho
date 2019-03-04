@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
+import PropTypes from "prop-types";
 
 import {
   SkipNavLink as ReachSkipNavLink,
@@ -11,10 +12,10 @@ import theme from "./Theme";
 import { focusShadow } from "./Button";
 import { Text } from "./Text";
 
-export const SkipNavLink = ({
+export const SkipNavLink: React.FunctionComponent<ISkipNavProps> = ({
   children = "Skip to content",
   ...other
-}: ISkipNavProps) => {
+}) => {
   return (
     <ReachSkipNavLink
       css={{
@@ -48,6 +49,11 @@ export const SkipNavLink = ({
       <Text>{children}</Text>
     </ReachSkipNavLink>
   );
+};
+
+SkipNavLink.propTypes = {
+  /** The text content of the skp nav button */
+  children: PropTypes.node
 };
 
 export const SkipNavContent = ReachSkipNavContent;
