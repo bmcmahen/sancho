@@ -57,7 +57,7 @@ const Wave = () => (
 )
 
 export const Hero = ({ children }) => (
-  <Layout>
+  <React.Fragment>
     <div
       css={{
         position: "relative",
@@ -90,5 +90,5 @@ export const Hero = ({ children }) => (
         <ComponentMDXProvider>{children}</ComponentMDXProvider>
       </Article>
     </Container>
-  </Layout>
+  </React.Fragment>
 )

@@ -10,10 +10,6 @@ export default class ComponentLayout extends React.Component<
   ComponentLayoutProps
 > {
   render() {
-    return (
-      <Layout>
-        <ComponentMDXProvider>{this.props.children}</ComponentMDXProvider>
-      </Layout>
-    )
+    return <ComponentMDXProvider>{this.props.children}</ComponentMDXProvider>
   }
 }
