@@ -76,20 +76,21 @@ const intents = {
     // ":hover": {
     //   background: gradient(theme.colors.scales.neutral.N2, "white")
     // },
-    ':active, &[aria-expanded="true"]': {
-      background: "none",
-      backgroundColor: theme.colors.intent.none.light,
-      boxShadow: insetShadow(
-        alpha(palette.gray.dark, 0.5),
-        alpha(palette.gray.dark, 0.3)
-      )
-    },
+
     ":focus": {
       zIndex: 2,
       boxShadow: focusShadow(
         alpha(palette.blue.dark, 0.1),
         alpha(palette.gray.dark, 0.2),
         alpha(palette.gray.dark, 0.05)
+      )
+    },
+    ':active, &[aria-expanded="true"]': {
+      background: "none",
+      backgroundColor: theme.colors.intent.none.lightest,
+      boxShadow: insetShadow(
+        alpha(palette.gray.dark, 0.3),
+        alpha(palette.gray.dark, 0.15)
       )
     }
   }),
@@ -103,8 +104,8 @@ const intents = {
         .toString()
     ),
     boxShadow: insetShadow(
-      alpha(palette.gray.dark, 0.3),
-      alpha(palette.gray.dark, 0.3)
+      alpha(palette.gray.dark, 0.2),
+      alpha(palette.gray.dark, 0.2)
     ),
     ":focus": {
       zIndex: 2,
@@ -135,8 +136,8 @@ const intents = {
         .toString()
     ),
     boxShadow: insetShadow(
-      alpha(palette.gray.dark, 0.3),
-      alpha(palette.gray.dark, 0.3)
+      alpha(palette.gray.dark, 0.2),
+      alpha(palette.gray.dark, 0.2)
     ),
     ":focus": {
       zIndex: 2,
@@ -171,8 +172,8 @@ const intents = {
         .toString()
     ),
     boxShadow: insetShadow(
-      alpha(palette.gray.dark, 0.3),
-      alpha(palette.gray.dark, 0.3)
+      alpha(palette.gray.dark, 0.2),
+      alpha(palette.gray.dark, 0.2)
     ),
     ":focus": {
       zIndex: 2,
@@ -244,7 +245,7 @@ const variants = {
     boxShadow: "none",
     color: theme.colors.text.muted,
     ":hover": {
-      background: theme.colors.palette.gray.lightest
+      background: alpha(theme.colors.palette.gray.base, 0.07)
     },
     ":focus": {
       zIndex: 2,
@@ -252,7 +253,7 @@ const variants = {
     },
     ':active, &[aria-expanded="true"]': {
       color: palette.blue.dark,
-      background: alpha(theme.colors.palette.blue.base, 0.15),
+      background: alpha(theme.colors.palette.gray.base, 0.13),
       boxShadow: "none"
     }
   })

@@ -167,11 +167,11 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         color: theme.colors.text.default,
         pointerEvents: disabled ? "none" : "initial",
         ":focus": {
-          backgroundColor: theme.colors.background.tint2,
+          backgroundColor: theme.colors.background.tint1,
           outline: "none"
         },
         ":active": {
-          backgroundColor: color(theme.colors.background.tint2)
+          backgroundColor: color(theme.colors.background.tint1)
             .darken(0.1)
             .string()
         }

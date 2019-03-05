@@ -64,12 +64,12 @@ export const palette = {
 export default {
   background: {
     tint1: scales.gray[1],
-    tint2: scales.gray[2],
+    tint2: scales.gray[3],
     overlay: alpha(scales.gray[9], 0.6)
   },
   border: {
-    default: scales.gray[2],
-    muted: scales.gray[1]
+    default: scales.gray[4],
+    muted: scales.gray[3]
   },
   text: {
     muted: scales.gray[7],

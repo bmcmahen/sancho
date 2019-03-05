@@ -120,7 +120,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
   }
 
   return (
-    <Positioner show={show} duration={200} target={renderTrigger}>
+    <Positioner isOpen={show} duration={200} target={renderTrigger}>
       {({ placement, ref, arrowProps, style }, animation) => (
         <AnimatedLayer
           role="dialog"
