@@ -48,12 +48,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   }
 
   return (
-    <Positioner
-      placement={placement}
-      show={show}
-      duration={200}
-      target={renderTrigger}
-    >
+    <Positioner placement={placement} isOpen={show} target={renderTrigger}>
       {({ placement, ref, style, arrowProps }, state) => (
         <animated.div
           id={id}
@@ -70,7 +65,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
         >
           <div
             data-placement={placement}
-            css={arrowStyles(theme.colors.palette.neutral.dark)}
+            css={arrowStyles(theme.colors.palette.gray.dark)}
             ref={arrowProps.ref}
             style={arrowProps.style}
           />
@@ -85,7 +80,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
                 borderRadius: theme.radii.sm,
                 padding: `${theme.spaces.xs} ${theme.spaces.md}`,
                 color: "white",
-                background: theme.colors.palette.neutral.dark
+                background: theme.colors.palette.gray.dark
               }
             ]}
           >
@@ -100,10 +95,9 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
 Tooltip.propTypes = {
   /** The content of the tooltip */
   content: PropTypes.node.isRequired,
-
   /** the target element for the tooltip */
   children: PropTypes.node.isRequired,
-
+  /** Where the tooltip should be placed */
   placement: PropTypes.oneOf([
     "auto-start",
     "auto",
