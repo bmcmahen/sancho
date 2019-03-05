@@ -4,6 +4,7 @@ import * as React from "react";
 import theme from "./Theme";
 import color from "color";
 import PropTypes from "prop-types";
+import { alpha } from "./Theme/colors";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -34,15 +35,15 @@ function insetShadow(from: string, to: string) {
 }
 
 export function focusShadow(
-  first: string = scales.blue.B4A,
-  second: string = scales.neutral.N5A,
-  third: string = scales.neutral.N3A
+  first: string = alpha(palette.blue.dark, 0.4),
+  second: string = alpha(palette.gray.dark, 0.5),
+  third: string = alpha(palette.gray.dark, 0.3)
 ) {
   return `0 0 0 3px ${first}, inset 0 0 0 1px ${second}, inset 0 -1px 1px 0 ${third}`;
 }
 
 const { scales, palette } = theme.colors;
-const { blue, neutral } = scales;
+const { blue, gray } = scales;
 
 export const buttonReset = css({
   textDecoration: "none",
@@ -66,134 +67,169 @@ export const buttonReset = css({
 const intents = {
   default: css({
     backgroundColor: "white",
-    color: neutral.N8,
-    background: gradient(theme.colors.scales.neutral.N1, "white"),
+    color: theme.colors.intent.none.base,
+    background: gradient(theme.colors.intent.none.lightest, "white"),
     boxShadow: insetShadow(
-      theme.colors.scales.neutral.N3A,
-      theme.colors.scales.neutral.N2A
+      alpha(theme.colors.palette.gray.dark, 0.2),
+      alpha(theme.colors.palette.gray.dark, 0.1)
     ),
     // ":hover": {
     //   background: gradient(theme.colors.scales.neutral.N2, "white")
     // },
     ':active, &[aria-expanded="true"]': {
       background: "none",
-      backgroundColor: theme.colors.palette.blue.lightest,
-      boxShadow: insetShadow(scales.neutral.N5A, scales.neutral.N3A)
+      backgroundColor: theme.colors.intent.none.light,
+      boxShadow: insetShadow(
+        alpha(palette.gray.dark, 0.5),
+        alpha(palette.gray.dark, 0.3)
+      )
     },
     ":focus": {
       zIndex: 2,
       boxShadow: focusShadow(
-        scales.blue.B4A,
-        scales.neutral.N5A,
-        scales.neutral.N3A
+        alpha(palette.blue.dark, 0.1),
+        alpha(palette.gray.dark, 0.2),
+        alpha(palette.gray.dark, 0.05)
       )
     }
   }),
   primary: css({
-    backgroundColor: blue.B9,
-    color: "white",
-    backgroundImage: gradient(blue.B9, blue.B7),
-    boxShadow: insetShadow(neutral.N4A, neutral.N4A),
-    ":focus": {
-      zIndex: 2,
-      boxShadow: focusShadow(
-        scales.blue.B5A,
-        scales.neutral.N5A,
-        scales.neutral.N1A
-      )
-    },
-    ':active, &[aria-expanded="true"]': {
-      boxShadow: insetShadow(neutral.N5A, neutral.N5A),
-      backgroundImage: gradient(blue.B10, blue.B9)
-    }
-  }),
-  success: css({
-    backgroundColor: palette.green.base,
+    backgroundColor: theme.colors.intent.primary.base,
     color: "white",
     backgroundImage: gradient(
-      palette.green.base,
-      color(palette.green.base)
+      theme.colors.intent.primary.base,
+      color(theme.colors.intent.primary.base)
         .lighten(0.4)
         .toString()
     ),
-    boxShadow: insetShadow(neutral.N4A, neutral.N4A),
+    boxShadow: insetShadow(
+      alpha(palette.gray.dark, 0.3),
+      alpha(palette.gray.dark, 0.3)
+    ),
     ":focus": {
       zIndex: 2,
       boxShadow: focusShadow(
-        color(palette.green.base)
-          .alpha(0.4)
-          .toString(),
-        scales.neutral.N3A,
-        scales.neutral.N1A
+        alpha(theme.colors.intent.primary.base, 0.3),
+        alpha(palette.gray.dark, 0.3),
+        alpha(palette.gray.dark, 0.07)
       )
     },
     ':active, &[aria-expanded="true"]': {
-      boxShadow: insetShadow(neutral.N5A, neutral.N5A),
+      boxShadow: insetShadow(
+        alpha(palette.gray.dark, 0.1),
+        alpha(palette.gray.dark, 0.1)
+      ),
       backgroundImage: gradient(
-        color(palette.green.base)
-          .darken(0.4)
+        theme.colors.intent.primary.dark,
+        theme.colors.intent.primary.base
+      )
+    }
+  }),
+  success: css({
+    backgroundColor: theme.colors.intent.success.base,
+    color: "white",
+    backgroundImage: gradient(
+      theme.colors.intent.success.base,
+      color(theme.colors.intent.success.base)
+        .lighten(0.5)
+        .toString()
+    ),
+    boxShadow: insetShadow(
+      alpha(palette.gray.dark, 0.3),
+      alpha(palette.gray.dark, 0.3)
+    ),
+    ":focus": {
+      zIndex: 2,
+      boxShadow: focusShadow(
+        color(theme.colors.intent.success.base)
+          .alpha(0.4)
           .toString(),
-        palette.green.base
+        alpha(palette.gray.dark, 0.3),
+        alpha(palette.gray.dark, 0.1)
+      )
+    },
+    ':active, &[aria-expanded="true"]': {
+      boxShadow: insetShadow(
+        alpha(palette.gray.dark, 0.1),
+        alpha(palette.gray.dark, 0.1)
+      ),
+      backgroundImage: gradient(
+        color(theme.colors.intent.success.base)
+          .darken(0.2)
+          .toString(),
+        theme.colors.intent.success.base
       )
     }
   }),
   danger: css({
-    backgroundColor: palette.red.base,
+    backgroundColor: theme.colors.intent.danger.base,
     color: "white",
     backgroundImage: gradient(
-      palette.red.base,
-      color(palette.red.base)
-        .lighten(0.2)
+      theme.colors.intent.danger.base,
+      color(theme.colors.intent.danger.base)
+        .lighten(0.3)
         .toString()
     ),
-    boxShadow: insetShadow(neutral.N4A, neutral.N4A),
+    boxShadow: insetShadow(
+      alpha(palette.gray.dark, 0.3),
+      alpha(palette.gray.dark, 0.3)
+    ),
     ":focus": {
       zIndex: 2,
       boxShadow: focusShadow(
-        color(palette.red.base)
+        color(theme.colors.intent.danger.base)
           .alpha(0.4)
           .toString(),
-        scales.neutral.N4A,
-        scales.neutral.N1A
+        alpha(palette.gray.dark, 0.3),
+        alpha(palette.gray.dark, 0.1)
       )
     },
     ':active, &[aria-expanded="true"]': {
-      boxShadow: insetShadow(neutral.N5A, neutral.N5A),
+      boxShadow: insetShadow(
+        alpha(palette.gray.dark, 0.1),
+        alpha(palette.gray.dark, 0.1)
+      ),
       backgroundImage: gradient(
-        color(palette.red.base)
+        color(theme.colors.intent.danger.base)
           .darken(0.2)
           .toString(),
-        palette.red.base
+        theme.colors.intent.danger.base
       )
     }
   }),
   warning: css({
-    backgroundColor: palette.yellow.base,
-    color: theme.colors.text.default,
+    backgroundColor: theme.colors.intent.warning.base,
+    color: "white",
     backgroundImage: gradient(
-      palette.yellow.base,
-      color(palette.yellow.base)
+      theme.colors.intent.warning.base,
+      color(theme.colors.intent.warning.base)
         .lighten(0.4)
         .toString()
     ),
-    boxShadow: insetShadow(neutral.N3A, neutral.N3A),
+    boxShadow: insetShadow(
+      alpha(palette.gray.dark, 0.2),
+      alpha(palette.gray.dark, 0.2)
+    ),
     ":focus": {
       zIndex: 2,
       boxShadow: focusShadow(
-        color(palette.yellow.base)
+        color(theme.colors.intent.warning.base)
           .alpha(0.4)
           .toString(),
-        scales.neutral.N2A,
-        scales.neutral.N1A
+        alpha(palette.gray.dark, 0.2),
+        alpha(palette.gray.dark, 0.1)
       )
     },
     ':active, &[aria-expanded="true"]': {
-      boxShadow: insetShadow(neutral.N5A, neutral.N5A),
+      boxShadow: insetShadow(
+        alpha(palette.gray.dark, 0.1),
+        alpha(palette.gray.dark, 0.1)
+      ),
       backgroundImage: gradient(
-        color(palette.yellow.base)
+        color(theme.colors.intent.warning.base)
           .darken(0.2)
           .toString(),
-        palette.yellow.base
+        theme.colors.intent.warning.base
       )
     }
   })
@@ -206,17 +242,17 @@ const variants = {
   ghost: css({
     background: "transparent",
     boxShadow: "none",
-    color: neutral.N7,
+    color: theme.colors.text.muted,
     ":hover": {
-      background: neutral.N2A
+      background: theme.colors.palette.gray.lightest
     },
     ":focus": {
       zIndex: 2,
-      boxShadow: `0 0 0 3px ${blue.B5A}`
+      boxShadow: `0 0 0 3px ${alpha(theme.colors.palette.blue.base, 0.25)}`
     },
     ':active, &[aria-expanded="true"]': {
-      color: blue.B10,
-      background: blue.B3A,
+      color: palette.blue.dark,
+      background: alpha(theme.colors.palette.blue.base, 0.15),
       boxShadow: "none"
     }
   })

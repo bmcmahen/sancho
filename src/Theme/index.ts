@@ -1,8 +1,10 @@
 import colors, { palette, scales } from "./colors";
-import color from "color";
+import { shadows } from "./shadows";
+import { breakpoints } from "./breakpoints";
 
 const spacer = 1;
 
+// padding & margin
 const spaces = {
   none: 0,
   xs: `${spacer * 0.25}rem`,
@@ -12,13 +14,7 @@ const spaces = {
   xl: `${spacer * 3}rem`
 };
 
-const breakpoints = {
-  sm: "@media (min-width: 567px)",
-  md: "@media (min-width: 768px)",
-  lg: "@media (min-width: 992px)",
-  xl: "@media (min-width: 1200px)"
-};
-
+// font sizes
 const sizes: [
   string,
   string,
@@ -44,6 +40,7 @@ const sizes: [
   "5.5rem"
 ];
 
+// radius (for layers, buttons, etc)
 const radii = {
   sm: "0.25rem",
   md: "0.4rem",
@@ -56,67 +53,6 @@ const fonts = {
   sans: sansFont,
   base: sansFont,
   monospace: `SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`
-};
-
-const shadows = {
-  xs: `0 0 1px ${color(scales.neutral.N8)
-    .alpha(0.1)
-    .hsl()
-    .string()},
-    0 0 1px 1px ${color(scales.neutral.N8)
-      .alpha(0.12)
-      .hsl()
-      .string()}
-  `,
-  sm: `0 1px 8px 0 ${color(scales.neutral.N8)
-    .alpha(0.15)
-    .hsl()
-    .string()}, 
-    0 1px 3px 0 ${color(scales.neutral.N8)
-      .alpha(0.1)
-      .hsl()
-      .string()},
-    0 2px 3px -2px ${color(scales.neutral.N8)
-      .alpha(0.12)
-      .hsl()
-      .string()}`,
-
-  md: `0 1px 10px 0 ${color(scales.neutral.N8)
-    .alpha(0.15)
-    .hsl()
-    .string()}, 
-    0 6px 12px 0 ${color(scales.neutral.N8)
-      .alpha(0.1)
-      .hsl()
-      .string()},
-    0 6px 15px -2px ${color(scales.neutral.N8)
-      .alpha(0.12)
-      .hsl()
-      .string()}`,
-  lg: `0 1px 10px 0 ${color(scales.neutral.N8)
-    .alpha(0.15)
-    .hsl()
-    .string()}, 
-    0 15px 22px 0 ${color(scales.neutral.N8)
-      .alpha(0.1)
-      .hsl()
-      .string()},
-    0 15px 25px -2px ${color(scales.neutral.N8)
-      .alpha(0.12)
-      .hsl()
-      .string()}`,
-  xl: `0 1px 10px 0 ${color(scales.neutral.N8)
-    .alpha(0.15)
-    .hsl()
-    .string()}, 
-    0 25px 35px 0 ${color(scales.neutral.N8)
-      .alpha(0.1)
-      .hsl()
-      .string()},
-    0 25px 40px -2px ${color(scales.neutral.N8)
-      .alpha(0.12)
-      .hsl()
-      .string()}`
 };
 
 export const theme = {

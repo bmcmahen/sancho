@@ -1,160 +1,87 @@
-export const scales = {
-  neutral: {
-    N1: "#f8f9fa",
-    N2: "#e9ecef",
-    N3: "#dee2e6",
-    N4: "#ced4da",
-    N5: "#adb5bd",
-    N6: "#6c757d",
-    N7: "#495057",
-    N8: "#343a40",
-    N9: "#212529",
-    N10: "#000",
+import open from "open-color";
+import color from "color";
 
-    // Transparent variants.
-    N1A: "rgba(0, 0, 0, 0.04)",
-    N2A: "rgba(0, 0, 0, 0.06)",
-    N3A: "rgba(0, 0, 0, 0.09)",
-    N4A: "rgba(0, 0, 0, 0.14)",
-    N5A: "rgba(0, 0, 0, 0.3)",
-    N6A: "rgba(0, 0, 0, 0.47)",
-    N7A: "rgba(0, 0, 0, 0.7)",
-    N8A: "rgba(0, 0, 0, 0.81)"
-  },
+export function alpha(c: string, amount: number) {
+  return color(c)
+    .alpha(amount)
+    .hsl()
+    .string();
+}
 
-  blue: {
-    B1: "#f7f9fd",
-    B2: "#f1f7fc",
-    B3: "#e9f2fa",
-    B4: "#ddebf7",
-    B5: "#b7d4ef",
-    B6: "#8fbce6",
-    B7: "#579ad9", // Large Text AA
-    B8: "#3d8bd4", // Normal Text AA
-    B9: "#1070ca", // Normal Text AAA
-    B10: "#084b8a", // Normal Text AAA
-
-    // Transparent variants.
-    B1A: "rgba(16, 112, 202, 0.04)",
-    B2A: "rgba(16, 112, 202, 0.06)",
-    B3A: "rgba(16, 112, 202, 0.09)",
-    B4A: "rgba(16, 112, 202, 0.14)",
-    B5A: "rgba(16, 112, 202, 0.3)",
-    B6A: "rgba(16, 112, 202, 0.47)",
-    B7A: "rgba(16, 112, 202, 0.7)",
-    B8A: "rgba(16, 112, 202, 0.81)"
-  }
-};
+export const scales = open;
 
 export const palette = {
-  neutral: {
-    lightest: scales.neutral.N1,
-    light: scales.neutral.N4,
-    base: scales.neutral.N8,
-    dark: scales.neutral.N9
+  gray: {
+    lightest: scales.gray[1],
+    light: scales.gray[4],
+    base: scales.gray[8],
+    dark: scales.gray[9]
   },
-
   blue: {
-    lightest: scales.blue.B1,
-    light: scales.blue.B4,
-    base: scales.blue.B9,
-    dark: scales.blue.B10
+    lightest: scales.blue[1],
+    light: scales.blue[4],
+    base: scales.blue[8],
+    dark: scales.blue[9]
   },
-
   red: {
-    lightest: "#fef6f6",
-    light: "#fae2e2",
-    base: "#ec4c47",
-    dark: "#bf0e08"
+    lightest: scales.red[1],
+    light: scales.red[4],
+    base: scales.red[8],
+    dark: scales.red[9]
   },
-
   orange: {
-    lightest: "#fdf8f3",
-    light: "#fae3cd",
-    base: "#d9822b",
-    dark: "#95591e"
+    lightest: scales.orange[1],
+    light: scales.orange[4],
+    base: scales.orange[8],
+    dark: scales.orange[9]
   },
-
   yellow: {
-    lightest: "#fef8e7",
-    light: "#fbe6a2",
-    base: "#ffc107",
-    dark: "#7e6514"
+    lightest: scales.yellow[1],
+    light: scales.yellow[4],
+    base: scales.yellow[8],
+    dark: scales.yellow[9]
   },
-
   green: {
-    lightest: "#f1faf5",
-    light: "#d4eee2",
-    base: "#47b881",
-    dark: "#00783e"
+    lightest: scales.green[1],
+    light: scales.green[4],
+    base: scales.green[8],
+    dark: scales.green[9]
   },
-
   teal: {
-    lightest: "#f1fbfc",
-    light: "#d2eef3",
-    base: "#14b5d0",
-    dark: "#007489"
+    lightest: scales.teal[1],
+    light: scales.teal[4],
+    base: scales.teal[8],
+    dark: scales.teal[9]
   },
-
-  purple: {
-    lightest: "#f8f7fc",
-    light: "#eae7f8",
-    base: "#735dd0",
-    dark: "#37248f"
+  violet: {
+    lightest: scales.violet[1],
+    light: scales.violet[4],
+    base: scales.violet[8],
+    dark: scales.violet[9]
   }
 };
 
 export default {
   background: {
-    tint1: scales.neutral.N1,
-    tint2: scales.neutral.N2,
-    overlay: scales.neutral.N6A,
-
-    // Non required.
-    yellowTint: palette.yellow.lightest,
-    greenTint: palette.green.lightest,
-    orangeTint: palette.orange.lightest,
-    redTint: palette.red.lightest,
-    blueTint: palette.blue.lightest,
-    purpleTint: palette.purple.lightest,
-    tealTint: palette.teal.lightest
+    tint1: scales.gray[1],
+    tint2: scales.gray[2],
+    overlay: alpha(scales.gray[9], 0.6)
   },
-
   border: {
-    default: scales.neutral.N3, // Was BorderColors.muted in v3 and under.
-    muted: scales.neutral.N2 // Was BorderColors.extraMuted in v3 and under
+    default: scales.gray[2],
+    muted: scales.gray[1]
   },
-
   text: {
-    muted: scales.neutral.N6,
-    default: scales.neutral.N8,
-    dark: scales.neutral.N10,
-    selected: palette.blue.base,
-
-    // Intent.
-    success: palette.green.dark,
-    info: palette.blue.dark,
-    danger: palette.red.dark,
-    warning: palette.orange.dark
+    muted: scales.gray[7],
+    default: scales.gray[9],
+    dark: scales.gray[10],
+    selected: palette.blue.base
   },
-
-  icon: {
-    default: scales.neutral.N8,
-    muted: scales.neutral.N7,
-    disabled: scales.neutral.N5A,
-    selected: palette.blue.base,
-
-    // Intent.
-    success: palette.green.base,
-    info: palette.blue.base,
-    danger: palette.red.base,
-    warning: palette.orange.base
-  },
-
   intent: {
-    none: palette.blue.base,
-    success: palette.green.base,
-    danger: palette.red.base,
-    warning: palette.orange.base
+    none: palette.gray,
+    primary: palette.blue,
+    success: palette.green,
+    danger: palette.red,
+    warning: palette.yellow
   }
 };

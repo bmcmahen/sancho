@@ -71,9 +71,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
   return (
     <div
       css={{
-        boxShadow: dark
-          ? `0px 3px 2px ${theme.colors.scales.neutral.N3}`
-          : "none"
+        boxShadow: dark ? `0px 3px 2px ${theme.colors.scales.gray[3]}` : "none"
       }}
     >
       <div

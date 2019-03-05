@@ -50,7 +50,7 @@ export const CloseButton: React.FunctionComponent<CloseButtonProps> = ({
     <IconButton
       variant="ghost"
       css={{
-        color: theme.colors.scales.neutral.N10
+        color: theme.colors.text.default
       }}
       label={label}
       icon="cross"

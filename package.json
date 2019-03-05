@@ -25,6 +25,7 @@
     "element-in-view": "^0.1.0",
     "focus-trap": "^4.0.2",
     "lodash.uniqueid": "^4.0.1",
+    "open-color": "^1.6.3",
     "popper.js": "^1.14.7",
     "raf-schd": "^4.0.0",
     "react": "^16.8.3",

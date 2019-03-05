@@ -11,11 +11,11 @@ import { LayerElevations } from "./Layer";
 import PropTypes from "prop-types";
 
 const alertIntentions = {
-  info: theme.colors.palette.neutral.base,
-  success: theme.colors.palette.green.base,
-  question: theme.colors.palette.blue.base,
-  danger: theme.colors.palette.red.base,
-  warning: theme.colors.palette.yellow.base
+  info: theme.colors.intent.none.base,
+  success: theme.colors.intent.success.base,
+  question: theme.colors.intent.primary.base,
+  danger: theme.colors.intent.danger.base,
+  warning: theme.colors.intent.warning.base
 };
 
 export type AlertIntentions = keyof typeof alertIntentions;

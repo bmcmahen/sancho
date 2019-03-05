@@ -17,7 +17,7 @@ export interface IconProps {
 export class Icon extends React.Component<IconProps> {
   static defaultProps = {
     size: 16,
-    color: theme.colors.palette.neutral.dark
+    color: theme.colors.palette.gray.dark
   };
 
   static propTypes = {

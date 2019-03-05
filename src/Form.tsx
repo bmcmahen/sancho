@@ -5,7 +5,8 @@ import { Text } from "./Text";
 import theme from "./Theme";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
-import uniqueId from "lodash.uniqueId";
+import uniqueId from "lodash.uniqueid";
+import { alpha } from "./Theme/colors";
 
 const inputSizes = {
   sm: css({
@@ -111,6 +112,9 @@ InputGroup.propTypes = {
   size: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[])
 };
 
+const gray = theme.colors.palette.gray.base;
+const blue = theme.colors.palette.blue.base;
+
 export const baseStyles = css({
   display: "block",
   width: "100%",
@@ -124,25 +128,25 @@ export const baseStyles = css({
   touchAction: "manipulation",
   fontFamily: theme.fonts.base,
   border: "none",
-  boxShadow: `inset 0 0 0 1px ${
-    theme.colors.scales.neutral.N3A
-  }, inset 0 1px 2px ${theme.colors.scales.neutral.N3A}`,
+  boxShadow: `inset 0 0 0 1px ${alpha(gray, 0.15)}, inset 0 1px 2px ${alpha(
+    gray,
+    0.2
+  )}`,
   borderRadius: theme.radii.sm,
   transition: "border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s",
   "::placeholder": {
-    color: theme.colors.scales.neutral.N5
+    color: alpha(gray, 0.7)
   },
   ":focus": {
     zIndex: 2,
-    boxShadow: `inset 0 0 2px ${
-      theme.colors.scales.neutral.N4A
-    }, inset 0 0 0 1px ${theme.colors.scales.blue.B6A}, 0 0 0 3px ${
-      theme.colors.scales.blue.B3A
-    }`,
+    boxShadow: `inset 0 0 2px ${alpha(gray, 0.4)}, inset 0 0 0 1px ${alpha(
+      blue,
+      0.3
+    )}, 0 0 0 3px ${alpha(blue, 0.2)}`,
     outline: "none"
   },
   ":disabled": {
-    boxShadow: `inset 0 0 0 1px ${theme.colors.scales.neutral.N3A}`
+    boxShadow: `inset 0 0 0 1px ${alpha(gray, 0.45)}`
   }
 });
 
