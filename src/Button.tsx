@@ -8,6 +8,10 @@ import { alpha } from "./Theme/colors";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
+const getTextColor = (background: string) => {
+  return color(background).isDark() ? 'white' : theme.colors.text.default;
+}
+
 const getPadding = (size: ButtonSize) => {
   if (size === "xs") return "0.1rem 0.5rem";
   if (size === "sm") return "0.25rem 1rem";
@@ -43,7 +47,6 @@ export function focusShadow(
 }
 
 const { scales, palette } = theme.colors;
-const { blue, gray } = scales;
 
 export const buttonReset = css({
   textDecoration: "none",
@@ -67,16 +70,12 @@ export const buttonReset = css({
 const intents = {
   default: css({
     backgroundColor: "white",
-    color: theme.colors.intent.none.base,
+    color: getTextColor(theme.colors.intent.none.lightest),
     background: gradient(theme.colors.intent.none.lightest, "white"),
     boxShadow: insetShadow(
       alpha(theme.colors.palette.gray.dark, 0.2),
       alpha(theme.colors.palette.gray.dark, 0.1)
     ),
-    // ":hover": {
-    //   background: gradient(theme.colors.scales.neutral.N2, "white")
-    // },
-
     ":focus": {
       zIndex: 2,
       boxShadow: focusShadow(
@@ -96,7 +95,7 @@ const intents = {
   }),
   primary: css({
     backgroundColor: theme.colors.intent.primary.base,
-    color: "white",
+    color: getTextColor(theme.colors.intent.primary.base),
     backgroundImage: gradient(
       theme.colors.intent.primary.base,
       color(theme.colors.intent.primary.base)
@@ -128,7 +127,7 @@ const intents = {
   }),
   success: css({
     backgroundColor: theme.colors.intent.success.base,
-    color: "white",
+    color: getTextColor(theme.colors.intent.success.base),
     backgroundImage: gradient(
       theme.colors.intent.success.base,
       color(theme.colors.intent.success.base)
@@ -164,7 +163,7 @@ const intents = {
   }),
   danger: css({
     backgroundColor: theme.colors.intent.danger.base,
-    color: "white",
+    color: getTextColor(theme.colors.intent.danger.base),
     backgroundImage: gradient(
       theme.colors.intent.danger.base,
       color(theme.colors.intent.danger.base)
@@ -200,7 +199,7 @@ const intents = {
   }),
   warning: css({
     backgroundColor: theme.colors.intent.warning.base,
-    color: "white",
+    color: getTextColor(theme.colors.intent.warning.base),
     backgroundImage: gradient(
       theme.colors.intent.warning.base,
       color(theme.colors.intent.warning.base)
