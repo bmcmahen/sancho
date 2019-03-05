@@ -9,8 +9,8 @@ import { alpha } from "./Theme/colors";
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 const getTextColor = (background: string) => {
-  return color(background).isDark() ? 'white' : theme.colors.text.default;
-}
+  return color(background).isDark() ? "white" : theme.colors.text.default;
+};
 
 const getPadding = (size: ButtonSize) => {
   if (size === "xs") return "0.1rem 0.5rem";
@@ -46,7 +46,7 @@ export function focusShadow(
   return `0 0 0 3px ${first}, inset 0 0 0 1px ${second}, inset 0 -1px 1px 0 ${third}`;
 }
 
-const { scales, palette } = theme.colors;
+const { palette } = theme.colors;
 
 export const buttonReset = css({
   textDecoration: "none",

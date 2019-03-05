@@ -20,7 +20,7 @@ const Example = () => {
         paddingTop: theme.spaces.xl,
         // borderBottom: "1px solid ",
         // borderColor: theme.colors.border.default,
-        background: theme.colors.background.blueTint
+        background: theme.colors.background.tint1
       }}
     >
       <Tabs value={value} onChange={i => setValue(i)}>

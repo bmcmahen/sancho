@@ -31,7 +31,9 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
 
   const focusComponents = [MenuItem, ...focusableChildren];
   const focusableItems = kids.filter(
-    kid => focusComponents.indexOf(kid.type as React.ComponentType) > -1
+    kid =>
+      React.isValidElement(kid) &&
+      focusComponents.indexOf(kid.type as React.ComponentType) > -1
   );
 
   const lastIndex = focusableItems.length - 1;
@@ -48,14 +50,20 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
       }}
       {...other}
     >
-      {kids.map((kid: ChildrenType) => {
+      {kids.map(kid => {
+        if (!React.isValidElement(kid)) {
+          return null;
+        }
+
         const i = focusableItems.indexOf(kid);
 
         if (i < 0) {
           return kid;
         }
 
-        disabled.set(i, kid.props.disabled);
+        const k = kid as React.ReactElement<any>;
+
+        disabled.set(i, k.props.disabled);
 
         function focusDown(current: number) {
           const next = current + 1 > lastIndex ? firstIndex : current + 1;
@@ -77,7 +85,7 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
 
         const index = focusIndex || 0;
 
-        return React.cloneElement(kid, {
+        return React.cloneElement(k, {
           focus: i === focusIndex,
           onMouseEnter: () => {
             if (i !== focusIndex) {
@@ -208,13 +216,10 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
 MenuItem.propTypes = {
   /** Called when the menu item is selected. Generally use this instead of onClick. */
   onSelect: PropTypes.func,
-
   /** Provide a custom component. Eg., ReactRouter Link */
   component: PropTypes.string,
-
   /** Disable this menu item */
   disabled: PropTypes.bool,
-
   /** Pass in a string to use standard text styles. Otherwise, pass in any other node. */
   children: PropTypes.node
 };

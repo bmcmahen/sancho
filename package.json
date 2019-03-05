@@ -32,7 +32,7 @@
     "react-dom": "^16.8.3",
     "react-popper": "^1.3.3",
     "react-scripts": "2.1.5",
-    "react-spring": "^8.0.7",
+    "react-spring": "8.0.10",
     "react-swipeable-views": "^0.13.1",
     "react-with-gesture": "^4.0.5",
     "resize-observer-polyfill": "^1.5.1",
@@ -41,10 +41,12 @@
     "use-media": "^1.2.0"
   },
   "scripts": {
+    "clear": "rimrf build",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "build": "tsc"
+    "build": "tsc",
+    "build-for-docgen": "tsc --jsx preserve"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -60,6 +62,7 @@
     "@storybook/addon-links": "^4.1.13",
     "@storybook/react": "4.1.13",
     "@types/faker": "^4.1.5",
-    "faker": "^4.1.0"
+    "faker": "^4.1.0",
+    "rimraf": "^2.6.3"
   }
 }

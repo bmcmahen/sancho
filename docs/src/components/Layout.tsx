@@ -55,9 +55,6 @@ const Layout = ({ children }) => (
             <Text css={{ margin: 0, color: "white" }} variant="h4">
               {data.site.siteMetadata.title}
             </Text>
-            <div css={{ marginLeft: "auto" }}>
-              <IconButton icon="github" variant="ghost" label="Github" />
-            </div>
           </Toolbar>
         </Navbar>
         <div
@@ -100,7 +97,12 @@ const Layout = ({ children }) => (
 
 export default Layout
 
-export const Article = ({ children, sidebar }) => (
+interface ArticleProps {
+  sidebar?: any
+  children?: React.ReactNode
+}
+
+export const Article = ({ children, sidebar }: ArticleProps) => (
   <div css={{ display: "flex" }}>
     <div
       css={{

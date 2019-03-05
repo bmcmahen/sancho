@@ -243,7 +243,11 @@ export const Label: React.FunctionComponent<LabelProps> = ({
       }}
       {...other}
     >
-      <Text css={{ fontSize: theme.sizes[0] }} variant={"body"}>
+      <Text
+        css={{ fontSize: theme.sizes[0], fontWeight: 600 }}
+        muted
+        variant={"body"}
+      >
         {children}
       </Text>
     </label>

@@ -14,7 +14,7 @@ import { Sheet } from "./Sheet";
 import { useMedia } from "use-media";
 import PropTypes from "prop-types";
 
-const AnimatedLayer = animated(Layer);
+const AnimatedLayer = animated(Layer) as React.FunctionComponent<any>;
 
 interface PopoverProps {
   isOpen?: boolean;
@@ -120,12 +120,12 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
   }
 
   return (
-    <Positioner isOpen={show} duration={200} target={renderTrigger}>
+    <Positioner isOpen={show} target={renderTrigger}>
       {({ placement, ref, arrowProps, style }, animation) => (
         <AnimatedLayer
           role="dialog"
           elevation="md"
-          ref={el => {
+          ref={(el: any) => {
             ref(el);
             bind.ref.current = el;
             popoverRef.current = el;

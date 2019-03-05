@@ -110,13 +110,12 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
           ]}
         >
           {React.Children.map(children, (child, i) => {
-            return React.cloneElement(child, {
+            return React.cloneElement(child as React.ReactElement<any>, {
               isActive: i === value,
               ref: (el: HTMLButtonElement | null) => {
                 refs.current!.set(i, el);
               },
               dark,
-              id: child.props.id,
               onParentSelect: () => {
                 onChange(i);
               }
@@ -277,10 +276,8 @@ export const Tab: React.RefForwardingComponent<
 Tab.propTypes = {
   /** The id of the tab to be shared with TabContent */
   id: PropTypes.string.isRequired,
-
   /** The text content of the tab */
   children: PropTypes.node,
-
   /** An optional badge */
   badge: PropTypes.node
 };

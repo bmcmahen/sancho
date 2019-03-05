@@ -121,6 +121,8 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
   );
 };
 
+Alert.displayName = "Alert";
+
 Alert.propTypes = {
   // If used, a close button will be attached to the alert box.
   onRequestClose: PropTypes.func,

@@ -1,57 +1,1262 @@
 {
-  "../build/Button.js": {
-    "description": "@name Button\n@description Your basic button element.",
-    "displayName": "Button",
-    "methods": [],
-    "props": {
-      "variant": {
-        "type": {
-          "name": "enum",
-          "value": [
-            { "value": "\"default\"", "computed": false },
-            { "value": "\"ghost\"", "computed": false }
-          ]
+  "../build/Alert.js": [
+    {
+      "description": "Just your usual Button element.",
+      "displayName": "Button",
+      "methods": [],
+      "props": {
+        "variant": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"default\"", "computed": false },
+              { "value": "\"ghost\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "Controls the basic button style."
         },
-        "required": false,
-        "description": "Controls the basic button style."
-      },
-      "size": {
-        "type": {
-          "name": "enum",
-          "value": [
-            { "value": "\"xs\"", "computed": false },
-            { "value": "\"sm\"", "computed": false },
-            { "value": "\"md\"", "computed": false },
-            { "value": "\"lg\"", "computed": false },
-            { "value": "\"xl\"", "computed": false }
-          ]
+        "size": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"xs\"", "computed": false },
+              { "value": "\"sm\"", "computed": false },
+              { "value": "\"md\"", "computed": false },
+              { "value": "\"lg\"", "computed": false },
+              { "value": "\"xl\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The size of the button."
         },
-        "required": false,
-        "description": "The size of the button."
-      },
-      "block": {
-        "type": { "name": "bool" },
-        "required": false,
-        "description": "If true, the button will be displayed as a block element instead of inline."
-      },
-      "intent": {
-        "type": {
-          "name": "enum",
-          "value": [
-            { "value": "\"default\"", "computed": false },
-            { "value": "\"primary\"", "computed": false },
-            { "value": "\"success\"", "computed": false },
-            { "value": "\"warning\"", "computed": false },
-            { "value": "\"danger\"", "computed": false }
-          ]
+        "block": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "If true, the button will be displayed as a block element instead of inline."
         },
-        "required": false,
-        "description": "Controls the colour of the button."
+        "intent": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"default\"", "computed": false },
+              { "value": "\"primary\"", "computed": false },
+              { "value": "\"success\"", "computed": false },
+              { "value": "\"warning\"", "computed": false },
+              { "value": "\"danger\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "Controls the colour of the button."
+        }
       }
     }
-  },
-  "../build/IconButton.js": { "description": "", "methods": [] },
-  "../build/Layer.js": { "description": "", "methods": [] },
-  "../build/Overlay.js": { "description": "", "methods": [] },
-  "../build/Tabs.js": { "description": "", "methods": [] }
+  ],
+  "../build/Alert.jsx": [
+    {
+      "description": "",
+      "displayName": "Alert",
+      "methods": [],
+      "props": {
+        "onRequestClose": {
+          "type": { "name": "func" },
+          "required": false,
+          "description": ""
+        },
+        "subtitle": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": ""
+        },
+        "title": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": ""
+        },
+        "id": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": ""
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        },
+        "intent": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"info\"", "computed": false },
+              { "value": "\"success\"", "computed": false },
+              { "value": "\"warning\"", "computed": false },
+              { "value": "\"danger\"", "computed": false },
+              { "value": "\"question\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Avatar.jsx": [
+    {
+      "description": "",
+      "displayName": "Avatar",
+      "methods": [],
+      "props": {
+        "src": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": ""
+        },
+        "name": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": ""
+        },
+        "size": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"xs\"", "computed": false },
+              { "value": "\"sm\"", "computed": false },
+              { "value": "\"md\"", "computed": false },
+              { "value": "\"lg\"", "computed": false },
+              { "value": "\"xl\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": ""
+        },
+        "srcSet": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Badge.jsx": [
+    {
+      "description": "",
+      "displayName": "Badge",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Breadcrumb.jsx": [
+    {
+      "description": "",
+      "displayName": "Breadcrumb",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": { "name": "element" },
+          "required": false,
+          "description": ""
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "BreadcrumbItem",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "BreadCrumbDivider",
+      "methods": [],
+      "props": {
+        "inverted": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Button.js": [
+    {
+      "description": "Just your usual Button element.",
+      "displayName": "Button",
+      "methods": [],
+      "props": {
+        "variant": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"default\"", "computed": false },
+              { "value": "\"ghost\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "Controls the basic button style."
+        },
+        "size": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"xs\"", "computed": false },
+              { "value": "\"sm\"", "computed": false },
+              { "value": "\"md\"", "computed": false },
+              { "value": "\"lg\"", "computed": false },
+              { "value": "\"xl\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The size of the button."
+        },
+        "block": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "If true, the button will be displayed as a block element instead of inline."
+        },
+        "intent": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"default\"", "computed": false },
+              { "value": "\"primary\"", "computed": false },
+              { "value": "\"success\"", "computed": false },
+              { "value": "\"warning\"", "computed": false },
+              { "value": "\"danger\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "Controls the colour of the button."
+        }
+      }
+    }
+  ],
+  "../build/Button.jsx": [
+    {
+      "description": "Just your usual Button element.",
+      "displayName": "Button",
+      "methods": [],
+      "props": {
+        "variant": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"default\"", "computed": false },
+              { "value": "\"ghost\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "Controls the basic button style."
+        },
+        "size": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"xs\"", "computed": false },
+              { "value": "\"sm\"", "computed": false },
+              { "value": "\"md\"", "computed": false },
+              { "value": "\"lg\"", "computed": false },
+              { "value": "\"xl\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The size of the button."
+        },
+        "block": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "If true, the button will be displayed as a block element instead of inline."
+        },
+        "intent": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"default\"", "computed": false },
+              { "value": "\"primary\"", "computed": false },
+              { "value": "\"success\"", "computed": false },
+              { "value": "\"warning\"", "computed": false },
+              { "value": "\"danger\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "Controls the colour of the button."
+        }
+      }
+    }
+  ],
+  "../build/Collapse.jsx": [
+    {
+      "description": "",
+      "displayName": "Collapse",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "Any element that you want to reveal"
+        },
+        "id": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": "A unique id required for accessibility purposes"
+        },
+        "show": {
+          "type": { "name": "bool" },
+          "required": true,
+          "description": "Whether the children should be visible"
+        }
+      }
+    }
+  ],
+  "../build/Container.jsx": [
+    {
+      "description": "",
+      "displayName": "Container",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "NegativeMarginsContainer",
+      "methods": []
+    }
+  ],
+  "../build/Divider.jsx": [
+    {
+      "description": "",
+      "displayName": "Divider",
+      "methods": [],
+      "props": {
+        "muted": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Use a muted border"
+        }
+      }
+    }
+  ],
+  "../build/Embed.jsx": [
+    {
+      "description": "The Embed component maintains the provided aspect ratio determined\nby the width and height props. It's useful for avoiding content shifting on image\nloading.",
+      "displayName": "Embed",
+      "methods": [],
+      "props": {
+        "width": {
+          "type": { "name": "number" },
+          "required": false,
+          "description": "The relative width of the embed container"
+        },
+        "height": {
+          "type": { "name": "number" },
+          "required": false,
+          "description": "The relative height of the embed container"
+        }
+      }
+    }
+  ],
+  "../build/Form.jsx": [
+    {
+      "description": "",
+      "displayName": "InputGroup",
+      "methods": [],
+      "props": {
+        "label": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": "A label is required for accessibility purposes. Use `hideLabel` to hide it."
+        },
+        "hideLabel": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Visually hide the label. It remains accessible to screen readers."
+        },
+        "helpText": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": "Optional help text"
+        }
+      }
+    },
+    {
+      "description": "Our basic Input element. Use this when building customized\nforms. Otherwise, stick with InputGroup",
+      "displayName": "InputBase",
+      "methods": [],
+      "props": {
+        "inputSize": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"sm\"", "computed": false },
+              { "value": "\"md\"", "computed": false },
+              { "value": "\"lg\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The size of the input element"
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "TextArea",
+      "methods": [],
+      "props": {
+        "inputSize": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"sm\"", "computed": false },
+              { "value": "\"md\"", "computed": false },
+              { "value": "\"lg\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The size of the input element"
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "Label",
+      "methods": [],
+      "props": {
+        "hide": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": ""
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "Select",
+      "methods": [],
+      "props": {
+        "inputSize": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"sm\"", "computed": false },
+              { "value": "\"md\"", "computed": false },
+              { "value": "\"lg\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The size of the select box"
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "Check",
+      "methods": [],
+      "props": {
+        "label": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": "a label for the Checkmark"
+        }
+      }
+    }
+  ],
+  "../build/IconButton.js": [{ "description": "", "methods": [] }],
+  "../build/IconButton.jsx": [
+    { "description": "", "methods": [] },
+    { "description": "", "displayName": "CloseButton", "methods": [] }
+  ],
+  "../build/Layer.js": [
+    {
+      "description": "",
+      "methods": [],
+      "props": {
+        "elevation": {
+          "type": {
+            "name": "enum",
+            "computed": true,
+            "value": "Object.keys(theme.shadows)"
+          },
+          "required": false,
+          "description": "The size of the shadow to use"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Layer.jsx": [
+    {
+      "description": "",
+      "methods": [],
+      "props": {
+        "elevation": {
+          "type": {
+            "name": "enum",
+            "computed": true,
+            "value": "Object.keys(theme.shadows)"
+          },
+          "required": false,
+          "description": "The size of the shadow to use"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "LayerLoading",
+      "methods": [],
+      "props": {
+        "loading": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Whether the layer is currently loading"
+        }
+      }
+    }
+  ],
+  "../build/Link.jsx": [
+    {
+      "description": "",
+      "displayName": "Link",
+      "methods": [],
+      "props": {
+        "button": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Display a link as a button"
+        },
+        "component": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": "Use a custom component. E.g., ReactRouter Link"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "The content of the link"
+        }
+      }
+    }
+  ],
+  "../build/List.jsx": [
+    { "description": "", "displayName": "List", "methods": [] }
+  ],
+  "../build/LoadingPlaceholder.jsx": [
+    { "description": "", "displayName": "LoadingPlaceholder", "methods": [] }
+  ],
+  "../build/Menu.jsx": [
+    {
+      "description": "",
+      "displayName": "MenuList",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        },
+        "focusableChildren": {
+          "type": { "name": "arrayOf", "value": { "name": "elementType" } },
+          "required": false,
+          "description": "Useful if you are providing your own MenuItem children"
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "MenuItem",
+      "methods": [],
+      "props": {
+        "onSelect": {
+          "type": { "name": "func" },
+          "required": false,
+          "description": "Called when the menu item is selected. Generally use this instead of onClick."
+        },
+        "component": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": "Provide a custom component. Eg., ReactRouter Link"
+        },
+        "disabled": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Disable this menu item"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "Pass in a string to use standard text styles. Otherwise, pass in any other node."
+        }
+      }
+    },
+    { "description": "", "displayName": "MenuDivider", "methods": [] },
+    {
+      "description": "",
+      "displayName": "MenuLabel",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Modal.jsx": [
+    {
+      "description": "",
+      "displayName": "Modal",
+      "methods": [],
+      "props": {
+        "isOpen": {
+          "type": { "name": "bool" },
+          "required": true,
+          "description": "Whether the modal is showing"
+        },
+        "onRequestClose": {
+          "type": { "name": "func" },
+          "required": true,
+          "description": "A callback for closing the modal."
+        },
+        "title": {
+          "type": { "name": "string" },
+          "required": false,
+          "description": "An optional title. If set, a header will be added to your dialog."
+        },
+        "mobileFullscreen": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Fill the entire screen on mobile devices"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "The contents of the dialog"
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "ModalHeader",
+      "methods": [],
+      "props": {
+        "title": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": "The title of the header"
+        },
+        "onRequestClose": {
+          "type": { "name": "func" },
+          "required": false,
+          "description": "An optional callback for closing the dialog. If set, a close button will be added to the header"
+        }
+      }
+    }
+  ],
+  "../build/Navbar.jsx": [
+    {
+      "description": "",
+      "displayName": "Navbar",
+      "methods": [],
+      "props": {
+        "position": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"fixed\"", "computed": false },
+              { "value": "\"static\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The position of the navbar. Eg., 'fixed', 'absolute'"
+        }
+      }
+    }
+  ],
+  "../build/Overlay.js": [
+    {
+      "description": "",
+      "methods": [],
+      "props": {
+        "isOpen": {
+          "type": { "name": "bool" },
+          "required": true,
+          "description": "Whether the overlay is open"
+        },
+        "onRequestClose": {
+          "type": { "name": "func" },
+          "required": true,
+          "description": "Callback to handle closing the overlay"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Overlay.jsx": [
+    {
+      "description": "",
+      "methods": [],
+      "props": {
+        "isOpen": {
+          "type": { "name": "bool" },
+          "required": true,
+          "description": "Whether the overlay is open"
+        },
+        "onRequestClose": {
+          "type": { "name": "func" },
+          "required": true,
+          "description": "Callback to handle closing the overlay"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Popover.jsx": [
+    {
+      "description": "",
+      "displayName": "Popover",
+      "methods": [],
+      "props": {
+        "isOpen": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Whether the popover is currently open"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "The trigger of the popover"
+        },
+        "content": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "the content of the popover"
+        },
+        "closeOnMenuItemClick": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Whether the menu should close when clicked"
+        }
+      }
+    },
+    {
+      "description": "Display popover contents in a bottom sheet if\non mobile devices. I generally find that this provides a\nbetter use experience on smaller screens.",
+      "displayName": "ResponsivePopover",
+      "methods": []
+    }
+  ],
+  "../build/Positions.jsx": [
+    {
+      "description": "",
+      "displayName": "Positioner",
+      "methods": [],
+      "props": {
+        "isOpen": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Whether the item being positioned is visible"
+        },
+        "placement": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"auto-start\"", "computed": false },
+              { "value": "\"auto\"", "computed": false },
+              { "value": "\"auto-end\"", "computed": false },
+              { "value": "\"top-start\"", "computed": false },
+              { "value": "\"top\"", "computed": false },
+              { "value": "\"top-end\"", "computed": false },
+              { "value": "\"right-start\"", "computed": false },
+              { "value": "\"right\"", "computed": false },
+              { "value": "\"right-end\"", "computed": false },
+              { "value": "\"bottom-end\"", "computed": false },
+              { "value": "\"bottom\"", "computed": false },
+              { "value": "\"bottom-start\"", "computed": false },
+              { "value": "\"left-end\"", "computed": false },
+              { "value": "\"left\"", "computed": false },
+              { "value": "\"left-start\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The placement of the children"
+        },
+        "positionFixed": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Use fixed positioning"
+        },
+        "target": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "The element our positioner is targetting (eg, Button)"
+        },
+        "children": {
+          "type": { "name": "func" },
+          "required": false,
+          "description": "The render callback which contains positioning and animation info"
+        }
+      }
+    }
+  ],
+  "../build/Sheet.jsx": [
+    {
+      "description": "",
+      "displayName": "Sheet",
+      "methods": [],
+      "props": {
+        "isOpen": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": ""
+        },
+        "onRequestClose": {
+          "type": { "name": "func" },
+          "required": false,
+          "description": ""
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        },
+        "position": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"left\"", "computed": false },
+              { "value": "\"top\"", "computed": false },
+              { "value": "\"right\"", "computed": false },
+              { "value": "\"bottom\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": ""
+        },
+        "closeOnClick": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": ""
+        },
+        "classes": {
+          "type": {
+            "name": "shape",
+            "value": { "sheet": { "name": "any", "required": false } }
+          },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/SkipNav.jsx": [
+    {
+      "description": "",
+      "displayName": "SkipNavLink",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "The text content of the skp nav button"
+        }
+      }
+    }
+  ],
+  "../build/Spinner.jsx": [
+    {
+      "description": "",
+      "displayName": "Spinner",
+      "methods": [],
+      "props": {
+        "delay": {
+          "type": { "name": "number" },
+          "required": false,
+          "description": "The delay (in ms) before the spinner will appear"
+        }
+      }
+    }
+  ],
+  "../build/TabContent.jsx": [
+    {
+      "description": "",
+      "displayName": "TabContent",
+      "methods": [],
+      "props": {
+        "value": {
+          "type": { "name": "number" },
+          "required": true,
+          "description": "The index of the visible view"
+        },
+        "onChange": {
+          "type": { "name": "func" },
+          "required": false,
+          "description": "The callback for controlling which tab is being viewed"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Table.jsx": [
+    {
+      "description": "",
+      "displayName": "Table",
+      "methods": [],
+      "props": {
+        "minWidth": {
+          "type": { "name": "number" },
+          "required": false,
+          "description": "An optional minimum width for table content."
+        },
+        "fixed": {
+          "type": { "name": "arrayOf", "value": { "name": "string" } },
+          "required": false,
+          "description": "An optional array of fixed layout widths for each column"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    },
+    { "description": "", "displayName": "TableHead", "methods": [] },
+    {
+      "description": "",
+      "displayName": "TableRow",
+      "methods": [],
+      "props": {
+        "onClick": {
+          "type": { "name": "func" },
+          "required": false,
+          "description": "A callback when a row is selected"
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "TableCell",
+      "methods": [],
+      "props": {
+        "align": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"right\"", "computed": false },
+              { "value": "\"left\"", "computed": false },
+              { "value": "\"center\"", "computed": false },
+              { "value": "\"justify\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": ""
+        },
+        "variant": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"head\"", "computed": false },
+              { "value": "\"body\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": ""
+        }
+      }
+    },
+    { "description": "", "displayName": "TableBody", "methods": [] },
+    {
+      "description": "",
+      "displayName": "ExpandingRow",
+      "methods": [],
+      "props": {
+        "content": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "The expanded content to show when the user selects the row"
+        }
+      }
+    }
+  ],
+  "../build/Tabs.js": [
+    {
+      "description": "",
+      "methods": [],
+      "props": {
+        "id": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": "The id of the tab to be shared with TabContent"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "The text content of the tab"
+        },
+        "badge": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "An optional badge"
+        }
+      }
+    }
+  ],
+  "../build/Tabs.jsx": [
+    {
+      "description": "",
+      "displayName": "Tabs",
+      "methods": [],
+      "props": {
+        "value": {
+          "type": { "name": "number" },
+          "required": true,
+          "description": "The currently selected index"
+        },
+        "onChange": {
+          "type": { "name": "func" },
+          "required": false,
+          "description": "Change callback to control which tab is selected"
+        },
+        "dark": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Whether the tab is on a dark background"
+        },
+        "slider": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Toggle slider visibiliby"
+        },
+        "variant": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"default\"", "computed": false },
+              { "value": "\"evenly-spaced\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "Whether tabs should be left-aligned or justified"
+        },
+        "classes": {
+          "type": {
+            "name": "shape",
+            "value": {
+              "slider": { "name": "any", "required": false },
+              "root": { "name": "any", "required": false },
+              "tablist": { "name": "any", "required": false }
+            }
+          },
+          "required": false,
+          "description": ""
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "Tab elements"
+        }
+      }
+    },
+    {
+      "description": "",
+      "methods": [],
+      "props": {
+        "id": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": "The id of the tab to be shared with TabContent"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "The text content of the tab"
+        },
+        "badge": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": "An optional badge"
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "TabPanel",
+      "methods": [],
+      "props": {
+        "id": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": "The id should correspond to the id given to the associated Tab"
+        }
+      }
+    },
+    {
+      "description": "",
+      "displayName": "TabIcon",
+      "methods": [],
+      "props": {
+        "icon": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": ""
+        },
+        "label": {
+          "type": { "name": "string" },
+          "required": true,
+          "description": ""
+        },
+        "size": {
+          "type": { "name": "number" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Text.jsx": [
+    {
+      "description": "",
+      "displayName": "Text",
+      "methods": [],
+      "props": {
+        "variant": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"uppercase\"", "computed": false },
+              { "value": "\"hidden\"", "computed": false },
+              { "value": "\"body\"", "computed": false },
+              { "value": "\"paragraph\"", "computed": false },
+              { "value": "\"subtitle\"", "computed": false },
+              { "value": "\"lead\"", "computed": false },
+              { "value": "\"h6\"", "computed": false },
+              { "value": "\"h5\"", "computed": false },
+              { "value": "\"h4\"", "computed": false },
+              { "value": "\"h3\"", "computed": false },
+              { "value": "\"h2\"", "computed": false },
+              { "value": "\"h1\"", "computed": false },
+              { "value": "\"display3\"", "computed": false },
+              { "value": "\"display2\"", "computed": false },
+              { "value": "\"display1\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "The text style"
+        },
+        "wrap": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Use text-overflow: ellipsis styling when set to false"
+        },
+        "muted": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Use muted colors"
+        },
+        "gutter": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Set to false to remove any bottom margins"
+        }
+      }
+    }
+  ],
+  "../build/Toolbar.jsx": [
+    {
+      "description": "",
+      "displayName": "Toolbar",
+      "methods": [],
+      "props": {
+        "compressed": {
+          "type": { "name": "bool" },
+          "required": false,
+          "description": "Reduce the height of the toolbar"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": false,
+          "description": ""
+        }
+      }
+    }
+  ],
+  "../build/Tooltip.jsx": [
+    {
+      "description": "",
+      "displayName": "Tooltip",
+      "methods": [],
+      "props": {
+        "content": {
+          "type": { "name": "node" },
+          "required": true,
+          "description": "The content of the tooltip"
+        },
+        "children": {
+          "type": { "name": "node" },
+          "required": true,
+          "description": "the target element for the tooltip"
+        },
+        "placement": {
+          "type": {
+            "name": "enum",
+            "value": [
+              { "value": "\"auto-start\"", "computed": false },
+              { "value": "\"auto\"", "computed": false },
+              { "value": "\"auto-end\"", "computed": false },
+              { "value": "\"top-start\"", "computed": false },
+              { "value": "\"top\"", "computed": false },
+              { "value": "\"top-end\"", "computed": false },
+              { "value": "\"right-start\"", "computed": false },
+              { "value": "\"right\"", "computed": false },
+              { "value": "\"right-end\"", "computed": false },
+              { "value": "\"bottom-end\"", "computed": false },
+              { "value": "\"bottom\"", "computed": false },
+              { "value": "\"bottom-start\"", "computed": false },
+              { "value": "\"left-end\"", "computed": false },
+              { "value": "\"left\"", "computed": false },
+              { "value": "\"left-start\"", "computed": false }
+            ]
+          },
+          "required": false,
+          "description": "Where the tooltip should be placed"
+        }
+      }
+    }
+  ]
 }

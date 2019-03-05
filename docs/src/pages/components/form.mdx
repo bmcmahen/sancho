@@ -26,20 +26,27 @@ The forms module exposes four different components: `InputGroup`, `Input`, `Text
 
 ```jsx
 <form>
+  <InputGroup error="Required field" label="Email address">
+    <Input type="email" placeholder="name@example.com" />
+  </InputGroup>
   <InputGroup
-    name="email"
-    label="Email address"
-    type="email"
-    placeholder="name@example.com"
-  />
-  <InputGroup
-    name="textarea"
     label="Example textarea"
-    hideLabel
-    textarea
     helpText="Please provide a brief description of yourself. This will go on your profile."
-    placeholder="Example textarea"
-  />
+  >
+    <TextArea />
+  </InputGroup>
+
+  <InputGroup label="Gender">
+    <Select>
+      <option>Female</option>
+      <option>Male</option>
+      <option>Other</option>
+    </Select>
+  </InputGroup>
+
+  <InputGroup label="Do you accept our terms?">
+    <Check label="Sure, whatevs" />
+  </InputGroup>
 </form>
 ```
 

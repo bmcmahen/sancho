@@ -34,15 +34,15 @@
     "babel-plugin-typescript-to-proptypes": "^0.17.1",
     "babel-preset-gatsby": "^0.1.8",
     "prettier": "^1.16.4",
-    "react-docgen": "^4.0.1"
+    "react-docgen": "4.1.0"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
   "scripts": {
-    "build-lib": "cd ../ && yarn run build",
-    "generate-props": "yarn run build-lib && react-docgen ../build -e /stories/ --out ./src/pages/components/props.json",
+    "build-lib": "cd ../ && yarn run build-for-docgen",
+    "generate-props": "yarn run build-lib && react-docgen ../build -e /stories/ --out ./src/pages/components/props.json --resolver=findAllComponentDefinitions --cwd=../",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
