@@ -56,7 +56,7 @@ export function IconList({  }: IconListProps) {
               <Icon css={{ margin: theme.spaces.sm }} icon={key} />
 
               <Text
-                noWrap
+                wrap={false}
                 css={{
                   fontSize: theme.sizes[0],
                   marginLeft: theme.spaces.md,

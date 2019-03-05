@@ -35,7 +35,13 @@ export class Icon extends React.Component<IconProps> {
   static readonly SIZE_LARGE = 20;
 
   render() {
-    const { title, color, icon, size = Icon.SIZE_STANDARD } = this.props;
+    const {
+      title,
+      color,
+      icon,
+      size = Icon.SIZE_STANDARD,
+      ...other
+    } = this.props;
 
     if (icon == null) return null;
     else if (typeof icon !== "string") return icon;
@@ -61,6 +67,7 @@ export class Icon extends React.Component<IconProps> {
         height={size}
         color={color}
         viewBox={viewBox}
+        {...other}
       >
         {title ? <title>{title}</title> : null}
         {paths}

@@ -64,7 +64,6 @@ export const variants = {
     fontSize: theme.sizes[6],
     marginBottom: theme.spaces.sm
   }),
-
   display3: css({
     fontWeight: 300,
     fontSize: theme.sizes[5],
@@ -125,6 +124,9 @@ const styles: { [key: string]: SerializedStyles } = {
     fontWeight: 400,
     "-webkit-font-smoothing": "antialiased"
   }),
+  noGutter: css({
+    marginBottom: 0
+  }),
   noWrap: css({
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -137,14 +139,16 @@ const styles: { [key: string]: SerializedStyles } = {
 
 export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariants;
-  noWrap?: boolean;
+  wrap?: boolean;
   muted?: boolean;
+  gutter?: boolean;
   component?: React.ReactType<TextProps>;
 }
 
 export const Text: React.FunctionComponent<TextProps> = ({
   variant = "body",
-  noWrap,
+  wrap = true,
+  gutter = true,
   muted,
   component,
   css,
@@ -155,9 +159,10 @@ export const Text: React.FunctionComponent<TextProps> = ({
     <Component
       css={[
         styles.base,
-        noWrap && styles.noWrap,
+        !wrap && styles.noWrap,
         muted && styles.muted,
-        variants[variant]
+        variants[variant],
+        !gutter && styles.noGutter
       ]}
       {...other}
     />
@@ -167,10 +172,10 @@ export const Text: React.FunctionComponent<TextProps> = ({
 Text.propTypes = {
   /** The text style */
   variant: PropTypes.oneOf(Object.keys(variants)),
-
-  /** Use text-overflow: ellipsis styling */
-  noWrap: PropTypes.bool,
-
+  /** Use text-overflow: ellipsis styling when set to false */
+  wrap: PropTypes.bool,
   /** Use muted colors */
-  muted: PropTypes.bool
+  muted: PropTypes.bool,
+  /** Set to false to remove any bottom margins */
+  gutter: PropTypes.bool
 };

@@ -144,7 +144,7 @@ export const ModalHeader: React.FunctionComponent<ModalHeaderProps> = ({
   ...other
 }) => (
   <div {...other}>
-    <Text noWrap variant="h4">
+    <Text wrap={false} variant="h4">
       {title}
     </Text>
     {onRequestClose && <CloseButton onClick={onRequestClose} />}

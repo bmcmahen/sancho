@@ -250,7 +250,7 @@ export const Tab: React.RefForwardingComponent<
       >
         {typeof children === "string" ? (
           <Text
-            noWrap
+            wrap={false}
             component="span"
             css={{
               fontSize: theme.sizes[0],
