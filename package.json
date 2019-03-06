@@ -47,7 +47,7 @@
     "build-storybook": "build-storybook -s public",
     "build": "yarn run clear && tsc",
     "build-for-docgen": "yarn run clear && tsc --jsx preserve",
-    "build-docs": "cd ./docs && npm run build"
+    "build-docs": "cd ./docs && yarn run build && surge public --domain sancho.surge.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
