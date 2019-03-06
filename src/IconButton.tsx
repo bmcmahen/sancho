@@ -26,15 +26,27 @@ export const IconButton: React.RefForwardingComponent<
   );
 });
 
+IconButton.displayName = "IconButton";
+
 IconButton.propTypes = {
   /** The name of the icon you wish to render */
   icon: PropTypes.string.isRequired,
 
+  /** Change the colour */
+  color: PropTypes.string,
+
   /** A label required for accessibility  */
   label: PropTypes.string.isRequired,
 
-  /** Inherits from Button */
-  ...Button.propTypes
+  /**
+   * Controls the basic button style.
+   */
+
+  variant: PropTypes.oneOf(["default", "ghost"]),
+  /**
+   * The size of the button.
+   */
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
 };
 
 interface CloseButtonProps extends Partial<ButtonProps> {
@@ -66,6 +78,12 @@ CloseButton.propTypes = {
   /** Change the colour */
   color: PropTypes.string,
 
-  /** Extends Button props */
-  ...Button.propTypes
+  /**
+   * Controls the basic button style.
+   */
+  variant: PropTypes.oneOf(["default", "ghost"]),
+  /**
+   * The size of the button.
+   */
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
 };

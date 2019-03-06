@@ -8,27 +8,35 @@ import SEO from "../../components/SEO"
 
 <Container>
 <Article sidebar={[
+  { id: 'Alert', name: 'Alert' },
   { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'With a subtitle', name: 'With a subtitle' },
   { id: 'Intent', name: 'Intent options'},
   { id: 'Props', name: 'Props'}
 ]}>
 
 # Alert
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+Use an alert to inform users of important information. To display an alert in a toast notification, use the [toast](/components/toast) module. Alert is modelled after the excellent version found in [Evergreen](https://evergreen.segment.com/components/alert).
 
 #### Basic usage
 
 ```jsx
+<Alert title="Nostrud non magna quis veniam dolore magna voluptate." />
+```
+
+#### With a subtitle
+
+```jsx
 <Alert
   title="Nostrud non magna quis veniam dolore magna voluptate."
-  subtitle="Ut ut eiusmod ad cillum ad magna cillum non esse labore exercitation qui minim minim. Aliqua consequat enim est reprehenderit."
+  subtitle="Nulla id amet reprehenderit laboris irure Lorem ex esse eiusmod eiusmod occaecat officia. Quis in reprehenderit dolor veniam id sunt mollit reprehenderit."
 />
 ```
 
 #### Intent
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+You can alter the colours and icons of the Alert by changing the `intent` prop to either `info`, `success`, `question`, `danger`, or `warning`.
 
 ```jsx
 <div className="Alert-example">
@@ -58,6 +66,19 @@ Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
     subtitle="Ut ut eiusmod ad cillum ad magna cillum non esse labore exercitation qui minim minim."
   />
 </div>
+```
+
+#### Custom
+
+You can provide your own components.
+
+```jsx
+<Alert>
+  <Text variant="subtitle">
+    Yeah, this is an absurd custom example, but I don't see myself doing this
+    very often.
+  </Text>
+</Alert>
 ```
 
 <Props names={["Alert"]} />

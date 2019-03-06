@@ -82,6 +82,14 @@ const MDXComponents = {
     <code css={{ background: theme.colors.background.tint2 }}>{children}</code>
   ),
   pre: ComponentPreview,
+  ul: props => (
+    <ul css={{ paddingLeft: "1.5rem", marginBottom: "1rem" }} {...props} />
+  ),
+  li: ({ children, ...other }) => (
+    <li {...other} css={{ marginBottom: "0.5rem" }}>
+      <Text>{children}</Text>
+    </li>
+  ),
   a: props => <Link {...props} />,
   h1: ({ children }) => (
     <Text id={getId(children)} css={anchorPadding} variant="h1">

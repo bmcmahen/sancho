@@ -15,7 +15,7 @@ import { anchorPadding } from "./ExamplePreview.jsx"
 
 // pretty lame
 function getKey(name: string) {
-  return `../build/${name}.js`
+  return `../build/${name}.jsx`
 }
 
 interface PropsProps {
@@ -41,49 +41,57 @@ export function Props({ names }: PropsProps) {
           Props
         </Text>
         {names.map(name => {
-          const entry = table[getKey(name)]
-          if (entry) {
-            const { props } = entry
-            return (
-              <React.Fragment key={name}>
-                <Table minWidth="650px">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell css={{ paddingLeft: "0 !important" }}>
-                        Name
-                      </TableCell>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Description</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {Object.keys(props).map(key => {
-                      const row = props[key]
-                      const type = row.type.name
-                      const val = row.type.value
-                      const { required, description } = row
-                      return (
-                        <TableRow key={key}>
-                          <TableCell
-                            css={{ paddingLeft: "0 !important" }}
-                            component="th"
-                            scope="row"
-                          >
-                            {key}
-                            {required ? "*" : ""}
-                          </TableCell>
-                          <TableCell>
-                            {type}
-                            {type === "enum" ? " " + getEnumString(val) : ""}
-                          </TableCell>
-                          <TableCell>{description}</TableCell>
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
-              </React.Fragment>
-            )
+          const entries = table[getKey(name)]
+          if (entries) {
+            return entries.map(entry => {
+              const { props } = entry
+
+              if (!props) {
+                return null
+              }
+
+              return (
+                <React.Fragment key={name}>
+                  <Text variant="h4">{entry.displayName}</Text>
+                  <Table css={{ marginBottom: "1.5rem" }} minWidth="650px">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell css={{ paddingLeft: "0 !important" }}>
+                          Name
+                        </TableCell>
+                        <TableCell>Type</TableCell>
+                        <TableCell>Description</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {Object.keys(props).map(key => {
+                        const row = props[key]
+                        const type = row.type.name
+                        const val = row.type.value
+                        const { required, description } = row
+                        return (
+                          <TableRow key={key}>
+                            <TableCell
+                              css={{ paddingLeft: "0 !important" }}
+                              component="th"
+                              scope="row"
+                            >
+                              {key}
+                              {required ? "*" : ""}
+                            </TableCell>
+                            <TableCell>
+                              {type}
+                              {type === "enum" ? " " + getEnumString(val) : ""}
+                            </TableCell>
+                            <TableCell>{description}</TableCell>
+                          </TableRow>
+                        )
+                      })}
+                    </TableBody>
+                  </Table>
+                </React.Fragment>
+              )
+            })
           }
 
           return null

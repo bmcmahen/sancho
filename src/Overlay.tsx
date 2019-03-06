@@ -37,7 +37,8 @@ export const Overlay: React.RefForwardingComponent<
             item && (
               <div
                 key={key}
-                ref={mergeRefs(ref, bind.ref)}
+                ref={ref}
+                {...bind}
                 onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
                   onRequestClose();
@@ -86,5 +87,6 @@ Overlay.propTypes = {
   /** Callback to handle closing the overlay */
   onRequestClose: PropTypes.func.isRequired,
 
+  /** Whatever you'd like to appear on top */
   children: PropTypes.node
 };

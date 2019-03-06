@@ -4,26 +4,34 @@ import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Navbar" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Navbar', name: 'Navbar'},
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Props', name: 'Props' }
 ]}>
 
-# Button
+# Navbar
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A Navbar is used to provide app based navigation.
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+You'll typically use the Navbar in combination with a [Toolbar](/components/toolbar). You can supply a custom background colour using standard styling, as in the example below.
 
 ```jsx
-<div className="Basic-example" />
+<div>
+  <Navbar css={{ background: theme.colors.background.tint2 }} position="static">
+    <Toolbar>
+      <Text>Hello world</Text>
+    </Toolbar>
+  </Navbar>
+</div>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Navbar"]} />
 
 </Article>
 </Container>

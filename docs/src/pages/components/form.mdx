@@ -10,19 +10,27 @@ import SEO from "../../components/SEO"
 <Article sidebar={[
   { id: 'Forms', name: 'Forms' },
   { id: 'InputGroup usage', name: 'InputGroup usage' },
-  { id: 'Input usage', name: 'Input usage' },
-  { id: 'Textarea usage', name: 'Textarea usage'},
+  { id: 'Different sizes', name: 'Different sizes' },
   { id: 'Custom', name: 'Custom example' },
   { id: 'Props', name: 'Props'}
 ]}>
 
 # Forms
 
-The forms module exposes four different components: `InputGroup`, `Input`, `TextArea`, `Label`.
+Forms are used for obtaining user input. For accessibility purposes we always recommend pairing an input element with a label. You can use the `hideLabel` prop with the Label component to visually hide it.
+
+To create forms, Sancho exports multiple components:
+
+- **InputGroup**: A useful helper for providing labels, helper text, and errors for the other input components. Composes the Label component.
+- **Input**: The standard input component for regular text input.
+- **TextArea**: A textarea version of the Input component.
+- **Label**: Label for input types.
+- **Select**: Select menu.
+- **Check**: Used for checkbox or radio style inputs.
 
 #### InputGroup usage
 
-`InputGroup` composes the other three and is a useful component for building your typical forms. If you need more customization, you can use the other three.
+`InputGroup` is typically used as a wrapper for input elements. It provides an `id` to the child input element to ensure accessibility.
 
 ```jsx
 <form>
@@ -35,7 +43,6 @@ The forms module exposes four different components: `InputGroup`, `Input`, `Text
   >
     <TextArea />
   </InputGroup>
-
   <InputGroup label="Gender">
     <Select>
       <option>Female</option>
@@ -43,26 +50,36 @@ The forms module exposes four different components: `InputGroup`, `Input`, `Text
       <option>Other</option>
     </Select>
   </InputGroup>
-
   <InputGroup label="Do you accept our terms?">
     <Check label="Sure, whatevs" />
   </InputGroup>
 </form>
 ```
 
-#### Input usage
+#### Different sizes
+
+Input elements support three different sizes: `lg`, `md` and `sm`.
 
 ```jsx
 <form>
-  <Input defaultValue="Just a standard input" />
-</form>
-```
-
-#### TextArea usage
-
-```jsx
-<form>
-  <TextArea defaultValue="Just a standard input" />
+  <form>
+    <InputGroup label="Email address">
+      <Input inputSize="lg" type="email" placeholder="name@example.com" />
+    </InputGroup>
+    <InputGroup
+      label="Example textarea"
+      helpText="Please provide a brief description of yourself. This will go on your profile."
+    >
+      <TextArea inputSize="lg" />
+    </InputGroup>
+    <InputGroup label="Gender">
+      <Select inputSize="lg">
+        <option>Female</option>
+        <option>Male</option>
+        <option>Other</option>
+      </Select>
+    </InputGroup>
+  </form>
 </form>
 ```
 
@@ -70,12 +87,14 @@ The forms module exposes four different components: `InputGroup`, `Input`, `Text
 
 ```jsx
 <form>
-  <Label htmlFor="example">My example</Label>
+  <Label css={{ background: theme.colors.background.tint1 }} htmlFor="example">
+    This is a lame custom example, but you get the point
+  </Label>
   <TextArea id="example" defaultValue="Just a textarea with a label" />
 </form>
 ```
 
-<Props names={["InputGroup"]} />
+<Props names={["Form"]} />
 
 </Article>
 </Container>

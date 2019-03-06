@@ -8,6 +8,7 @@ import SEO from "../../components/SEO"
 
 <Container>
 <Article sidebar={[
+  { id: 'Collapse', name: 'Collapse' },
   { id: 'Basic usage', name: 'Basic usage' },
   { id: 'Using hooks', name: 'Using hooks'},
   { id: 'Props', name: 'Props'}
@@ -15,12 +16,17 @@ import SEO from "../../components/SEO"
 
 # Collapse
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+Collapse is used to hide and reveal content and works seamlessly with content of dynamic height.
+
+You can build collapsing content using two exports:
+
+- **Collapse**: The main component which measures and reveals content.
+- **useCollapse**: A hook which helps control Collapse and provides the necessary aria-attributes.
 
 #### Basic usage
 
-You can also control the collapse using your own state. You are responsible for providing the `aria` attributes
-yourself. Alternatively, you might want to use the `useCollapse` hook to have the aria attributes managed for you.
+If you control `Collapse` using your own state, you are responsible for providing the `aria` attributes
+yourself like in the example below.
 
 ```jsx
 <Component initialState={{ show: false }}>

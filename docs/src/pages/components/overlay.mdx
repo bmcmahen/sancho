@@ -1,29 +1,42 @@
 import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Overlay" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Overlay', name: 'Overlay' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Props', name: 'Props' }
 ]}>
 
-# Button
+# Overlay
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+An overlay used by the [Modal](/components/modal) and [Sheet](/components/sheet) components. It requests to close when clicked.
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+Add whatever you'd like to display over the Overlay as its children.
 
 ```jsx
-<div className="Basic-example" />
+<Component initialState={{ isOpen: false }}>
+  {({ state, setState }) => (
+    <React.Fragment>
+      <Button onClick={() => setState({ isOpen: true })}>Open</Button>
+      <Overlay
+        isOpen={state.isOpen}
+        onRequestClose={() => setState({ isOpen: false })}
+      >
+        <div>Click somewhere to close</div>
+      </Overlay>
+    </React.Fragment>
+  )}
+</Component>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Overlay"]} />
 
 </Article>
 </Container>

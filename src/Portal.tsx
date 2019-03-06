@@ -34,5 +34,6 @@ export const Portal: React.FunctionComponent<PortalProps> = ({ children }) => {
 };
 
 Portal.propTypes = {
+  /** The element to be rendered in the portal */
   children: PropTypes.node
 };

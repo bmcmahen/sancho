@@ -41,12 +41,12 @@
     "use-media": "^1.2.0"
   },
   "scripts": {
-    "clear": "rimrf build",
+    "clear": "rimraf ./build",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "build": "tsc",
-    "build-for-docgen": "tsc --jsx preserve"
+    "build": "yarn run clear && tsc",
+    "build-for-docgen": "yarn run clear && tsc --jsx preserve"
   },
   "eslintConfig": {
     "extends": "react-app"

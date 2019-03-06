@@ -8,13 +8,19 @@ import SEO from "../../components/SEO"
 
 <Container>
 <Article sidebar={[
+  { id: 'Breadcrumb', name: 'Breadcrumb' },
   { id: 'Basic usage', name: 'Basic usage' },
   { id: 'Props', name: 'Props' }
 ]}>
 
 # Breadcrumb
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+Breadcrumbs are useful to orient the user on your site, especially when working with hierarchies of content.
+
+Sancho exports two components to create breadcrumbs:
+
+- **Breadcrumb**: The container for wrapping a list of BreadcrumbItem children.
+- **BreadcrumbItem**: Each item in the list of breadcrumbs.
 
 #### Basic usage
 
@@ -30,7 +36,7 @@ Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmo
 </Breadcrumb>
 ```
 
-<Props names={["Breadcrumb", "BreadcrumbItem"]} />
+<Props names={["Breadcrumb"]} />
 
 </Article>
 </Container>

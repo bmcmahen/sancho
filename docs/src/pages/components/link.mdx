@@ -4,26 +4,39 @@ import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Link" />
 
 <Container>
 <Article sidebar={[
+  { id: 'Link', name: 'Link'},
   { id: 'Basic usage', name: 'Basic usage' }
 ]}>
 
-# Button
+# Link
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A standard anchor element useful in standard body text.
 
-#### Intent
-
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+#### Basic usage
 
 ```jsx
-<div className="Basic-example" />
+<Text gutter={false} variant="paragraph">
+  Ut aute non <Link href="#">deserunt</Link> non sunt.
+</Text>
 ```
 
-<Props names={["Button"]} />
+#### Using a custom component
+
+You can pass in a custom component such as a Link from react-router.
+
+```.jsx
+import { Link } from 'react-router'
+
+<Link component={Link} to='/some-url'>
+  deserunt
+</Link>
+```
+
+<Props names={["Link"]} />
 
 </Article>
 </Container>

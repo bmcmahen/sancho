@@ -47,6 +47,6 @@ export const Navbar: React.FunctionComponent<NavbarProps> = ({
 };
 
 Navbar.propTypes = {
-  /** The position of the navbar. Eg., 'fixed', 'absolute' */
+  /** The position of the navbar. */
   position: PropTypes.oneOf(["fixed", "static"] as Positions[])
 };

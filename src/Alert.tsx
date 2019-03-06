@@ -124,22 +124,22 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
 Alert.displayName = "Alert";
 
 Alert.propTypes = {
-  // If used, a close button will be attached to the alert box.
+  /** If used, a close button will be attached to the alert box. */
   onRequestClose: PropTypes.func,
 
-  // Secondary text
+  /** Secondary text */
   subtitle: PropTypes.string,
 
-  // Primary text
+  /** Primary text */
   title: PropTypes.string,
 
-  // A unique id used for accessibility purposes
+  /** A unique id used for accessibility purposes */
   id: PropTypes.string,
 
-  // Optionally render children if a title is not specified. Used for custom alerts.
+  /** Optionally render children if a title is not specified. Used for custom alerts. */
   children: PropTypes.node,
 
-  // Changes the icon and colour of the alert.
+  /** Changes the icon and colour of the alert. */
   intent: PropTypes.oneOf([
     "info",
     "success",

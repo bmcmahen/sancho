@@ -41,8 +41,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build-lib": "cd ../ && yarn run build-for-docgen",
-    "generate-props": "yarn run build-lib && react-docgen ../build -e /stories/ --out ./src/pages/components/props.json --resolver=findAllComponentDefinitions --cwd=../",
+    "build-for-docgen": "cd ../ && yarn run build-for-docgen",
+    "generate-props": "yarn run build-for-docgen && react-docgen ../build -e /stories/ --out ./src/pages/components/props.json --resolver=findAllComponentDefinitions --cwd=../",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",

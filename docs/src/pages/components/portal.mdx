@@ -4,26 +4,28 @@ import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Portal" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Portal', name: 'Portal'},
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Props', name: 'Props'}
 ]}>
 
-# Button
+# Portal
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A portal renders a react component outside of the standard application tree. This is used by the [Overlay](/components/overlay), [Popover](/components/popover), and [Tooltip](/components/tooltip) components.
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+Supply the element you want rendered as the child of the portal.
 
-```jsx
-<div className="Basic-example" />
+```.jsx
+<Portal><div>Yeah, that's simple</div></Portal>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Portal"]} />
 
 </Article>
 </Container>

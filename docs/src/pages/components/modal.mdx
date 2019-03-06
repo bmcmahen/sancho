@@ -17,6 +17,13 @@ import SEO from "../../components/SEO"
 
 # Modal
 
+A modal (or dialog) is useful for displaying infomation that commands the user's attention.
+
+Sancho exports these components to create Modals:
+
+- **Modal**: Your basic modal dialog which includes a ModalHeader if provided a title.
+- **ModalHeader**: A standard header of a modal, which includes a title and a close button.
+
 #### Basic usage
 
 ```jsx
@@ -40,6 +47,8 @@ import SEO from "../../components/SEO"
 
 #### Fullscreen mobile example
 
+This option enables fullscreen on mobile devices, which is typically a better user experience.
+
 ```jsx
 <Component initialState={{ isOpen: false }}>
   {({ state, setState }) => (
@@ -62,6 +71,8 @@ import SEO from "../../components/SEO"
 
 #### Without a title
 
+When a title isn't provided, a header isn't added.
+
 ```jsx
 <Component initialState={{ isOpen: false }}>
   {({ state, setState }) => (
@@ -81,7 +92,7 @@ import SEO from "../../components/SEO"
 </Component>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Modal"]} />
 
 </Article>
 </Container>

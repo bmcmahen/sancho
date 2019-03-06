@@ -16,9 +16,11 @@ import SEO from "../../components/SEO"
 
 # Avatar
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+Display a profile image to represent a user. Initials can be shown as a fallback. Inspired by the excellent Evergreen [Avatar](https://evergreen.segment.com/components/avatar).
 
 #### Basic usage
+
+Set the `name` and `src` attributes. By default, the `src` will display instead of the initials if provided. Set to `aria-hidden="true"` when displayed alongside the user's name.
 
 ```jsx
 <Avatar
@@ -28,6 +30,8 @@ Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmo
 ```
 
 #### Letters
+
+If you're happy only showing initials, leave out the `src` attribute.
 
 ```jsx
 <Avatar name="Ben McMahen" />

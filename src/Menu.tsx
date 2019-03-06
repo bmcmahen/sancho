@@ -119,6 +119,7 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
 };
 
 MenuList.propTypes = {
+  /** A combination of MenuItem, MenuLabel, and MenuDivider children */
   children: PropTypes.node,
   /** Useful if you are providing your own MenuItem children */
   focusableChildren: PropTypes.arrayOf(PropTypes.elementType)
@@ -257,5 +258,6 @@ export const MenuLabel: React.FunctionComponent<MenuLabelProps> = props => {
 };
 
 MenuLabel.propTypes = {
+  /** The name of the label */
   children: PropTypes.node
 };

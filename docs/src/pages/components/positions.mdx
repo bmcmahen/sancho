@@ -1,29 +1,46 @@
 import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Positioner" />
 
 <Container>
 <Article sidebar={[
+  { id: 'Positioner', name: 'Positioner' },
   { id: 'Basic usage', name: 'Basic usage' }
 ]}>
 
-# Button
+# Positioner
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+Position an element around another one. This component uses [react-popper](https://github.com/FezVrasta/react-popper) to determine positions.
 
-#### Intent
-
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+#### Basic usage
 
 ```jsx
-<div className="Basic-example" />
+<React.Fragment>
+  <Positioner
+    isOpen={true}
+    placement="right"
+    target={({ ref }) => <Button ref={ref}>Target</Button>}
+  >
+    {({ placement, ref, arrowProps, style }, animation) => (
+      <Layer
+        ref={ref}
+        data-placement={placement}
+        style={{
+          ...style,
+          padding: "1rem",
+        }}
+      >
+        Put me in my place
+      </Layer>
+    )}
+  </Positioner>
+</React.Fragment>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Positions"]} />
 
 </Article>
 </Container>

@@ -17,7 +17,11 @@ import SEO from "../../components/SEO"
 
 # Popover
 
+A popover typically contains supplemental content to the item with which it's attached. A common use case is to create dropdown menus. A popover should be triggered by a button for full accessibility.
+
 #### Basic usage
+
+The content of the popover is supplied to the `content` prop. The child is the element that will trigger it.
 
 ```jsx
 <Popover
@@ -32,6 +36,8 @@ import SEO from "../../components/SEO"
 ```
 
 #### Dropdown menu
+
+Combine a Popover with a [MenuList](/components/menu) to create a dropdown menu.
 
 ```jsx
 <Popover
@@ -73,7 +79,7 @@ Because dropdown menus often aren't great on mobile devices, this component will
 </ResponsivePopover>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Popover"]} />
 
 </Article>
 </Container>

@@ -88,17 +88,16 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
 };
 
 Avatar.propTypes = {
-  // The image source
+  /** The image source */
   src: PropTypes.string,
 
-  // The name of the user. Used as an alt attribute, or used to generate
-  // initials in the absence of an image.
+  /**The name of the user. Used as an alt attribute, or used to generate initials in the absence of an image. */
   name: PropTypes.string,
 
-  // Determine the size of the avatar
+  /** Determine the size of the avatar */
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"] as AvatarSizes[]),
 
-  // An alternative to setting the src attribute.
+  /** An alternative to setting the src attribute. */
   srcSet: PropTypes.string
 };
 

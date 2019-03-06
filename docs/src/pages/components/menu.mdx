@@ -4,26 +4,75 @@ import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Menu" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Menu', name: 'Menu' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Dropdown menu', name: 'Dropdown menu'},
+  { id: 'MenuItem custom component', name: 'Custom component'},
+  { id: 'Props', name: 'Props'}
 ]}>
 
-# Button
+# Menu
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A menu is used to create popover content with a list of options. To create a menu, Sancho exports the following components:
 
-#### Intent
+- **MenuList**: A wrapper component that handles focusing MenuItems.
+- **MenuItem**: A list item in the menu.
+- **MenuDivider**: A horizontal divider for separating groups of menu items.
+- **MenuLabel**: A label for groups of menu items.
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+#### Basic usage
 
 ```jsx
-<div className="Basic-example" />
+<MenuList>
+  <MenuLabel>Options</MenuLabel>
+  <MenuItem onSelect={() => alert("Hello 1")}>I will trigger an alert</MenuItem>
+  <MenuItem component="a" href="/bacon">
+    I'm a link
+  </MenuItem>
+  <MenuDivider />
+  <MenuLabel>More</MenuLabel>
+  <MenuItem>Item three</MenuItem>
+</MenuList>
 ```
 
-<Props names={["Button"]} />
+#### Dropdown menu
+
+Combine a MenuList with a Popover to create a dropdown menu.
+
+```jsx
+<Popover
+  content={
+    <MenuList>
+      <MenuItem onSelect={() => alert("Hello 1")}>
+        I will trigger an alert
+      </MenuItem>
+      <MenuItem component="a" href="/bacon">
+        I'm a link
+      </MenuItem>
+      <MenuDivider />
+      <MenuItem>Item three</MenuItem>
+    </MenuList>
+  }
+>
+  <Button>See my menu</Button>
+</Popover>
+```
+
+### MenuItem custom component
+
+You can use a custom component such as an `a` or `Link`.
+
+```jsx
+<MenuItem component="a" href="#">
+  MenuItem as an anchor
+</MenuItem>
+```
+
+<Props names={["Menu"]} />
 
 </Article>
 </Container>

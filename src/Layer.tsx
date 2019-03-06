@@ -37,10 +37,13 @@ export const Layer: React.RefForwardingComponent<
   }
 );
 
+Layer.displayName = "Layer";
+
 Layer.propTypes = {
   /** The size of the shadow to use */
-  elevation: PropTypes.oneOf(Object.keys(theme.shadows) as LayerElevations[]),
+  elevation: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
 
+  /** The contents of the layer */
   children: PropTypes.node
 };
 
