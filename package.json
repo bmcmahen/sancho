@@ -1,8 +1,8 @@
 {
-  "name": "pants",
+  "name": "sancho",
   "version": "0.1.0",
-  "private": true,
   "licence": "MIT",
+  "main": "build/index.js",
   "module": "build/index.js",
   "dependencies": {
     "@blueprintjs/icons": "^3.6.0",
