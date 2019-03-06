@@ -76,11 +76,17 @@ export const Hero = ({ children }) => (
           >
             Sancho UI
           </Text>
-          <Text css={{ color: "white", maxWidth: "34rem" }} variant="lead">
-            In laboris aliqua voluptate adipisicing sunt mollit quis voluptate
-            eu laborum amet reprehenderit. Accessibility, mobile friendly,
-            flexible
+          <Text css={{ color: "white", maxWidth: "38rem" }} variant="lead">
+            Sancho is a design system built with React, Typescript and Emotion.
+            It's designed to be responsive, accessible, and beautiful.
           </Text>
+          <Button
+            css={{ marginTop: theme.spaces.lg }}
+            component="a"
+            href="https://github.com/bmcmahen/sancho"
+          >
+            View on Github
+          </Button>
         </Article>
       </Container>
       <Wave />

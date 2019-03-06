@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 export interface IconButtonProps extends Partial<ButtonProps> {
   label: string;
-  icon: IconName;
+  icon: IconName | JSX.Element;
   color?: string;
 }
 
@@ -30,7 +30,7 @@ IconButton.displayName = "IconButton";
 
 IconButton.propTypes = {
   /** The name of the icon you wish to render */
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 
   /** Change the colour */
   color: PropTypes.string,

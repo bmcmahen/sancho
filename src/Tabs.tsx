@@ -273,6 +273,8 @@ export const Tab: React.RefForwardingComponent<
   }
 );
 
+Tab.displayName = "Tab";
+
 Tab.propTypes = {
   /** The id of the tab to be shared with TabContent */
   id: PropTypes.string.isRequired,

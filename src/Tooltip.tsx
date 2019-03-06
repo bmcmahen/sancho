@@ -69,6 +69,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
             opacity: state.opacity
           }}
           css={{
+            zIndex: 500,
             margin: theme.spaces.xs
           }}
         >

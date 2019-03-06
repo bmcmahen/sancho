@@ -53,48 +53,48 @@ export function Props({ names }: PropsProps) {
               }
 
               return (
-                <React.Fragment key={name}>
-                  <Layer
-                    css={{ marginBottom: "1.5rem", overflow: "hidden" }}
-                    elevation="xs"
-                  >
-                    <div css={{ margin: theme.spaces.md }}>
-                      <Text variant="h4">{entry.displayName}</Text>
-                    </div>
-                    <Table fixed={["100px", "200px", "80%"]} minWidth="650px">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Name</TableCell>
-                          <TableCell>Type</TableCell>
-                          <TableCell>Description</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {Object.keys(props).map(key => {
-                          const row = props[key]
-                          const type = row.type.name
-                          const val = row.type.value
-                          const { required, description } = row
-                          return (
-                            <TableRow key={key}>
-                              <TableCell component="th" scope="row">
-                                {key}
-                                {required ? "*" : ""}
-                              </TableCell>
-                              <TableCell>
-                                {type}
-                                {type === "enum"
-                                  ? " " + getEnumString(val)
-                                  : ""}
-                              </TableCell>
-                              <TableCell>{description}</TableCell>
-                            </TableRow>
-                          )
-                        })}
-                      </TableBody>
-                    </Table>
-                  </Layer>
-                </React.Fragment>
+                <div css={{ marginBottom: "3rem" }} key={name}>
+                  <div>
+                    <Text variant="h4">{entry.displayName}</Text>
+                  </div>
+
+                  {Object.keys(props).map(key => {
+                    const row = props[key]
+                    const type = row.type.name
+                    const val = row.type.value
+                    const { required, description } = row
+                    return (
+                      <div css={{ marginBottom: "1rem" }} key={key}>
+                        <div>
+                          <Text
+                            css={{
+                              fontWeight: 500,
+                              marginRight: theme.spaces.sm,
+                            }}
+                          >
+                            {key}
+                            {required ? "*" : ""}
+                          </Text>
+                          <Text
+                            css={{
+                              fontSize: "small",
+                              background: theme.colors.background.tint1,
+                              padding: "3px",
+                              borderRadius: theme.radii.sm,
+                            }}
+                          >
+                            {type}
+
+                            {type === "enum" ? " " + getEnumString(val) : ""}
+                          </Text>
+                        </div>
+                        <div>
+                          <Text muted>{description}</Text>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               )
             })
           }

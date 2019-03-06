@@ -5,7 +5,6 @@ import { animated, useTransition } from "react-spring";
 import theme from "./Theme";
 import { Portal } from "./Portal";
 import { useHideBody } from "./Hooks/hide-body";
-import { mergeRefs } from "./Hooks/merge-refs";
 import PropTypes from "prop-types";
 
 interface OverlayProps {
@@ -79,6 +78,8 @@ export const Overlay: React.RefForwardingComponent<
     );
   }
 );
+
+Overlay.displayName = "Overlay";
 
 Overlay.propTypes = {
   /** Whether the overlay is open */

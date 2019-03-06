@@ -35,7 +35,7 @@ function Project() {
 
 ### Styling and Themes
 
-Sancho uses [Emotion](https://emotion.sh/docs/introduction) for styling. Irure officia ea ex aute voluptate nisi eu est irure. Excepteur labore quis excepteur magna et sunt mollit. Fugiat culpa officia aliqua veniam velit ad. Cillum ad ex cupidatat in velit sit. Sint irure anim aliqua mollit eu laborum commodo minim reprehenderit sit tempor voluptate pariatur.
+Sancho uses [Emotion](https://emotion.sh/docs/introduction) for styling. The reasons for choosing Emotion are outlined in this [blog post](https://benmcmahen.com/why-i-choose-emotion/). You can override component styles by passing in custom css using the `css` prop. Learn more about using the `css` prop on the [Emotion](https://emotion.sh/docs/css-prop) website.
 
 ```.jsx
 /** @jsx jsx */
@@ -50,3 +50,31 @@ function MyCustomButton() {
   )
 }
 ```
+
+Sancho uses a main `theme` object which contains global theming variables related to type, colours, spacing, and breakpoints. View the [default theme here](https://github.com/bmcmahen/sancho/blob/master/src/Theme/index.ts).
+
+```.jsx
+/** @jsx jsx */
+import { jsx } from "@emotion/core"
+import { theme } from 'sancho'
+
+function Component() {
+  return (
+    <div css={{
+      padding: theme.spaces.sm,
+      color: theme.colors.text.muted,
+      [theme.breakpoints.md]: {
+        padding: theme.spaces.md
+      }
+    }}>
+      Hello world
+    </div>
+  )
+}
+```
+
+There is currently no way to override theme variables other than forking the repo. This will change soon as we migrate to using Emotion's theme provider.
+
+### Prior work
+
+Sancho originally started as a fork of [Evergreen](https://evergreen.segment.com/) and eventually incorporated some of my favourite ideas from [Bootstrap](https://getbootstrap.com/) and [Material-UI](https://material-ui.com/). This project is obviously hugely indebted to those.

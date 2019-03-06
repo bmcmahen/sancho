@@ -63,8 +63,8 @@ function ListGroup({ label, children }) {
 }
 
 const about = [
-  { title: "Install", path: "/#install" },
-  { title: "Styling", path: "/#styling" },
+  { title: "Installation", path: "/#installation" },
+  { title: "Styling and themes", path: "/#styling%20and%20themes" },
 ]
 
 const components = [
