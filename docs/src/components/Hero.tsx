@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Link } from "gatsby"
 import Layout, { Article } from "../components/layout"
-import SEO from "../components/seo"
+import SEO from "./SEO"
 import { graphql } from "gatsby"
 import { theme, Text, Container, Button } from "../../../src"
 import { ComponentMDXProvider } from "./ExamplePreview"

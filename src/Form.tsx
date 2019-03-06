@@ -127,7 +127,7 @@ export const baseStyles = css({
   backgroundColor: "white",
   backgroundImage: "none",
   backgroundClip: "padding-box",
-  "-webkit-font-smoothing": "antialiased",
+  WebkitFontSmoothing: "antialiased",
   boxSizing: "border-box",
   touchAction: "manipulation",
   fontFamily: theme.fonts.base,

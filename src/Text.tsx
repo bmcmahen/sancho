@@ -122,7 +122,7 @@ const styles: { [key: string]: SerializedStyles } = {
     fontSize: theme.sizes[1],
     color: theme.colors.text.default,
     fontWeight: 400,
-    "-webkit-font-smoothing": "antialiased"
+    WebkitFontSmoothing: "antialiased"
   }),
   noGutter: css({
     marginBottom: 0

@@ -14,7 +14,6 @@ export * from "./Icons";
 export * from "./Layer";
 export * from "./Link";
 export * from "./List";
-export * from "./LoadingPlaceholder";
 export * from "./Menu";
 export * from "./Modal";
 export * from "./Navbar";

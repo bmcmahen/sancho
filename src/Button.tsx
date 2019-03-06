@@ -51,8 +51,8 @@ const { palette } = theme.colors;
 export const buttonReset = css({
   textDecoration: "none",
   background: "none",
-  "-webkit-appearance": "none",
-  "-webkit-font-smoothing": "antialiased",
+  WebkitAppearance: "none",
+  WebkitFontSmoothing: "antialiased",
   border: "none",
   outline: "none",
   textRendering: "optimizeLegibility",
