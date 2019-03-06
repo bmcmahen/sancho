@@ -1,29 +1,44 @@
-import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
+import { Container } from "../../../../src"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="SkipNav" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'SkipNav', name: 'SkipNav' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Props', name: 'Props'}
 ]}>
 
-# Button
+# SkipNav
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+The [SkipNav](https://ui.reach.tech/skip-nav) component from Reach-UI. This allows a user using a screen reader to skip over the navigation to quickly access the main content.
 
-#### Intent
+SkipNav is implemented using two components:
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+- **SkipNavLink**: The link to be placed at the top of your app tree. It will remain hidden unless focused via keyboard.
+- **SkipNavContent**: Place this component before your content and after your navigation.
 
-```jsx
-<div className="Basic-example" />
+See the [documentation](https://ui.reach.tech/skip-nav) at the Reach-UI website for full usage details, and thank Ryan Florence for making accessibility a priority.
+
+#### Basic usage
+
+```.jsx
+<React.Fragment>
+  {/* the SkipNavLink goes at the top of your app */}
+  <SkipNavLink />
+  <div>
+    <div>Your nav contents</div>
+    {/* while SkipNavContent goes just before your main content */}
+    <SkipNavContent />
+    <main>The main content</main>
+  </div>
+</React.Fragment>
 ```
 
-<Props names={["Button"]} />
+<Props names={["SkipNav"]} />
 
 </Article>
 </Container>

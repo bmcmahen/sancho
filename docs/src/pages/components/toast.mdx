@@ -11,15 +11,23 @@ import SEO from "../../components/SEO"
   { id: 'Toast', name: 'Toast'},
   { id: 'Basic usage', name: 'Basic usage' },
   { id: 'Altering positions', name: 'Altering positions' },
-  { id: 'Changing the altert intent', name: 'Changing the altert intent' },
-  { id: 'Using a custom element', name: 'Using a custom element' },
-  { id: 'Using a render callback', name: 'Using a render callback' },
-  { id: 'Options', name: 'Custom options'}
+  { id: 'Changing the altert intent', name: 'Changing the intent' },
+  { id: 'Using a custom element', name: 'Custom element' },
+  { id: 'Using a render callback', name: 'Render callback' }
 ]}>
 
 # Toast
 
 A toast is used to notify users about a particular event. We built this with an imperative API mostly because it's way easier to invoke in response to API errors or user events. As a result, we export the lowercase `toast` function which you can use to invoke notifications. We use the library [toasted-notes](https://github.com/bmcmahen/toasted-notes) under the hood.
+
+Toast accepts the following options:
+
+- **title**: The title of the notification.
+- **subtitle**: The subtitle of the notification.
+- **duration**: How long the toast remains visible in ms. Set to null for it to remain open indefinitely.
+- **position**: The position where the toast will appears. Can be top-left, top, top-right, bottom-left, bottom, bottom-right.
+- **intent**: Accepts the same intent options as [Alert](/components/alert).
+- **render**: Used to render custom toast notifications.
 
 #### Basic usage
 
@@ -59,7 +67,7 @@ A toast is used to notify users about a particular event. We built this with an 
     })
   }}
 >
-  Show toast
+  Show all the toasts
 </Button>
 ```
 
@@ -86,6 +94,8 @@ A toast is used to notify users about a particular event. We built this with an 
 
 #### Using a custom element
 
+You can supply a custom element by providing a render option.
+
 ```jsx
 <Button
   onClick={() => {
@@ -99,6 +109,8 @@ A toast is used to notify users about a particular event. We built this with an 
 ```
 
 #### Using a render callback
+
+Using a render callback allows you to control when the toast is closed.
 
 ```jsx
 <Button
@@ -116,8 +128,6 @@ A toast is used to notify users about a particular event. We built this with an 
   Show toast
 </Button>
 ```
-
-<Props names={["Button"]} />
 
 </Article>
 </Container>

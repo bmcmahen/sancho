@@ -1,29 +1,32 @@
-import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
+import { Container } from "../../../../src"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Toolbar" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Toolbar', name: 'Toolbar' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Props', name: 'Props'}
 ]}>
 
-# Button
+# Toolbar
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A toolbar provides a responsive component which changes height and padding depending on the screen size. This is typically used in combination with [Navbar](/components/navbar).
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+Use the `compressed` prop to create a toolbar with less vertical padding.
 
 ```jsx
-<div className="Basic-example" />
+<Toolbar compressed>
+  <Text>Lame example</Text>
+</Toolbar>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Toolbar"]} />
 
 </Article>
 </Container>

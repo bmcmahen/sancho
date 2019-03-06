@@ -1,26 +1,24 @@
-import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
+import { Container } from "../../../../src"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="VisuallyHidden" />
 
 <Container>
 <Article sidebar={[
+  { id: 'VisuallyHidden', name: 'VisuallyHidden'},
   { id: 'Basic usage', name: 'Basic usage' }
 ]}>
 
-# Button
+# VisuallyHidden
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+Used to maintain screen reader accessibility while hiding elements visually from users. The opposite of `aria-hidden`. For full documentation see [Reach-UI](https://ui.reach.tech/visually-hidden).
 
-#### Intent
+#### Basic example
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
-
-```jsx
-<div className="Basic-example" />
+```.jsx
+<VisuallyHidden>Can't see me.</VisuallyHidden>
 ```
 
 <Props names={["Button"]} />

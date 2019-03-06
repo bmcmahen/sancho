@@ -188,6 +188,7 @@ type TableCellBaseProps = React.ThHTMLAttributes<HTMLTableHeaderCellElement> &
 interface TableCellProps extends TableCellBaseProps {
   align?: keyof typeof tableCellAlignments;
   variant?: keyof typeof tableCellVariants;
+  ellipsis?: boolean;
   component?: React.ReactType<TableCellBaseProps>;
 }
 
@@ -195,11 +196,11 @@ export const TableCell: React.FunctionComponent<TableCellProps> = ({
   align = "left",
   variant,
   component,
+  ellipsis,
   children,
   ...other
 }) => {
   const { type: tableSectionType } = React.useContext(TableSectionContext);
-  const { fixed } = React.useContext(TableContext);
 
   const Component =
     component || (tableSectionType === "TableHead" ? "th" : "td");
@@ -227,7 +228,7 @@ export const TableCell: React.FunctionComponent<TableCellProps> = ({
             paddingRight: theme.spaces.md
           }
         },
-        fixed && {
+        ellipsis && {
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           overflow: "hidden"

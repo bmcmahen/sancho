@@ -7,6 +7,7 @@ import { Text } from "./Text";
 import theme from "./Theme";
 import { animated } from "react-spring";
 import PropTypes from "prop-types";
+import { isMobile } from "is-mobile";
 
 interface TooltipProps {
   content: React.ReactNode;
@@ -29,6 +30,14 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   }, []);
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
+    // We don't want tooltips to show on touch based devices
+    // so we just return the child without the event handlers.
+    // Really not sure if this is the best way to do this.
+    if (isMobile()) {
+      return children;
+    }
+
+    // Enable on non-mobile devices
     return React.cloneElement(children, {
       ref,
       "aria-describedby": id,

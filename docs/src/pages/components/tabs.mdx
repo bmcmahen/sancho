@@ -20,7 +20,15 @@ import SEO from "../../components/SEO"
 
 # Tabs
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+Provide a tabbed interface, similar to that found in [Material-UI](https://material-ui.com/demos/tabs/).
+
+Sancho exports the following components to create tabbed interfaces:
+
+- **Tabs**: The wrapper component for a number of Tab children.
+- **Tab**: An clickable tab item.
+- **TabIcon**: Use an icon as a tab.
+- **TabPanel**: Where an individual tab panel is rendered.
+- **TabContent**: An animated container for tab panels.
 
 #### Basic usage
 
@@ -123,7 +131,10 @@ Sliding content is a nice option when working with smaller panels or mobile appl
           Take you places
         </Tab>
         <Tab component="a" href="#another">
-          If you touch me
+          You ain't never
+        </Tab>
+        <Tab component="a" href="#another">
+          Been
         </Tab>
       </Tabs>
     )}
@@ -192,7 +203,7 @@ You can use the `TabIcon` component to create mobile style tab bars.
 </div>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Tabs"]} />
 
 </Article>
 </Container>

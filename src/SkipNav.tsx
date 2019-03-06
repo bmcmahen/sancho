@@ -52,7 +52,7 @@ export const SkipNavLink: React.FunctionComponent<ISkipNavProps> = ({
 };
 
 SkipNavLink.propTypes = {
-  /** The text content of the skp nav button */
+  /** The message to your screen reader user */
   children: PropTypes.node
 };
 

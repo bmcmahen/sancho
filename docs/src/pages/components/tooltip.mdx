@@ -1,29 +1,32 @@
-import { Button, Divider, Container } from "../../../../src"
-import "./button.css"
+import { Container } from "../../../../src"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
 
-<SEO title="Button" />
+<SEO title="Tooltip" />
 
 <Container>
 <Article sidebar={[
-  { id: 'Basic usage', name: 'Basic usage' }
+  { id: 'Tooltip', name: 'Tooltip' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Props', name: 'Props' }
 ]}>
 
-# Button
+# Tooltip
 
-Et sint qui dolor aliquip mollit anim. Duis laborum consectetur aliqua in eiusmod. Commodo laborum laborum reprehenderit ipsum sunt tempor laboris ad incididunt in. Reprehenderit in cupidatat nulla est. Laborum est veniam est aliqua ipsum eiusmod magna aliquip sunt nisi Lorem in quis Lorem. Ipsum excepteur in cupidatat irure eu veniam do aliqua velit mollit.
+A tooltip is used to display extra information about something on the screen, such as an icon, button or link. Tooltips should only display non-essential information since they won't display on touch-based devices.
 
-#### Intent
+#### Basic usage
 
-Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
+The tooltip will appear when the target is hovered or focused.
 
 ```jsx
-<div className="Basic-example" />
+<Tooltip content="This is some tooltip content">
+  <Button>Hello world. Hover me!!</Button>
+</Tooltip>
 ```
 
-<Props names={["Button"]} />
+<Props names={["Tooltip"]} />
 
 </Article>
 </Container>

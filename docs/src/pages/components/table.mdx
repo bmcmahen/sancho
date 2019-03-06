@@ -1,0 +1,163 @@
+import { Container } from "../../../../src"
+import { Article } from "../../components/Layout"
+import { Props } from "../../components/Props"
+import SEO from "../../components/SEO"
+
+<SEO title="Table" />
+
+<Container>
+<Article sidebar={[
+  { id: 'Table', name: 'Table' },
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Fixed width', name: 'Fixed width'},
+  { id: 'Expanding Rows', name: 'Expanding Rows'},
+  { id: 'Props', name: 'Props'}
+]}>
+
+# Table
+
+You can create tables using a combination of:
+
+- **Table**: The main table wrapper.
+- **TableHead**: Used to create column labels for your table.
+- **TableRow**: Signifies a row of cells in your table.
+- **TableCell**: A cell of table content.
+- **TableBody**: The main body of your table.
+- **ExpandingRow**: A row that can be clicked to reveal additional information.
+
+#### Basic usage
+
+Setting a `minWidth` will result in a responsive table that scrolls once smaller than that width.
+
+```jsx
+<Table minWidth="600px">
+  <TableHead>
+    <TableRow>
+      <TableCell>Name</TableCell>
+      <TableCell align="right">Age</TableCell>
+      <TableCell align="right">Height</TableCell>
+      <TableCell align="right">Sex</TableCell>
+      <TableCell align="right">Location</TableCell>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow>
+      <TableCell component="th" scope="row">
+        Ben McMahen
+      </TableCell>
+      <TableCell align="right">30</TableCell>
+      <TableCell align="right">180</TableCell>
+      <TableCell align="right">Male</TableCell>
+      <TableCell align="right">BC</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell component="th" scope="row">
+        James Bond
+      </TableCell>
+      <TableCell align="right">53</TableCell>
+      <TableCell align="right">185</TableCell>
+      <TableCell align="right">Male</TableCell>
+      <TableCell align="right">England</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+#### Fixed width
+
+Set fixed column widths by assigining the `fixed` prop a series of widths for each column.
+
+```jsx
+<Table fixed={["40%", "125px", "125px", "125px", "125px"]} minWidth="600px">
+  <TableHead>
+    <TableRow>
+      <TableCell>Name</TableCell>
+      <TableCell align="right">Age</TableCell>
+      <TableCell align="right">Height</TableCell>
+      <TableCell align="right">Sex</TableCell>
+      <TableCell align="right">Location</TableCell>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow>
+      <TableCell ellipsis component="th" scope="row">
+        Ben McMahen
+      </TableCell>
+      <TableCell align="right">30</TableCell>
+      <TableCell align="right">180</TableCell>
+      <TableCell align="right">Male</TableCell>
+      <TableCell align="right">BC</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell ellipsis component="th" scope="row">
+        James Bond
+      </TableCell>
+      <TableCell align="right">53</TableCell>
+      <TableCell align="right">185</TableCell>
+      <TableCell align="right">Male</TableCell>
+      <TableCell align="right">England</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+#### Expanding rows
+
+Using expanding rows is useful for when you want to reveal additional information about a particular row. This UI pattern is inspired by the one found in the Firebase console. Currently this will not work with `minWidth` set on the table.
+
+```jsx
+<Table fixed={["40%", "125px", "125px", "125px", "125px"]}>
+  <TableHead>
+    <TableRow>
+      <TableCell>Name</TableCell>
+      <TableCell align="right">Age</TableCell>
+      <TableCell align="right">Height</TableCell>
+      <TableCell align="right">Sex</TableCell>
+      <TableCell align="right">Location</TableCell>
+    </TableRow>
+  </TableHead>
+  <ExpandingRow
+    content={close => (
+      <div>
+        <Text>A form perhaps?</Text>
+        <div>
+          <Button onClick={close}>Close</Button>
+        </div>
+      </div>
+    )}
+  >
+    <TableCell ellipsis component="th" scope="row">
+      Ben McMahen
+    </TableCell>
+    <TableCell align="right">30</TableCell>
+    <TableCell align="right">180</TableCell>
+    <TableCell align="right">Male</TableCell>
+    <TableCell align="right">BC</TableCell>
+  </ExpandingRow>
+
+  <ExpandingRow
+    content={close => (
+      <div>
+        <Text>A form perhaps?</Text>
+        <div>
+          <Button onClick={close}>Close</Button>
+        </div>
+      </div>
+    )}
+  >
+    <TableCell ellipsis component="th" scope="row">
+      James Bond
+    </TableCell>
+    <TableCell align="right">53</TableCell>
+    <TableCell align="right">185</TableCell>
+    <TableCell align="right">Male</TableCell>
+    <TableCell align="right">England</TableCell>
+  </ExpandingRow>
+</Table>
+```
+
+<Props names={["Table"]} />
+
+</Article>
+</Container>
+```

@@ -10,6 +10,8 @@ import {
   TableBody,
   theme,
   Text,
+  Layer,
+  Container,
 } from "../../../src"
 import { anchorPadding } from "./ExamplePreview.jsx"
 
@@ -52,43 +54,46 @@ export function Props({ names }: PropsProps) {
 
               return (
                 <React.Fragment key={name}>
-                  <Text variant="h4">{entry.displayName}</Text>
-                  <Table css={{ marginBottom: "1.5rem" }} minWidth="650px">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell css={{ paddingLeft: "0 !important" }}>
-                          Name
-                        </TableCell>
-                        <TableCell>Type</TableCell>
-                        <TableCell>Description</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {Object.keys(props).map(key => {
-                        const row = props[key]
-                        const type = row.type.name
-                        const val = row.type.value
-                        const { required, description } = row
-                        return (
-                          <TableRow key={key}>
-                            <TableCell
-                              css={{ paddingLeft: "0 !important" }}
-                              component="th"
-                              scope="row"
-                            >
-                              {key}
-                              {required ? "*" : ""}
-                            </TableCell>
-                            <TableCell>
-                              {type}
-                              {type === "enum" ? " " + getEnumString(val) : ""}
-                            </TableCell>
-                            <TableCell>{description}</TableCell>
-                          </TableRow>
-                        )
-                      })}
-                    </TableBody>
-                  </Table>
+                  <Layer
+                    css={{ marginBottom: "1.5rem", overflow: "hidden" }}
+                    elevation="xs"
+                  >
+                    <div css={{ margin: theme.spaces.md }}>
+                      <Text variant="h4">{entry.displayName}</Text>
+                    </div>
+                    <Table fixed={["100px", "200px", "80%"]} minWidth="650px">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Name</TableCell>
+                          <TableCell>Type</TableCell>
+                          <TableCell>Description</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {Object.keys(props).map(key => {
+                          const row = props[key]
+                          const type = row.type.name
+                          const val = row.type.value
+                          const { required, description } = row
+                          return (
+                            <TableRow key={key}>
+                              <TableCell component="th" scope="row">
+                                {key}
+                                {required ? "*" : ""}
+                              </TableCell>
+                              <TableCell>
+                                {type}
+                                {type === "enum"
+                                  ? " " + getEnumString(val)
+                                  : ""}
+                              </TableCell>
+                              <TableCell>{description}</TableCell>
+                            </TableRow>
+                          )
+                        })}
+                      </TableBody>
+                    </Table>
+                  </Layer>
                 </React.Fragment>
               )
             })
