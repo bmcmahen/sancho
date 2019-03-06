@@ -11,7 +11,6 @@
     "@reach/alert": "^0.1.2",
     "@reach/skip-nav": "^0.1.2",
     "@reach/visually-hidden": "^0.1.2",
-    "@rehooks/window-size": "^1.0.2",
     "@types/color": "^3.0.0",
     "@types/jest": "24.0.6",
     "@types/lodash.uniqueid": "^4.0.5",
@@ -47,7 +46,8 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "build": "yarn run clear && tsc",
-    "build-for-docgen": "yarn run clear && tsc --jsx preserve"
+    "build-for-docgen": "yarn run clear && tsc --jsx preserve",
+    "build-docs": "cd ./docs && yarn run build"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1361,13 +1361,6 @@
   resolved "https://registry.yarnpkg.com/@reach/visually-hidden/-/visually-hidden-0.1.2.tgz#96605cdcbd4585c76b56fed779904423e1f87794"
   integrity sha512-x/ewdWFlUphyF4pEth5U2FNS29vz/OOxAKcxc+XWbX96XUTobfIvLjYfQWawcP6+Eavy7zGvobpeHj7GVegTRA==
 
-"@rehooks/window-size@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@rehooks/window-size/-/window-size-1.0.2.tgz#24583dda021969e7b7166b923b055a47cca4e4b5"
-  integrity sha512-sqPpGM4kivmOFHG+UKqmJbVDBSLOpjMZgqnCNzpzXRZey8R84LL3MaYiE5hulAAosiOh3UJopvJhgUauccaoeA==
-  dependencies:
-    react "^16.7.0-alpha.0"
-
 "@storybook/addon-actions@^4.1.13":
   version "4.1.13"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-4.1.13.tgz#b7d5ad772e0499f9989db6d11987426fe8ea90f6"
@@ -10207,7 +10200,7 @@ react-with-gesture@^4.0.5:
   resolved "https://registry.yarnpkg.com/react-with-gesture/-/react-with-gesture-4.0.5.tgz#8268f1c0cf77cde14b73130ec35ccbee480900b8"
   integrity sha512-5M27P31u9Kl3wJro4oWlBd007kxoBCDknzZv1McdkXTiSL1FgQO3v7zNA3dsjdiMsg/9eBlor6Loip2npxp1wQ==
 
-react@^16.6.3, react@^16.7.0, react@^16.7.0-alpha.0, react@^16.8.3:
+react@^16.6.3, react@^16.7.0, react@^16.8.3:
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.3.tgz#c6f988a2ce895375de216edcfaedd6b9a76451d9"
   integrity sha512-3UoSIsEq8yTJuSu0luO1QQWYbgGEILm+eJl2QN/VLDi7hL+EN18M3q3oVZwmVzzBJ3DkM7RMdRwBmZZ+b4IzSA==

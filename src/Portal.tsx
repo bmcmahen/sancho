@@ -11,7 +11,11 @@ export interface PortalProps {
 let container: Element | null = null;
 
 export const Portal: React.FunctionComponent<PortalProps> = ({ children }) => {
-  const [target] = React.useState<HTMLDivElement>(() => {
+  const [target] = React.useState<HTMLDivElement | null>(() => {
+    if (typeof document === "undefined") {
+      return null;
+    }
+
     if (!container) {
       container = document.createElement("div");
       document.body.appendChild(container);

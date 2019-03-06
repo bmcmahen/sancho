@@ -1,15 +1,15 @@
 /** @jsx jsx */
-import { jsx, SerializedStyles, css } from "@emotion/core";
+import { jsx, SerializedStyles } from "@emotion/core";
 import * as React from "react";
-import { Text, variants } from "./Text";
+import { Text } from "./Text";
 import theme from "./Theme";
 import { buttonReset } from "./Button";
-import useWindowSize from "@rehooks/window-size";
 import { useMeasure } from "./Collapse";
 import { Icon } from "./Icons";
 import VisuallyHidden from "@reach/visually-hidden";
 import { IconName } from "@blueprintjs/icons";
 import PropTypes from "prop-types";
+import { useWindowSize } from "./Hooks/use-window-size";
 
 /**
  * Tab container
