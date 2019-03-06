@@ -38,8 +38,7 @@ const Layout = ({ children }) => (
             },
             body: {
               margin: 0,
-              "-webkit-font-smoothing": "antialiased",
-              "-moz-osx-font-smoothing": "grayscale",
+              WebkitFontSmoothing: "antialiased",
               background: "white",
             },
           }}

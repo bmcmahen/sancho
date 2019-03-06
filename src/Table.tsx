@@ -22,8 +22,8 @@ const tableStyle = css({
   borderCollapse: "separate",
   width: "100%",
   fontFamily: theme.fonts.base,
-  "-webkit-appearance": "none",
-  "-webkit-font-smoothing": "antialiased",
+  WebkitAppearance: "none",
+  WebkitFontSmoothing: "antialiased",
   display: "table"
 });
 
