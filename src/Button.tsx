@@ -68,7 +68,7 @@ export const buttonReset = css({
  */
 
 const intents = {
-  default: css({
+  none: css({
     backgroundColor: "white",
     color: getTextColor(theme.colors.intent.none.lightest),
     background: gradient(theme.colors.intent.none.lightest, "white"),
@@ -237,15 +237,41 @@ const intents = {
 
 export type ButtonIntent = keyof typeof intents;
 
+// variations to the ghost buttons based on intent
+const ghostIntents = (intent: ButtonIntent) => {
+  return css({
+    color:
+      intent === "none"
+        ? theme.colors.text.muted
+        : theme.colors.intent[intent].base,
+    ":hover": {
+      background: alpha(theme.colors.intent[intent].base, 0.07)
+    }
+  });
+};
+
+// variations to the outline buttons based on intent
+const outlineIntents = (intent: ButtonIntent) => {
+  return css({
+    color: theme.colors.intent[intent].base,
+    borderColor: theme.colors.intent[intent].base,
+    ":active": {
+      background: theme.colors.intent[intent].lightest
+    },
+    ":focus": {
+      zIndex: 2,
+      boxShadow: `0 0 0 3px ${alpha(theme.colors.palette.blue.base, 0.25)}`
+    }
+  });
+};
+
 const variants = {
   default: css({}),
   ghost: css({
     background: "transparent",
     boxShadow: "none",
     color: theme.colors.text.muted,
-    ":hover": {
-      background: alpha(theme.colors.palette.gray.base, 0.07)
-    },
+
     ":focus": {
       zIndex: 2,
       boxShadow: `0 0 0 3px ${alpha(theme.colors.palette.blue.base, 0.25)}`
@@ -255,6 +281,10 @@ const variants = {
       background: alpha(theme.colors.palette.gray.base, 0.13),
       boxShadow: "none"
     }
+  }),
+  outline: css({
+    border: `1px solid`,
+    background: "none"
   })
 };
 
@@ -289,7 +319,7 @@ export const Button: React.RefForwardingComponent<
       size = "md",
       block,
       variant = "default",
-      intent = "default",
+      intent = "none",
       component: Component = "button",
       ...other
     }: ButtonProps,
@@ -311,7 +341,7 @@ Button.propTypes = {
   /**
    * Controls the basic button style.
    */
-  variant: PropTypes.oneOf(["default", "ghost"] as ButtonVariant[]),
+  variant: PropTypes.oneOf(["default", "ghost", "outline"] as ButtonVariant[]),
   /**
    * The size of the button.
    */
@@ -324,7 +354,7 @@ Button.propTypes = {
    * Controls the colour of the button.
    */
   intent: PropTypes.oneOf([
-    "default",
+    "none",
     "primary",
     "success",
     "warning",
@@ -336,7 +366,7 @@ export function getButtonStyles({
   size = "md",
   block = false,
   variant = "default",
-  intent = "default"
+  intent = "none"
 }: ButtonStyleProps) {
   return css([
     buttonReset,
@@ -349,7 +379,18 @@ export function getButtonStyles({
       padding: getPadding(size),
       display: getDisplay(block)
     },
-    intents[intent],
-    variants[variant]
+    variants[variant],
+    getIntent(variant, intent)
   ]);
+}
+
+function getIntent(variant: ButtonVariant, intent: ButtonIntent) {
+  switch (variant) {
+    case "default":
+      return intents[intent];
+    case "ghost":
+      return ghostIntents(intent);
+    case "outline":
+      return outlineIntents(intent);
+  }
 }

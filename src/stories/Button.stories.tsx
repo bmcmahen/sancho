@@ -7,9 +7,9 @@ import { storiesOf } from "@storybook/react";
 export const ButtonStories = storiesOf("Button", module).add("basic", () => {
   const sizes: Array<ButtonSize> = ["xs", "sm", "md", "lg", "xl"];
 
-  const appearance: Array<ButtonVariant> = ["default", "ghost"];
+  const appearance: Array<ButtonVariant> = ["default", "ghost", "outline"];
   const intents: Array<ButtonIntent> = [
-    "default",
+    "none",
     "primary",
     "success",
     "danger",
