@@ -81,8 +81,14 @@ export const Hero = ({ children }) => (
             It's designed to be responsive, accessible, and beautiful.
           </Text>
           <Button
-            css={{ marginTop: theme.spaces.lg }}
+            css={{
+              marginTop: theme.spaces.lg,
+              borderColor: "white",
+              color: "white",
+            }}
             component="a"
+            variant="outline"
+            size="lg"
             href="https://github.com/bmcmahen/sancho"
           >
             View on Github

@@ -246,6 +246,14 @@ const ghostIntents = (intent: ButtonIntent) => {
         : theme.colors.intent[intent].base,
     ":hover": {
       background: alpha(theme.colors.intent[intent].base, 0.07)
+    },
+    ":focus": {
+      zIndex: 2,
+      boxShadow: `0 0 0 3px ${alpha(theme.colors.intent[intent].base, 0.15)}`
+    },
+    ':active, &[aria-expanded="true"]': {
+      background: alpha(theme.colors.intent[intent].base, 0.15),
+      boxShadow: "none"
     }
   });
 };
@@ -255,12 +263,13 @@ const outlineIntents = (intent: ButtonIntent) => {
   return css({
     color: theme.colors.intent[intent].base,
     borderColor: theme.colors.intent[intent].base,
-    ":active": {
-      background: theme.colors.intent[intent].lightest
-    },
     ":focus": {
       zIndex: 2,
-      boxShadow: `0 0 0 3px ${alpha(theme.colors.palette.blue.base, 0.25)}`
+      boxShadow: `0 0 0 3px ${alpha(theme.colors.intent[intent].base, 0.15)}`
+    },
+    ':active, &[aria-expanded="true"]': {
+      boxShadow: "none",
+      background: alpha(theme.colors.intent[intent].base, 0.15)
     }
   });
 };
@@ -269,18 +278,7 @@ const variants = {
   default: css({}),
   ghost: css({
     background: "transparent",
-    boxShadow: "none",
-    color: theme.colors.text.muted,
-
-    ":focus": {
-      zIndex: 2,
-      boxShadow: `0 0 0 3px ${alpha(theme.colors.palette.blue.base, 0.25)}`
-    },
-    ':active, &[aria-expanded="true"]': {
-      color: palette.blue.dark,
-      background: alpha(theme.colors.palette.gray.base, 0.13),
-      boxShadow: "none"
-    }
+    boxShadow: "none"
   }),
   outline: css({
     border: `1px solid`,
