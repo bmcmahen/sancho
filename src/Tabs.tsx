@@ -10,6 +10,7 @@ import VisuallyHidden from "@reach/visually-hidden";
 import { IconName } from "@blueprintjs/icons";
 import PropTypes from "prop-types";
 import { useWindowSize } from "./Hooks/use-window-size";
+import { alpha } from "./Theme/colors";
 
 /**
  * Tab container
@@ -81,6 +82,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
             width: "100%",
             whiteSpace: "nowrap",
             overflowX: "scroll",
+            WebkitOverflowScrolling: "touch",
             maxWidth: "1200px",
             margin: "0 auto",
             scrollbarWidth: "none",
@@ -225,13 +227,26 @@ export const Tab: React.RefForwardingComponent<
               padding: `10px ${theme.spaces.lg}`
             },
             cursor: "pointer",
-            transition: `background-color .35s cubic-bezier(0.35,0,0.25,1)`,
+
             color: getTextColor(),
             "& svg": {
+              transition: "fill 0.35s cubic-bezier(0.35,0,0.25,1)",
               fill: getTextColor() + " !important"
             },
+
             ":focus": {
               color: dark ? "white" : theme.colors.text.selected
+            },
+            ":active": {
+              color: dark
+                ? "rgba(255,255,255,0.4)"
+                : alpha(theme.colors.text.selected, 0.4),
+              "& svg": {
+                fill:
+                  (dark
+                    ? "rgba(255,255,255,0.4)"
+                    : alpha(theme.colors.text.selected, 0.4)) + " !important"
+              }
             }
           }
         ]}
@@ -255,7 +270,7 @@ export const Tab: React.RefForwardingComponent<
               fontSize: theme.sizes[0],
               color: "inherit",
               fontWeight: 500,
-              transition: "color 0.25s ease"
+              transition: "color 0.25s cubic-bezier(0.35,0,0.25,1)"
             }}
           >
             {children}

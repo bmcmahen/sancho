@@ -173,6 +173,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         opacity: disabled ? 0.3 : 1,
         display: "block",
         textDecoration: "none",
+        WebkitTapHighlightColor: "transparent",
         color: theme.colors.text.default,
         pointerEvents: disabled ? "none" : "initial",
         ":focus": {
