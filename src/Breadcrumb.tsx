@@ -13,12 +13,21 @@ export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
   children
 }) => {
   return (
-    <nav aria-label="breadcrumb">
+    <nav
+      aria-label="breadcrumb"
+      css={{
+        maxWidth: "100%",
+        overflow: "hidden"
+      }}
+    >
       <ol
         css={{
           listStyle: "none",
-          flexWrap: "wrap",
+          whiteSpace: "nowrap",
           display: "inline-flex",
+          boxSizing: "border-box",
+          overflow: "hidden",
+          width: "100%",
           margin: 0,
           padding: `${theme.spaces.sm} ${theme.spaces.md}`,
           background: theme.colors.background.tint1,
@@ -50,12 +59,14 @@ export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
   return (
     <li
       css={{
+        flex: "1 1 auto",
+        overflow: "hidden",
         display: "flex",
         alignItems: "center"
       }}
       {...other}
     >
-      <Text component="div" variant="body">
+      <Text wrap={false} component="div" variant="body">
         {children}
       </Text>
       {!current && <BreadCrumbDivider />}
@@ -73,6 +84,7 @@ const BreadCrumbDivider: React.FunctionComponent<{ inverted?: boolean }> = ({
   <div
     aria-hidden
     css={{
+      flex: "0 0 auto",
       margin: `0 ${theme.spaces.sm}`,
       color: !inverted ? theme.colors.text.muted : "white"
     }}
