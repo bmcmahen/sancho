@@ -138,6 +138,7 @@ export const Article = ({ children, sidebar }: ArticleProps) => (
   <div css={{ display: "flex" }}>
     <div
       css={{
+        flex: 1,
         minWidth: 0,
         padding: `${theme.spaces.md} 0`,
         [theme.breakpoints.md]: {

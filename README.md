@@ -29,3 +29,12 @@ yarn run storybook
 ```
 yarn run build
 ```
+
+### Docs:
+
+Our documentation is built with gatsby.
+
+```
+cd docs
+yarn run start
+```

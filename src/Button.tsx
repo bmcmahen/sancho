@@ -57,7 +57,7 @@ export const buttonReset = css({
   outline: "none",
   textRendering: "optimizeLegibility",
   userSelect: "none",
-  "-webkit-tap-highlight-color": "transparent",
+  WebkitTapHighlightColor: "transparent",
   cursor: "pointer",
   boxShadow: "none"
 });
