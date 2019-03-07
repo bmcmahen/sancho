@@ -128,6 +128,7 @@ export const baseStyles = css({
   backgroundImage: "none",
   backgroundClip: "padding-box",
   WebkitFontSmoothing: "antialiased",
+  WebkitAppearance: "none",
   boxSizing: "border-box",
   touchAction: "manipulation",
   fontFamily: theme.fonts.base,

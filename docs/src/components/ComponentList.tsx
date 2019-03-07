@@ -18,6 +18,7 @@ function MenuLink({ to, children }) {
       }}
     >
       <Link
+        data-trigger-close
         activeStyle={{
           background: theme.colors.background.tint2,
         }}
@@ -27,11 +28,13 @@ function MenuLink({ to, children }) {
           textDecoration: "none",
           background: "transparent",
           outline: "none",
-          ":hover": {
-            background: theme.colors.background.tint2,
-          },
-          ":focus": {
-            background: theme.colors.background.tint2,
+          ["@media (hover: hover)"]: {
+            ":hover": {
+              background: theme.colors.background.tint2,
+            },
+            ":focus": {
+              background: theme.colors.background.tint2,
+            },
           },
         }}
         to={to}
