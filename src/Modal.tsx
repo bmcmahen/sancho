@@ -8,6 +8,7 @@ import { useTransition, animated } from "react-spring";
 import { Overlay } from "./Overlay";
 import { useFocusElement } from "./Hooks/focus";
 import PropTypes from "prop-types";
+import { RemoveScroll } from "react-remove-scroll";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -37,77 +38,79 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
           {transitions.map(
             ({ item, key, props: animationProps }) =>
               item && (
-                <animated.div
-                  key={key}
-                  aria-modal="true"
-                  {...bind}
-                  tabIndex={-1}
-                  onClick={e => {
-                    e.stopPropagation();
-                  }}
-                  style={{
-                    opacity: animationProps.opacity,
-                    transform: animationProps.transform
-                  }}
-                  css={[
-                    {
-                      background: "white",
-                      boxShadow: theme.shadows.md,
-                      borderRadius: theme.radii.lg,
-                      margin: "16px",
-                      width: "calc(100% - 32px)",
-                      outline: "none",
-                      [theme.breakpoints.sm]: {
-                        maxWidth: "500px",
-                        margin: "30px auto"
-                      },
-                      [theme.breakpoints.lg]: {
-                        maxWidth: "650px",
-                        margin: "30px auto"
-                      }
-                    },
-                    props.mobileFullscreen && {
-                      maxWidth: "none",
-                      margin: 0,
-                      width: "100vw",
-                      height: "100vh",
-                      borderRadius: 0,
-                      boxShadow: "none",
-                      [theme.breakpoints.sm]: {
-                        maxWidth: "none",
-                        margin: "0"
-                      },
-                      [theme.breakpoints.md]: {
-                        maxWidth: "500px",
-                        margin: "30px auto",
-                        height: "auto",
+                <RemoveScroll forwardProps>
+                  <animated.div
+                    key={key}
+                    aria-modal="true"
+                    {...bind}
+                    tabIndex={-1}
+                    onClick={e => {
+                      e.stopPropagation();
+                    }}
+                    style={{
+                      opacity: animationProps.opacity,
+                      transform: animationProps.transform
+                    }}
+                    css={[
+                      {
+                        background: "white",
                         boxShadow: theme.shadows.md,
                         borderRadius: theme.radii.lg,
-                        width: "calc(100% - 32px)"
+                        margin: "16px",
+                        width: "calc(100% - 32px)",
+                        outline: "none",
+                        [theme.breakpoints.sm]: {
+                          maxWidth: "500px",
+                          margin: "30px auto"
+                        },
+                        [theme.breakpoints.lg]: {
+                          maxWidth: "650px",
+                          margin: "30px auto"
+                        }
+                      },
+                      props.mobileFullscreen && {
+                        maxWidth: "none",
+                        margin: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        borderRadius: 0,
+                        boxShadow: "none",
+                        [theme.breakpoints.sm]: {
+                          maxWidth: "none",
+                          margin: "0"
+                        },
+                        [theme.breakpoints.md]: {
+                          maxWidth: "500px",
+                          margin: "30px auto",
+                          height: "auto",
+                          boxShadow: theme.shadows.md,
+                          borderRadius: theme.radii.lg,
+                          width: "calc(100% - 32px)"
+                        }
                       }
-                    }
-                  ]}
-                >
-                  <React.Fragment>
-                    {props.title && (
-                      <ModalHeader
-                        css={{
-                          display: "flex",
-                          justifyContent: "space-between",
+                    ]}
+                  >
+                    <React.Fragment>
+                      {props.title && (
+                        <ModalHeader
+                          css={{
+                            display: "flex",
+                            justifyContent: "space-between",
 
-                          alignItems: "center",
-                          padding: `${theme.spaces.lg} ${theme.spaces.lg} 0 ${
-                            theme.spaces.lg
-                          }`
-                        }}
-                        title={props.title}
-                        onRequestClose={props.onRequestClose}
-                      />
-                    )}
+                            alignItems: "center",
+                            padding: `${theme.spaces.lg} ${theme.spaces.lg} 0 ${
+                              theme.spaces.lg
+                            }`
+                          }}
+                          title={props.title}
+                          onRequestClose={props.onRequestClose}
+                        />
+                      )}
 
-                    {props.children}
-                  </React.Fragment>
-                </animated.div>
+                      {props.children}
+                    </React.Fragment>
+                  </animated.div>
+                </RemoveScroll>
               )
           )}
         </React.Fragment>

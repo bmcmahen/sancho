@@ -2,13 +2,22 @@
 import { jsx } from "@emotion/core"
 import * as React from "react"
 import { Link } from "gatsby"
-import { Text, theme, MenuLabel, MenuDivider, InputBase } from "../../../src"
+import {
+  Text,
+  theme,
+  MenuLabel,
+  MenuDivider,
+  InputBase,
+  RequestCloseContext,
+} from "../../../src"
 
 interface ComponentListProps {}
 
 const padding = `${theme.spaces.xs} ${theme.spaces.lg}`
 
 function MenuLink({ to, children }) {
+  const closeParent = React.useContext(RequestCloseContext)
+
   return (
     <li
       css={{
@@ -19,6 +28,9 @@ function MenuLink({ to, children }) {
     >
       <Link
         data-trigger-close
+        onClick={() => {
+          closeParent()
+        }}
         activeStyle={{
           background: theme.colors.background.tint2,
         }}
@@ -26,7 +38,9 @@ function MenuLink({ to, children }) {
           display: "block",
           padding,
           textDecoration: "none",
-          background: "transparent",
+
+          WebkitTapHighlightColor: "transparent",
+
           outline: "none",
           ["@media (hover: hover)"]: {
             ":hover": {

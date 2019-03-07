@@ -28,13 +28,13 @@ export function ComponentPreview({ className, ...props }) {
     return (
       <div
         css={{
-          marginTop: theme.spaces.sm,
+          marginTop: theme.spaces.md,
           padding: theme.spaces.sm,
           background: theme.colors.background.tint1,
           borderRadius: theme.radii.md,
           marginLeft: "-0.5rem",
           marginRight: "-0.5rem",
-          marginBottom: ` ${theme.spaces.md}`,
+          marginBottom: ` ${theme.spaces.lg}`,
         }}
       >
         <LiveProvider

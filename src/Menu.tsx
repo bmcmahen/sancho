@@ -5,6 +5,7 @@ import theme from "./Theme";
 import { Text } from "./Text";
 import color from "color";
 import PropTypes from "prop-types";
+import { RequestCloseContext } from "./Sheet";
 
 const KeyCodes = {
   ArrowUp: 38,
@@ -156,6 +157,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   ...other
 }) => {
   const localRef = React.useRef<HTMLDivElement>(null);
+  const closeParent = React.useContext(RequestCloseContext);
 
   React.useEffect(() => {
     if (focus && localRef.current) {
@@ -164,6 +166,14 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   }, [focus, localRef]);
 
   const isLink = Component === "a" || other.href || other.to;
+
+  function select() {
+    if (onSelect) {
+      onSelect();
+    }
+
+    closeParent();
+  }
 
   return (
     <Component
@@ -192,7 +202,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
       data-trigger-close={true}
       onClick={(e: React.MouseEvent) => {
         if (onClick) onClick(e);
-        if (onSelect) onSelect();
+        select();
       }}
       onKeyDown={(e: React.KeyboardEvent) => {
         if (onKeyDown) onKeyDown(e);
@@ -200,7 +210,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
           if (!isLink) {
             e.preventDefault();
           }
-          if (onSelect) onSelect();
+          select();
         }
       }}
       ref={localRef}

@@ -244,16 +244,24 @@ const ghostIntents = (intent: ButtonIntent) => {
       intent === "none"
         ? theme.colors.text.muted
         : theme.colors.intent[intent].base,
-    ":hover": {
-      background: alpha(theme.colors.intent[intent].base, 0.07)
+    opacity: 1,
+    transition: "opacity 0.35s cubic-bezier(0.35,0,0.25,1)",
+    ":active": {
+      opacity: 0.4
     },
-    ":focus": {
-      zIndex: 2,
-      boxShadow: `0 0 0 3px ${alpha(theme.colors.intent[intent].base, 0.15)}`
-    },
-    ':active, &[aria-expanded="true"]': {
-      background: alpha(theme.colors.intent[intent].base, 0.15),
-      boxShadow: "none"
+    "@media (hover: hover)": {
+      ":hover": {
+        background: alpha(theme.colors.intent[intent].base, 0.07)
+      },
+      ":focus": {
+        zIndex: 2,
+        boxShadow: `0 0 0 3px ${alpha(theme.colors.intent[intent].base, 0.15)}`
+      },
+      ':active, &[aria-expanded="true"]': {
+        background: alpha(theme.colors.intent[intent].base, 0.15),
+        boxShadow: "none",
+        opacity: 1
+      }
     }
   });
 };

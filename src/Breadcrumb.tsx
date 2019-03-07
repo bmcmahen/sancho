@@ -7,17 +7,27 @@ import PropTypes from "prop-types";
 
 interface BreadcrumbProps extends React.OlHTMLAttributes<HTMLOListElement> {
   children: React.ReactElement<BreadcrumbItemProps>[];
+  overflowX?: number;
 }
 
 export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
-  children
+  children,
+  overflowX
 }) => {
   return (
     <nav
       aria-label="breadcrumb"
       css={{
         maxWidth: "100%",
-        overflow: "hidden"
+        overflow: overflowX ? "scroll" : "hidden",
+        WebkitOverflowScrolling: "touch",
+        scrollbarWidth: "none",
+        borderRadius: theme.radii.sm,
+        msOverflowStyle: "none",
+        "::-webkit-scrollbar": {
+          width: 0,
+          height: 0
+        }
       }}
     >
       <ol
@@ -27,7 +37,7 @@ export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
           display: "inline-flex",
           boxSizing: "border-box",
           overflow: "hidden",
-          width: "100%",
+          maxWidth: overflowX ? undefined : "100%",
           margin: 0,
           padding: `${theme.spaces.sm} ${theme.spaces.md}`,
           background: theme.colors.background.tint1,
@@ -59,7 +69,7 @@ export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
   return (
     <li
       css={{
-        flex: "1 1 auto",
+        flex: "0 1 auto",
         overflow: "hidden",
         display: "flex",
         alignItems: "center"

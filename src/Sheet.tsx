@@ -5,8 +5,10 @@ import { useTransition, animated } from "react-spring";
 import theme from "./Theme";
 import { useFocusElement } from "./Hooks/focus";
 import { Overlay } from "./Overlay";
-import { useCloseOnClick } from "./Hooks/useCloseOnClick";
 import PropTypes from "prop-types";
+import { RemoveScroll } from "react-remove-scroll";
+
+export const RequestCloseContext = React.createContext(() => {});
 
 function getTransitionForPosition(position: SheetPositions) {
   switch (position) {
@@ -105,10 +107,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   ...other
 }) => {
   const { bind: bindFocus } = useFocusElement(isOpen);
-  const { bind: bindClose } = useCloseOnClick(
-    closeOnClick && isOpen,
-    onRequestClose
-  );
 
   const transitions = useTransition(
     isOpen,
@@ -123,34 +121,37 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           {transitions.map(({ item, key, props: animationProps, ...other }) => {
             return (
               item && (
-                <animated.div
-                  key={key}
-                  role={role}
-                  tabIndex={-1}
-                  onClick={e => {
-                    e.stopPropagation();
-                  }}
-                  style={{
-                    transform: animationProps.transform
-                  }}
-                  css={[
-                    {
-                      outline: "none",
-                      zIndex: 41,
-                      overflowY: "auto",
-                      WebkitOverflowScrolling: "touch",
-                      opacity: 1,
-                      position: "fixed",
-                      background: "white"
-                    },
-                    positions[position]
-                  ]}
-                  {...bindClose}
-                  {...classes.sheet}
-                  {...other}
-                >
-                  {children}
-                </animated.div>
+                <RemoveScroll forwardProps>
+                  <animated.div
+                    key={key}
+                    role={role}
+                    tabIndex={-1}
+                    onClick={e => {
+                      e.stopPropagation();
+                    }}
+                    style={{
+                      transform: animationProps.transform
+                    }}
+                    css={[
+                      {
+                        outline: "none",
+                        zIndex: 41,
+                        overflowY: "auto",
+                        WebkitOverflowScrolling: "touch",
+                        opacity: 1,
+                        position: "fixed",
+                        background: "white"
+                      },
+                      positions[position]
+                    ]}
+                    {...classes.sheet}
+                    {...other}
+                  >
+                    <RequestCloseContext.Provider value={onRequestClose}>
+                      {children}
+                    </RequestCloseContext.Provider>
+                  </animated.div>
+                </RemoveScroll>
               )
             );
           })}

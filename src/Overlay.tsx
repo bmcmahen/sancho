@@ -55,7 +55,8 @@ export const Overlay: React.RefForwardingComponent<
                   zIndex: 40,
                   position: "fixed",
                   right: 0,
-                  top: 0
+                  top: 0,
+                  WebkitTapHighlightColor: "transparent"
                 }}
               >
                 <animated.div
