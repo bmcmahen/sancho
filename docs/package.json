@@ -43,7 +43,7 @@
   "scripts": {
     "build-for-docgen": "cd ../ && yarn run build-for-docgen",
     "generate-props": "yarn run build-for-docgen && react-docgen ../build -e /stories/ --out ./src/pages/components/props.json --resolver=findAllComponentDefinitions --cwd=../",
-    "build": "gatsby build",
+    "build": "yarn run generate-props && gatsby build",
     "develop": "gatsby develop",
     "develop-phone": "gatsby develop -H 0.0.0.0",
     "format": "prettier --write src/**/*.{js,jsx}",
