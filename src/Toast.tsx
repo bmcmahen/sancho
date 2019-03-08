@@ -1,9 +1,88 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { jsx, Global, css } from "@emotion/core";
 import * as React from "react";
 import toaster, { Position } from "toasted-notes";
-import "toasted-notes/lib/index.css";
 import { Alert, AlertIntentions } from "./Alert";
+
+const toastStyles = css`
+  .Toaster__manager-top {
+    max-width: 560px;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 5500;
+    pointer-events: none;
+  }
+
+  .Toaster__manager-top-left {
+    max-width: 560px;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 5500;
+    pointer-events: none;
+  }
+
+  .Toaster__manager-top-right {
+    max-width: 560px;
+    top: 0;
+    right: 0;
+    position: fixed;
+    z-index: 5500;
+    pointer-events: none;
+  }
+
+  .Toaster__manager-bottom-left {
+    max-width: 560px;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    z-index: 5500;
+    pointer-events: none;
+  }
+
+  .Toaster__manager-bottom {
+    max-width: 560px;
+    margin: 0 auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 5500;
+    pointer-events: none;
+  }
+
+  .Toaster__manager-bottom-right {
+    max-width: 560px;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: 5500;
+    pointer-events: none;
+  }
+
+  .Toaster__message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Toaster__manager-bottom-right .Toaster__message,
+  .Toaster__manager-top-right .Toaster__message {
+    align-items: flex-end;
+  }
+
+  .Toaster__manager-bottom-left .Toaster__message,
+  .Toaster__manager-top-left .Toaster__message {
+    align-items: flex-start;
+  }
+
+  .Toaster__message-wrapper {
+    padding: 8px;
+  }
+`;
 
 interface Toast {
   position?: keyof typeof Position;
@@ -38,15 +117,18 @@ export const toast = ({
 
   toaster.notify(
     ({ onClose, id }) => (
-      <Alert
-        id={id}
-        title={title}
-        component="div"
-        elevation={"md"}
-        subtitle={subtitle}
-        intent={intent}
-        onRequestClose={onClose}
-      />
+      <React.Fragment>
+        <Global styles={toastStyles} />
+        <Alert
+          id={id}
+          title={title}
+          component="div"
+          elevation={"md"}
+          subtitle={subtitle}
+          intent={intent}
+          onRequestClose={onClose}
+        />
+      </React.Fragment>
     ),
     options
   );

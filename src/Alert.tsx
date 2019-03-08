@@ -105,13 +105,18 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
           css={{
             display: "flex",
             alignItems: "flex-start",
-            padding: `${theme.spaces.md} ${theme.spaces.md}`
+            padding: `${theme.spaces.md} ${theme.spaces.md}`,
+            paddingRight: onRequestClose ? "3rem" : undefined
           }}
         >
           {contents}
           {onRequestClose && (
             <CloseButton
-              css={{ marginTop: "-0.5rem", marginRight: "-0.5rem" }}
+              css={{
+                marginTop: "-0.25rem",
+                right: theme.spaces.sm,
+                position: "absolute"
+              }}
               onClick={onRequestClose}
             />
           )}
