@@ -32,6 +32,7 @@ function MenuLink({ to, children }) {
           closeParent()
         }}
         activeStyle={{
+          fontWeight: 500,
           background: theme.colors.background.tint2,
         }}
         css={{
@@ -40,13 +41,15 @@ function MenuLink({ to, children }) {
           textDecoration: "none",
 
           WebkitTapHighlightColor: "transparent",
-
+          ":active": {
+            background: theme.colors.background.tint2,
+          },
+          ":focus": {
+            background: theme.colors.background.tint2,
+          },
           outline: "none",
           ["@media (hover: hover)"]: {
             ":hover": {
-              background: theme.colors.background.tint2,
-            },
-            ":focus": {
               background: theme.colors.background.tint2,
             },
           },
@@ -55,8 +58,12 @@ function MenuLink({ to, children }) {
       >
         <Text
           css={{
+            fontWeight: "inherit",
             color: theme.colors.text.muted,
-            fontSize: theme.sizes[0],
+            fontSize: theme.sizes[1],
+            [theme.breakpoints.lg]: {
+              fontSize: theme.sizes[0],
+            },
           }}
         >
           {children}
@@ -163,12 +170,12 @@ export function ComponentList(_props: ComponentListProps) {
             boxShadow: "none",
             borderRadius: 0,
             background: "none",
-            border: `1px solid transparent`,
+
             borderBottom: `1px solid ${theme.colors.border.muted}`,
             padding: theme.spaces.lg,
             height: "64px",
             ":focus": {
-              borderColor: theme.colors.palette.blue.light,
+              // borderColor: theme.colors.palette.blue.light,
               boxShadow: "none",
               // background: theme.colors.background.tint2,
             },
@@ -180,7 +187,7 @@ export function ComponentList(_props: ComponentListProps) {
         css={{
           flex: 1,
           overflowY: "scroll",
-          "webkit-overflow-scrolling": "touch",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         <ListGroup label="Getting started">

@@ -17,7 +17,11 @@ export function SideMenu({  }: SideMenuProps) {
         color="white"
         onClick={() => setIsOpen(true)}
         css={{
+          marginLeft: "-" + theme.spaces.sm,
           marginRight: theme.spaces.sm,
+          [theme.breakpoints.md]: {
+            marginLeft: 0,
+          },
           [theme.breakpoints.lg]: {
             display: "none",
           },

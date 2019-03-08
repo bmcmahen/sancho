@@ -34,7 +34,10 @@ export function ComponentPreview({ className, ...props }) {
           borderRadius: theme.radii.md,
           marginLeft: "-0.5rem",
           marginRight: "-0.5rem",
-          marginBottom: ` ${theme.spaces.xl}`,
+          marginBottom: theme.spaces.lg,
+          [theme.breakpoints.md]: {
+            marginBottom: theme.spaces.xl,
+          },
         }}
       >
         <LiveProvider
@@ -116,7 +119,10 @@ const MDXComponents = {
       css={[
         {
           marginBottom: theme.spaces.sm,
-          marginTop: theme.spaces.xl,
+          marginTop: theme.spaces.md,
+          [theme.breakpoints.md]: {
+            marginTop: theme.spaces.xl,
+          },
         },
         anchorPadding,
       ]}

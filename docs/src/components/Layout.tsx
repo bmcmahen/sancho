@@ -72,8 +72,8 @@ const Layout = ({ children }) => (
                 icon={
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
+                    width="20"
+                    height="20"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="white"
@@ -141,6 +141,7 @@ export const Article = ({ children, sidebar }: ArticleProps) => (
         flex: 1,
         minWidth: 0,
         padding: `${theme.spaces.md} 0`,
+
         [theme.breakpoints.md]: {
           padding: `${theme.spaces.md} ${theme.spaces.md}`,
         },

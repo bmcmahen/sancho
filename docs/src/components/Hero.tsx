@@ -63,9 +63,14 @@ export const Hero = ({ children }) => (
         position: "relative",
         background: `linear-gradient(to right, #185a9d, #43cea2)`,
         // background: theme.colors.palette.neutral.dark,
-        padding: `4.5rem 0`,
-        paddingBottom: "5.5rem",
+        padding: `${theme.spaces.xl} 0`,
         marginBottom: theme.spaces.lg,
+        textAlign: "center",
+        [theme.breakpoints.sm]: {
+          textAlign: "left",
+          padding: `4.5rem 0`,
+          paddingBottom: "5.5rem",
+        },
       }}
     >
       <Container>
@@ -95,10 +100,26 @@ export const Hero = ({ children }) => (
           </Button>
         </Article>
       </Container>
-      <Wave />
+      <div
+        css={{
+          display: "none",
+          [theme.breakpoints.lg]: {
+            display: "block",
+          },
+        }}
+      >
+        <Wave />
+      </div>
     </div>
     <Container>
-      <Article>
+      <Article
+        sidebar={[
+          { id: "Installation", name: "Installation" },
+          { id: "Styling and Themes", name: "Styling and Themes" },
+          { id: "Prior art", name: "Prior art" },
+          { id: "About", name: "About" },
+        ]}
+      >
         <ComponentMDXProvider>{children}</ComponentMDXProvider>
       </Article>
     </Container>
