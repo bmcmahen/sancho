@@ -66,7 +66,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
         <div
           css={{
             alignItems: "center",
-            marginTop: theme.spaces.sm,
+            marginTop: theme.spaces.xs,
             display: "flex"
           }}
         >
@@ -78,7 +78,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
           <Text
             css={{
               display: "block",
-              marginLeft: theme.spaces.sm,
+              marginLeft: theme.spaces.xs,
               fontSize: theme.sizes[0],
               color: theme.colors.intent.danger.base
             }}
@@ -94,7 +94,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
         <Text
           css={{
             display: "block",
-            marginTop: theme.spaces.sm,
+            marginTop: theme.spaces.xs,
             color: theme.colors.text.muted,
             fontSize: theme.sizes[0]
           }}
@@ -240,17 +240,11 @@ export const Label: React.FunctionComponent<LabelProps> = ({
     <label
       css={{
         display: "inline-block",
-        marginBottom: hide ? 0 : theme.spaces.sm
+        marginBottom: hide ? 0 : theme.spaces.xs
       }}
       {...other}
     >
-      <Text
-        css={{ fontSize: theme.sizes[0], fontWeight: 600 }}
-        muted
-        variant={"body"}
-      >
-        {children}
-      </Text>
+      <Text variant={"subtitle"}>{children}</Text>
     </label>
   );
 

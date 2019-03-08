@@ -18,7 +18,7 @@ export function useFocusElement(showing: boolean, options: Options = {}) {
 
     const trap = createFocusTrap(elementRef.current, {
       escapeDeactivates: false,
-      clickOutsideDeactivates: false,
+      clickOutsideDeactivates: true,
       fallbackFocus: '[tabindex="-1"]',
       ...options
     });

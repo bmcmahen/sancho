@@ -266,10 +266,9 @@ export const Tab: React.RefForwardingComponent<
           <Text
             wrap={false}
             component="span"
+            variant="subtitle"
             css={{
-              fontSize: theme.sizes[0],
               color: "inherit",
-              fontWeight: 500,
               transition: "color 0.25s cubic-bezier(0.35,0,0.25,1)"
             }}
           >

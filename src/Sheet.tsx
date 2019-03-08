@@ -5,6 +5,7 @@ import { useTransition, animated } from "react-spring";
 import theme from "./Theme";
 import { useFocusElement } from "./Hooks/focus";
 import { Overlay } from "./Overlay";
+
 import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
 
@@ -116,42 +117,41 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
 
   return (
     <React.Fragment>
-      <Overlay isOpen={isOpen} onRequestClose={onRequestClose} {...bindFocus}>
+      <Overlay isOpen={isOpen} onRequestClose={onRequestClose}>
         <React.Fragment>
           {transitions.map(({ item, key, props: animationProps, ...other }) => {
             return (
               item && (
-                <RemoveScroll forwardProps>
-                  <animated.div
-                    key={key}
-                    role={role}
-                    tabIndex={-1}
-                    onClick={e => {
-                      e.stopPropagation();
-                    }}
-                    style={{
-                      transform: animationProps.transform
-                    }}
-                    css={[
-                      {
-                        outline: "none",
-                        zIndex: 41,
-                        overflowY: "auto",
-                        WebkitOverflowScrolling: "touch",
-                        opacity: 1,
-                        position: "fixed",
-                        background: "white"
-                      },
-                      positions[position]
-                    ]}
-                    {...classes.sheet}
-                    {...other}
-                  >
-                    <RequestCloseContext.Provider value={onRequestClose}>
-                      {children}
-                    </RequestCloseContext.Provider>
-                  </animated.div>
-                </RemoveScroll>
+                <animated.div
+                  key={key}
+                  role={role}
+                  {...bindFocus}
+                  tabIndex={-1}
+                  onClick={e => {
+                    e.stopPropagation();
+                  }}
+                  style={{
+                    transform: animationProps.transform
+                  }}
+                  css={[
+                    {
+                      outline: "none",
+                      zIndex: 41,
+                      opacity: 1,
+                      position: "fixed",
+                      background: "white"
+                    },
+                    positions[position]
+                  ]}
+                  {...classes.sheet}
+                  {...other}
+                >
+                  <RequestCloseContext.Provider value={onRequestClose}>
+                    <RemoveScroll forwardProps>
+                      <div css={{ height: "100%" }}>{children}</div>
+                    </RemoveScroll>
+                  </RequestCloseContext.Provider>
+                </animated.div>
               )
             );
           })}

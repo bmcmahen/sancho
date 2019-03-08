@@ -29,7 +29,9 @@ By default, a sheet will open to the right with its width adjusting to the width
         onRequestClose={() => setState({ isOpen: false })}
         isOpen={state.isOpen}
       >
-        <div style={{ padding: "3rem" }}>Hello world</div>
+        <div tabIndex={0} style={{ padding: "3rem" }}>
+          Hello world
+        </div>
       </Sheet>
     </React.Fragment>
   )}
