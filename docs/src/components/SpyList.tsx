@@ -30,7 +30,7 @@ export function SpyList({ items }: SpyListProps) {
       {items.map((item, i) => {
         // const active = inView[inView.length - 1] === item.id
         const active = false // disable scroll spy for now
-
+        const props = item.name === "Props" || item.name === "Props table"
         return (
           <li
             css={{
@@ -48,10 +48,13 @@ export function SpyList({ items }: SpyListProps) {
               }}
             >
               <Text
+                variant={i === 0 ? "uppercase" : "body"}
                 css={{
                   display: "block",
                   lineHeight: "1.75",
-                  fontWeight: i === 0 ? 500 : 400,
+
+                  paddingBottom: i === 0 ? theme.spaces.xs : 0,
+                  marginBottom: i === 0 ? theme.spaces.xs : 0,
                   borderBottom:
                     i === 0
                       ? `1px solid ${theme.colors.border.muted}`
@@ -60,6 +63,8 @@ export function SpyList({ items }: SpyListProps) {
                     item.name === "Props" || item.name === "Props table"
                       ? `1px solid ${theme.colors.border.muted}`
                       : undefined,
+                  paddingTop: props && theme.spaces.xs,
+                  marginTop: props && theme.spaces.xs,
                   color: active
                     ? theme.colors.text.default
                     : theme.colors.text.muted,

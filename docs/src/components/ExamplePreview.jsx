@@ -89,7 +89,7 @@ const MDXComponents = {
     <ul css={{ paddingLeft: "1.5rem", marginBottom: "1rem" }} {...props} />
   ),
   li: ({ children, ...other }) => (
-    <li {...other} css={{ maxWidth: "38rem", marginBottom: "0.5rem" }}>
+    <li {...other} css={{ maxWidth: "43rem", marginBottom: "0.5rem" }}>
       <Text>{children}</Text>
     </li>
   ),
@@ -132,7 +132,7 @@ const MDXComponents = {
     </Text>
   ),
   p: ({ children }) => (
-    <Text css={{ maxWidth: "38rem" }} variant="paragraph">
+    <Text css={{ maxWidth: "43rem" }} variant="paragraph">
       {children}
     </Text>
   ),

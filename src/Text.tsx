@@ -7,9 +7,10 @@ import PropTypes from "prop-types";
 export const variants = {
   uppercase: css({
     textTransform: "uppercase",
-    fontSize: `calc(${theme.sizes[0]} - 0.1rem)`,
+    fontSize: theme.sizes[0],
     fontWeight: 600,
-    letterSpacing: "0.07em"
+    color: theme.colors.text.muted,
+    letterSpacing: "-0.02em"
   }),
   hidden: css({
     position: "absolute",
