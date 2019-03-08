@@ -3,3 +3,5 @@ docs
 src
 .storybook
 node_modules
+tsconfig.json
+public
