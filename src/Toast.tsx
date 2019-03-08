@@ -84,13 +84,18 @@ const toastStyles = css`
   }
 `;
 
+interface renderArgs {
+  id: string;
+  onClose: () => void;
+}
+
 interface Toast {
   position?: keyof typeof Position;
   duration?: number | null;
   title?: string;
   subtitle?: string;
   intent?: AlertIntentions;
-  render?: () => React.ReactNode;
+  render?: (options: renderArgs) => React.ReactNode;
 }
 
 /**
@@ -112,7 +117,15 @@ export const toast = ({
   };
 
   if (render) {
-    return toaster.notify(render, options);
+    return toaster.notify(
+      ({ onClose, id }) => (
+        <React.Fragment>
+          <Global styles={toastStyles} />
+          {render({ onClose, id })}
+        </React.Fragment>
+      ),
+      options
+    );
   }
 
   toaster.notify(
