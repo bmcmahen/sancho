@@ -179,7 +179,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
     <Component
       css={{
         cursor: "pointer",
-        padding: `${theme.spaces.xs} ${theme.spaces.md}`,
+        padding: `${theme.spaces.sm} ${theme.spaces.md}`,
         opacity: disabled ? 0.3 : 1,
         display: "block",
         textDecoration: "none",
@@ -194,6 +194,9 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
           backgroundColor: color(theme.colors.background.tint1)
             .darken(0.1)
             .string()
+        },
+        [theme.breakpoints.md]: {
+          padding: `${theme.spaces.xs} ${theme.spaces.md}`
         }
       }}
       onFocus={onFocus}

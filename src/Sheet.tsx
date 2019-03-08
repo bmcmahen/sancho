@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import { useTransition, animated } from "react-spring";
+import { useTransition, animated, config } from "react-spring";
 import theme from "./Theme";
 import { useFocusElement } from "./Hooks/focus";
 import { Overlay } from "./Overlay";
@@ -67,8 +67,15 @@ const positions = {
     right: 0,
     height: "auto",
     width: "100%",
+    padding: `0 ${theme.spaces.sm}`,
+    boxSizing: "border-box",
     [theme.breakpoints.md]: {
       maxHeight: "400px"
+    },
+    "& > div": {
+      borderTopRightRadius: theme.radii.md,
+      borderTopLeftRadius: theme.radii.md,
+      paddingBottom: theme.spaces.md
     }
   }),
   top: css({
@@ -77,11 +84,18 @@ const positions = {
     right: 0,
     height: "auto",
     width: "100%",
+    padding: `0 ${theme.spaces.sm}`,
     [theme.breakpoints.md]: {
       maxHeight: "400px"
+    },
+    "& > div": {
+      borderBottomRightRadius: theme.radii.md,
+      borderBottomLeftRadius: theme.radii.md
     }
   })
 };
+
+const noop = () => {};
 
 export type SheetPositions = keyof typeof positions;
 
@@ -105,7 +119,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   closeOnClick = true,
   position = "right",
   onRequestClose,
-  ...other
+  ...props
 }) => {
   const { bind: bindFocus } = useFocusElement(isOpen);
 
@@ -117,7 +131,10 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
 
   return (
     <React.Fragment>
-      <Overlay isOpen={isOpen} onRequestClose={onRequestClose}>
+      <Overlay
+        isOpen={isOpen}
+        onRequestClose={closeOnClick ? onRequestClose : noop}
+      >
         <React.Fragment>
           {transitions.map(({ item, key, props: animationProps, ...other }) => {
             return (
@@ -138,17 +155,19 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                       outline: "none",
                       zIndex: 41,
                       opacity: 1,
-                      position: "fixed",
-                      background: "white"
+                      position: "fixed"
                     },
                     positions[position]
                   ]}
                   {...classes.sheet}
                   {...other}
+                  {...props}
                 >
                   <RequestCloseContext.Provider value={onRequestClose}>
                     <RemoveScroll forwardProps>
-                      <div css={{ height: "100%" }}>{children}</div>
+                      <div css={{ background: "white", height: "100%" }}>
+                        {children}
+                      </div>
                     </RemoveScroll>
                   </RequestCloseContext.Provider>
                 </animated.div>

@@ -40,13 +40,13 @@ export const variants = {
     marginBottom: theme.spaces.sm
   }),
   h5: css({
-    fontWeight: 400,
+    fontWeight: 500,
     fontSize: theme.sizes[2],
     lineHeight: 1.2,
     marginBottom: theme.spaces.sm
   }),
   h4: css({
-    fontWeight: 400,
+    fontWeight: 500,
     fontSize: theme.sizes[3],
     lineHeight: 1.2,
     marginBottom: theme.spaces.sm,
@@ -59,7 +59,7 @@ export const variants = {
     marginBottom: theme.spaces.sm
   }),
   h2: css({
-    fontWeight: 400,
+    fontWeight: 500,
     fontSize: theme.sizes[5],
     lineHeight: 1.2,
     marginBottom: theme.spaces.sm,

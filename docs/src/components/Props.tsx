@@ -2,17 +2,7 @@
 import { jsx } from "@emotion/core"
 import * as React from "react"
 import table from "../pages/components/props.json"
-import {
-  Table,
-  TableHead,
-  TableCell,
-  TableRow,
-  TableBody,
-  theme,
-  Text,
-  Layer,
-  Container,
-} from "../../../src"
+import { theme, Text } from "../../../src"
 import { anchorPadding } from "./ExamplePreview.jsx"
 
 // pretty lame
@@ -37,7 +27,7 @@ export function Props({ names }: PropsProps) {
         ]}
       >
         <Text
-          css={{ marginBottom: theme.spaces.md, marginTop: theme.spaces.xl }}
+          css={{ marginBottom: theme.spaces.md, marginTop: theme.spaces.lg }}
           variant="h2"
         >
           Props
@@ -53,7 +43,7 @@ export function Props({ names }: PropsProps) {
               }
 
               return (
-                <div css={{ marginBottom: "3rem" }} key={name}>
+                <div css={{ marginBottom: theme.spaces.lg }} key={name}>
                   <div>
                     <Text variant="h4">{entry.displayName}</Text>
                   </div>

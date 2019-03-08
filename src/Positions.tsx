@@ -9,7 +9,7 @@ import {
   PopperChildrenProps
 } from "react-popper";
 import { Portal } from "./Portal";
-import { useTransition, AnimatedValue } from "react-spring";
+import { useTransition, AnimatedValue, config } from "react-spring";
 import PropTypes from "prop-types";
 
 export type Placements =

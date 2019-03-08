@@ -36,7 +36,7 @@ export function ComponentPreview({ className, ...props }) {
           marginRight: "-0.5rem",
           marginBottom: theme.spaces.lg,
           [theme.breakpoints.md]: {
-            marginBottom: theme.spaces.xl,
+            marginBottom: theme.spaces.lg,
           },
         }}
       >
@@ -121,7 +121,7 @@ const MDXComponents = {
           marginBottom: theme.spaces.sm,
           marginTop: theme.spaces.md,
           [theme.breakpoints.md]: {
-            marginTop: theme.spaces.xl,
+            marginTop: theme.spaces.lg,
           },
         },
         anchorPadding,
@@ -132,7 +132,7 @@ const MDXComponents = {
     </Text>
   ),
   p: ({ children }) => (
-    <Text css={{ maxWidth: "45rem" }} variant="paragraph">
+    <Text css={{ maxWidth: "38rem" }} variant="paragraph">
       {children}
     </Text>
   ),

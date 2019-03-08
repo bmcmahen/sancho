@@ -28,7 +28,7 @@ export function SpyList({ items }: SpyListProps) {
         top: "64px",
       }}
     >
-      {items.map(item => {
+      {items.map((item, i) => {
         // const active = inView[inView.length - 1] === item.id
         const active = false // disable scroll spy for now
 
@@ -36,8 +36,8 @@ export function SpyList({ items }: SpyListProps) {
           <li
             css={{
               listStyle: "none",
-              padding: 0,
               margin: 0,
+              padding: `${0} ${theme.spaces.lg}`,
             }}
             key={item.id}
           >
@@ -45,14 +45,22 @@ export function SpyList({ items }: SpyListProps) {
               href={"#" + getId(item.id)}
               css={{
                 textDecoration: "none",
+                display: "block",
               }}
             >
               <Text
                 css={{
-                  display: "inline-block",
+                  display: "block",
                   lineHeight: "1.75",
-                  fontWeight: active ? 600 : 400,
-                  padding: `${0} ${theme.spaces.lg}`,
+                  fontWeight: i === 0 ? 500 : 400,
+                  borderBottom:
+                    i === 0
+                      ? `1px solid ${theme.colors.border.muted}`
+                      : undefined,
+                  borderTop:
+                    item.name === "Props" || item.name === "Props table"
+                      ? `1px solid ${theme.colors.border.muted}`
+                      : undefined,
                   color: active
                     ? theme.colors.text.default
                     : theme.colors.text.muted,
