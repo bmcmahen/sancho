@@ -5,6 +5,7 @@
   "main": "commonjs/index.js",
   "module": "build/index.js",
   "typings": "build/index.d.ts",
+  "author": "Ben McMahen <ben.mcmahen@gmail.com>",
   "dependencies": {
     "@blueprintjs/icons": "^3.6.0",
     "@emotion/core": "^10.0.7",

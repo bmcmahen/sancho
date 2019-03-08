@@ -1,9 +1,8 @@
 {
-  "name": "gatsby-starter-default",
-  "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "name": "sancho-docs",
+  "description": "The sancho docs built with gatsby",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Ben McMahen <ben.mcmahen@gmail.com>",
   "dependencies": {
     "@babel/standalone": "^7.3.4",
     "@emotion/styled": "^10.0.7",
