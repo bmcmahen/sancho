@@ -14,6 +14,8 @@ node_modules
 # production
 /build
 build
+commonjs
+/commonjs
 
 # misc
 .DS_Store

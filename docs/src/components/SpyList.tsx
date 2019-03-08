@@ -15,7 +15,6 @@ interface SpyListProps {
 
 export function SpyList({ items }: SpyListProps) {
   const [ids] = React.useState(() => items.map(item => item.id))
-  // const { inView } = useScrollSpy(ids)
 
   return (
     <ul
