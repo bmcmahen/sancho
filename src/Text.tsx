@@ -49,7 +49,8 @@ export const variants = {
     fontWeight: 400,
     fontSize: theme.sizes[3],
     lineHeight: 1.2,
-    marginBottom: theme.spaces.sm
+    marginBottom: theme.spaces.sm,
+    letterSpacing: "-0.2px"
   }),
   h3: css({
     fontWeight: 500,
@@ -61,13 +62,15 @@ export const variants = {
     fontWeight: 400,
     fontSize: theme.sizes[5],
     lineHeight: 1.2,
-    marginBottom: theme.spaces.sm
+    marginBottom: theme.spaces.sm,
+    letterSpacing: "-0.2px"
   }),
   h1: css({
     fontWeight: 500,
     fontSize: theme.sizes[6],
     lineHeight: 1.2,
-    marginBottom: theme.spaces.sm
+    marginBottom: theme.spaces.sm,
+    letterSpacing: "-0.2px"
   }),
   display3: css({
     fontWeight: 300,
