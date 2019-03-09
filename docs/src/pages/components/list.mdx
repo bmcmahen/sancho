@@ -1,0 +1,80 @@
+import { Container } from "../../../../src"
+import "./button.css"
+import { Article } from "../../components/Layout"
+import { Props } from "../../components/Props"
+import SEO from "../../components/SEO"
+
+<SEO title="List" />
+
+<Container>
+<Article sidebar={[
+  { id: 'List', name: 'List'},
+  { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Using links', name: 'Using links'},
+  { id: 'Props', name: 'Props table'}
+]}>
+
+# List
+
+Lists are useful for rendering things like lists of emails, actions, documents, and so on.
+
+#### Basic usage
+
+```jsx
+<Layer style={{ overflow: "hidden", width: "450px" }}>
+  <div
+    style={{
+      height: "1.5rem",
+      borderBottom: "1px solid",
+      borderBottomColor: theme.colors.border.muted,
+    }}
+  />
+  <List>
+    <ListItem
+      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Ben McMahen"
+      secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
+      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    />
+    <ListItem
+      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    />
+    <ListItem
+      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    />
+    <ListItem
+      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    />
+  </List>
+</Layer>
+```
+
+#### Using links
+
+```jsx
+<List>
+  <ListItem
+    component="a"
+    href="/"
+    iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+    primary="Ben McMahen"
+    wrap={false}
+    secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
+    iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+  />
+</List>
+```
+
+<Props names={["List"]} />
+
+</Article>
+</Container>

@@ -7,6 +7,7 @@ import * as components from "../../../src"
 import "./ExamplePreview.css"
 import Component from "react-component-component"
 import { Text, theme, Link } from "../../../src"
+import faker from "faker"
 
 export const anchorPadding = css`
   &::before {
@@ -44,6 +45,7 @@ export function ComponentPreview({ className, ...props }) {
           scope={{
             ...components,
             Component,
+            faker,
           }}
           mountStylesheet={false}
           code={props.children.props.children}
