@@ -16,7 +16,7 @@ export const List: React.FunctionComponent<ListProps> = ({
 
 List.propTypes = {
   /** A series of ListItem elements */
-  children: PropTypes.element
+  children: PropTypes.node
 };
 
 interface ListItemProps extends React.HTMLAttributes<any> {

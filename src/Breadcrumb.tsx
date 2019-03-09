@@ -58,7 +58,8 @@ export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
 };
 
 Breadcrumb.propTypes = {
-  children: PropTypes.element as any
+  /** A list of BreadcrumbItem children */
+  children: PropTypes.node
 };
 
 interface BreadcrumbItemProps extends React.LiHTMLAttributes<HTMLLIElement> {}

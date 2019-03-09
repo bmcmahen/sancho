@@ -34,7 +34,10 @@ export class Icon extends React.Component<IconProps> {
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 
     /** The size of the icon */
-    size: PropTypes.number,
+    size: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
+    ]),
 
     /** An optional title for the icon */
     title: PropTypes.string
