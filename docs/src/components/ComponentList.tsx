@@ -105,7 +105,7 @@ const components = [
   { title: "Icon", path: "/components/icon" },
   { title: "Layer", path: "/components/layer" },
   { title: "Link", path: "/components/link" },
-  { title: "List", path: "/components/List" },
+  { title: "List", path: "/components/list" },
   { title: "Menu", path: "/components/menu" },
   { title: "Modal", path: "/components/modal" },
   { title: "Navbar", path: "/components/navbar" },

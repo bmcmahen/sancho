@@ -10,6 +10,7 @@ import SEO from "../../components/SEO"
 <Article sidebar={[
   { id: 'List', name: 'List'},
   { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'No wrap', name: 'No wrap' },
   { id: 'Using links', name: 'Using links'},
   { id: 'Props', name: 'Props table'}
 ]}>
@@ -22,13 +23,6 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
 
 ```jsx
 <Layer style={{ overflow: "hidden", width: "450px" }}>
-  <div
-    style={{
-      height: "1.5rem",
-      borderBottom: "1px solid",
-      borderBottomColor: theme.colors.border.muted,
-    }}
-  />
   <List>
     <ListItem
       iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
@@ -43,14 +37,51 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
       iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
     />
     <ListItem
+      iconBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
+      primary="Lynn Apple"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    />
+    <ListItem
+      iconBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
+      primary="Mary Joe"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    />
+  </List>
+</Layer>
+```
+
+#### No wrap
+
+```jsx
+<Layer style={{ overflow: "hidden", width: "450px" }}>
+  <List>
+    <ListItem
+      wrap={false}
+      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Ben McMahen"
+      secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
+      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    />
+    <ListItem
+      wrap={false}
       iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
       primary="Joe Chen"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
       iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
     />
     <ListItem
-      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
-      primary="Joe Chen"
+      wrap={false}
+      iconBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
+      primary="Lynn Apple"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    />
+    <ListItem
+      wrap={false}
+      iconBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
+      primary="Mary Joe"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
       iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
     />
