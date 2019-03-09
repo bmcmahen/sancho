@@ -12,7 +12,8 @@ interface BreadcrumbProps extends React.OlHTMLAttributes<HTMLOListElement> {
 
 export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
   children,
-  overflowX
+  overflowX,
+  ...other
 }) => {
   return (
     <nav
@@ -41,8 +42,9 @@ export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
           margin: 0,
           padding: `${theme.spaces.sm} ${theme.spaces.md}`,
           background: theme.colors.background.tint1,
-          borderRadius: theme.radii.sm
+          borderRadius: theme.radii.md
         }}
+        {...other}
       >
         {React.Children.map(children, (child, i) => {
           return React.cloneElement(child as any, {
