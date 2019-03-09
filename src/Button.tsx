@@ -270,10 +270,11 @@ const ghostIntents = (intent: ButtonIntent) => {
 const outlineIntents = (intent: ButtonIntent) => {
   return css({
     color: theme.colors.intent[intent].base,
-    borderColor: theme.colors.intent[intent].base,
+    borderColor: alpha(theme.colors.intent[intent].base, 0.2),
     ":focus": {
       zIndex: 2,
-      boxShadow: `0 0 0 3px ${alpha(theme.colors.intent[intent].base, 0.15)}`
+      boxShadow: `0 0 0 3px ${alpha(theme.colors.intent[intent].base, 0.15)}`,
+      borderColor: alpha(theme.colors.intent[intent].base, 0.5)
     },
     ':active, &[aria-expanded="true"]': {
       boxShadow: "none",
@@ -301,6 +302,7 @@ export interface ButtonStyleProps {
   intent?: ButtonIntent;
   block?: boolean;
   size?: ButtonSize;
+  disabled?: boolean;
 }
 
 export interface ButtonProps
@@ -326,6 +328,7 @@ export const Button: React.RefForwardingComponent<
       block,
       variant = "default",
       intent = "none",
+      disabled = false,
       component: Component = "button",
       ...other
     }: ButtonProps,
@@ -334,7 +337,7 @@ export const Button: React.RefForwardingComponent<
     return (
       <Component
         ref={ref}
-        css={getButtonStyles({ size, block, variant, intent })}
+        css={getButtonStyles({ size, block, variant, intent, disabled })}
         {...other}
       />
     );
@@ -372,7 +375,8 @@ export function getButtonStyles({
   size = "md",
   block = false,
   variant = "default",
-  intent = "none"
+  intent = "none",
+  disabled = false
 }: ButtonStyleProps) {
   return css([
     buttonReset,
@@ -386,7 +390,11 @@ export function getButtonStyles({
       display: getDisplay(block)
     },
     variants[variant],
-    getIntent(variant, intent)
+    getIntent(variant, intent),
+    disabled && {
+      opacity: 0.7,
+      pointerEvents: "none"
+    }
   ]);
 }
 
