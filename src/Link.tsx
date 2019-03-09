@@ -30,7 +30,7 @@ export const Link: React.FunctionComponent<LinkProps> = ({
 
 Link.propTypes = {
   /** Use a custom component. E.g., ReactRouter Link */
-  component: PropTypes.string,
+  component: PropTypes.any,
 
   /** The content of the link */
   children: PropTypes.node
