@@ -23,6 +23,7 @@ interface ListItemProps extends React.HTMLAttributes<any> {
   component?: React.ReactType<any>;
   iconBefore?: React.ReactNode;
   iconAfter?: React.ReactNode;
+  children?: React.ReactNode;
   wrap?: boolean;
   primary: string | React.ReactNode;
   secondary?: string | React.ReactNode;
@@ -33,6 +34,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
   primary,
   secondary,
   iconBefore,
+  children,
   wrap = true,
   iconAfter,
   component: Component = "div",
@@ -82,6 +84,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
               {secondary}
             </Text>
           )}
+          {children}
         </div>
         {iconAfter && (
           <div css={{ flex: "0 0 auto", marginLeft: theme.spaces.md }}>
@@ -103,5 +106,7 @@ ListItem.propTypes = {
   /** an icon to appear to the right of the text content */
   iconAfter: PropTypes.node,
   /** whether primary and secondary text should be wrapped */
-  wrap: PropTypes.bool
+  wrap: PropTypes.bool,
+  /** optional third row of content */
+  children: PropTypes.node
 };
