@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import { Button, ButtonProps } from "./Button";
+import { Button, ButtonProps, ButtonSize } from "./Button";
 import { IconName } from "@blueprintjs/icons";
 import { Icon } from "./Icons";
 import theme from "./Theme";
@@ -14,17 +14,32 @@ export interface IconButtonProps extends Partial<ButtonProps> {
   color?: string;
 }
 
+const paddingForIconSizes = {
+  xs: theme.spaces.sm,
+  sm: theme.spaces.sm,
+  md: theme.spaces.sm,
+  lg: theme.spaces.md,
+  xl: theme.spaces.md
+};
+
 export const IconButton: React.RefForwardingComponent<
   React.Ref<HTMLButtonElement>,
   IconButtonProps
-> = React.forwardRef(({ label, icon, color, ...other }, ref) => {
-  return (
-    <Button ref={ref} css={{ padding: "0.5rem" }} {...other}>
-      <VisuallyHidden>{label}</VisuallyHidden>
-      <Icon color={color} aria-hidden icon={icon} />
-    </Button>
-  );
-});
+> = React.forwardRef(
+  ({ label, size = "md" as ButtonSize, icon, color, ...other }, ref) => {
+    return (
+      <Button
+        ref={ref}
+        size={size}
+        css={{ padding: paddingForIconSizes[size] }}
+        {...other}
+      >
+        <VisuallyHidden>{label}</VisuallyHidden>
+        <Icon size={size} color={color} aria-hidden icon={icon} />
+      </Button>
+    );
+  }
+);
 
 IconButton.displayName = "IconButton";
 

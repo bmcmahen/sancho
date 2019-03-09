@@ -2,21 +2,30 @@ import * as React from "react";
 import { IconName, IconSvgPaths16, IconSvgPaths20 } from "@blueprintjs/icons";
 import theme from "./Theme";
 import PropTypes from "prop-types";
+import { ButtonSize } from "./Button";
 
 export { IconNames, IconName } from "@blueprintjs/icons";
+
+const sizesForIcon = {
+  xs: 8,
+  sm: 12,
+  md: 16,
+  lg: 20,
+  xl: 32
+};
 
 export interface IconProps {
   color?: string;
   icon: IconName | JSX.Element | null;
   children?: never;
-  size: number;
+  size: number | ButtonSize;
   title?: string;
   style?: React.CSSProperties;
 }
 
 export class Icon extends React.Component<IconProps> {
   static defaultProps = {
-    size: 16,
+    size: "md",
     color: theme.colors.palette.gray.dark
   };
 
@@ -31,23 +40,17 @@ export class Icon extends React.Component<IconProps> {
     title: PropTypes.string
   };
 
-  static readonly SIZE_STANDARD = 16;
-  static readonly SIZE_LARGE = 20;
-
   render() {
-    const {
-      title,
-      color,
-      icon,
-      size = Icon.SIZE_STANDARD,
-      ...other
-    } = this.props;
+    const { title, color, icon, size, ...other } = this.props;
 
     if (icon == null) return null;
     else if (typeof icon !== "string") return icon;
 
+    const s =
+      typeof size === "string" ? sizesForIcon[size as ButtonSize] : size;
+
     const pixelGridSize =
-      size >= Icon.SIZE_LARGE ? Icon.SIZE_LARGE : Icon.SIZE_STANDARD;
+      s >= sizesForIcon.lg ? sizesForIcon.lg : sizesForIcon.md;
     const paths = this.renderSvgPaths(pixelGridSize, icon);
     if (paths == null) {
       return null;
@@ -63,8 +66,8 @@ export class Icon extends React.Component<IconProps> {
       <svg
         style={style}
         data-icon={icon}
-        width={size}
-        height={size}
+        width={s}
+        height={s}
         color={color}
         viewBox={viewBox}
         {...other}
@@ -77,7 +80,7 @@ export class Icon extends React.Component<IconProps> {
 
   private renderSvgPaths(pathsSize: number, iconName: IconName) {
     const svgPathsRecord =
-      pathsSize === Icon.SIZE_STANDARD ? IconSvgPaths16 : IconSvgPaths20;
+      pathsSize === sizesForIcon.md ? IconSvgPaths16 : IconSvgPaths20;
     const pathStrings = svgPathsRecord[iconName];
     if (pathStrings == null) {
       return null;
