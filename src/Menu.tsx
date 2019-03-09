@@ -17,7 +17,7 @@ const KeyCodes = {
 type ChildrenType = React.ReactElement<MenuItemProps>;
 
 interface MenuListProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: Array<ChildrenType>;
+  children: React.ReactNode;
   focusableChildren?: React.ComponentType<any>[];
 }
 
