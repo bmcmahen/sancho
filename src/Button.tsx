@@ -245,7 +245,10 @@ const ghostIntents = (intent: ButtonIntent) => {
         ? theme.colors.text.muted
         : theme.colors.intent[intent].base,
     opacity: 1,
-    transition: "opacity 0.35s cubic-bezier(0.35,0,0.25,1)",
+    background: "transparent",
+    boxShadow: "none",
+    transition:
+      "box-shadow 0.07s cubic-bezier(0.35,0,0.25,1), background 0.07s cubic-bezier(0.35,0,0.25,1), opacity 0.35s cubic-bezier(0.35,0,0.25,1)",
     ":active": {
       opacity: 0.4
     },
@@ -271,6 +274,14 @@ const outlineIntents = (intent: ButtonIntent) => {
   return css({
     color: theme.colors.intent[intent].base,
     borderColor: alpha(theme.colors.intent[intent].base, 0.2),
+    boxShadow: "none",
+    transition:
+      "box-shadow 0.07s cubic-bezier(0.35,0,0.25,1), background 0.07s cubic-bezier(0.35,0,0.25,1)",
+    "@media (hover:hover)": {
+      ":hover": {
+        background: alpha(theme.colors.intent[intent].base, 0.05)
+      }
+    },
     ":focus": {
       zIndex: 2,
       boxShadow: `0 0 0 3px ${alpha(theme.colors.intent[intent].base, 0.15)}`,
