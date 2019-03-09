@@ -6,7 +6,8 @@ import PropTypes from "prop-types";
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   children: React.ReactNode;
-  component?: React.ReactType<LinkProps>;
+  component?: React.ReactType<any>;
+  [key: string]: any; // back hack to permit things like to='/page'
 }
 
 export const Link: React.FunctionComponent<LinkProps> = ({
