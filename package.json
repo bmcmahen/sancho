@@ -1,6 +1,6 @@
 {
   "name": "sancho",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "licence": "MIT",
   "main": "commonjs/index.js",
   "module": "build/index.js",
