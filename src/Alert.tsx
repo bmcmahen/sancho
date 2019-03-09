@@ -28,10 +28,10 @@ const icons: { [key in AlertIntentions]: IconName } = {
   question: "help"
 };
 
-export interface AlertProps extends React.HTMLAttributes<HTMLElement> {
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   onRequestClose?: () => void;
   title?: string;
-  subtitle?: string;
+  subtitle?: string | React.ReactNode;
   id?: string;
   elevation?: LayerElevations;
   children?: React.ReactNode;
