@@ -1,6 +1,7 @@
 import { Hero } from "../components/Hero"
 import SEO from "../components/SEO"
 import { Article } from "../components/layout"
+import { Button, Divider, Container } from "../../../src"
 
 <SEO
   title="Sancho - A React-based Design System"
@@ -9,9 +10,22 @@ import { Article } from "../components/layout"
 
 export default Hero
 
-# Getting started
+# Sancho UI
 
-### Installation
+Sancho is a design system built with React, Typescript and Emotion. It's designed to be responsive, accessible, and beautiful.
+
+<Button
+component="a"
+href="http://github.com/bmcmahen/sancho"
+> View on Github
+
+</Button>
+
+<Divider style={{ margin: "1.5rem 0" }} />
+
+## Getting started
+
+#### Installation
 
 Install Sancho into your react application using either Yarn or NPM.
 
@@ -33,7 +47,7 @@ function Project() {
 }
 ```
 
-### Styling and Themes
+#### Styling and Themes
 
 Sancho uses [Emotion](https://emotion.sh/docs/introduction) for styling. The reasons for choosing Emotion are outlined in this [blog post](https://benmcmahen.com/why-i-choose-emotion/). You can override component styles by passing in custom css using the `css` prop. Learn more about using the `css` prop on the [Emotion](https://emotion.sh/docs/css-prop) website.
 

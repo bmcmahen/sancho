@@ -68,8 +68,8 @@ export default {
     overlay: alpha(scales.gray[9], 0.6)
   },
   border: {
-    default: scales.gray[4],
-    muted: scales.gray[3]
+    default: scales.gray[3],
+    muted: scales.gray[2]
   },
   text: {
     muted: scales.gray[7],

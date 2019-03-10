@@ -97,7 +97,7 @@ Positioner.propTypes = {
   positionFixed: PropTypes.bool,
 
   /** The element our positioner is targetting (eg, Button) */
-  target: PropTypes.node,
+  target: PropTypes.func,
 
   /** The render callback which contains positioning and animation info */
   children: PropTypes.func

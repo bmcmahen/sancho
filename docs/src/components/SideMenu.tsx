@@ -14,11 +14,12 @@ export function SideMenu({  }: SideMenuProps) {
         label="Show menu"
         icon="menu"
         variant="ghost"
-        color="white"
+        color={theme.colors.text.muted}
+        size="lg"
         onClick={() => setIsOpen(true)}
         css={{
-          marginLeft: "-" + theme.spaces.sm,
-          marginRight: theme.spaces.sm,
+          // marginLeft: "-" + theme.spaces.sm,
+          // marginRight: theme.spaces.sm,
           [theme.breakpoints.md]: {
             marginLeft: 0,
           },
