@@ -5,6 +5,7 @@ import SEO from "./SEO"
 import { graphql } from "gatsby"
 import { theme, Text, Container, Button } from "../../../src"
 import { ComponentMDXProvider } from "./ExamplePreview"
+import { Nav } from "./Nav"
 
 const Wave = () => (
   <div
@@ -58,62 +59,11 @@ const Wave = () => (
 
 export const Hero = ({ children }) => (
   <React.Fragment>
-    <div
-      css={{
-        position: "relative",
-        background: `linear-gradient(to right, #185a9d, #43cea2)`,
-        // background: theme.colors.palette.neutral.dark,
-        padding: `${theme.spaces.xl} 0`,
-        marginBottom: theme.spaces.lg,
-        textAlign: "center",
-        [theme.breakpoints.sm]: {
-          textAlign: "left",
-          padding: `4.5rem 0`,
-          paddingBottom: "5.5rem",
-        },
-      }}
-    >
-      <Container>
-        <Article>
-          <Text
-            css={{ color: "white", marginBottom: theme.spaces.md }}
-            variant="display2"
-          >
-            Sancho UI
-          </Text>
-          <Text css={{ color: "white", maxWidth: "38rem" }} variant="lead">
-            Sancho is a design system built with React, Typescript and Emotion.
-            It's designed to be responsive, accessible, and beautiful.
-          </Text>
-          <Button
-            css={{
-              marginTop: theme.spaces.lg,
-              borderColor: "white",
-              color: "white",
-            }}
-            component="a"
-            variant="outline"
-            size="lg"
-            href="https://github.com/bmcmahen/sancho"
-          >
-            View on Github
-          </Button>
-        </Article>
-      </Container>
-      <div
-        css={{
-          display: "none",
-          [theme.breakpoints.lg]: {
-            display: "block",
-          },
-        }}
-      >
-        <Wave />
-      </div>
-    </div>
+    <Nav />
     <Container>
       <Article
         sidebar={[
+          { id: "Sancho", name: "Sancho" },
           { id: "Installation", name: "Installation" },
           { id: "Styling and Themes", name: "Styling and Themes" },
           { id: "Prior art", name: "Prior art" },

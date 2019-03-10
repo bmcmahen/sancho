@@ -172,9 +172,9 @@ export function ComponentList(_props: ComponentListProps) {
             borderRadius: 0,
             background: "none",
 
-            borderBottom: `1px solid ${theme.colors.border.muted}`,
+            borderBottom: `1px solid ${theme.colors.border.default}`,
             padding: theme.spaces.lg,
-            height: "64px",
+            height: "65px",
             ":focus": {
               // borderColor: theme.colors.palette.blue.light,
               boxShadow: "none",

@@ -18,7 +18,7 @@ const paddingForIconSizes = {
   xs: theme.spaces.sm,
   sm: theme.spaces.sm,
   md: theme.spaces.sm,
-  lg: theme.spaces.md,
+  lg: theme.spaces.sm,
   xl: theme.spaces.md
 };
 

@@ -121,7 +121,7 @@ const MDXComponents = {
       css={[
         {
           marginBottom: theme.spaces.sm,
-          marginTop: theme.spaces.md,
+          marginTop: theme.spaces.lg,
           [theme.breakpoints.md]: {
             marginTop: theme.spaces.lg,
           },

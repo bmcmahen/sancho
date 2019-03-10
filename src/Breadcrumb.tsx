@@ -6,7 +6,9 @@ import { Text } from "./Text";
 import PropTypes from "prop-types";
 
 interface BreadcrumbProps extends React.OlHTMLAttributes<HTMLOListElement> {
-  children: React.ReactElement<BreadcrumbItemProps>[];
+  children:
+    | React.ReactElement<BreadcrumbItemProps>
+    | React.ReactElement<BreadcrumbItemProps>[];
   overflowX?: number;
 }
 
@@ -47,9 +49,13 @@ export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
         {...other}
       >
         {React.Children.map(children, (child, i) => {
+          if (!React.isValidElement(child)) {
+            return child;
+          }
+
           return React.cloneElement(child as any, {
             "aria-current":
-              i === React.Children.count(children) - 1 ? "page" : undefined
+              i === validChildrenCount(children) - 1 ? "page" : undefined
           });
         })}
       </ol>
@@ -62,10 +68,19 @@ Breadcrumb.propTypes = {
   children: PropTypes.node
 };
 
-interface BreadcrumbItemProps extends React.LiHTMLAttributes<HTMLLIElement> {}
+function validChildrenCount(children: any) {
+  return React.Children.toArray(children).filter(child =>
+    React.isValidElement(child)
+  ).length;
+}
+
+interface BreadcrumbItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
+  inverted?: boolean;
+}
 
 export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
   children,
+  inverted,
   ...other
 }) => {
   const current = other["aria-current"];
@@ -79,10 +94,17 @@ export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
       }}
       {...other}
     >
-      <Text wrap={false} component="div" variant="body">
+      <Text
+        wrap={false}
+        css={{
+          color: inverted ? "rgba(255,255,255,0.8)" : undefined
+        }}
+        component="div"
+        variant="body"
+      >
         {children}
       </Text>
-      {!current && <BreadCrumbDivider />}
+      {!current && <BreadCrumbDivider inverted={inverted} />}
     </li>
   );
 };
@@ -99,7 +121,7 @@ const BreadCrumbDivider: React.FunctionComponent<{ inverted?: boolean }> = ({
     css={{
       flex: "0 0 auto",
       margin: `0 ${theme.spaces.sm}`,
-      color: !inverted ? theme.colors.text.muted : "white"
+      color: !inverted ? theme.colors.text.muted : "rgba(255,255,255,0.8)"
     }}
   >
     <svg

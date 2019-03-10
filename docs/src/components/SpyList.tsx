@@ -48,23 +48,12 @@ export function SpyList({ items }: SpyListProps) {
               }}
             >
               <Text
-                variant={i === 0 ? "uppercase" : "body"}
+                variant={"body"}
+                muted
                 css={{
                   display: "block",
-                  lineHeight: "1.75",
 
-                  paddingBottom: i === 0 ? theme.spaces.xs : 0,
-                  marginBottom: i === 0 ? theme.spaces.xs : 0,
-                  borderBottom:
-                    i === 0
-                      ? `1px solid ${theme.colors.border.muted}`
-                      : undefined,
-                  borderTop:
-                    item.name === "Props" || item.name === "Props table"
-                      ? `1px solid ${theme.colors.border.muted}`
-                      : undefined,
-                  paddingTop: props && theme.spaces.xs,
-                  marginTop: props && theme.spaces.xs,
+                  paddingLeft: i === 0 || props ? 0 : theme.spaces.sm,
                   color: active
                     ? theme.colors.text.default
                     : theme.colors.text.muted,
