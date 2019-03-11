@@ -7,6 +7,7 @@ import { getId } from "./ExamplePreview"
 export interface Item {
   id: string
   name: string
+  parent?: boolean
 }
 
 interface SpyListProps {
@@ -53,7 +54,8 @@ export function SpyList({ items }: SpyListProps) {
                 css={{
                   display: "block",
 
-                  paddingLeft: i === 0 || props ? 0 : theme.spaces.sm,
+                  paddingLeft:
+                    item.parent || i === 0 || props ? 0 : theme.spaces.sm,
                   color: active
                     ? theme.colors.text.default
                     : theme.colors.text.muted,

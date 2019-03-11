@@ -6,7 +6,7 @@ import {
   Text,
   theme,
   MenuLabel,
-  MenuDivider,
+  Divider,
   InputBase,
   RequestCloseContext,
 } from "../../../src"
@@ -192,7 +192,7 @@ export function ComponentList(_props: ComponentListProps) {
             </MenuLink>
           ))}
         </ListGroup>
-        <MenuDivider />
+        <Divider />
         <ListGroup label="Components">
           {componentList.map(entry => (
             <MenuLink key={entry.path} to={entry.path}>

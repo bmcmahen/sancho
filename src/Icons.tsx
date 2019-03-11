@@ -30,10 +30,10 @@ export class Icon extends React.Component<IconProps> {
   };
 
   static propTypes = {
-    /** The icon to render */
+    /** The icon to render. Either an icon name or an svg element. */
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 
-    /** The size of the icon */
+    /** The size of the icon. Either a number or string (sm, md, etc.) */
     size: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
@@ -60,19 +60,17 @@ export class Icon extends React.Component<IconProps> {
     }
 
     const viewBox = `0 0 ${pixelGridSize} ${pixelGridSize}`;
-    let { style = {} } = this.props;
-    if (color != null) {
-      style = { ...style, fill: color };
-    }
 
     return (
       <svg
-        style={style}
         data-icon={icon}
         width={s}
         height={s}
         color={color}
         viewBox={viewBox}
+        css={{
+          fill: color
+        }}
         {...other}
       >
         {title ? <title>{title}</title> : null}

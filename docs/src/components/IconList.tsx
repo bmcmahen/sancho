@@ -47,6 +47,7 @@ export function IconList({  }: IconListProps) {
                 background: theme.colors.background.tint1,
                 borderRadius: theme.radii.sm,
                 display: "flex",
+                alignItems: "center",
                 padding: theme.spaces.md,
                 margin: theme.spaces.sm,
                 flex: "1",
