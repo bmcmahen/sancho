@@ -136,11 +136,19 @@ export const arrowStyles = (color: string) =>
     bottom: 100%;
     left: 0;
     margin-top: 0em;
+    
     width: 1em;
     height: 0.25em;
     &::before {
-      border-width: 0 0.25em 0.25em 0.25em;
-      border-color: transparent transparent ${color} transparent;
+      width: 10px;
+      border: none;
+      height: 10px;
+      background: ${color};
+      border-top: 1px solid ${color === "white" ? " #dee2e685" : color};
+      border-right: 1px solid ${color === "white" ? "#dee2e685" : color};
+      transform: rotate(-45deg);
+      border-radius: 2px;
+      margin-top: -1px;
     }
   }
   &[data-placement*='top'] {

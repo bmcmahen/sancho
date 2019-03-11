@@ -151,6 +151,7 @@ export function ComponentList(_props: ComponentListProps) {
   const [search, setSearch] = React.useState("")
   const [componentList, setComponentList] = React.useState(components)
   const [aboutList, setAboutList] = React.useState(about)
+  const closeParent = React.useContext(RequestCloseContext)
 
   React.useEffect(() => {
     if (!search) {
@@ -191,7 +192,11 @@ export function ComponentList(_props: ComponentListProps) {
           paddingLeft: theme.spaces.lg,
         }}
       >
-        <Link css={{ textDecoration: "none" }} to="/">
+        <Link
+          onClick={() => closeParent()}
+          css={{ textDecoration: "none" }}
+          to="/"
+        >
           <Text
             css={{ color: theme.colors.palette.blue.base }}
             gutter={false}
