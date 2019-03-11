@@ -15,6 +15,8 @@ import { Nav } from "../../components/Nav"
   { id: 'Intent', name: 'Button intent' },
   { id: 'Sizes', name: 'Button sizes'},
   { id: 'Variants', name: 'Button variants'},
+  { id: 'Loading', name: 'Loading state'},
+  { id: 'Disabled', name: 'Disabled state'},
   { id: 'Custom component', name: 'Custom component'},
   { id: 'Props', name: 'Props table'}
 ]}>
@@ -56,6 +58,39 @@ Similar to Bootstrap, you can style your buttons by setting the `intent` prop.
   <Button variant="default">Default variant</Button>
   <Button variant="ghost">Ghost variant</Button>
   <Button variant="outline">Outline variant</Button>
+</div>
+```
+
+#### Loading
+
+```jsx
+<Component initialState={{ isLoading: false }}>
+  {({ state, setState }) => (
+    <Button
+      intent="primary"
+      variant="outline"
+      onClick={() => setState({ isLoading: !state.isLoading })}
+      loading={state.isLoading}
+    >
+      Click me to toggle loading
+    </Button>
+  )}
+</Component>
+```
+
+#### Disabled
+
+```jsx
+<div className="Button-example">
+  <Button disabled variant="default">
+    Default variant
+  </Button>
+  <Button disabled variant="ghost">
+    Ghost variant
+  </Button>
+  <Button disabled variant="outline">
+    Outline variant
+  </Button>
 </div>
 ```
 

@@ -5,6 +5,7 @@ import theme from "./Theme";
 import color from "color";
 import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
+import { Spinner } from "./Spinner";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -313,6 +314,7 @@ export interface ButtonStyleProps {
   intent?: ButtonIntent;
   block?: boolean;
   size?: ButtonSize;
+  loading?: boolean;
   disabled?: boolean;
 }
 
@@ -340,7 +342,9 @@ export const Button: React.RefForwardingComponent<
       variant = "default",
       intent = "none",
       disabled = false,
+      loading = false,
       component: Component = "button",
+      children,
       ...other
     }: ButtonProps,
     ref
@@ -348,9 +352,35 @@ export const Button: React.RefForwardingComponent<
     return (
       <Component
         ref={ref}
-        css={getButtonStyles({ size, block, variant, intent, disabled })}
+        css={getButtonStyles({
+          size,
+          block,
+          variant,
+          intent,
+          disabled,
+          loading
+        })}
         {...other}
-      />
+      >
+        {loading && (
+          <div
+            className="Spinner"
+            css={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)"
+            }}
+          >
+            <Spinner delay={1} size={size} />
+          </div>
+        )}
+        {typeof children === "string" ? (
+          <span aria-hidden={loading}>{children}</span>
+        ) : (
+          children
+        )}
+      </Component>
     );
   }
 );
@@ -387,7 +417,8 @@ export function getButtonStyles({
   block = false,
   variant = "default",
   intent = "none",
-  disabled = false
+  disabled = false,
+  loading = false
 }: ButtonStyleProps) {
   return css([
     buttonReset,
@@ -404,6 +435,13 @@ export function getButtonStyles({
     disabled && {
       opacity: 0.7,
       pointerEvents: "none"
+    },
+    loading && {
+      position: "relative",
+      "& > :not(.Spinner)": {
+        opacity: 0,
+        transition: "opacity 0.1s ease"
+      }
     }
   ]);
 }
