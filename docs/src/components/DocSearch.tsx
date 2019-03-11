@@ -32,6 +32,7 @@ export const DocSearch: React.FunctionComponent<DocSearchProps> = props => {
     <form css={{ flex: "1" }} onSubmit={e => e.preventDefault()}>
       <Global
         styles={{
+          ".ds-dropdown-menu": {},
           ".algolia-autocomplete": {
             width: "100%",
           },
@@ -55,10 +56,10 @@ export const DocSearch: React.FunctionComponent<DocSearchProps> = props => {
           ".algolia-autocomplete .ds-dropdown-menu": {
             border: "none",
             boxShadow: theme.shadows.md,
-            maxWidth: "500px",
-            minWidth: "400px",
+            maxWidth: "400px",
+            minWidth: "300px",
             borderRadius: theme.radii.lg,
-
+            transform: "translateX(-7%)", // lameee hack for mobile
             lineHeight: 1.5,
           },
           ".algolia-autocomplete .algolia-docsearch-suggestion--category-header": {
@@ -94,6 +95,17 @@ export const DocSearch: React.FunctionComponent<DocSearchProps> = props => {
           ".algolia-docsearch-suggestion--category-header-lvl0 .algolia-docsearch-suggestion--highlight": {
             background: "none !important",
             color: "#33363d !important",
+          },
+          ".algolia-autocomplete .algolia-docsearch-suggestion--no-results": {
+            padding: "8px !important",
+            display: "block",
+          },
+          [theme.breakpoints.sm]: {
+            ".algolia-autocomplete .ds-dropdown-menu": {
+              transform: "none",
+              maxWidth: "400px",
+              minWidth: "400px",
+            },
           },
         }}
       />

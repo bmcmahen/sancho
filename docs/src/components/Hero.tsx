@@ -92,7 +92,7 @@ export const Hero = ({ children }) => (
             variant="lead"
           >
             Sancho is a design system built with React, Typescript and Emotion.
-            It's designed to be responsive, accessible, and beautiful.
+            It's designed to be responsive, accessible, and flexible.
           </Text>
           <Button
             variant="outline"
