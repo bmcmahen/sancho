@@ -6,10 +6,11 @@ import {
   Text,
   theme,
   MenuLabel,
-  MenuDivider,
+  Divider,
   InputBase,
   RequestCloseContext,
 } from "../../../src"
+import { DocSearch } from "./DocSearch"
 
 interface ComponentListProps {}
 
@@ -34,12 +35,13 @@ function MenuLink({ to, children }) {
         activeStyle={{
           fontWeight: 500,
           background: theme.colors.background.tint2,
+          color: theme.colors.text.default,
         }}
         css={{
           display: "block",
           padding,
           textDecoration: "none",
-
+          color: theme.colors.text.muted,
           WebkitTapHighlightColor: "transparent",
           ":active": {
             background: theme.colors.background.tint2,
@@ -59,7 +61,7 @@ function MenuLink({ to, children }) {
         <Text
           css={{
             fontWeight: "inherit",
-            color: theme.colors.text.muted,
+            color: "inherit",
             fontSize: theme.sizes[1],
             [theme.breakpoints.lg]: {
               fontSize: theme.sizes[0],
@@ -159,31 +161,24 @@ export function ComponentList(_props: ComponentListProps) {
         background: theme.colors.background.tint1,
       }}
     >
-      <form onSubmit={e => e.preventDefault()}>
-        <InputBase
-          type="search"
-          placeholder="Search..."
-          onChange={(e: React.FormEvent<HTMLInputElement>) =>
-            setSearch(e.currentTarget.value)
-          }
-          value={search}
-          css={{
-            boxShadow: "none",
-            borderRadius: 0,
-            background: "none",
-
-            borderBottom: `1px solid ${theme.colors.border.default}`,
-            padding: theme.spaces.lg,
-            height: "65px",
-            ":focus": {
-              // borderColor: theme.colors.palette.blue.light,
-              boxShadow: "none",
-              // background: theme.colors.background.tint2,
-            },
-          }}
-        />
-      </form>
-
+      <div
+        css={{
+          height: "64px",
+          borderBottom: "1px solid",
+          borderColor: theme.colors.border.default,
+          display: "flex",
+          alignItems: "center",
+          paddingLeft: theme.spaces.lg,
+        }}
+      >
+        <Text
+          css={{ color: theme.colors.palette.blue.base }}
+          gutter={false}
+          variant="h5"
+        >
+          Sancho UI
+        </Text>
+      </div>
       <div
         css={{
           flex: 1,
@@ -198,7 +193,7 @@ export function ComponentList(_props: ComponentListProps) {
             </MenuLink>
           ))}
         </ListGroup>
-        <MenuDivider />
+        <Divider />
         <ListGroup label="Components">
           {componentList.map(entry => (
             <MenuLink key={entry.path} to={entry.path}>

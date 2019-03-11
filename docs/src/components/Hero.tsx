@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import Layout, { Article } from "../components/layout"
 import SEO from "./SEO"
 import { graphql } from "gatsby"
-import { theme, Text, Container, Button } from "../../../src"
+import { theme, Text, Container, Button, Divider } from "../../../src"
 import { ComponentMDXProvider } from "./ExamplePreview"
 import { Nav } from "./Nav"
 
@@ -60,6 +60,51 @@ const Wave = () => (
 export const Hero = ({ children }) => (
   <React.Fragment>
     <Nav />
+    <div
+      css={{
+        padding: `${theme.spaces.lg} 0`,
+        borderBottom: `1px solid ${theme.colors.border.muted}`,
+      }}
+    >
+      <Container>
+        <div
+          css={{
+            textAlign: "center",
+            padding: `${theme.spaces.lg} 0`,
+
+            [theme.breakpoints.md]: {
+              textAlign: "left",
+              padding: `${theme.spaces.lg} 0.75rem`,
+            },
+          }}
+        >
+          <Text variant="display2">Sancho UI</Text>
+          <Text
+            css={{
+              maxWidth: "38rem",
+              margin: "0 auto",
+
+              marginBottom: theme.spaces.lg,
+              [theme.breakpoints.md]: {
+                marginLeft: 0,
+              },
+            }}
+            variant="lead"
+          >
+            Sancho is a design system built with React, Typescript and Emotion.
+            It's designed to be responsive, accessible, and flexible.
+          </Text>
+          <Button
+            variant="outline"
+            component="a"
+            size="lg"
+            href="http://github.com/bmcmahen/sancho"
+          >
+            View on Github
+          </Button>
+        </div>
+      </Container>
+    </div>
     <Container>
       <Article
         sidebar={[

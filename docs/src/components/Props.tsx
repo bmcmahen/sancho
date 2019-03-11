@@ -50,6 +50,9 @@ export function Props({ names }: PropsProps) {
 
                   {Object.keys(props).map(key => {
                     const row = props[key]
+                    if (!row.type) {
+                      return null
+                    }
                     const type = row.type.name
                     const val = row.type.value
                     const { required, description } = row

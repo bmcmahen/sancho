@@ -14,6 +14,7 @@ import {
 } from "../../../src"
 import { SideMenu } from "./SideMenu"
 import { Link } from "gatsby"
+import { DocSearch } from "./DocSearch"
 
 export interface NavProps {
   title?: string
@@ -29,6 +30,10 @@ export const Nav: React.FunctionComponent<NavProps> = ({ title }) => {
         boxShadow: "none",
         borderBottom: `1px solid ${theme.colors.border.default}`,
         background: "white",
+        backdropFilter: "blur(8px)",
+        ["@supports (backdrop-filter: blur(8px))"]: {
+          background: "rgba(255,255,255,0.6)",
+        },
         [theme.breakpoints.lg]: {
           width: "calc(100% - 14rem)",
         },
@@ -36,8 +41,16 @@ export const Nav: React.FunctionComponent<NavProps> = ({ title }) => {
     >
       <Toolbar>
         <SideMenu />
-        <Breadcrumb css={{ background: "none" }}>
-          <BreadcrumbItem
+        <Breadcrumb
+          css={{
+            display: "none",
+            [theme.breakpoints.sm]: {
+              display: "block",
+            },
+            background: "none",
+          }}
+        >
+          {/* <BreadcrumbItem
             css={{
               display: "none",
               [theme.breakpoints.lg]: {
@@ -50,7 +63,7 @@ export const Nav: React.FunctionComponent<NavProps> = ({ title }) => {
                 Sancho UI
               </Text>
             </StyledLink>
-          </BreadcrumbItem>
+          </BreadcrumbItem> */}
           {title && (
             <BreadcrumbItem inverted>
               <Text gutter={false} variant="h5">
@@ -59,12 +72,24 @@ export const Nav: React.FunctionComponent<NavProps> = ({ title }) => {
             </BreadcrumbItem>
           )}
         </Breadcrumb>
-
+        <div
+          css={{
+            flex: 1,
+            marginLeft: theme.spaces.md,
+            [theme.breakpoints.sm]: {
+              marginLeft: "auto",
+              flex: "0 0 auto",
+              width: "250px",
+            },
+          }}
+        >
+          <DocSearch />
+        </div>
         <Tooltip content="View on Github">
           <IconButton
-            css={{ marginLeft: "auto" }}
             variant="ghost"
             component="a"
+            css={{ marginLeft: theme.spaces.md }}
             color={theme.colors.text.muted}
             href="https://github.com/bmcmahen/sancho"
             icon={

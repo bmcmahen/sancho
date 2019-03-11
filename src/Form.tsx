@@ -143,7 +143,6 @@ export const baseStyles = css({
     color: alpha(gray, 0.7)
   },
   ":focus": {
-    zIndex: 2,
     boxShadow: `inset 0 0 2px ${alpha(gray, 0.4)}, inset 0 0 0 1px ${alpha(
       blue,
       0.3

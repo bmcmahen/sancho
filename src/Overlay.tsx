@@ -70,6 +70,7 @@ export const Overlay: React.RefForwardingComponent<
                     left: 0,
                     right: 0,
                     bottom: 0,
+                    backdropFilter: "blur(4px)",
                     background: theme.colors.background.overlay
                   }}
                 />
