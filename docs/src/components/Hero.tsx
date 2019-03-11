@@ -1,9 +1,6 @@
 import * as React from "react"
-import { Link } from "gatsby"
-import Layout, { Article } from "../components/layout"
-import SEO from "./SEO"
-import { graphql } from "gatsby"
-import { theme, Text, Container, Button, Divider } from "../../../src"
+import { Article } from "../components/layout"
+import { theme, Text, Container, Button } from "../../../src"
 import { ComponentMDXProvider } from "./ExamplePreview"
 import { Nav } from "./Nav"
 
@@ -118,10 +115,12 @@ export const Hero = ({ children }) => (
       <Article
         sidebar={[
           { id: "Sancho", name: "Sancho" },
+          { id: "Getting started", name: "Getting started", parent: true },
           { id: "Installation", name: "Installation" },
-          { id: "Styling and Themes", name: "Styling and Themes" },
-          { id: "Prior art", name: "Prior art" },
-          { id: "About", name: "About" },
+          { id: "Styling and Emotion", name: "Styling and Emotion" },
+          { id: "Theme", name: "Theme" },
+          { id: "Prior art", name: "Prior art", parent: true },
+          { id: "About", name: "About", parent: true },
         ]}
       >
         <ComponentMDXProvider>{children}</ComponentMDXProvider>

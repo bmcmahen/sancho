@@ -6,6 +6,7 @@ import {
   Text,
   theme,
   MenuLabel,
+  Link as StyleLink,
   Divider,
   RequestCloseContext,
 } from "../../../src"
@@ -108,7 +109,8 @@ function ListGroup({ label, children }) {
 
 const about = [
   { title: "Installation", path: "/#installation" },
-  { title: "Styling and themes", path: "/#styling%20and%20themes" },
+  { title: "Styling and emotion", path: "/#styling%20and%20emotion" },
+  { title: "Theme", path: "/#theme" },
 ]
 
 const components = [
@@ -175,7 +177,7 @@ export function ComponentList(_props: ComponentListProps) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        minWidth: "14rem",
+        width: "14rem",
         background: theme.colors.background.tint1,
       }}
     >
@@ -221,6 +223,19 @@ export function ComponentList(_props: ComponentListProps) {
             </MenuLink>
           ))}
         </ListGroup>
+        <Divider />
+        <Text
+          muted
+          css={{
+            display: "block",
+            fontSize: theme.sizes[0],
+            padding: `${theme.spaces.lg}`,
+            paddingTop: 0,
+          }}
+        >
+          Build with ☕ by <br />
+          <StyleLink href="http://benmcmahen.com">Ben McMahen</StyleLink>
+        </Text>
       </div>
     </div>
   )

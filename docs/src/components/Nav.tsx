@@ -28,7 +28,7 @@ export const Nav: React.FunctionComponent<NavProps> = ({ title }) => {
         left: "auto",
         width: "100%",
         boxShadow: "none",
-        borderBottom: `1px solid ${theme.colors.border.default}`,
+        borderBottom: `1px solid ${theme.colors.border.muted}`,
         background: "white",
         backdropFilter: "blur(8px)",
         ["@supports (backdrop-filter: blur(8px))"]: {
