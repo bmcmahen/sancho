@@ -19,7 +19,7 @@ export const DocSearch: React.FunctionComponent<DocSearchProps> = props => {
         apiKey: "976b020b43c68297729e9c18c6412e07",
         indexName: "sancho",
         inputSelector: "#doc-search",
-        debug: false,
+        debug: true,
       })
       setEnabled(true)
     } else {
