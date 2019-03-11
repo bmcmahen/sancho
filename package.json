@@ -34,8 +34,8 @@
     "use-media": "^1.2.0"
   },
   "peerDependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   "scripts": {
     "clear": "rimraf ./build",
@@ -66,6 +66,8 @@
     "@types/node": "^11.10.5",
     "@types/storybook__react": "^4.0.1",
     "faker": "^4.1.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
     "react-scripts": "2.1.5",
     "rimraf": "^2.6.3",
     "typescript": "3.3.3333"

@@ -35,22 +35,30 @@ export const Spinner: React.FunctionComponent<SpinnerProps> = ({
 
   return (
     <div
-      role="status"
-      css={css`
-        opacity: ${show ? 1 : 0};
-        display: inline-block;
-        width: 1.5rem;
-        height: 1.5rem;
-        transition: opacity 0.3s ease;
-        vertical-align: text-bottom;
-        border: 0.2em solid currentColor;
-        border-right-color: transparent;
-        border-radius: 50%;
-        animation: ${spin} 0.75s linear infinite;
-      `}
-      {...other}
+      css={{
+        opacity: show ? 1 : 0,
+        display: "inline-block",
+        transition: "opacity 0.4s cubic-bezier(0.35,0,0.25,1)"
+      }}
     >
-      <VisuallyHidden>Loading...</VisuallyHidden>
+      <div
+        role="status"
+        css={css`
+          opacity: ${show ? 1 : 0};
+          display: inline-block;
+          width: 1.5rem;
+          height: 1.5rem;
+          transition: opacity 0.3s ease;
+          vertical-align: text-bottom;
+          border: 0.2em solid currentColor;
+          border-right-color: transparent;
+          border-radius: 50%;
+          animation: ${spin} 0.75s linear infinite;
+        `}
+        {...other}
+      >
+        <VisuallyHidden>Loading...</VisuallyHidden>
+      </div>
     </div>
   );
 };

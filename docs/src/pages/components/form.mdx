@@ -19,7 +19,7 @@ import { Nav } from "../../components/Nav"
 
 # Forms
 
-Forms are used for obtaining user input. For accessibility purposes we always recommend pairing an input element with a label. You can use the `hideLabel` prop with the Label component to visually hide it.
+Forms are used for obtaining user input.
 
 To create forms, Sancho exports multiple components:
 
@@ -30,9 +30,11 @@ To create forms, Sancho exports multiple components:
 - **Select**: Select menu.
 - **Check**: Used for checkbox or radio style inputs.
 
+For accessibility purposes we always recommend pairing an input element with a label. You can use the `hideLabel` prop with the Label component to visually hide it.
+
 #### InputGroup usage
 
-`InputGroup` is typically used as a wrapper for input elements. It provides an `id` to the child input element to ensure accessibility.
+InputGroup is typically used as a wrapper for input elements. It provides margins, labels, and other accessibility features, which makes it the preferred way to use form elements.
 
 ```jsx
 <form>

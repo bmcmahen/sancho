@@ -1,1 +1,3 @@
-export * from "@reach/visually-hidden";
+import VisuallyHidden from "@reach/visually-hidden";
+
+export { VisuallyHidden };

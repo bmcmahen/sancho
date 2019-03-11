@@ -12,7 +12,7 @@ import { isMobile } from "is-mobile";
 interface TooltipProps {
   content: React.ReactNode;
   placement?: Placements;
-  children: React.ReactElement<any>;
+  children: React.ReactNode;
 }
 
 let idcount = 0;
@@ -38,7 +38,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
     }
 
     // Enable on non-mobile devices
-    return React.cloneElement(children, {
+    return React.cloneElement(children as React.ReactElement<any>, {
       ref,
       "aria-describedby": id,
       onMouseEnter: (e: MouseEvent) => {
@@ -124,7 +124,7 @@ Tooltip.propTypes = {
     "left-end",
     "left",
     "left-start"
-  ])
+  ] as Placements[])
 };
 
 export const arrowStyles = (color: string) =>
