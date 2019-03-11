@@ -128,6 +128,7 @@ export const baseStyles = css({
   backgroundImage: "none",
   backgroundClip: "padding-box",
   WebkitFontSmoothing: "antialiased",
+  WebkitTapHighlightColor: "transparent",
   WebkitAppearance: "none",
   boxSizing: "border-box",
   touchAction: "manipulation",
@@ -138,7 +139,8 @@ export const baseStyles = css({
     0.2
   )}`,
   borderRadius: theme.radii.sm,
-  transition: "border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s",
+  transition:
+    "background 0.25s cubic-bezier(0.35,0,0.25,1), border-color 0.15s cubic-bezier(0.35,0,0.25,1), box-shadow 0.15s cubic-bezier(0.35,0,0.25,1)",
   "::placeholder": {
     color: alpha(gray, 0.7)
   },
@@ -151,8 +153,24 @@ export const baseStyles = css({
   },
   ":disabled": {
     boxShadow: `inset 0 0 0 1px ${alpha(gray, 0.45)}`
+  },
+  ":active": {
+    background: theme.colors.background.tint1
   }
 });
+
+const activeBackground = css({ background: theme.colors.background.tint1 });
+
+function useActiveStyle() {
+  const [active, setActive] = React.useState(false);
+  return {
+    bind: {
+      onTouchStart: () => setActive(true),
+      onTouchEnd: () => setActive(false)
+    },
+    active
+  };
+}
 
 export interface InputBaseProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -170,11 +188,14 @@ export const InputBase: React.FunctionComponent<InputBaseProps> = ({
   inputSize = "md",
   ...other
 }) => {
+  const { bind, active } = useActiveStyle();
+
   return (
     <input
       autoComplete={autoComplete}
       autoFocus={autoFocus}
-      css={[baseStyles, inputSizes[inputSize]]}
+      {...bind}
+      css={[baseStyles, inputSizes[inputSize], active && activeBackground]}
       {...other}
     />
   );
@@ -200,15 +221,19 @@ export const TextArea: React.FunctionComponent<TextAreaProps> = ({
   inputSize = "md",
   ...other
 }) => {
+  const { bind, active } = useActiveStyle();
+
   return (
     <textarea
+      {...bind}
       css={[
         baseStyles,
         inputSizes[inputSize],
         {
           overflow: "auto",
           resize: "vertical"
-        }
+        },
+        active && activeBackground
       ]}
       {...other}
     />

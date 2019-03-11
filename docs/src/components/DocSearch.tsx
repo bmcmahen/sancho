@@ -58,8 +58,9 @@ export const DocSearch: React.FunctionComponent<DocSearchProps> = props => {
             boxShadow: theme.shadows.md,
             maxWidth: "400px",
             minWidth: "300px",
+            width: "315px !important",
             borderRadius: theme.radii.lg,
-            transform: "translateX(-7%)", // lameee hack for mobile
+            transform: "translateX(13%)", // lameee hack for mobile
             lineHeight: 1.5,
           },
           ".algolia-autocomplete .algolia-docsearch-suggestion--category-header": {

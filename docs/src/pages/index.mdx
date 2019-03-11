@@ -14,13 +14,13 @@ export default Hero
 
 #### Installation
 
-Install Sancho into your react application using either Yarn or NPM.
+Install Sancho using Yarn or NPM. Sancho works well with [Gatsby](https://www.gatsbyjs.org/), [Create React App](https://github.com/facebook/create-react-app), and [Next.js](https://github.com/zeit/next.js/).
 
 ```
 yarn add sancho
 ```
 
-And then import whatever components you'd like into your project.
+Import Sancho components into your project.
 
 ```.jsx
 import { Button } from "sancho"
@@ -34,9 +34,9 @@ function Project() {
 }
 ```
 
-#### Styling and Themes
+#### Styling and Emotion
 
-Sancho uses [Emotion](https://emotion.sh/docs/introduction) for styling. The reasons for choosing Emotion are outlined in this [blog post](https://benmcmahen.com/why-i-choose-emotion/). You can override component styles by passing in custom css using the `css` prop. Learn more about using the `css` prop on the [Emotion](https://emotion.sh/docs/css-prop) website.
+Sancho uses CSS-in-JS and [Emotion](https://emotion.sh/docs/introduction) for styling, and it’s recommended (though not required) to use Sancho within projects that use Emotion. Emotion allows us to style components using the `css` prop - a bit like styling elements using the `style` prop, but with the benefits of pseudo selectors and the full power of css. Emotion also provides powerful and predictable composition. This means that you can pass css attributes into our components to override their styles.
 
 ```.jsx
 /** @jsx jsx */
@@ -52,7 +52,11 @@ function MyCustomButton() {
 }
 ```
 
-Sancho uses a main `theme` object which contains global theming variables related to type, colours, spacing, and breakpoints. View the [default theme here](https://github.com/bmcmahen/sancho/blob/master/src/Theme/index.ts).
+For a full explanation of why Emotion was chosen, read this [blog post](https://benmcmahen.com/why-i-choose-emotion/). Learn more about using the `css` prop on the [Emotion](https://emotion.sh/docs/css-prop) website.
+
+#### Theme
+
+Sancho uses a main `theme` object which contains global theming variables related to typography, color, spacing, and breakpoints. View the [default theme here](https://github.com/bmcmahen/sancho/blob/master/src/Theme/index.ts).
 
 ```.jsx
 /** @jsx jsx */
@@ -78,7 +82,7 @@ There is currently no way to override theme variables other than forking the rep
 
 ### Prior art
 
-Sancho originally started as a fork of [Evergreen](https://evergreen.segment.com/) and eventually incorporated some of my favourite ideas from [Bootstrap](https://getbootstrap.com/) and [Material-UI](https://material-ui.com/). This project is obviously hugely indebted to those.
+Sancho originally started as a fork of [Evergreen](https://evergreen.segment.com/) but has since evolved to incorporate my favourite ideas from [Bootstrap](https://getbootstrap.com/) and [Material-UI](https://material-ui.com/). We make substantial use of [Reach-UI](https://github.com/reach/reach-ui) where possible to ensure proper accessibility. This project is obviously hugely indebted to all of these projects.
 
 ### About
 
