@@ -72,7 +72,10 @@ export default {
     muted: scales.gray[2]
   },
   text: {
-    muted: scales.gray[7],
+    muted: color(scales.gray[7])
+      .lighten(0.3)
+      .hex()
+      .toString(),
     default: scales.gray[9],
     dark: scales.gray[10],
     selected: palette.blue.base

@@ -38,6 +38,8 @@ export function SpyList({ items }: SpyListProps) {
               listStyle: "none",
               margin: 0,
               padding: `${0} ${theme.spaces.lg}`,
+              borderLeft: `1px solid ${theme.colors.border.muted}`,
+              paddingRight: 0,
             }}
             key={item.id}
           >

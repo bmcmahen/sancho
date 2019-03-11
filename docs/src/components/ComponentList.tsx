@@ -35,12 +35,13 @@ function MenuLink({ to, children }) {
         activeStyle={{
           fontWeight: 500,
           background: theme.colors.background.tint2,
+          color: theme.colors.text.default,
         }}
         css={{
           display: "block",
           padding,
           textDecoration: "none",
-
+          color: theme.colors.text.muted,
           WebkitTapHighlightColor: "transparent",
           ":active": {
             background: theme.colors.background.tint2,
@@ -60,7 +61,7 @@ function MenuLink({ to, children }) {
         <Text
           css={{
             fontWeight: "inherit",
-            color: theme.colors.text.muted,
+            color: "inherit",
             fontSize: theme.sizes[1],
             [theme.breakpoints.lg]: {
               fontSize: theme.sizes[0],
