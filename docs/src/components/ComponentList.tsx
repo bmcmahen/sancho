@@ -7,10 +7,8 @@ import {
   theme,
   MenuLabel,
   Divider,
-  InputBase,
   RequestCloseContext,
 } from "../../../src"
-import { DocSearch } from "./DocSearch"
 
 interface ComponentListProps {}
 
@@ -31,6 +29,26 @@ function MenuLink({ to, children }) {
         data-trigger-close
         onClick={() => {
           closeParent()
+        }}
+        getProps={options => {
+          const activeStyle = {
+            fontWeight: 500,
+            background: theme.colors.background.tint2,
+            color: theme.colors.text.default,
+          }
+
+          if (options.isCurrent) {
+            return {
+              style: activeStyle,
+            }
+          }
+
+          if (options.location.hash && to.indexOf(options.location.hash) > -1) {
+            return {
+              style: activeStyle,
+            }
+          }
+          return {}
         }}
         activeStyle={{
           fontWeight: 500,
@@ -94,37 +112,37 @@ const about = [
 ]
 
 const components = [
-  { title: "Alert", path: "/components/alert" },
-  { title: "Avatar", path: "/components/avatar" },
-  { title: "Badge", path: "/components/badge" },
-  { title: "Breadcrumb", path: "/components/breadcrumb" },
-  { title: "Button", path: "/components/button" },
-  { title: "Collapse", path: "/components/collapse" },
-  { title: "Container", path: "/components/container" },
-  { title: "Divider", path: "/components/divider" },
-  { title: "Form", path: "/components/form" },
-  { title: "IconButton", path: "/components/icon-button" },
-  { title: "Icon", path: "/components/icon" },
-  { title: "Layer", path: "/components/layer" },
-  { title: "Link", path: "/components/link" },
-  { title: "List", path: "/components/list" },
-  { title: "Menu", path: "/components/menu" },
-  { title: "Modal", path: "/components/modal" },
-  { title: "Navbar", path: "/components/navbar" },
-  { title: "Overlay", path: "/components/overlay" },
-  { title: "Popover", path: "/components/popover" },
-  { title: "Portal", path: "/components/portal" },
-  { title: "Positioner", path: "/components/positions" },
-  { title: "Sheet", path: "/components/sheet" },
-  { title: "SkipNav", path: "/components/skipnav" },
-  { title: "Spinner", path: "/components/spinner" },
-  { title: "Table", path: "/components/table" },
-  { title: "Tabs", path: "/components/tabs" },
-  { title: "Text", path: "/components/text" },
-  { title: "Toast", path: "/components/toast" },
-  { title: "Toolbar", path: "/components/toolbar" },
-  { title: "Tooltip", path: "/components/tooltip" },
-  { title: "VisuallyHidden", path: "/components/visually-hidden" },
+  { title: "Alert", path: "/components/alert/" },
+  { title: "Avatar", path: "/components/avatar/" },
+  { title: "Badge", path: "/components/badge/" },
+  { title: "Breadcrumb", path: "/components/breadcrumb/" },
+  { title: "Button", path: "/components/button/" },
+  { title: "Collapse", path: "/components/collapse/" },
+  { title: "Container", path: "/components/container/" },
+  { title: "Divider", path: "/components/divider/" },
+  { title: "Form", path: "/components/form/" },
+  { title: "IconButton", path: "/components/icon-button/" },
+  { title: "Icon", path: "/components/icon/" },
+  { title: "Layer", path: "/components/layer/" },
+  { title: "Link", path: "/components/link/" },
+  { title: "List", path: "/components/list/" },
+  { title: "Menu", path: "/components/menu/" },
+  { title: "Modal", path: "/components/modal/" },
+  { title: "Navbar", path: "/components/navbar/" },
+  { title: "Overlay", path: "/components/overlay/" },
+  { title: "Popover", path: "/components/popover/" },
+  { title: "Portal", path: "/components/portal/" },
+  { title: "Positioner", path: "/components/positions/" },
+  { title: "Sheet", path: "/components/sheet/" },
+  { title: "SkipNav", path: "/components/skipnav/" },
+  { title: "Spinner", path: "/components/spinner/" },
+  { title: "Table", path: "/components/table/" },
+  { title: "Tabs", path: "/components/tabs/" },
+  { title: "Text", path: "/components/text/" },
+  { title: "Toast", path: "/components/toast/" },
+  { title: "Toolbar", path: "/components/toolbar/" },
+  { title: "Tooltip", path: "/components/tooltip/" },
+  { title: "VisuallyHidden", path: "/components/visually-hidden/" },
 ]
 
 export function ComponentList(_props: ComponentListProps) {
@@ -171,13 +189,15 @@ export function ComponentList(_props: ComponentListProps) {
           paddingLeft: theme.spaces.lg,
         }}
       >
-        <Text
-          css={{ color: theme.colors.palette.blue.base }}
-          gutter={false}
-          variant="h5"
-        >
-          Sancho UI
-        </Text>
+        <Link css={{ textDecoration: "none" }} to="/">
+          <Text
+            css={{ color: theme.colors.palette.blue.base }}
+            gutter={false}
+            variant="h5"
+          >
+            Sancho UI
+          </Text>
+        </Link>
       </div>
       <div
         css={{
