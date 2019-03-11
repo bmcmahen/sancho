@@ -53,9 +53,9 @@ export function SpyList({ items }: SpyListProps) {
                 muted
                 css={{
                   display: "block",
-
+                  lineHeight: 1.75,
                   paddingLeft:
-                    item.parent || i === 0 || props ? 0 : theme.spaces.sm,
+                    item.parent || i === 0 || props ? 0 : theme.spaces.md,
                   color: active
                     ? theme.colors.text.default
                     : theme.colors.text.muted,

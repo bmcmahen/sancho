@@ -30,6 +30,24 @@ We make use of Blueprint's wonderful collection of icons. For accessibility purp
 <Icon icon="menu" />
 ```
 
+If a text descriptor doesn't accompany the icon, use VisuallyHidden to ensure accessibility.
+
+```.jsx
+<div>
+  <Icon icon="menu" />
+  <VisuallyHidden>Menu</VisuallyHidden>
+</div>
+```
+
+Otherwise, set the `aria-hidden` attribute.
+
+```.jsx
+<button>
+  <Icon aria-hidden icon='menu' />
+  <Text>Show menu</Text>
+</button>
+```
+
 #### Changing colours
 
 You can change the colour using the `color` prop.
