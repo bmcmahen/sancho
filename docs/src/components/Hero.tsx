@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Article } from "../components/layout"
-import { theme, Text, Container, Button } from "../../../src"
+import { theme, Text, Container, Button, Link } from "../../../src"
 import { ComponentMDXProvider } from "./ExamplePreview"
 import { Nav } from "./Nav"
 
@@ -97,8 +97,14 @@ export const Hero = ({ children }) => (
             }}
             variant="lead"
           >
-            Sancho is a design system built with React, Typescript and Emotion.
-            It's designed to be responsive, accessible, and flexible.
+            Sancho is a responsive and accessible design system built with
+            React, Typescript and Emotion. Named after the ever-faithful,
+            hilariously acerbic{" "}
+            <Link href="https://en.wikipedia.org/wiki/Sancho_Panza">
+              sidekick
+            </Link>{" "}
+            of Don Quixote, Sancho is designed to help you no matter how
+            quixotic your dreams may be.
           </Text>
           <Button
             intent="primary"
