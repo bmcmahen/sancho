@@ -10,8 +10,17 @@ const spin = keyframes`
   }
 `;
 
-interface SpinnerProps {
+const sizeStyles = {
+  xs: css({ width: "0.5rem", height: "0.5rem" }),
+  sm: css({ width: "0.75rem", height: "0.75rem" }),
+  md: css({ width: "1rem", height: "1rem" }),
+  lg: css({ width: "1.25rem", height: "1.25rem" }),
+  xl: css({ width: "1.5rem", height: "1.5rem" })
+};
+
+interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   delay?: number;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 // spinner css based on one provided by bootstrap
@@ -19,6 +28,7 @@ interface SpinnerProps {
 
 export const Spinner: React.FunctionComponent<SpinnerProps> = ({
   delay = 400,
+  size = "md",
   ...other
 }) => {
   const [show, setShow] = React.useState(delay === 0 ? true : false);
@@ -35,22 +45,31 @@ export const Spinner: React.FunctionComponent<SpinnerProps> = ({
 
   return (
     <div
-      role="status"
-      css={css`
-        opacity: ${show ? 1 : 0};
-        display: inline-block;
-        width: 1.5rem;
-        height: 1.5rem;
-        transition: opacity 0.3s ease;
-        vertical-align: text-bottom;
-        border: 0.2em solid currentColor;
-        border-right-color: transparent;
-        border-radius: 50%;
-        animation: ${spin} 0.75s linear infinite;
-      `}
-      {...other}
+      css={{
+        opacity: show ? 1 : 0,
+        display: "inline-block",
+        transition: "opacity 0.4s cubic-bezier(0.35,0,0.25,1)"
+      }}
     >
-      <VisuallyHidden>Loading...</VisuallyHidden>
+      <div
+        role="status"
+        css={[
+          css`
+            opacity: ${show ? 1 : 0};
+            display: inline-block;
+            transition: opacity 0.3s ease;
+            vertical-align: text-bottom;
+            border: 0.2em solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            animation: ${spin} 0.75s linear infinite;
+          `,
+          sizeStyles[size]
+        ]}
+        {...other}
+      >
+        <VisuallyHidden>Loading...</VisuallyHidden>
+      </div>
     </div>
   );
 };

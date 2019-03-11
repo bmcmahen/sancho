@@ -32,12 +32,15 @@ export function ComponentPreview({ className, ...props }) {
           marginTop: theme.spaces.md,
           padding: theme.spaces.sm,
           background: theme.colors.background.tint1,
-          borderRadius: theme.radii.md,
-          marginLeft: "-0.5rem",
-          marginRight: "-0.5rem",
+          borderRadius: 0,
+          marginLeft: "-1rem",
+          marginRight: "-1rem",
           marginBottom: theme.spaces.lg,
           [theme.breakpoints.md]: {
+            borderRadius: theme.radii.md,
             marginBottom: theme.spaces.lg,
+            marginLeft: "-0.5rem",
+            marginRight: "-0.5rem",
           },
         }}
       >
