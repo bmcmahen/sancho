@@ -109,7 +109,7 @@ const MDXComponents = {
   h3: ({ children }) => (
     <Text
       id={getId(children)}
-      css={[{ marginTop: theme.spaces.lg }, anchorPadding]}
+      css={[{ marginTop: theme.spaces.md }, anchorPadding]}
       variant="h3"
     >
       {children}

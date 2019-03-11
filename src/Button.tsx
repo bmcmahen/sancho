@@ -394,7 +394,6 @@ export function getButtonStyles({
     {
       fontWeight: 500,
       fontFamily: theme.fonts.base,
-      position: "relative",
       borderRadius: theme.radii.sm,
       fontSize: getFontSize(size),
       padding: getPadding(size),

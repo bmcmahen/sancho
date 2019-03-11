@@ -10,6 +10,7 @@ import {
   InputBase,
   RequestCloseContext,
 } from "../../../src"
+import { DocSearch } from "./DocSearch"
 
 interface ComponentListProps {}
 
@@ -159,31 +160,24 @@ export function ComponentList(_props: ComponentListProps) {
         background: theme.colors.background.tint1,
       }}
     >
-      <form onSubmit={e => e.preventDefault()}>
-        <InputBase
-          type="search"
-          placeholder="Search..."
-          onChange={(e: React.FormEvent<HTMLInputElement>) =>
-            setSearch(e.currentTarget.value)
-          }
-          value={search}
-          css={{
-            boxShadow: "none",
-            borderRadius: 0,
-            background: "none",
-
-            borderBottom: `1px solid ${theme.colors.border.default}`,
-            padding: theme.spaces.lg,
-            height: "65px",
-            ":focus": {
-              // borderColor: theme.colors.palette.blue.light,
-              boxShadow: "none",
-              // background: theme.colors.background.tint2,
-            },
-          }}
-        />
-      </form>
-
+      <div
+        css={{
+          height: "64px",
+          borderBottom: "1px solid",
+          borderColor: theme.colors.border.default,
+          display: "flex",
+          alignItems: "center",
+          paddingLeft: theme.spaces.lg,
+        }}
+      >
+        <Text
+          css={{ color: theme.colors.palette.blue.base }}
+          gutter={false}
+          variant="h5"
+        >
+          Sancho UI
+        </Text>
+      </div>
       <div
         css={{
           flex: 1,

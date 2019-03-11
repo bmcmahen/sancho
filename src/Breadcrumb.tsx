@@ -43,7 +43,6 @@ export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
           maxWidth: overflowX ? undefined : "100%",
           margin: 0,
           padding: `${theme.spaces.sm} ${theme.spaces.md}`,
-          background: theme.colors.background.tint1,
           borderRadius: theme.radii.md
         }}
         {...other}
@@ -100,7 +99,8 @@ export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
           color: inverted ? "rgba(255,255,255,0.8)" : undefined
         }}
         component="div"
-        variant="body"
+        variant="h5"
+        gutter={false}
       >
         {children}
       </Text>
