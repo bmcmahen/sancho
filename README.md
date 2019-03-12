@@ -2,7 +2,6 @@
   <a href="https://sancho.surge.sh/">
     <img alt="sancho logo" src="https://sancho.surge.sh/icons/icon-144x144.png">
     <br>
-    <br>
     <h1 style="color: #1971c2">Sancho</h1>
   </a>
 </div>
