@@ -194,11 +194,23 @@ export function ComponentList(_props: ComponentListProps) {
       >
         <Link
           onClick={() => closeParent()}
-          css={{ textDecoration: "none" }}
+          css={{
+            textDecoration: "none",
+            alignItems: "center",
+            display: "flex",
+          }}
           to="/"
         >
+          <img
+            css={{
+              width: "30px",
+              height: "30px",
+              marginRight: theme.spaces.sm,
+            }}
+            src={require("../images/donkey.svg")}
+          />
           <Text
-            css={{ color: theme.colors.palette.blue.base }}
+            css={{ color: theme.colors.text.default }}
             gutter={false}
             variant="h5"
           >
@@ -238,7 +250,7 @@ export function ComponentList(_props: ComponentListProps) {
             paddingTop: 0,
           }}
         >
-          Build with ☕ by <br />
+          Built with ☕ by <br />
           <StyleLink href="http://benmcmahen.com">Ben McMahen</StyleLink>
         </Text>
       </div>

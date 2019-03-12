@@ -1,6 +1,8 @@
+/** @jsx jsx */
+import { jsx, css, keyframes } from "@emotion/core"
 import * as React from "react"
 import { Article } from "../components/layout"
-import { theme, Text, Container, Button, Link } from "../../../src"
+import { theme, Text, Container, Button, Divider, Link } from "../../../src"
 import { ComponentMDXProvider } from "./ExamplePreview"
 import { Nav } from "./Nav"
 
@@ -131,6 +133,38 @@ export const Hero = ({ children }) => (
         ]}
       >
         <ComponentMDXProvider>{children}</ComponentMDXProvider>
+        <Divider muted />
+        <Text
+          muted
+          css={{
+            display: "block",
+            paddingBottom: theme.spaces.md,
+            fontSize: theme.sizes[0],
+          }}
+        >
+          <div>
+            Icons made by{" "}
+            <Link
+              href="https://www.flaticon.com/authors/smashicons"
+              title="Smashicons"
+            >
+              Smashicons
+            </Link>{" "}
+            from{" "}
+            <Link href="https://www.flaticon.com/" title="Flaticon">
+              www.flaticon.com
+            </Link>{" "}
+            is licensed by{" "}
+            <Link
+              href="http://creativecommons.org/licenses/by/3.0/"
+              title="Creative Commons BY 3.0"
+              target="_blank"
+            >
+              CC 3.0 BY
+            </Link>
+            .
+          </div>
+        </Text>
       </Article>
     </Container>
   </React.Fragment>
