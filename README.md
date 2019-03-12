@@ -7,7 +7,7 @@
   </a>
 </div>
 
-Sancho is a design system built with React, Typescript and Emotion. It's designed to be responsive, accessible, and beautiful. It takes its inspiration from [Evergreen](https://evergreen.segment.com/), [Bootstrap](https://getbootstrap.com/), [Material-UI](https://material-ui.com/), and [Reach-UI](https://github.com/reach/reach-ui) for accessibility.
+Sancho is a responsive and accessible design system built with React, Typescript and Emotion. Named after the ever-faithful, hilariously acerbic sidekick of Don Quixote, Sancho is designed to help you no matter how quixotic your dreams may be.
 
 [View the docs](/https://sancho.surge.sh) for full usage details.
 
