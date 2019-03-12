@@ -24,19 +24,19 @@ function MyApp() {
 }
 ```
 
-### Development:
+### Development
 
 ```
 yarn run storybook
 ```
 
-### Build:
+### Build
 
 ```
 yarn run build
 ```
 
-### Docs:
+### Documentation
 
 Our documentation is built with gatsby.
 
