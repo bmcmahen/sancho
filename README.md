@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://sancho.surge.sh/">
-    <img aria-hidden="true"  src="https://raw.githubusercontent.com/bmcmahen/sancho/master/docs/src/images/donkey.png" style="width: 60px; height: 60px;">
+    <img alt="sancho logo" src="https://sancho.surge.sh/icons/icon-144x144.png">
     <br>
     <br>
     <h1 style="color: #1971c2">Sancho</h1>
