@@ -10,7 +10,7 @@ import { useFocusElement } from "./Hooks/focus";
 import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
 
-export interface ModalProps {
+export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   title?: string;
   mobileFullscreen?: boolean;
@@ -18,24 +18,32 @@ export interface ModalProps {
   children: React.ReactNode;
 }
 
-export const Modal: React.FunctionComponent<ModalProps> = props => {
-  const transitions = useTransition(props.isOpen, null, {
+export const Modal: React.FunctionComponent<ModalProps> = ({
+  isOpen,
+  onRequestClose,
+  mobileFullscreen,
+  title,
+  children,
+  ...other
+}) => {
+  const transitions = useTransition(isOpen, null, {
     from: { opacity: 0, transform: "scale(0.9)" },
     enter: { opacity: 1, transform: "scale(1)" },
     leave: { opacity: 0, transform: "scale(0.9)" }
   });
 
-  const { bind } = useFocusElement(props.isOpen);
+  const { bind } = useFocusElement(isOpen);
 
   return (
     <React.Fragment>
-      <Overlay onRequestClose={props.onRequestClose} isOpen={props.isOpen}>
+      <Overlay onRequestClose={onRequestClose} isOpen={isOpen}>
         <React.Fragment>
           {transitions.map(
             ({ item, key, props: animationProps }) =>
               item && (
                 <animated.div
                   key={key}
+                  className="Modal"
                   aria-modal="true"
                   {...bind}
                   tabIndex={-1}
@@ -64,7 +72,7 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
                         margin: "30px auto"
                       }
                     },
-                    props.mobileFullscreen && {
+                    mobileFullscreen && {
                       maxWidth: "none",
                       margin: 0,
                       width: "100vw",
@@ -85,10 +93,12 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
                       }
                     }
                   ]}
+                  {...other}
                 >
                   <React.Fragment>
-                    {props.title && (
+                    {title && (
                       <ModalHeader
+                        className="Modal__header"
                         css={{
                           display: "flex",
                           justifyContent: "space-between",
@@ -98,11 +108,11 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
                             theme.spaces.lg
                           }`
                         }}
-                        title={props.title}
-                        onRequestClose={props.onRequestClose}
+                        title={title}
+                        onRequestClose={onRequestClose}
                       />
                     )}
-                    <RemoveScroll>{props.children}</RemoveScroll>
+                    <RemoveScroll>{children}</RemoveScroll>
                   </React.Fragment>
                 </animated.div>
               )
@@ -130,7 +140,7 @@ Modal.propTypes = {
   children: PropTypes.node
 };
 
-interface ModalHeaderProps {
+interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   onRequestClose?: () => void;
 }
