@@ -12,6 +12,7 @@ import { Nav } from "../../components/Nav"
 <Article sidebar={[
   { id: 'Breadcrumbs', name: 'Breadcrumbs' },
   { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Large sizing', name: 'Large sizing'},
   { id: 'Overflow mode', name: 'Overflow mode'},
   { id: 'Props', name: 'Props' }
 ]}>
@@ -23,12 +24,26 @@ Breadcrumbs are useful to orient the user on your site, especially when working 
 Sancho exports two components to create breadcrumbs:
 
 - **Breadcrumbs**: The container for wrapping a list of BreadcrumbItem children.
-- **BreadcrumbItem**: Each item in the list of breadcrumbs.
+- **BreadcrumbItem**: Each item in a list of breadcrumbs.
 
 #### Basic usage
 
 ```jsx
 <Breadcrumbs>
+  <BreadcrumbItem>
+    <Link href="#">Watershed</Link>
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <Link href="#">Visual Teaching Strategies</Link>
+  </BreadcrumbItem>
+  <BreadcrumbItem>Settings</BreadcrumbItem>
+</Breadcrumbs>
+```
+
+#### Large sizing
+
+```jsx
+<Breadcrumbs size="lg">
   <BreadcrumbItem>
     <Link href="#">Watershed</Link>
   </BreadcrumbItem>
@@ -60,7 +75,7 @@ When you set a `overflowX` prop, the container will scroll horizontally instead 
 </div>
 ```
 
-<Props names={["Breadcrumbs"]} />
+<Props names={["Breadcrumb"]} />
 
 </Article>
 </Container>
