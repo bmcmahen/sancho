@@ -10,11 +10,12 @@ import PropTypes from "prop-types";
 import { isMobile } from "is-mobile";
 import uniqueId from "lodash.uniqueid";
 
-interface TooltipProps {
+interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
   content: React.ReactNode;
   placement?: Placements;
   children: React.ReactNode;
   id?: string;
+  maxWidth?: string;
 }
 
 let idcount = 0;
@@ -23,7 +24,9 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   placement,
   children,
   content,
-  id = uniqueId()
+  maxWidth = "300px",
+  id = uniqueId(),
+  ...other
 }) => {
   const [show, setShow] = React.useState(false);
 
@@ -61,6 +64,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
           id={id}
           data-placement={placement}
           role="tooltip"
+          className="Tooltip"
           ref={ref}
           style={{
             ...style,
@@ -70,20 +74,25 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
             zIndex: theme.zIndex.tooltip,
             margin: theme.spaces.xs
           }}
+          {...other}
         >
           <div
+            className="Tooltip__content"
             data-placement={placement}
             css={arrowStyles(theme.colors.palette.gray.dark)}
             ref={arrowProps.ref}
             style={arrowProps.style}
           />
           <Text
+            className="Tooltip__text"
             variant="body"
             css={[
               {
                 fontSize: theme.sizes[0],
                 display: "inline-block",
                 margin: 0,
+                textAlign: "center",
+                maxWidth,
                 boxShadow: theme.shadows.md,
                 borderRadius: theme.radii.sm,
                 padding: `${theme.spaces.xs} ${theme.spaces.md}`,
