@@ -16,7 +16,7 @@ const sizesForIcon = {
   xl: 32
 };
 
-export interface IconProps {
+export interface IconProps extends React.SVGAttributes<SVGElement> {
   color?: string;
   icon: IconName | JSX.Element | null;
   children?: never;

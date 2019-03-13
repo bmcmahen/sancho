@@ -5,7 +5,6 @@ import { Text } from "./Text";
 import theme from "./Theme";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
-import uniqueId from "lodash.uniqueid";
 import { alpha } from "./Theme/colors";
 import { Icon } from "./Icons";
 import { useUid } from "./Hooks/use-uid";
@@ -49,6 +48,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
 
   return (
     <div
+      className="InputGroup"
       css={{
         marginTop: theme.spaces.md,
         ":first-child": {
@@ -67,6 +67,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
 
       {error && typeof error === "string" ? (
         <div
+          className="InputGroup__error"
           css={{
             alignItems: "center",
             marginTop: theme.spaces.xs,
@@ -95,6 +96,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
 
       {helpText && (
         <Text
+          className="InputGroup__help"
           css={{
             display: "block",
             marginTop: theme.spaces.xs,
@@ -195,6 +197,7 @@ export const InputBase: React.FunctionComponent<InputBaseProps> = ({
 
   return (
     <input
+      className="Input"
       autoComplete={autoComplete}
       autoFocus={autoFocus}
       {...bind}
@@ -228,6 +231,7 @@ export const TextArea: React.FunctionComponent<TextAreaProps> = ({
 
   return (
     <textarea
+      className="TextArea"
       {...bind}
       css={[
         baseStyles,
@@ -265,13 +269,16 @@ export const Label: React.FunctionComponent<LabelProps> = ({
 }) => {
   const child = (
     <label
+      className="Label"
       css={{
         display: "inline-block",
         marginBottom: hide ? 0 : theme.spaces.xs
       }}
       {...other}
     >
-      <Text variant={"subtitle"}>{children}</Text>
+      <Text className="Label__text" variant={"subtitle"}>
+        {children}
+      </Text>
     </label>
   );
 
@@ -304,11 +311,13 @@ export const Select: React.FunctionComponent<SelectProps> = ({
 }) => {
   return (
     <div
+      className="Select"
       css={{
         position: "relative"
       }}
     >
       <select
+        className="Select__input"
         css={[
           selectSize[inputSize],
           {
@@ -350,6 +359,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
       />
       {!multiple && (
         <Icon
+          className="Select__icon"
           icon="double-caret-vertical"
           color={theme.colors.text.muted}
           css={{
@@ -382,9 +392,17 @@ export const Check: React.FunctionComponent<CheckProps> = ({
   const uid = useUid(id);
 
   return (
-    <div css={{ display: "flex", alignItems: "center" }}>
-      <input type="checkbox" id={uid} {...other} />
-      <label css={{ marginLeft: theme.spaces.xs }} htmlFor={uid}>
+    <div
+      className="Check"
+      css={{ display: "flex", alignItems: "center" }}
+      {...other}
+    >
+      <input className="Check__input" type="checkbox" id={uid} {...other} />
+      <label
+        className="Check__label"
+        css={{ marginLeft: theme.spaces.xs }}
+        htmlFor={uid}
+      >
         <Text>{label}</Text>
       </label>
     </div>
