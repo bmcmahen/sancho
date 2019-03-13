@@ -2,7 +2,7 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { Breadcrumb, BreadcrumbItem } from "../Breadcrumb";
+import { Breadcrumbs, BreadcrumbItem } from "../Breadcrumbs";
 import { Link } from "../Link";
 
 export const BreadcrumbStories = storiesOf("Breadcrumb", module).add(
@@ -10,7 +10,7 @@ export const BreadcrumbStories = storiesOf("Breadcrumb", module).add(
   () => {
     return (
       <div css={{ display: "flex", justifyContent: "center" }}>
-        <Breadcrumb>
+        <Breadcrumbs>
           <BreadcrumbItem>
             <Link href="#">Watershed</Link>
           </BreadcrumbItem>
@@ -18,7 +18,7 @@ export const BreadcrumbStories = storiesOf("Breadcrumb", module).add(
             <Link href="#">Visual Teaching Strategies</Link>
           </BreadcrumbItem>
           <BreadcrumbItem>Settings</BreadcrumbItem>
-        </Breadcrumb>
+        </Breadcrumbs>
       </div>
     );
   }

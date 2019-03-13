@@ -1,4 +1,4 @@
-import { Breadcrumb, Divider, Container } from "../../../../src"
+import { Breadcrumbs, Divider, Container } from "../../../../src"
 import "./button.css"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
@@ -10,25 +10,25 @@ import { Nav } from "../../components/Nav"
 
 <Container>
 <Article sidebar={[
-  { id: 'Breadcrumb', name: 'Breadcrumb' },
+  { id: 'Breadcrumbs', name: 'Breadcrumbs' },
   { id: 'Basic usage', name: 'Basic usage' },
   { id: 'Overflow mode', name: 'Overflow mode'},
   { id: 'Props', name: 'Props' }
 ]}>
 
-# Breadcrumb
+# Breadcrumbs
 
 Breadcrumbs are useful to orient the user on your site, especially when working with hierarchies of content.
 
 Sancho exports two components to create breadcrumbs:
 
-- **Breadcrumb**: The container for wrapping a list of BreadcrumbItem children.
+- **Breadcrumbs**: The container for wrapping a list of BreadcrumbItem children.
 - **BreadcrumbItem**: Each item in the list of breadcrumbs.
 
 #### Basic usage
 
 ```jsx
-<Breadcrumb>
+<Breadcrumbs>
   <BreadcrumbItem>
     <Link href="#">Watershed</Link>
   </BreadcrumbItem>
@@ -36,7 +36,7 @@ Sancho exports two components to create breadcrumbs:
     <Link href="#">Visual Teaching Strategies</Link>
   </BreadcrumbItem>
   <BreadcrumbItem>Settings</BreadcrumbItem>
-</Breadcrumb>
+</Breadcrumbs>
 ```
 
 #### Overflow mode
@@ -45,7 +45,7 @@ When you set a `overflowX` prop, the container will scroll horizontally instead 
 
 ```jsx
 <div style={{ width: "300px" }}>
-  <Breadcrumb overflowX>
+  <Breadcrumbs overflowX>
     <BreadcrumbItem>
       <Link href="#">Watershed</Link>
     </BreadcrumbItem>
@@ -56,11 +56,11 @@ When you set a `overflowX` prop, the container will scroll horizontally instead 
       <Link href="#">Some other thing</Link>
     </BreadcrumbItem>
     <BreadcrumbItem>Settings</BreadcrumbItem>
-  </Breadcrumb>
+  </Breadcrumbs>
 </div>
 ```
 
-<Props names={["Breadcrumb"]} />
+<Props names={["Breadcrumbs"]} />
 
 </Article>
 </Container>

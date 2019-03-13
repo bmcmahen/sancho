@@ -9,7 +9,7 @@ import {
   Link as StyledLink,
   Tooltip,
   IconButton,
-  Breadcrumb,
+  Breadcrumbs,
   BreadcrumbItem,
 } from "../../../src"
 import { SideMenu } from "./SideMenu"
@@ -41,7 +41,7 @@ export const Nav: React.FunctionComponent<NavProps> = ({ title }) => {
     >
       <Toolbar>
         <SideMenu />
-        <Breadcrumb
+        <Breadcrumbs
           css={{
             display: "none",
             [theme.breakpoints.sm]: {
@@ -71,7 +71,7 @@ export const Nav: React.FunctionComponent<NavProps> = ({ title }) => {
               </Text>
             </BreadcrumbItem>
           )}
-        </Breadcrumb>
+        </Breadcrumbs>
         <div
           css={{
             flex: 1,

@@ -5,14 +5,14 @@ import theme from "./Theme";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
 
-interface BreadcrumbProps extends React.OlHTMLAttributes<HTMLOListElement> {
+interface BreadcrumbsProps extends React.OlHTMLAttributes<HTMLOListElement> {
   children:
     | React.ReactElement<BreadcrumbItemProps>
     | React.ReactElement<BreadcrumbItemProps>[];
   overflowX?: number;
 }
 
-export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
+export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
   children,
   overflowX,
   ...other
@@ -62,7 +62,7 @@ export const Breadcrumb: React.FunctionComponent<BreadcrumbProps> = ({
   );
 };
 
-Breadcrumb.propTypes = {
+Breadcrumbs.propTypes = {
   /** A list of BreadcrumbItem children */
   children: PropTypes.node
 };
