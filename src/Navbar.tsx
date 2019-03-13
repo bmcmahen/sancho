@@ -34,7 +34,7 @@ export const Navbar: React.FunctionComponent<NavbarProps> = ({
       css={[
         {
           background: "white",
-          zIndex: 20,
+          zIndex: position === "fixed" ? theme.zIndex.fixed : undefined,
           boxShadow: theme.shadows.sm
         },
         styles[position]

@@ -54,7 +54,7 @@ export const Overlay: React.RefForwardingComponent<
                   overflow: "auto",
                   width: "100vw",
                   height: "100vh",
-                  zIndex: 40,
+                  zIndex: theme.zIndex.overlay,
                   position: "fixed",
                   content: "''",
                   right: 0,

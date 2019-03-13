@@ -8,11 +8,13 @@ import theme from "./Theme";
 import { animated } from "react-spring";
 import PropTypes from "prop-types";
 import { isMobile } from "is-mobile";
+import uniqueId from "lodash.uniqueid";
 
 interface TooltipProps {
   content: React.ReactNode;
   placement?: Placements;
   children: React.ReactNode;
+  id?: string;
 }
 
 let idcount = 0;
@@ -20,14 +22,10 @@ let idcount = 0;
 export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   placement,
   children,
-  content
+  content,
+  id = uniqueId()
 }) => {
   const [show, setShow] = React.useState(false);
-  const [id] = React.useState(() => idcount.toString());
-
-  React.useEffect(() => {
-    idcount += 1;
-  }, []);
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
     // We don't want tooltips to show on touch based devices
@@ -69,7 +67,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
             opacity: state.opacity
           }}
           css={{
-            zIndex: 500,
+            zIndex: theme.zIndex.tooltip,
             margin: theme.spaces.xs
           }}
         >
