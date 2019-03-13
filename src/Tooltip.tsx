@@ -9,25 +9,24 @@ import { animated } from "react-spring";
 import PropTypes from "prop-types";
 import { isMobile } from "is-mobile";
 import uniqueId from "lodash.uniqueid";
+import { useUid } from "./Hooks/use-uid";
 
 interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
   content: React.ReactNode;
   placement?: Placements;
   children: React.ReactNode;
-  id?: string;
   maxWidth?: string;
 }
-
-let idcount = 0;
 
 export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   placement,
   children,
   content,
   maxWidth = "300px",
-  id = uniqueId(),
   ...other
 }) => {
+  const id = useUid();
+
   const [show, setShow] = React.useState(false);
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
