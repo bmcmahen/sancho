@@ -106,14 +106,10 @@ interface SheetProps {
   children: React.ReactNode;
   position: SheetPositions;
   closeOnClick?: boolean;
-  classes?: {
-    sheet?: any;
-  };
 }
 
 export const Sheet: React.FunctionComponent<SheetProps> = ({
   isOpen,
-  classes = {},
   children,
   role = "document",
   closeOnClick = true,
@@ -144,6 +140,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                   role={role}
                   {...bindFocus}
                   tabIndex={-1}
+                  className="Sheet"
                   onClick={e => {
                     e.stopPropagation();
                   }}
@@ -153,19 +150,21 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                   css={[
                     {
                       outline: "none",
-                      zIndex: 41,
+                      zIndex: theme.zIndex.modal,
                       opacity: 1,
                       position: "fixed"
                     },
                     positions[position]
                   ]}
-                  {...classes.sheet}
                   {...other}
                   {...props}
                 >
                   <RequestCloseContext.Provider value={onRequestClose}>
                     <RemoveScroll forwardProps>
-                      <div css={{ background: "white", height: "100%" }}>
+                      <div
+                        className="Sheet__container"
+                        css={{ background: "white", height: "100%" }}
+                      >
                         {children}
                       </div>
                     </RemoveScroll>
@@ -185,8 +184,5 @@ Sheet.propTypes = {
   onRequestClose: PropTypes.func,
   children: PropTypes.node,
   position: PropTypes.oneOf(["left", "top", "right", "bottom"]),
-  closeOnClick: PropTypes.bool,
-  classes: PropTypes.shape({
-    sheet: PropTypes.any
-  })
+  closeOnClick: PropTypes.bool
 };

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "@emotion/core";
 import * as React from "react";
 import { IconName, IconSvgPaths16, IconSvgPaths20 } from "@blueprintjs/icons";
 import theme from "./Theme";
@@ -6,15 +8,15 @@ import { ButtonSize } from "./Button";
 
 export { IconNames, IconName } from "@blueprintjs/icons";
 
-const sizesForIcon = {
-  xs: 8,
+export const sizesForIcon = {
+  xs: 10,
   sm: 12,
   md: 16,
   lg: 20,
   xl: 32
 };
 
-export interface IconProps {
+export interface IconProps extends React.SVGAttributes<SVGElement> {
   color?: string;
   icon: IconName | JSX.Element | null;
   children?: never;

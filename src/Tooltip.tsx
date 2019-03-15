@@ -8,26 +8,25 @@ import theme from "./Theme";
 import { animated } from "react-spring";
 import PropTypes from "prop-types";
 import { isMobile } from "is-mobile";
+import { useUid } from "./Hooks/use-uid";
 
-interface TooltipProps {
+interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
   content: React.ReactNode;
   placement?: Placements;
   children: React.ReactNode;
+  maxWidth?: string;
 }
-
-let idcount = 0;
 
 export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   placement,
   children,
-  content
+  content,
+  maxWidth = "300px",
+  ...other
 }) => {
-  const [show, setShow] = React.useState(false);
-  const [id] = React.useState(() => idcount.toString());
+  const id = useUid();
 
-  React.useEffect(() => {
-    idcount += 1;
-  }, []);
+  const [show, setShow] = React.useState(false);
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
     // We don't want tooltips to show on touch based devices
@@ -63,29 +62,35 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
           id={id}
           data-placement={placement}
           role="tooltip"
+          className="Tooltip"
           ref={ref}
           style={{
             ...style,
             opacity: state.opacity
           }}
           css={{
-            zIndex: 500,
+            zIndex: theme.zIndex.tooltip,
             margin: theme.spaces.xs
           }}
+          {...other}
         >
           <div
+            className="Tooltip__content"
             data-placement={placement}
             css={arrowStyles(theme.colors.palette.gray.dark)}
             ref={arrowProps.ref}
             style={arrowProps.style}
           />
           <Text
+            className="Tooltip__text"
             variant="body"
             css={[
               {
                 fontSize: theme.sizes[0],
                 display: "inline-block",
                 margin: 0,
+                textAlign: "center",
+                maxWidth,
                 boxShadow: theme.shadows.md,
                 borderRadius: theme.radii.sm,
                 padding: `${theme.spaces.xs} ${theme.spaces.md}`,

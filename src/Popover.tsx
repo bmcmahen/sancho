@@ -4,7 +4,7 @@ import * as React from "react";
 import { ButtonProps } from "./Button";
 import { IconButtonProps } from "./IconButton";
 import { Layer } from "./Layer";
-import { Positioner } from "./Positions";
+import { Positioner, Placements } from "./Positions";
 import { ReferenceChildrenProps } from "react-popper";
 import theme from "./Theme";
 import { arrowStyles } from "./Tooltip";
@@ -21,11 +21,13 @@ interface PopoverProps {
   children: React.ReactElement<ButtonProps | IconButtonProps>;
   content: React.ReactNode;
   closeOnMenuItemClick?: boolean;
+  placement?: Placements;
 }
 
 export const Popover: React.FunctionComponent<PopoverProps> = ({
   content,
   children,
+  placement,
   closeOnMenuItemClick = true,
   isOpen: defaultShow = false
 }) => {
@@ -104,7 +106,12 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
     return React.cloneElement(child, {
-      onClick: onTriggerClicked,
+      onClick: (e: React.MouseEvent) => {
+        onTriggerClicked(e);
+        if (child.props.onClick) {
+          child.props.onClick(e);
+        }
+      },
       ref: (el: HTMLButtonElement | null) => {
         ref(el);
         triggerRef.current = el;
@@ -120,7 +127,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
   }
 
   return (
-    <Positioner isOpen={show} target={renderTrigger}>
+    <Positioner placement={placement} isOpen={show} target={renderTrigger}>
       {({ placement, ref, arrowProps, style }, animation) => (
         <AnimatedLayer
           role="dialog"
@@ -136,6 +143,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
           }}
           data-placement={placement}
           css={{
+            zIndex: theme.zIndex.popover,
             margin: theme.spaces.sm,
             borderRadius: theme.radii.md
           }}
@@ -156,13 +164,10 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
 Popover.propTypes = {
   /** Whether the popover is currently open */
   isOpen: PropTypes.bool,
-
   /** The trigger of the popover */
   children: PropTypes.node,
-
   /** the content of the popover */
   content: PropTypes.node,
-
   /** Whether the menu should close when clicked */
   closeOnMenuItemClick: PropTypes.bool
 };

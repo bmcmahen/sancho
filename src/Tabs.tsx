@@ -22,11 +22,6 @@ interface SliderPositions {
 }
 
 interface TabsProps {
-  classes?: {
-    slider?: SerializedStyles;
-    root?: SerializedStyles;
-    tablist?: SerializedStyles;
-  };
   value: number;
   dark?: boolean;
   slider?: boolean;
@@ -39,7 +34,6 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
   variant = "default",
   dark = false,
-  classes = {},
   slider: enableSlider = true,
   value,
   onChange,
@@ -71,45 +65,42 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 
   return (
     <div
+      className="Tabs"
       css={{
         boxShadow: dark ? `0px 3px 2px ${theme.colors.scales.gray[3]}` : "none"
       }}
     >
       <div
+        className="Tabs__container"
         ref={ref}
-        css={[
-          {
-            width: "100%",
-            whiteSpace: "nowrap",
-            overflowX: "scroll",
-            WebkitOverflowScrolling: "touch",
-            maxWidth: "1200px",
-            margin: "0 auto",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            "::-webkit-scrollbar": {
-              width: 0,
-              height: 0
-            }
-          },
-          classes.root
-        ]}
+        css={{
+          width: "100%",
+          whiteSpace: "nowrap",
+          overflowX: "scroll",
+          WebkitOverflowScrolling: "touch",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          "::-webkit-scrollbar": {
+            width: 0,
+            height: 0
+          }
+        }}
         {...other}
       >
         <div
+          className="Tabs__tablist"
           role="tablist"
           ref={tablist}
-          css={[
-            {
-              display: variant === "evenly-spaced" ? "flex" : "inline-block",
-              position: "relative",
-              verticalAlign: "bottom",
-              "& button": {
-                flex: variant === "evenly-spaced" ? "1" : undefined
-              }
-            },
-            classes.tablist
-          ]}
+          css={{
+            display: variant === "evenly-spaced" ? "flex" : "inline-block",
+            position: "relative",
+            verticalAlign: "bottom",
+            "& button": {
+              flex: variant === "evenly-spaced" ? "1" : undefined
+            }
+          }}
         >
           {React.Children.map(children, (child, i) => {
             return React.cloneElement(child as React.ReactElement<any>, {
@@ -125,17 +116,15 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
           })}
           {enableSlider && slider.left !== null && slider.right !== null && (
             <div
+              className="Tabs__slider"
               style={{ left: slider.left + "px", right: slider.right + "px" }}
-              css={[
-                {
-                  height: "3px",
-                  bottom: 0,
-                  position: "absolute",
-                  background: dark ? "white" : theme.colors.text.selected,
-                  transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
-                },
-                classes.slider
-              ]}
+              css={{
+                height: "3px",
+                bottom: 0,
+                position: "absolute",
+                background: dark ? "white" : theme.colors.text.selected,
+                transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+              }}
             />
           )}
         </div>
@@ -159,12 +148,6 @@ Tabs.propTypes = {
 
   /** Whether tabs should be left-aligned or justified */
   variant: PropTypes.oneOf(["default", "evenly-spaced"]),
-
-  classes: PropTypes.shape({
-    slider: PropTypes.any,
-    root: PropTypes.any,
-    tablist: PropTypes.any
-  }),
 
   /** Tab elements */
   children: PropTypes.node

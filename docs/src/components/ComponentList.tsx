@@ -117,7 +117,7 @@ const components = [
   { title: "Alert", path: "/components/alert/" },
   { title: "Avatar", path: "/components/avatar/" },
   { title: "Badge", path: "/components/badge/" },
-  { title: "Breadcrumb", path: "/components/breadcrumb/" },
+  { title: "Breadcrumbs", path: "/components/breadcrumb/" },
   { title: "Button", path: "/components/button/" },
   { title: "Collapse", path: "/components/collapse/" },
   { title: "Container", path: "/components/container/" },

@@ -11,6 +11,8 @@ import { Nav } from "../../components/Nav"
 <Article sidebar={[
   { id: 'Tooltip', name: 'Tooltip' },
   { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Controlling width', name: 'Controlling width'},
+  { id: 'Customizing placement', name: 'Customizing placement'},
   { id: 'Props', name: 'Props' }
 ]}>
 
@@ -25,6 +27,31 @@ The tooltip will appear when the target is hovered or focused.
 ```jsx
 <Tooltip content="This is some tooltip content">
   <Button>Hello world. Hover me!!</Button>
+</Tooltip>
+```
+
+#### Controlling width
+
+By default, the tooltip is limited to a width of `300px`. You can customize this by setting the `maxWidth` prop.
+
+```jsx
+<Tooltip
+  maxWidth="200px"
+  content="This is some tooltip content. I have a max width of 200px."
+>
+  <Button>I should limit text width</Button>
+</Tooltip>
+```
+
+#### Customizing placement
+
+```jsx
+<Tooltip
+  maxWidth="200px"
+  placement="right"
+  content="This is some tooltip content. I have a max width of 200px."
+>
+  <Button>I will appear to the right</Button>
 </Tooltip>
 ```
 

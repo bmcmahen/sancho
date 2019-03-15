@@ -14,19 +14,32 @@ export interface IconButtonProps extends Partial<ButtonProps> {
   color?: string;
 }
 
+// I need to think more about maintaining consistent
+// sizes for buttons and iconbuttons so that iconbuttons and buttons
+// appear to be consistent heights.
+// use heights instead of padding?
 const paddingForIconSizes = {
-  xs: theme.spaces.sm,
-  sm: theme.spaces.sm,
-  md: theme.spaces.sm,
-  lg: theme.spaces.sm,
-  xl: theme.spaces.md
+  xs: "0.32rem",
+  sm: "0.4rem",
+  md: "0.55rem",
+  lg: "0.7rem",
+  xl: "0.7rem"
 };
 
 export const IconButton: React.RefForwardingComponent<
   React.Ref<HTMLButtonElement>,
   IconButtonProps
 > = React.forwardRef(
-  ({ label, size = "md" as ButtonSize, icon, color, ...other }, ref) => {
+  (
+    {
+      label,
+      size = "md" as ButtonSize,
+      icon,
+      color = "currentColor",
+      ...other
+    },
+    ref
+  ) => {
     return (
       <Button
         ref={ref}
