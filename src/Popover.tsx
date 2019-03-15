@@ -4,7 +4,7 @@ import * as React from "react";
 import { ButtonProps } from "./Button";
 import { IconButtonProps } from "./IconButton";
 import { Layer } from "./Layer";
-import { Positioner } from "./Positions";
+import { Positioner, Placements } from "./Positions";
 import { ReferenceChildrenProps } from "react-popper";
 import theme from "./Theme";
 import { arrowStyles } from "./Tooltip";
@@ -21,11 +21,13 @@ interface PopoverProps {
   children: React.ReactElement<ButtonProps | IconButtonProps>;
   content: React.ReactNode;
   closeOnMenuItemClick?: boolean;
+  placement?: Placements;
 }
 
 export const Popover: React.FunctionComponent<PopoverProps> = ({
   content,
   children,
+  placement,
   closeOnMenuItemClick = true,
   isOpen: defaultShow = false
 }) => {
@@ -125,7 +127,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
   }
 
   return (
-    <Positioner isOpen={show} target={renderTrigger}>
+    <Positioner placement={placement} isOpen={show} target={renderTrigger}>
       {({ placement, ref, arrowProps, style }, animation) => (
         <AnimatedLayer
           role="dialog"

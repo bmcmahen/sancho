@@ -69,6 +69,9 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
         ["@media (hover: hover)"]: {
           ":hover": {
             background: theme.colors.background.tint1
+          },
+          ":active": {
+            background: theme.colors.background.tint2
           }
         }
       }}
