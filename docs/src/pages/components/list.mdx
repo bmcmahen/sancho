@@ -27,28 +27,36 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
 <Layer style={{ overflow: "hidden", width: "450px" }}>
   <List>
     <ListItem
-      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
       primary="Ben McMahen"
       secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+      contentAfter={
+        <Icon color={theme.colors.text.muted} icon="chevron-right" />
+      }
     />
     <ListItem
-      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
       primary="Joe Chen"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+      contentAfter={
+        <Icon color={theme.colors.text.muted} icon="chevron-right" />
+      }
     />
     <ListItem
-      iconBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
       primary="Lynn Apple"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+      contentAfter={
+        <Icon color={theme.colors.text.muted} icon="chevron-right" />
+      }
     />
     <ListItem
-      iconBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
       primary="Mary Joe"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+      contentAfter={
+        <Icon color={theme.colors.text.muted} icon="chevron-right" />
+      }
     />
   </List>
 </Layer>
@@ -79,18 +87,20 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
   <div>
     <List>
       <ListItem
-        iconBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
+        contentBefore={
+          <Avatar name={"Lynn Apple"} src={faker.image.avatar()} />
+        }
         primary="Lynn Apple"
         wrap={false}
         secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-        iconAfter={<Badge>1</Badge>}
+        contentAfter={<Badge>1</Badge>}
       />
       <ListItem
-        iconBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
+        contentBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
         primary="Mary Joe"
         wrap={false}
         secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-        iconAfter={<Badge>4</Badge>}
+        contentAfter={<Badge>4</Badge>}
       />
     </List>
   </div>
@@ -104,31 +114,39 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
   <List>
     <ListItem
       wrap={false}
-      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
       primary="Ben McMahen"
       secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+      contentAfter={
+        <Icon color={theme.colors.text.muted} icon="chevron-right" />
+      }
     />
     <ListItem
       wrap={false}
-      iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
       primary="Joe Chen"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+      contentAfter={
+        <Icon color={theme.colors.text.muted} icon="chevron-right" />
+      }
     />
     <ListItem
       wrap={false}
-      iconBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
       primary="Lynn Apple"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+      contentAfter={
+        <Icon color={theme.colors.text.muted} icon="chevron-right" />
+      }
     />
     <ListItem
       wrap={false}
-      iconBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
       primary="Mary Joe"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-      iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+      contentAfter={
+        <Icon color={theme.colors.text.muted} icon="chevron-right" />
+      }
     />
   </List>
 </Layer>
@@ -141,11 +159,11 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
   <ListItem
     component="a"
     href="/"
-    iconBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+    contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
     primary="Ben McMahen"
     wrap={false}
     secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-    iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+    contentAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
   />
 </List>
 ```

@@ -104,7 +104,12 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
     return React.cloneElement(child, {
-      onClick: onTriggerClicked,
+      onClick: (e: React.MouseEvent) => {
+        onTriggerClicked(e);
+        if (child.props.onClick) {
+          child.props.onClick(e);
+        }
+      },
       ref: (el: HTMLButtonElement | null) => {
         ref(el);
         triggerRef.current = el;

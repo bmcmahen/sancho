@@ -5,7 +5,7 @@ import theme from "./Theme";
 import { Text } from "./Text";
 import PropTypes, { string } from "prop-types";
 
-interface BreadcrumbsProps extends React.OlHTMLAttributes<HTMLOListElement> {
+interface BreadcrumbsProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "md" | "lg";
   children:
     | React.ReactElement<BreadcrumbItemProps>
@@ -35,6 +35,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
           height: 0
         }
       }}
+      {...other}
     >
       <ol
         className="Breadcrumbs__list"
@@ -49,7 +50,6 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
           padding: `${theme.spaces.sm} ${theme.spaces.md}`,
           borderRadius: theme.radii.md
         }}
-        {...other}
       >
         {React.Children.map(children, (child, i) => {
           if (!React.isValidElement(child)) {

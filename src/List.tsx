@@ -21,8 +21,8 @@ List.propTypes = {
 
 interface ListItemProps extends React.HTMLAttributes<any> {
   component?: React.ReactType<any>;
-  iconBefore?: React.ReactNode;
-  iconAfter?: React.ReactNode;
+  contentBefore?: React.ReactNode;
+  contentAfter?: React.ReactNode;
   children?: React.ReactNode;
   wrap?: boolean;
   primary: string | React.ReactNode;
@@ -33,10 +33,10 @@ interface ListItemProps extends React.HTMLAttributes<any> {
 export const ListItem: React.FunctionComponent<ListItemProps> = ({
   primary,
   secondary,
-  iconBefore,
+  contentBefore,
   children,
   wrap = true,
-  iconAfter,
+  contentAfter,
   component: Component = "div",
   ...other
 }) => {
@@ -80,12 +80,12 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
         className="ListItem__container"
         css={{ display: "flex", alignItems: "center" }}
       >
-        {iconBefore && (
+        {contentBefore && (
           <div
-            className="ListItem__icon-before"
+            className="ListItem__content-before"
             css={{ marginRight: theme.spaces.md }}
           >
-            {iconBefore}
+            {contentBefore}
           </div>
         )}
 
@@ -114,12 +114,12 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
           )}
           {children}
         </div>
-        {iconAfter && (
+        {contentAfter && (
           <div
-            className="ListItem__icon-after"
+            className="ListItem__content-after"
             css={{ flex: "0 0 auto", marginLeft: theme.spaces.md }}
           >
-            {iconAfter}
+            {contentAfter}
           </div>
         )}
       </div>
@@ -129,13 +129,13 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
 
 ListItem.propTypes = {
   /** The primary text content of the list item */
-  primary: PropTypes.oneOf([PropTypes.string, PropTypes.node]).isRequired,
+  primary: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   /** the secondary text content */
-  secondary: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
+  secondary: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   /** An icon or avatar to appear to the left of the text content */
-  iconBefore: PropTypes.node,
+  contentBefore: PropTypes.node,
   /** an icon to appear to the right of the text content */
-  iconAfter: PropTypes.node,
+  contentAfter: PropTypes.node,
   /** whether primary and secondary text should be wrapped */
   wrap: PropTypes.bool,
   /** optional third row of content */
