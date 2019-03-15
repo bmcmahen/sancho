@@ -8,7 +8,7 @@ import { ButtonSize } from "./Button";
 
 export { IconNames, IconName } from "@blueprintjs/icons";
 
-const sizesForIcon = {
+export const sizesForIcon = {
   xs: 8,
   sm: 12,
   md: 16,

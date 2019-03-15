@@ -6,6 +6,8 @@ import color from "color";
 import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
 import { Spinner } from "./Spinner";
+import { IconName } from "@blueprintjs/icons";
+import { Icon, sizesForIcon } from "./Icons";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -15,10 +17,10 @@ const getTextColor = (background: string) => {
 
 const getPadding = (size: ButtonSize) => {
   if (size === "xs") return "0.1rem 0.5rem";
-  if (size === "sm") return "0.25rem 1rem";
-  if (size === "lg") return "0.6rem 2rem";
+  if (size === "sm") return "0.25rem 0.8rem";
+  if (size === "lg") return "0.6rem 1.5rem";
   if (size === "xl") return "0.8rem 2.2rem";
-  return "0.5rem 1.7rem";
+  return "0.5rem 1rem";
 };
 
 const getFontSize = (size: ButtonSize) => {
@@ -307,6 +309,14 @@ const variants = {
   })
 };
 
+const iconSpaceForSize = {
+  xs: `calc(${sizesForIcon.xs}px + ${theme.spaces.md} + ${theme.spaces.sm})`,
+  sm: `calc(${sizesForIcon.sm}px + ${theme.spaces.md} + ${theme.spaces.sm})`,
+  md: `calc(${sizesForIcon.md}px + ${theme.spaces.md} + 0.65rem)`,
+  lg: `calc(${sizesForIcon.lg}px + ${theme.spaces.md} + 0.8rem)`,
+  xl: `calc(${sizesForIcon.xl}px + ${theme.spaces.md} + ${theme.spaces.md})`
+};
+
 export type ButtonVariant = keyof typeof variants;
 
 export interface ButtonStyleProps {
@@ -316,6 +326,8 @@ export interface ButtonStyleProps {
   size?: ButtonSize;
   loading?: boolean;
   disabled?: boolean;
+  iconBefore?: IconName | JSX.Element;
+  iconAfter?: IconName | JSX.Element;
 }
 
 export interface ButtonProps
@@ -344,6 +356,8 @@ export const Button: React.RefForwardingComponent<
       disabled = false,
       loading = false,
       component: Component = "button",
+      iconBefore,
+      iconAfter,
       children,
       ...other
     }: ButtonProps,
@@ -358,7 +372,9 @@ export const Button: React.RefForwardingComponent<
           variant,
           intent,
           disabled,
-          loading
+          loading,
+          iconBefore,
+          iconAfter
         })}
         {...other}
       >
@@ -375,10 +391,41 @@ export const Button: React.RefForwardingComponent<
             <Spinner delay={1} size={size} />
           </div>
         )}
+
+        {iconBefore && (
+          <Icon
+            css={{
+              position: "absolute",
+              left: theme.spaces.md,
+              top: "50%",
+              transform: "translateY(-50%)"
+            }}
+            size={size}
+            color="currentColor"
+            aria-hidden
+            icon={iconBefore}
+          />
+        )}
+
         {typeof children === "string" ? (
           <span aria-hidden={loading}>{children}</span>
         ) : (
           children
+        )}
+
+        {iconAfter && (
+          <Icon
+            css={{
+              position: "absolute",
+              right: theme.spaces.md,
+              top: "50%",
+              transform: "translateY(-50%)"
+            }}
+            size={size}
+            color="currentColor"
+            aria-hidden
+            icon={iconAfter}
+          />
         )}
       </Component>
     );
@@ -409,7 +456,13 @@ Button.propTypes = {
     "success",
     "warning",
     "danger"
-  ] as ButtonIntent[])
+  ] as ButtonIntent[]),
+
+  /** The name of the icon to appear to the left of the button text*/
+  iconBefore: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+
+  /** The name of the icon to appear to the right of the button text */
+  iconAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 };
 
 export function getButtonStyles({
@@ -418,12 +471,15 @@ export function getButtonStyles({
   variant = "default",
   intent = "none",
   disabled = false,
-  loading = false
+  loading = false,
+  iconBefore,
+  iconAfter
 }: ButtonStyleProps) {
   return css([
     buttonReset,
     {
       fontWeight: 500,
+      position: "relative",
       fontFamily: theme.fonts.base,
       borderRadius: theme.radii.sm,
       fontSize: getFontSize(size),
@@ -437,11 +493,16 @@ export function getButtonStyles({
       pointerEvents: "none"
     },
     loading && {
-      position: "relative",
       "& > :not(.Spinner)": {
         opacity: 0,
         transition: "opacity 0.1s ease"
       }
+    },
+    iconBefore && {
+      paddingLeft: iconSpaceForSize[size]
+    },
+    iconAfter && {
+      paddingRight: iconSpaceForSize[size]
     }
   ]);
 }
