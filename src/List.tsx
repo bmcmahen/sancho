@@ -5,7 +5,7 @@ import { Text } from "./Text";
 import theme from "./Theme";
 import PropTypes from "prop-types";
 
-export interface ListProps {}
+export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const List: React.FunctionComponent<ListProps> = ({
   children,
