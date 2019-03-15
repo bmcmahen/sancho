@@ -42,6 +42,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
 }) => {
   return (
     <Component
+      className="ListItem"
       css={{
         display: "block",
         textDecoration: "none",
@@ -52,7 +53,11 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
         borderBottom: "1px solid",
         borderColor: theme.colors.border.muted,
         transition: "background 0.07s ease",
-        ":last": {
+        [theme.breakpoints.md]: {
+          paddingLeft: theme.spaces.lg,
+          paddingRight: theme.spaces.lg
+        },
+        ":last-child": {
           borderBottom: "none"
         },
         ":active": {
@@ -60,19 +65,36 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
         },
         ":focus": {
           background: theme.colors.background.tint1
+        },
+        ["@media (hover: hover)"]: {
+          ":hover": {
+            background: theme.colors.background.tint1
+          }
         }
       }}
       role="button"
       tabIndex={0}
       {...other}
     >
-      <div css={{ display: "flex", alignItems: "center" }}>
+      <div
+        className="ListItem__container"
+        css={{ display: "flex", alignItems: "center" }}
+      >
         {iconBefore && (
-          <div css={{ marginRight: theme.spaces.md }}>{iconBefore}</div>
+          <div
+            className="ListItem__icon-before"
+            css={{ marginRight: theme.spaces.md }}
+          >
+            {iconBefore}
+          </div>
         )}
 
-        <div css={{ flex: 1, overflow: "hidden" }}>
+        <div
+          className="ListItem__content"
+          css={{ flex: 1, overflow: "hidden" }}
+        >
           <Text
+            className="ListItem__primary"
             wrap={wrap}
             variant="body"
             css={{ display: "block", fontWeight: 500 }}
@@ -80,14 +102,23 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
             {primary}
           </Text>
           {secondary && (
-            <Text wrap={wrap} css={{ display: "block" }} variant="body" muted>
+            <Text
+              className="ListItem__secondary"
+              wrap={wrap}
+              css={{ display: "block", fontSize: theme.sizes[0] }}
+              variant="body"
+              muted
+            >
               {secondary}
             </Text>
           )}
           {children}
         </div>
         {iconAfter && (
-          <div css={{ flex: "0 0 auto", marginLeft: theme.spaces.md }}>
+          <div
+            className="ListItem__icon-after"
+            css={{ flex: "0 0 auto", marginLeft: theme.spaces.md }}
+          >
             {iconAfter}
           </div>
         )}

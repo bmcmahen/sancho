@@ -1,5 +1,5 @@
 import { Container } from "../../../../src"
-import "./button.css"
+import "./list.css"
 import { Article } from "../../components/Layout"
 import { Props } from "../../components/Props"
 import SEO from "../../components/SEO"
@@ -51,6 +51,49 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
       iconAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
     />
   </List>
+</Layer>
+```
+
+```jsx
+<Layer className="List-example">
+  <Toolbar className="List-toolbar">
+    <Text gutter={false} variant="h6">
+      My Chat App
+    </Text>
+  </Toolbar>
+  <Component initialState={{ value: 0 }}>
+    {({ state, setState }) => (
+      <Tabs
+        className="List-tabs"
+        variant="evenly-spaced"
+        onChange={i => setState({ value: i })}
+        value={state.value}
+      >
+        <Tab>Family</Tab>
+        <Tab>Work</Tab>
+        <Tab>Favorites</Tab>
+        <Tab>Groups</Tab>
+      </Tabs>
+    )}
+  </Component>
+  <div>
+    <List>
+      <ListItem
+        iconBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
+        primary="Lynn Apple"
+        wrap={false}
+        secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+        iconAfter={<Badge>1</Badge>}
+      />
+      <ListItem
+        iconBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
+        primary="Mary Joe"
+        wrap={false}
+        secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+        iconAfter={<Badge>4</Badge>}
+      />
+    </List>
+  </div>
 </Layer>
 ```
 

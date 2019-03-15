@@ -67,6 +67,7 @@ const fonts = {
 
 export const theme = {
   colors: {
+    mode: "light",
     ...colors,
     palette,
     scales
@@ -80,5 +81,7 @@ export const theme = {
   shadows,
   lineHeight: "1.5"
 };
+
+export type Theme = typeof theme;
 
 export default theme;
