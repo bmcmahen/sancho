@@ -52,16 +52,25 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
   ...other
 }) => {
   const contents = title ? (
-    <div css={{ display: "flex", alignItems: "flex-start" }}>
+    <div
+      className="Alert__title"
+      css={{ display: "flex", alignItems: "flex-start" }}
+    >
       <div css={{ flex: "0 0 auto", marginTop: "4px" }}>
         <Icon color={alertIntentions[intent]} icon={icons[intent]} />
       </div>
       <div css={{ marginLeft: theme.spaces.md }}>
-        <Text id={id} css={{ margin: 0 }} variant="h6">
+        <Text
+          className="Alert__title-text"
+          id={id}
+          css={{ margin: 0 }}
+          variant="h6"
+        >
           {title}
         </Text>
         {subtitle && (
           <Text
+            className="Alert__title-subtitle"
             muted
             css={{
               fontSize: theme.sizes[0]
@@ -80,6 +89,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
 
   return (
     <Component
+      className="Alert"
       css={{
         backgroundColor: "white",
         overflow: "hidden",
@@ -92,6 +102,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
     >
       <div>
         <div
+          className="Alert__bar"
           css={{
             width: theme.radii.md,
             position: "absolute",
@@ -102,6 +113,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
           }}
         />
         <div
+          className="Alert__content"
           css={{
             display: "flex",
             alignItems: "flex-start",
