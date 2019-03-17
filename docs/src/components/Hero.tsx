@@ -113,6 +113,7 @@ export const Hero = ({ children }) => (
             intent="primary"
             component="a"
             size="lg"
+            iconAfter={"arrow-right"}
             href="http://github.com/bmcmahen/sancho"
           >
             View on Github
