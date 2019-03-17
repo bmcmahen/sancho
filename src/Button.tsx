@@ -478,7 +478,7 @@ export function getButtonStyles({
   return css([
     buttonReset,
     {
-      fontWeight: 400,
+      fontWeight: 500,
       position: "relative",
       fontFamily: theme.fonts.base,
       borderRadius: theme.radii.sm,
