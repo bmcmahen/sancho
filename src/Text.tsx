@@ -31,7 +31,7 @@ export const variants = {
     lineHeight: 1.5
   }),
   lead: css({
-    fontWeight: 400,
+    fontWeight: 300,
     fontSize: theme.sizes[2]
   }),
   h6: css({

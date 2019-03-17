@@ -11,6 +11,7 @@ import { Nav } from "../../components/Nav"
 <Article sidebar={[
   { id: 'Spinner', name: 'Spinner'},
   { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Other options', name: 'Other options' },
   { id: 'Props', name: 'Props'}
 ]}>
 
@@ -22,6 +23,16 @@ Just your usual spinner component modelled after the one found in [Bootstrap](ht
 
 ```jsx
 <Spinner />
+```
+
+#### Other options
+
+You can also add a label to your spinner and you can attempt to center the spinner using the `center` prop.
+
+```jsx
+<div style={{ width: "300px", height: "150px" }}>
+  <Spinner label="Creating project..." center />
+</div>
 ```
 
 <Props names={["Spinner"]} />
