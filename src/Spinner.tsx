@@ -3,6 +3,8 @@ import { jsx, css, keyframes } from "@emotion/core";
 import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
+import { Text } from "./Text";
+import theme from "./Theme";
 
 const spin = keyframes`
   to { 
@@ -21,6 +23,8 @@ const sizeStyles = {
 interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   delay?: number;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
+  center?: boolean;
+  label?: string;
 }
 
 // spinner css based on one provided by bootstrap
@@ -29,6 +33,8 @@ interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Spinner: React.FunctionComponent<SpinnerProps> = ({
   delay = 400,
   size = "md",
+  center,
+  label,
   ...other
 }) => {
   const [show, setShow] = React.useState(delay === 0 ? true : false);
@@ -45,30 +51,56 @@ export const Spinner: React.FunctionComponent<SpinnerProps> = ({
 
   return (
     <div
-      css={{
-        opacity: show ? 1 : 0,
-        display: "inline-block",
-        transition: "opacity 0.4s cubic-bezier(0.35,0,0.25,1)"
-      }}
+      className="Spinner"
+      css={[
+        {
+          opacity: show ? 1 : 0,
+          display: "inline-block",
+          transition: "opacity 0.4s cubic-bezier(0.35,0,0.25,1)"
+        },
+        center && {
+          width: "100%",
+          height: "100%",
+          boxSizing: "border-box",
+          display: "flex",
+          alignItems: "center",
+          alignSelf: "center",
+          justifyContent: "center"
+        }
+      ]}
+      {...other}
     >
       <div
+        className="Spinner__container"
         role="status"
-        css={[
-          css`
-            opacity: ${show ? 1 : 0};
-            display: inline-block;
-            transition: opacity 0.3s ease;
-            vertical-align: text-bottom;
-            border: 0.2em solid currentColor;
-            border-right-color: transparent;
-            border-radius: 50%;
-            animation: ${spin} 0.75s linear infinite;
-          `,
-          sizeStyles[size]
-        ]}
-        {...other}
+        css={{ textAlign: "center", display: "inline-block" }}
       >
-        <VisuallyHidden>Loading...</VisuallyHidden>
+        <div
+          className="Spinner__spinner"
+          css={[
+            css`
+              display: inline-block;
+              vertical-align: text-bottom;
+              border: 0.15em solid currentColor;
+              border-right-color: transparent;
+              border-radius: 50%;
+              animation: ${spin} 0.75s linear infinite;
+            `,
+            sizeStyles[size]
+          ]}
+        />
+        {label ? (
+          <Text
+            className="Spinner__label"
+            wrap={false}
+            css={{ display: "block", marginTop: theme.spaces.sm }}
+            variant="subtitle"
+          >
+            {label}
+          </Text>
+        ) : (
+          <VisuallyHidden>{"Loading"}</VisuallyHidden>
+        )}
       </div>
     </div>
   );
@@ -76,5 +108,11 @@ export const Spinner: React.FunctionComponent<SpinnerProps> = ({
 
 Spinner.propTypes = {
   /** The delay (in ms) before the spinner will appear */
-  delay: PropTypes.number
+  delay: PropTypes.number,
+
+  /** Attempt to center the spinner in the parent element */
+  center: PropTypes.bool,
+
+  /** Use an optional label */
+  label: PropTypes.string
 };

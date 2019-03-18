@@ -52,7 +52,32 @@ function MyCustomButton() {
 }
 ```
 
-For a full explanation of why Emotion was chosen, read this [blog post](https://benmcmahen.com/why-i-choose-emotion/). Learn more about using the `css` prop on the [Emotion](https://emotion.sh/docs/css-prop) website.
+Most Sancho components provide BEM-style class names. This allows you to configure the styles of elements contained within components.
+
+```.jsx
+/** @jsx jsx */
+import { jsx } from "@emotion/core"
+import { Alert, theme } from 'sancho'
+
+function MyCustomAlert() {
+  return (
+    <Alert
+      title='Hello world!'
+      css={{
+        maxWidth: '100vw',
+        '& .Alert__bar': {
+          display: 'none'
+        },
+        '& .Alert__content': {
+          padding: theme.spaces.sm
+        }
+      }}
+    />
+  )
+}
+```
+
+For a full explanation of why Emotion was chosen, read this [blog post](https://benmcmahen.com/why-i-choose-emotion/). You can learn more about using the `css` prop on the [Emotion](https://emotion.sh/docs/css-prop) website.
 
 #### Theme
 
