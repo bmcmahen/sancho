@@ -52,6 +52,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
         background: "transparent",
         borderBottom: "1px solid",
         borderColor: theme.colors.border.muted,
+        WebkitTapHighlightColor: "transparent",
         transition: "background 0.07s ease",
         [theme.breakpoints.md]: {
           paddingLeft: theme.spaces.lg,

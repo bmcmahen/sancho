@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core"
-import React from "react"
+import React, { useRef, useEffect, useState } from "react"
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 import { MDXProvider } from "@mdx-js/tag"
 import * as components from "../../../src"
@@ -25,6 +25,7 @@ export const anchorPadding = css`
 
 export function ComponentPreview({ className, ...props }) {
   const isJSX = props.children.props.props.className === "language-jsx"
+
   if (props.children.props.props) {
     return (
       <div
@@ -63,7 +64,10 @@ export function ComponentPreview({ className, ...props }) {
               }}
             />
           )}
-          <LiveEditor className="language-" />
+          <LiveEditor
+            contentEditable={isJSX ? "true" : "false"}
+            className="language-"
+          />
           {isJSX && <LiveError />}
         </LiveProvider>
       </div>
