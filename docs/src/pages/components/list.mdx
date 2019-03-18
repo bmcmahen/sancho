@@ -24,7 +24,7 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
 #### Basic usage
 
 ```jsx
-<Layer style={{ overflow: "hidden", width: "450px" }}>
+<Layer style={{ overflow: "hidden", maxWidth: "100%", width: "450px" }}>
   <List>
     <ListItem
       contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
@@ -110,7 +110,7 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
 #### No wrap
 
 ```jsx
-<Layer style={{ overflow: "hidden", width: "450px" }}>
+<Layer style={{ overflow: "hidden", maxWidth: "100%", width: "450px" }}>
   <List>
     <ListItem
       wrap={false}
