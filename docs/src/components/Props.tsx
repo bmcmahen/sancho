@@ -2,7 +2,7 @@
 import { jsx } from "@emotion/core"
 import * as React from "react"
 import table from "../pages/components/props.json"
-import { theme, Text } from "../../../src"
+import { theme, Text, Divider } from "../../../src"
 import { anchorPadding } from "./ExamplePreview.jsx"
 
 // pretty lame
@@ -43,9 +43,13 @@ export function Props({ names }: PropsProps) {
               }
 
               return (
-                <div css={{ marginBottom: theme.spaces.lg }} key={name}>
+                <div
+                  css={{ marginBottom: theme.spaces.lg }}
+                  key={entry.displayName}
+                >
+                  <Divider muted />
                   <div>
-                    <Text variant="h4">{entry.displayName}</Text>
+                    <Text variant="h5">{entry.displayName}</Text>
                   </div>
 
                   {Object.keys(props).map(key => {
@@ -57,11 +61,18 @@ export function Props({ names }: PropsProps) {
                     const val = row.type.value
                     const { required, description } = row
                     return (
-                      <div css={{ marginBottom: "1rem" }} key={key}>
-                        <div>
+                      <div
+                        css={{ display: "block", marginBottom: "1rem" }}
+                        key={key + name}
+                      >
+                        <div css={{ flex: "0 0 200px" }}>
                           <Text
                             css={{
+                              padding: "3px",
+                              borderRadius: theme.radii.sm,
+                              background: theme.colors.palette.blue.lightest,
                               fontWeight: 500,
+                              fontSize: theme.sizes[0],
                               marginRight: theme.spaces.sm,
                             }}
                           >
@@ -82,7 +93,14 @@ export function Props({ names }: PropsProps) {
                           </Text>
                         </div>
                         <div>
-                          <Text muted>{description}</Text>
+                          <Text
+                            css={{
+                              fontSize: theme.sizes[0],
+                            }}
+                            muted
+                          >
+                            {description}
+                          </Text>
                         </div>
                       </div>
                     )

@@ -74,7 +74,7 @@ export const Table: React.FunctionComponent<TableProps> = ({
 
 Table.propTypes = {
   /** An optional minimum width for table content. */
-  minWidth: PropTypes.number,
+  minWidth: PropTypes.string,
   /** An optional array of fixed layout widths for each column */
   fixed: PropTypes.arrayOf(PropTypes.string),
   children: PropTypes.node
@@ -351,5 +351,5 @@ export const ExpandingRow: React.FunctionComponent<ExpandingRowProps> = ({
 
 ExpandingRow.propTypes = {
   /** The expanded content to show when the user selects the row */
-  content: PropTypes.node
+  content: PropTypes.oneOfType([PropTypes.func, PropTypes.node])
 };
