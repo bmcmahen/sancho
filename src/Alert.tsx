@@ -151,7 +151,7 @@ Alert.propTypes = {
   title: PropTypes.string,
 
   /** A unique id used for accessibility purposes */
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
   /** Optionally render children if a title is not specified. Used for custom alerts. */
   children: PropTypes.node,
