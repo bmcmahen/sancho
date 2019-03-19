@@ -14,6 +14,7 @@ import { Nav } from "../../components/Nav"
   { id: 'Basic usage', name: 'Basic usage' },
   { id: 'No wrap', name: 'No wrap' },
   { id: 'Using links', name: 'Using links'},
+  { id: 'Non interactive', name: 'Non interactive'},
   { id: 'Props', name: 'Props table'}
 ]}>
 
@@ -107,6 +108,72 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
 </Layer>
 ```
 
+#### Using sections
+
+```jsx
+<Layer
+  style={{
+    overflowY: "scroll",
+    maxHeight: "300px",
+    maxWidth: "100%",
+    width: "450px",
+  }}
+>
+  <List>
+    <ListSection title="Friends">
+      <ListItem
+        contentBefore={
+          <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+        }
+        primary="Ben McMahen"
+        secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
+        contentAfter={
+          <Icon color={theme.colors.text.muted} icon="chevron-right" />
+        }
+      />
+      <ListItem
+        contentBefore={
+          <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+        }
+        primary="Joe Chen"
+        secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+        contentAfter={
+          <Icon color={theme.colors.text.muted} icon="chevron-right" />
+        }
+      />
+    </ListSection>
+    <ListSection title="Family">
+      <ListItem
+        contentBefore={
+          <Avatar name={"Lynn Apple"} src={faker.image.avatar()} />
+        }
+        primary="Lynn Apple"
+        secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+        contentAfter={
+          <Icon color={theme.colors.text.muted} icon="chevron-right" />
+        }
+      />
+      <ListItem
+        contentBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
+        primary="Mary Joe"
+        secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+        contentAfter={
+          <Icon color={theme.colors.text.muted} icon="chevron-right" />
+        }
+      />
+      <ListItem
+        contentBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
+        primary="Mary Joe"
+        secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+        contentAfter={
+          <Icon color={theme.colors.text.muted} icon="chevron-right" />
+        }
+      />
+    </ListSection>
+  </List>
+</Layer>
+```
+
 #### No wrap
 
 ```jsx
@@ -117,33 +184,6 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
       contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
       primary="Ben McMahen"
       secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-      contentAfter={
-        <Icon color={theme.colors.text.muted} icon="chevron-right" />
-      }
-    />
-    <ListItem
-      wrap={false}
-      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
-      primary="Joe Chen"
-      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-      contentAfter={
-        <Icon color={theme.colors.text.muted} icon="chevron-right" />
-      }
-    />
-    <ListItem
-      wrap={false}
-      contentBefore={<Avatar name={"Lynn Apple"} src={faker.image.avatar()} />}
-      primary="Lynn Apple"
-      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-      contentAfter={
-        <Icon color={theme.colors.text.muted} icon="chevron-right" />
-      }
-    />
-    <ListItem
-      wrap={false}
-      contentBefore={<Avatar name={"Mary Joe"} src={faker.image.avatar()} />}
-      primary="Mary Joe"
-      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
       contentAfter={
         <Icon color={theme.colors.text.muted} icon="chevron-right" />
       }
@@ -164,6 +204,22 @@ Lists are useful for rendering things like lists of emails, actions, documents, 
     wrap={false}
     secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
     contentAfter={<Icon color={theme.colors.text.muted} icon="chevron-right" />}
+  />
+</List>
+```
+
+#### Non interactive
+
+By default, list items are treated as interactive buttons. You can turn disable this.
+
+```jsx
+<List>
+  <ListItem
+    interactive={false}
+    contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+    primary="Ben McMahen"
+    wrap={false}
+    contentAfter={<Button onClick={() => alert("Hey!")}>Learn more</Button>}
   />
 </List>
 ```

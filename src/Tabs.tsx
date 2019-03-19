@@ -27,7 +27,7 @@ interface TabsProps {
   slider?: boolean;
   variant?: "default" | "evenly-spaced";
   onChange: (value: number) => void;
-  children: React.ReactElement<TabProps>[];
+  children: React.ReactElement<TabProps>[] | React.ReactElement<TabProps>;
 }
 
 export const Tabs: React.FunctionComponent<TabsProps> = ({
