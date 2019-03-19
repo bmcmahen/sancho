@@ -4,6 +4,7 @@ import * as React from "react";
 import { Text } from "./Text";
 import theme from "./Theme";
 import PropTypes from "prop-types";
+import { MenuLabel } from "./Menu";
 
 export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -23,6 +24,7 @@ interface ListItemProps extends React.HTMLAttributes<any> {
   component?: React.ReactType<any>;
   contentBefore?: React.ReactNode;
   contentAfter?: React.ReactNode;
+  interactive?: boolean;
   children?: React.ReactNode;
   wrap?: boolean;
   primary: string | React.ReactNode;
@@ -34,50 +36,61 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
   primary,
   secondary,
   contentBefore,
+  interactive = true,
   children,
   wrap = true,
   contentAfter,
   component: Component = "div",
   ...other
 }) => {
+  const interactiveProps = interactive
+    ? {
+        role: "button",
+        tabIndex: 0
+      }
+    : {};
+
   return (
     <Component
       className="ListItem"
-      css={{
-        display: "block",
-        textDecoration: "none",
-        outline: "none",
-        padding: theme.spaces.md,
-        cursor: "pointer",
-        background: "transparent",
-        borderBottom: "1px solid",
-        borderColor: theme.colors.border.muted,
-        WebkitTapHighlightColor: "transparent",
-        transition: "background 0.07s ease",
-        [theme.breakpoints.md]: {
-          paddingLeft: theme.spaces.lg,
-          paddingRight: theme.spaces.lg
+      css={[
+        {
+          display: "block",
+          textDecoration: "none",
+          outline: "none",
+          padding: theme.spaces.md,
+          background: "transparent",
+          borderBottom: "1px solid",
+          borderColor: theme.colors.border.muted,
+          WebkitTapHighlightColor: "transparent",
+          transition: "background 0.07s ease",
+          [theme.breakpoints.md]: {
+            paddingLeft: theme.spaces.lg,
+            paddingRight: theme.spaces.lg
+          },
+          ":last-child": {
+            borderBottom: "none"
+          }
         },
-        ":last-child": {
-          borderBottom: "none"
-        },
-        ":active": {
-          background: theme.colors.background.tint1
-        },
-        ":focus": {
-          background: theme.colors.background.tint1
-        },
-        ["@media (hover: hover)"]: {
-          ":hover": {
+        interactive && {
+          cursor: "pointer",
+          ":active": {
             background: theme.colors.background.tint1
           },
-          ":active": {
-            background: theme.colors.background.tint2
+          ":focus": {
+            background: theme.colors.background.tint1
+          },
+          ["@media (hover: hover)"]: {
+            ":hover": {
+              background: theme.colors.background.tint1
+            },
+            ":active": {
+              background: theme.colors.background.tint2
+            }
           }
         }
-      }}
-      role="button"
-      tabIndex={0}
+      ]}
+      {...interactiveProps}
       {...other}
     >
       <div
@@ -143,5 +156,57 @@ ListItem.propTypes = {
   /** whether primary and secondary text should be wrapped */
   wrap: PropTypes.bool,
   /** optional third row of content */
+  children: PropTypes.node,
+  /** whether the list item is interactive (ie., can be clicked as a button) */
+  interactive: PropTypes.bool
+};
+
+interface ListSectionProps extends React.HTMLAttributes<HTMLDivElement> {
+  title: string;
+  children?: React.ReactNode;
+  sticky?: boolean;
+}
+
+export const ListSection: React.FunctionComponent<ListSectionProps> = ({
+  title,
+  children,
+  sticky = true,
+  ...other
+}) => {
+  return (
+    <div
+      css={{
+        ":first-child > *": {
+          borderTop: "none"
+        }
+      }}
+    >
+      <MenuLabel
+        css={{
+          position: sticky ? "sticky" : "static",
+          top: 0,
+          backgroundColor: sticky ? "white" : "transparent",
+          borderTop: `1px solid ${theme.colors.border.muted}`,
+          borderBottom: `1px solid ${theme.colors.border.muted}`,
+          padding: theme.spaces.sm,
+          [theme.breakpoints.md]: {
+            paddingLeft: theme.spaces.lg,
+            paddingRight: theme.spaces.lg
+          }
+        }}
+        {...other}
+      >
+        {title}
+      </MenuLabel>
+      {children}
+    </div>
+  );
+};
+
+ListSection.propTypes = {
+  /** A title of the section */
+  title: PropTypes.string.isRequired,
+  /** whether the title should stick to the top of the scrollable content */
+  sticky: PropTypes.bool,
   children: PropTypes.node
 };
