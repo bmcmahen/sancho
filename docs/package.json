@@ -1,7 +1,7 @@
 {
   "name": "sancho-docs",
   "description": "The sancho docs built with gatsby",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.5",
   "author": "Ben McMahen <ben.mcmahen@gmail.com>",
   "dependencies": {
     "@babel/standalone": "^7.3.4",
