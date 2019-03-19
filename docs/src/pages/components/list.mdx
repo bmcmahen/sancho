@@ -12,6 +12,7 @@ import { Nav } from "../../components/Nav"
 <Article sidebar={[
   { id: 'List', name: 'List'},
   { id: 'Basic usage', name: 'Basic usage' },
+  { id: 'Using sections', name: 'Using sections'},
   { id: 'No wrap', name: 'No wrap' },
   { id: 'Using links', name: 'Using links'},
   { id: 'Non interactive', name: 'Non interactive'},
@@ -21,6 +22,12 @@ import { Nav } from "../../components/Nav"
 # List
 
 Lists are useful for rendering things like lists of emails, actions, documents, and so on.
+
+Sancho exports the following components to create lists:
+
+- **List**: The wrapper component for ListItem and ListSection children.
+- **ListSection**: A labelled wrapper component for ListItem components.
+- **ListItem**: The list item itself.
 
 #### Basic usage
 
