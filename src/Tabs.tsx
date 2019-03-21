@@ -248,7 +248,7 @@ interface LocalTabProps {
   onParentSelect: () => void;
   isActive: boolean;
   dark: boolean;
-  badge?: React.ReactNode;
+  badge?: React.ReactNode | string | number;
 }
 
 interface TabProps
@@ -286,6 +286,16 @@ export const Tab: React.RefForwardingComponent<
       return isActive ? theme.colors.text.selected : theme.colors.text.muted;
     }
 
+    function getBadgeBackground(isDark: boolean | undefined) {
+      if (isDark) {
+        return isActive ? "white" : "rgba(255,255,255,0.65)";
+      }
+
+      return isActive
+        ? theme.colors.text.selected
+        : theme.colors.scales.gray[6];
+    }
+
     const mounted = React.useRef(false);
     const ref = React.useRef<any>(null);
 
@@ -316,6 +326,9 @@ export const Tab: React.RefForwardingComponent<
             },
             cursor: "pointer",
             color: getTextColor(dark),
+            "& span": {
+              transition: "color 0.25s cubic-bezier(0.35,0,0.25,1)"
+            },
             "& svg": {
               transition: "fill 0.35s cubic-bezier(0.35,0,0.25,1)",
               fill: getTextColor(dark) + " !important"
@@ -376,7 +389,9 @@ export const Tab: React.RefForwardingComponent<
             {typeof badge === "string" || typeof badge === "number" ? (
               <Badge
                 css={{
-                  background: getTextColor(dark),
+                  position: "absolute",
+                  marginTop: "1px",
+                  background: getBadgeBackground(dark),
                   color: getTextColor(!dark)
                 }}
               >

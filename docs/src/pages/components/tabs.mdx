@@ -45,7 +45,9 @@ For accessibility purposes you should provide a unique `id` to each tab. That id
         <Tab id="sports">Sports</Tab>
         <Tab id="entertainment">Entertainment</Tab>
         <Tab id="news">News</Tab>
-        <Tab id="fun">Fun</Tab>
+        <Tab id="fun" badge={7}>
+          Fun
+        </Tab>
       </Tabs>
     )}
   </Component>
@@ -63,7 +65,9 @@ For accessibility purposes you should provide a unique `id` to each tab. That id
         <Tab id="sports">Sports</Tab>
         <Tab id="entertainment">Entertainment</Tab>
         <Tab id="news">News</Tab>
-        <Tab id="fun">Fun</Tab>
+        <Tab id="fun" badge={7}>
+          Fun
+        </Tab>
       </Tabs>
     )}
   </Component>
@@ -187,7 +191,7 @@ You can use the `TabIcon` component to create mobile style tab bars.
         <Tab>
           <TabIcon icon="annotation" label="Annotation" />
         </Tab>
-        <Tab>
+        <Tab badge={1}>
           <TabIcon icon="chat" label="Chat" />
         </Tab>
         <Tab>
