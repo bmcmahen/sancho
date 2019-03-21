@@ -276,7 +276,7 @@ export const Tab: React.RefForwardingComponent<
       children,
       ...other
     }: TabProps,
-    ref: React.Ref<HTMLButtonElement>
+    forwarded: React.Ref<HTMLButtonElement>
   ) => {
     function getTextColor(isDark: boolean | undefined) {
       if (isDark) {
@@ -285,6 +285,25 @@ export const Tab: React.RefForwardingComponent<
 
       return isActive ? theme.colors.text.selected : theme.colors.text.muted;
     }
+
+    const mounted = React.useRef(false);
+    const ref = React.useRef<any>(null);
+
+    React.useEffect(() => {
+      // don't autofocus if mounting
+      if (!mounted.current) {
+        mounted.current = true;
+        return;
+      }
+
+      if (!isActive) {
+        return;
+      }
+
+      if (ref.current) {
+        ref.current.focus();
+      }
+    }, [isActive]);
 
     return (
       <Component
@@ -317,7 +336,14 @@ export const Tab: React.RefForwardingComponent<
             }
           }
         ]}
-        ref={ref}
+        ref={(el: any) => {
+          // typescript got me like "what?"
+          if (forwarded) {
+            const f = forwarded as any;
+            f(el);
+          }
+          ref.current = el;
+        }}
         role="tab"
         id={id + "-tab"}
         aria-controls={id}
