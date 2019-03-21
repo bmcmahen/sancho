@@ -28,7 +28,7 @@ const Example = () => {
         <Tab id="course" onClick={() => alert("clicked!")}>
           Course events
         </Tab>
-        <Tab id="settings" badge={<Badge>23</Badge>}>
+        <Tab id="settings" badge={<Badge>1</Badge>}>
           Settings
         </Tab>
         <Tab id="templates">Templates</Tab>
@@ -216,7 +216,9 @@ function EvenlySpaced() {
               value={value}
               onChange={i => setValue(i)}
             >
-              <Tab id="hello">Games</Tab>
+              <Tab badge={7} id="hello">
+                Games
+              </Tab>
               <Tab id="cool">News</Tab>
               <Tab id="tables">Tables</Tab>
               <Tab id="players">Players</Tab>

@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
 import { useSpring, animated } from "react-spring";
 import { usePrevious } from "./Hooks/previous";
+import { Badge } from "./Badge";
 
 /**
  * Tab container
@@ -43,11 +44,15 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 }) => {
   const tablist = React.useRef<HTMLDivElement>(null);
   const refs = React.useRef<Map<number, HTMLButtonElement | null>>(new Map());
+
+  // We store the 'value' prop to determine when we should actually
+  // animated our slider. ie., only when the index changes.
   const [slider, setSlider] = React.useState<SliderPositions>({
     right: 0,
     left: 0,
     value
   });
+
   const [showSlider, setShowSlider] = React.useState(false);
   const previousSlider = usePrevious(slider);
   const { ref, bounds } = useMeasure();
@@ -60,7 +65,8 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
     if (target) {
       const cRect = container.getBoundingClientRect();
 
-      // handle cases when display is set to 'none'
+      // when container is `display: none`, width === 0.
+      // ignore this case
       if (cRect.width === 0) {
         return;
       }
@@ -83,8 +89,58 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
     left: slider.left + "px",
     right: slider.right + "px",
     immediate: previousSlider ? previousSlider.value === slider.value : false,
-    config: { mass: 1, tension: 185, friction: 26 }
+    config: { mass: 1, tension: 185, friction: 26 } // default friction is 160: speed up our animation slightly
   });
+
+  // Thanks to Ryan Florence for this code
+  // https://github.com/reach/reach-ui/blob/master/packages/tabs/src/index.js
+  function onKeyDown(e: React.KeyboardEvent) {
+    const enabledIndexes = React.Children.map(
+      children as React.ReactElement<any>,
+      (child, index) => {
+        return child.props.disabled === true ? null : index;
+      }
+    ).filter(index => index != null);
+    const enabledSelectedIndex = enabledIndexes.indexOf(value);
+
+    switch (e.key) {
+      case "ArrowRight": {
+        const nextEnabledIndex =
+          (enabledSelectedIndex + 1) % enabledIndexes.length;
+        const nextIndex = enabledIndexes[nextEnabledIndex];
+        if (typeof nextIndex === "number") {
+          onChange(nextIndex);
+        }
+        break;
+      }
+
+      case "ArrowLeft": {
+        const count = enabledIndexes.length;
+        const nextEnabledIndex = (enabledSelectedIndex - 1 + count) % count;
+        const nextIndex = enabledIndexes[nextEnabledIndex];
+        if (typeof nextIndex === "number") {
+          onChange(nextIndex);
+        }
+        break;
+      }
+
+      case "ArrowDown": {
+        e.preventDefault();
+        break;
+        // should focus panel
+      }
+
+      case "Home": {
+        onChange(0);
+        break;
+      }
+
+      case "End": {
+        onChange(React.Children.count(children) - 1);
+        break;
+      }
+    }
+  }
 
   return (
     <div
@@ -116,6 +172,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
           className="Tabs__tablist"
           role="tablist"
           ref={tablist}
+          onKeyDown={onKeyDown}
           css={{
             display: variant === "evenly-spaced" ? "flex" : "inline-block",
             position: "relative",
@@ -214,8 +271,8 @@ export const Tab: React.RefForwardingComponent<
     }: TabProps,
     ref: React.Ref<HTMLButtonElement>
   ) => {
-    function getTextColor() {
-      if (dark) {
+    function getTextColor(isDark: boolean | undefined) {
+      if (isDark) {
         return isActive ? "white" : "rgba(255,255,255,0.7)";
       }
 
@@ -232,13 +289,11 @@ export const Tab: React.RefForwardingComponent<
               padding: `10px ${theme.spaces.lg}`
             },
             cursor: "pointer",
-
-            color: getTextColor(),
+            color: getTextColor(dark),
             "& svg": {
               transition: "fill 0.35s cubic-bezier(0.35,0,0.25,1)",
-              fill: getTextColor() + " !important"
+              fill: getTextColor(dark) + " !important"
             },
-
             ":focus": {
               color: dark ? "white" : theme.colors.text.selected
             },
@@ -279,14 +334,25 @@ export const Tab: React.RefForwardingComponent<
             }}
           >
             {children}
-            {badge && (
-              <div css={{ display: "inline", marginLeft: theme.spaces.sm }}>
-                {badge}
-              </div>
-            )}
           </Text>
         ) : (
           children
+        )}
+        {badge && (
+          <div css={{ display: "inline", marginLeft: theme.spaces.sm }}>
+            {typeof badge === "string" || typeof badge === "number" ? (
+              <Badge
+                css={{
+                  background: getTextColor(dark),
+                  color: getTextColor(!dark)
+                }}
+              >
+                {badge}
+              </Badge>
+            ) : (
+              badge
+            )}
+          </div>
         )}
       </Component>
     );
