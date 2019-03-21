@@ -133,7 +133,7 @@ export const toast = ({
       <React.Fragment>
         <Global styles={toastStyles} />
         <Alert
-          id={id}
+          id={String(id)}
           title={title}
           component="div"
           elevation={"md"}

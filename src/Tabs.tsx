@@ -384,13 +384,13 @@ export const Tab: React.RefForwardingComponent<
         ) : (
           children
         )}
+
+        {/** Render a badge either from a string, or as a custom element */}
         {badge && (
           <div css={{ display: "inline", marginLeft: theme.spaces.sm }}>
             {typeof badge === "string" || typeof badge === "number" ? (
               <Badge
                 css={{
-                  position: "absolute",
-                  marginTop: "1px",
                   background: getBadgeBackground(dark),
                   color: getTextColor(!dark)
                 }}

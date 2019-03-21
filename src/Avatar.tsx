@@ -39,6 +39,12 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
     Math.abs(makeHash(name)) % colors.length
   ] as keyof typeof theme.colors.palette;
 
+  const [error, setError] = React.useState(false);
+
+  function onError() {
+    setError(true);
+  }
+
   return (
     <div
       css={[
@@ -56,11 +62,12 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
       ]}
       {...other}
     >
-      {img ? (
+      {img && !error ? (
         <img
           alt={name}
           src={src}
           srcSet={srcSet}
+          onError={onError}
           css={{
             width: "100%",
             height: "100%",
