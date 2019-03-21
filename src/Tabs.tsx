@@ -64,6 +64,8 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 
   const [showSlider, setShowSlider] = React.useState(false);
   const previousSlider = usePrevious(slider);
+
+  // this should be debounced, probably
   const { ref, bounds } = useMeasure();
 
   // measure our elements
