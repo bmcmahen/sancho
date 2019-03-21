@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, SerializedStyles } from "@emotion/core";
+import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import theme from "./Theme";
@@ -9,16 +9,18 @@ import { Icon } from "./Icons";
 import VisuallyHidden from "@reach/visually-hidden";
 import { IconName } from "@blueprintjs/icons";
 import PropTypes from "prop-types";
-import { useWindowSize } from "./Hooks/use-window-size";
 import { alpha } from "./Theme/colors";
+import { useSpring, animated } from "react-spring";
+import { usePrevious } from "./Hooks/previous";
 
 /**
  * Tab container
  */
 
 interface SliderPositions {
-  right: number | null;
-  left: number | null;
+  right: number;
+  left: number;
+  value: number;
 }
 
 interface TabsProps {
@@ -42,26 +44,47 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
   const tablist = React.useRef<HTMLDivElement>(null);
   const refs = React.useRef<Map<number, HTMLButtonElement | null>>(new Map());
   const [slider, setSlider] = React.useState<SliderPositions>({
-    right: null,
-    left: null
+    right: 0,
+    left: 0,
+    value
   });
-
-  const size = useWindowSize();
+  const [showSlider, setShowSlider] = React.useState(false);
+  const previousSlider = usePrevious(slider);
   const { ref, bounds } = useMeasure();
 
+  // measure our elements
   React.useEffect(() => {
     const target = refs.current!.get(value);
     const container = tablist.current!;
 
     if (target) {
       const cRect = container.getBoundingClientRect();
+
+      // handle cases when display is set to 'none'
+      if (cRect.width === 0) {
+        return;
+      }
+
       const tRect = target.getBoundingClientRect();
+      const left = tRect.left - cRect.left;
+      const right = cRect.right - tRect.right;
+
       setSlider({
-        left: tRect.left - cRect.left,
-        right: cRect.right - tRect.right
+        value,
+        left,
+        right
       });
+
+      setShowSlider(true);
     }
-  }, [value, refs, size, bounds]);
+  }, [value, bounds]);
+
+  const spring = useSpring({
+    left: slider.left + "px",
+    right: slider.right + "px",
+    immediate: previousSlider ? previousSlider.value === slider.value : false,
+    config: { mass: 1, tension: 185, friction: 26 }
+  });
 
   return (
     <div
@@ -69,6 +92,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
       css={{
         boxShadow: dark ? `0px 3px 2px ${theme.colors.scales.gray[3]}` : "none"
       }}
+      {...other}
     >
       <div
         className="Tabs__container"
@@ -87,7 +111,6 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
             height: 0
           }
         }}
-        {...other}
       >
         <div
           className="Tabs__tablist"
@@ -114,16 +137,15 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
               }
             });
           })}
-          {enableSlider && slider.left !== null && slider.right !== null && (
-            <div
+          {enableSlider && showSlider && (
+            <animated.div
               className="Tabs__slider"
-              style={{ left: slider.left + "px", right: slider.right + "px" }}
+              style={spring}
               css={{
                 height: "3px",
                 bottom: 0,
                 position: "absolute",
-                background: dark ? "white" : theme.colors.text.selected,
-                transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+                background: dark ? "white" : theme.colors.text.selected
               }}
             />
           )}
@@ -251,6 +273,7 @@ export const Tab: React.RefForwardingComponent<
             component="span"
             variant="subtitle"
             css={{
+              letterSpacing: "0.25px",
               color: "inherit",
               transition: "color 0.25s cubic-bezier(0.35,0,0.25,1)"
             }}

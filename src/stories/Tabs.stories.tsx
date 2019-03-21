@@ -10,6 +10,7 @@ import { storiesOf } from "@storybook/react";
 import { Layer } from "../Layer";
 import { TabContent } from "../TabContent";
 import { Icon } from "../Icons";
+import { Button } from "../Button";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
@@ -82,6 +83,9 @@ export const TabsExamples = storiesOf("Tabs", module)
   })
   .add("Evenly spaced", () => {
     return <EvenlySpaced />;
+  })
+  .add("Toggle display example", () => {
+    return <ToggleDisplayExample />;
   })
   .add("Icons", () => {
     return (
@@ -234,6 +238,19 @@ function EvenlySpaced() {
           </TabContent>
         </div>
       </Layer>
+    </div>
+  );
+}
+
+function ToggleDisplayExample() {
+  const [show, setShow] = React.useState(true);
+
+  return (
+    <div>
+      <Button onClick={() => setShow(!show)}>Toggle</Button>
+      <div css={{ display: show ? "block" : "none" }}>
+        <EvenlySpaced />
+      </div>
     </div>
   );
 }
