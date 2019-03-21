@@ -363,7 +363,7 @@ export const Tab: React.RefForwardingComponent<
         id={id + "-tab"}
         aria-controls={id}
         aria-selected={isActive}
-        tabIndex={0}
+        tabIndex={isActive ? 0 : -1}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           if (onClick) onClick(e);
           if (onParentSelect) onParentSelect();
@@ -432,7 +432,15 @@ interface TabContentProps extends React.HTMLAttributes<HTMLDivElement> {
 export const TabPanel: React.FunctionComponent<TabContentProps> = ({
   id,
   ...other
-}) => <div id={id} role="tabpanel" aria-labelledby={id + "-tab"} {...other} />;
+}) => (
+  <div
+    id={id}
+    role="tabpanel"
+    tabIndex={0}
+    aria-labelledby={id + "-tab"}
+    {...other}
+  />
+);
 
 TabPanel.propTypes = {
   /** The id should correspond to the id given to the associated Tab */
