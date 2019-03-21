@@ -17,25 +17,29 @@ function getTransitionForPosition(position: SheetPositions) {
       return {
         from: { transform: `translate3d(-100%, 0, 0)` },
         enter: { transform: `translate3d(0, 0, 0)` },
-        leave: { transform: `translate3d(-100%, 0, 0)` }
+        leave: { transform: `translate3d(-100%, 0, 0)` },
+        config: { mass: 1, tension: 185, friction: 26 }
       };
     case "right":
       return {
         from: { transform: `translate3d(100%, 0, 0)` },
         enter: { transform: `translate3d(0, 0, 0)` },
-        leave: { transform: `translate3d(100%, 0, 0)` }
+        leave: { transform: `translate3d(100%, 0, 0)` },
+        config: { mass: 1, tension: 185, friction: 26 }
       };
     case "top":
       return {
         from: { transform: `translateY(-100%)` },
         enter: { transform: `translateY(0)` },
-        leave: { transform: `translateY(-100%)` }
+        leave: { transform: `translateY(-100%)` },
+        config: { mass: 1, tension: 185, friction: 26 }
       };
     case "bottom":
       return {
         from: { transform: `translateY(100%)` },
         enter: { transform: `translateY(0)` },
-        leave: { transform: `translateY(100%)` }
+        leave: { transform: `translateY(100%)` },
+        config: { mass: 1, tension: 185, friction: 26 }
       };
   }
 }

@@ -29,7 +29,8 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0, transform: "scale(0.9)" },
     enter: { opacity: 1, transform: "scale(1)" },
-    leave: { opacity: 0, transform: "scale(0.9)" }
+    leave: { opacity: 0, transform: "scale(0.9)" },
+    config: { mass: 1, tension: 185, friction: 26 }
   });
 
   const { bind } = useFocusElement(isOpen);
