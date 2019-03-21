@@ -15,6 +15,15 @@ import { usePrevious } from "./Hooks/previous";
 import { Badge } from "./Badge";
 
 /**
+ * Ideas for improving accessibility:
+ *
+ * Utilize a 'Tabs' container:
+ * This will provide a unique id using context to TabList and TabContent.
+ * Both of these components go through children and assign
+ * each one a unique id consistent with the index. ('random-tab-1', 'random-tab-content-1')
+ */
+
+/**
  * Tab container
  */
 
@@ -77,8 +86,8 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 
       setSlider({
         value,
-        left,
-        right
+        left: left + 8,
+        right: right + 8
       });
 
       setShowSlider(true);
@@ -124,11 +133,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
         break;
       }
 
-      case "ArrowDown": {
-        e.preventDefault();
-        break;
-        // should focus panel
-      }
+      // todo: ArrowDown should focus our selected tab content
 
       case "Home": {
         onChange(0);
@@ -200,6 +205,8 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
               style={spring}
               css={{
                 height: "3px",
+                borderTopRightRadius: "8px",
+                borderTopLeftRadius: "8px",
                 bottom: 0,
                 position: "absolute",
                 background: dark ? "white" : theme.colors.text.selected
@@ -273,7 +280,7 @@ export const Tab: React.RefForwardingComponent<
   ) => {
     function getTextColor(isDark: boolean | undefined) {
       if (isDark) {
-        return isActive ? "white" : "rgba(255,255,255,0.7)";
+        return isActive ? "white" : "rgba(255,255,255,0.65)";
       }
 
       return isActive ? theme.colors.text.selected : theme.colors.text.muted;
