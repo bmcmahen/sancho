@@ -23,25 +23,30 @@ import { Badge } from "./Badge";
  * each one a unique id consistent with the index. ('random-tab-1', 'random-tab-content-1')
  */
 
-/**
- * Tab container
- */
-
 interface SliderPositions {
   right: number;
   left: number;
   value: number;
 }
 
-interface TabsProps {
+export interface TabsProps {
+  /** The currently selected index */
   value: number;
+  /** Whether the tab is on a dark background */
   dark?: boolean;
+  /** Toggle slider visibiliby */
   slider?: boolean;
+  /** Whether tabs should be left-aligned or justified */
   variant?: "default" | "evenly-spaced";
+  /** Change callback to control which tab is selected */
   onChange: (value: number) => void;
+  /** Tab elements */
   children: React.ReactElement<TabProps>[] | React.ReactElement<TabProps>;
 }
 
+/**
+ * Provide a tabbed interface, similar to that found in Material-UI.
+ */
 export const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
   variant = "default",
@@ -222,27 +227,16 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 };
 
 Tabs.propTypes = {
-  /** The currently selected index */
   value: PropTypes.number.isRequired,
-
-  /** Change callback to control which tab is selected */
   onChange: PropTypes.func,
-
-  /** Whether the tab is on a dark background */
   dark: PropTypes.bool,
-
-  /** Toggle slider visibiliby */
   slider: PropTypes.bool,
-
-  /** Whether tabs should be left-aligned or justified */
   variant: PropTypes.oneOf(["default", "evenly-spaced"]),
-
-  /** Tab elements */
   children: PropTypes.node
 };
 
 /**
- * Individual tabs
+ * Tab
  */
 
 interface LocalTabProps {
@@ -250,17 +244,24 @@ interface LocalTabProps {
   onParentSelect: () => void;
   isActive: boolean;
   dark: boolean;
-  badge?: React.ReactNode | string | number;
 }
 
-interface TabProps
+export interface TabProps
   extends Partial<LocalTabProps>,
     React.HTMLAttributes<HTMLButtonElement> {
+  /** The text content of the tab */
   children: React.ReactNode;
+  /** The id of the tab to be shared with TabContent */
   id: string;
   component?: React.ReactType<any>;
   [key: string]: any;
+  /** An optional badge */
+  badge?: React.ReactNode | string | number;
 }
+
+/**
+ * A clickable tab item
+ */
 
 export const Tab: React.RefForwardingComponent<
   React.Ref<HTMLButtonElement>,
@@ -416,11 +417,8 @@ export const Tab: React.RefForwardingComponent<
 Tab.displayName = "Tab";
 
 Tab.propTypes = {
-  /** The id of the tab to be shared with TabContent */
   id: PropTypes.string.isRequired,
-  /** The text content of the tab */
   children: PropTypes.node,
-  /** An optional badge */
   badge: PropTypes.node
 };
 
@@ -429,11 +427,12 @@ Tab.propTypes = {
  * are anchors.
  */
 
-interface TabContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TabPanelProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The id should correspond to the id given to the associated Tab */
   id: string;
 }
 
-export const TabPanel: React.FunctionComponent<TabContentProps> = ({
+export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
   id,
   ...other
 }) => (
@@ -447,11 +446,10 @@ export const TabPanel: React.FunctionComponent<TabContentProps> = ({
 );
 
 TabPanel.propTypes = {
-  /** The id should correspond to the id given to the associated Tab */
   id: PropTypes.string.isRequired
 };
 
-interface TabIconProps {
+export interface TabIconProps {
   icon: IconName;
   label: string;
   size?: number;

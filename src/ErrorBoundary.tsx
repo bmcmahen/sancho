@@ -6,8 +6,12 @@ import { Alert } from "./Alert";
 import PropTypes from "prop-types";
 
 interface ErrorBoundaryProps {
+  /** The title of the error message. */
   title?: string;
+  /** The subtitle of the error message. */
   subtitle?: string;
+  /** The regular content you want to render. Errors in this tree will be captured. */
+  children?: React.ReactNode;
 }
 
 interface ErrorBoundaryState {
@@ -23,13 +27,8 @@ export class ErrorBoundary extends React.Component<
   };
 
   static propTypes = {
-    // The title of the error message.
     title: PropTypes.string,
-
-    // The subtitle of the error message.
     subtitle: PropTypes.string,
-
-    // The regular content you want to render. Errors in this tree will be captured.
     children: PropTypes.node
   };
 

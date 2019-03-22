@@ -6,7 +6,10 @@ import theme from "./Theme";
 import PropTypes from "prop-types";
 import { MenuLabel } from "./Menu";
 
-export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** A series of ListItem elements */
+  children?: React.ReactNode;
+}
 
 export const List: React.FunctionComponent<ListProps> = ({
   children,
@@ -16,18 +19,24 @@ export const List: React.FunctionComponent<ListProps> = ({
 };
 
 List.propTypes = {
-  /** A series of ListItem elements */
   children: PropTypes.node
 };
 
 interface ListItemProps extends React.HTMLAttributes<any> {
   component?: React.ReactType<any>;
+  /** An icon or avatar to appear to the left of the text content */
   contentBefore?: React.ReactNode;
+  /** an icon to appear to the right of the text content */
   contentAfter?: React.ReactNode;
+  /** whether the list item is interactive (ie., can be clicked as a button) */
   interactive?: boolean;
+  /** optional third row of content */
   children?: React.ReactNode;
+  /** whether primary and secondary text should be wrapped */
   wrap?: boolean;
+  /** The primary text content of the list item */
   primary: string | React.ReactNode;
+  /** the secondary text content */
   secondary?: string | React.ReactNode;
   [key: string]: any; // back hack to permit things like to='/page'
 }
@@ -145,25 +154,20 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
 };
 
 ListItem.propTypes = {
-  /** The primary text content of the list item */
   primary: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  /** the secondary text content */
   secondary: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  /** An icon or avatar to appear to the left of the text content */
   contentBefore: PropTypes.node,
-  /** an icon to appear to the right of the text content */
   contentAfter: PropTypes.node,
-  /** whether primary and secondary text should be wrapped */
   wrap: PropTypes.bool,
-  /** optional third row of content */
   children: PropTypes.node,
-  /** whether the list item is interactive (ie., can be clicked as a button) */
   interactive: PropTypes.bool
 };
 
 interface ListSectionProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** A title of the section */
   title: string;
   children?: React.ReactNode;
+  /** whether the title should stick to the top of the scrollable content */
   sticky?: boolean;
 }
 
@@ -204,9 +208,7 @@ export const ListSection: React.FunctionComponent<ListSectionProps> = ({
 };
 
 ListSection.propTypes = {
-  /** A title of the section */
   title: PropTypes.string.isRequired,
-  /** whether the title should stick to the top of the scrollable content */
   sticky: PropTypes.bool,
   children: PropTypes.node
 };

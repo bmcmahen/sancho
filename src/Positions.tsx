@@ -9,7 +9,7 @@ import {
   PopperChildrenProps
 } from "react-popper";
 import { Portal } from "./Portal";
-import { useTransition, AnimatedValue, config } from "react-spring";
+import { useTransition, AnimatedValue } from "react-spring";
 import PropTypes from "prop-types";
 
 export type Placements =
@@ -30,10 +30,15 @@ export type Placements =
   | "left-start";
 
 interface PositionsProps {
-  placement?: Placements;
+  /** Whether the item being positioned is visible */
   isOpen?: boolean;
+  /** The placement of children */
+  placement?: Placements;
+  /** Use fixed positioning */
   positionFixed?: boolean;
+  /** The element our positioner is targetting (eg, Button) */
   target: (props: ReferenceChildrenProps) => React.ReactNode;
+  /** The render callback which contains positioning and animation info */
   children: (
     props: PopperChildrenProps,
     state: AnimatedValue<any>
@@ -72,10 +77,7 @@ export const Positioner: React.FunctionComponent<PositionsProps> = ({
 };
 
 Positioner.propTypes = {
-  /** Whether the item being positioned is visible */
   isOpen: PropTypes.bool,
-
-  /** The placement of the children */
   placement: PropTypes.oneOf([
     "auto-start",
     "auto",
@@ -93,13 +95,7 @@ Positioner.propTypes = {
     "left",
     "left-start"
   ] as Placements[]),
-
-  /** Use fixed positioning */
   positionFixed: PropTypes.bool,
-
-  /** The element our positioner is targetting (eg, Button) */
   target: PropTypes.func,
-
-  /** The render callback which contains positioning and animation info */
   children: PropTypes.func
 };

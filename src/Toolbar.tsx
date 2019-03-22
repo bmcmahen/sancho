@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
  */
 
 interface ToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Reduce the height of the toolbar */
   compressed?: boolean;
 }
 
@@ -44,9 +45,7 @@ export const Toolbar: React.FunctionComponent<ToolbarProps> = ({
 };
 
 Toolbar.propTypes = {
-  /** Reduce the height of the toolbar */
   compressed: PropTypes.bool,
-
   children: PropTypes.node
 };
 

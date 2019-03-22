@@ -17,7 +17,9 @@ const KeyCodes = {
 type ChildrenType = React.ReactElement<MenuItemProps>;
 
 export interface MenuListProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** A combination of MenuItem, MenuLabel, and MenuDivider children */
   children: ChildrenType | Array<ChildrenType>;
+  /** Useful if you are providing your own MenuItem children */
   focusableChildren?: React.ComponentType<any>[];
 }
 
@@ -120,9 +122,7 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
 };
 
 MenuList.propTypes = {
-  /** A combination of MenuItem, MenuLabel, and MenuDivider children */
   children: PropTypes.node,
-  /** Useful if you are providing your own MenuItem children */
   focusableChildren: PropTypes.arrayOf(PropTypes.elementType)
 };
 
@@ -135,11 +135,15 @@ interface MenuItemProps extends Partial<MenuItemPropsCloned> {}
 interface MenuItemPropsCloned extends React.HTMLAttributes<Element> {
   focus: boolean;
   onFocus: () => void;
+  /** Called when the menu item is selected. Generally use this instead of onClick. */
   onSelect: () => void;
+  /** Disable this menu item */
   disabled?: boolean;
+  /** Pass in a string to use standard text styles. Otherwise, pass in any other node. */
   children: React.ReactNode;
   onKeyDown: (e: React.KeyboardEvent) => void;
   ref: React.RefObject<HTMLDivElement>;
+  /** Provide a custom component. Eg., ReactRouter Link */
   component?: React.ReactType<any>;
   [key: string]: any;
 }
@@ -229,13 +233,9 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
 };
 
 MenuItem.propTypes = {
-  /** Called when the menu item is selected. Generally use this instead of onClick. */
   onSelect: PropTypes.func,
-  /** Provide a custom component. Eg., ReactRouter Link */
   component: PropTypes.string,
-  /** Disable this menu item */
   disabled: PropTypes.bool,
-  /** Pass in a string to use standard text styles. Otherwise, pass in any other node. */
   children: PropTypes.node
 };
 
@@ -256,7 +256,10 @@ export function MenuDivider(props: MenuDividerProps) {
   );
 }
 
-interface MenuLabelProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface MenuLabelProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The name of the label */
+  children?: React.ReactNode;
+}
 
 export const MenuLabel: React.FunctionComponent<MenuLabelProps> = props => {
   return (
@@ -272,6 +275,5 @@ export const MenuLabel: React.FunctionComponent<MenuLabelProps> = props => {
 };
 
 MenuLabel.propTypes = {
-  /** The name of the label */
   children: PropTypes.node
 };

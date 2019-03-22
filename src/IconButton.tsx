@@ -9,8 +9,11 @@ import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 
 export interface IconButtonProps extends Partial<ButtonProps> {
+  /** A label required for accessibility  */
   label: string;
+  /** The name of the icon you wish to render */
   icon: IconName | JSX.Element;
+  /** Change the colour */
   color?: string;
 }
 
@@ -26,6 +29,10 @@ const paddingForIconSizes = {
   xl: "0.7rem"
 };
 
+/**
+ * A component which composes Button and Icon to provide
+ * interactive icon elements.
+ */
 export const IconButton: React.RefForwardingComponent<
   React.Ref<HTMLButtonElement>,
   IconButtonProps
@@ -57,28 +64,17 @@ export const IconButton: React.RefForwardingComponent<
 IconButton.displayName = "IconButton";
 
 IconButton.propTypes = {
-  /** The name of the icon you wish to render */
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-
-  /** Change the colour */
   color: PropTypes.string,
-
-  /** A label required for accessibility  */
   label: PropTypes.string.isRequired,
-
-  /**
-   * Controls the basic button style.
-   */
-
   variant: PropTypes.oneOf(["default", "ghost"]),
-  /**
-   * The size of the button.
-   */
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
 };
 
 interface CloseButtonProps extends Partial<ButtonProps> {
+  /** An optional label for the close button */
   label?: string;
+  /** Change the colour */
   color?: string;
 }
 
@@ -100,18 +96,8 @@ export const CloseButton: React.FunctionComponent<CloseButtonProps> = ({
 };
 
 CloseButton.propTypes = {
-  /** An optional label for the close button */
   label: PropTypes.string,
-
-  /** Change the colour */
   color: PropTypes.string,
-
-  /**
-   * Controls the basic button style.
-   */
   variant: PropTypes.oneOf(["default", "ghost"]),
-  /**
-   * The size of the button.
-   */
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
 };

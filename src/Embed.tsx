@@ -4,7 +4,9 @@ import * as React from "react";
 import PropTypes from "prop-types";
 
 export interface EmbedProps extends React.HTMLAttributes<Element> {
+  /** The relative width of the embed container */
   width: number;
+  /** The relative height of the embed container */
   height: number;
 }
 
@@ -47,9 +49,6 @@ export const Embed: React.FunctionComponent<EmbedProps> = ({
 };
 
 Embed.propTypes = {
-  /** The relative width of the embed container */
   width: PropTypes.number,
-
-  /** The relative height of the embed container */
   height: PropTypes.number
 };

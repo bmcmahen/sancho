@@ -321,13 +321,19 @@ const iconSpaceForSize = {
 export type ButtonVariant = keyof typeof variants;
 
 export interface ButtonStyleProps {
+  /** Controls the basic button style. */
   variant?: ButtonVariant;
+  /** Controls the colour of the button. */
   intent?: ButtonIntent;
+  /** If true, the button will be displayed as a block element instead of inline. */
   block?: boolean;
+  /** The size of the button. */
   size?: ButtonSize;
   loading?: boolean;
   disabled?: boolean;
+  /** The name of the icon to appear to the left of the button text*/
   iconBefore?: IconName | JSX.Element;
+  /** The name of the icon to appear to the right of the button text */
   iconAfter?: IconName | JSX.Element;
 }
 
@@ -341,7 +347,7 @@ export interface ButtonProps
 }
 
 /**
- * Just your usual Button element.
+ * Your standard Button element
  */
 
 export const Button: React.RefForwardingComponent<
@@ -436,21 +442,9 @@ export const Button: React.RefForwardingComponent<
 Button.displayName = "Button";
 
 Button.propTypes = {
-  /**
-   * Controls the basic button style.
-   */
   variant: PropTypes.oneOf(["default", "ghost", "outline"] as ButtonVariant[]),
-  /**
-   * The size of the button.
-   */
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"] as ButtonSize[]),
-  /**
-   * If true, the button will be displayed as a block element instead of inline.
-   */
   block: PropTypes.bool,
-  /**
-   * Controls the colour of the button.
-   */
   intent: PropTypes.oneOf([
     "none",
     "primary",
@@ -458,11 +452,7 @@ Button.propTypes = {
     "warning",
     "danger"
   ] as ButtonIntent[]),
-
-  /** The name of the icon to appear to the left of the button text*/
   iconBefore: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-
-  /** The name of the icon to appear to the right of the button text */
   iconAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 };
 

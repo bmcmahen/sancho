@@ -18,9 +18,12 @@ export const sizesForIcon = {
 
 export interface IconProps extends React.SVGAttributes<SVGElement> {
   color?: string;
+  /** The icon to render. Either an icon name or an svg element. */
   icon: IconName | JSX.Element | null;
   children?: never;
+  /** The size of the icon. Either a number or string (sm, md, etc.) */
   size: number | ButtonSize;
+  /** An optional title for the icon */
   title?: string;
   style?: React.CSSProperties;
 }
@@ -32,16 +35,11 @@ export class Icon extends React.Component<IconProps> {
   };
 
   static propTypes = {
-    /** The icon to render. Either an icon name or an svg element. */
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-
-    /** The size of the icon. Either a number or string (sm, md, etc.) */
     size: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
     ]),
-
-    /** An optional title for the icon */
     title: PropTypes.string
   };
 

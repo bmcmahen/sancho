@@ -29,17 +29,27 @@ const icons: { [key in AlertIntentions]: IconName } = {
 };
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** If used, a close button will be attached to the alert box. */
   onRequestClose?: () => void;
+  /** Primary text */
   title?: string;
+  /** Secondary text */
   subtitle?: string | React.ReactNode;
+  /** A unique id used for accessibility purposes */
   id?: string;
   elevation?: LayerElevations;
+  /** Optionally render children if a title is not specified. Used for custom alerts. */
   children?: React.ReactNode;
+  /** Changes the icon and colour of the alert. */
   intent?: AlertIntentions;
   component?: React.ReactType<any>;
   type?: "polite" | "assertive";
 }
 
+/**
+ * Use an alert to inform users of important information.
+ * To display an alert in a toast notification, use the toast module.
+ */
 export const Alert: React.FunctionComponent<AlertProps> = ({
   children,
   title,
@@ -141,22 +151,11 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
 Alert.displayName = "Alert";
 
 Alert.propTypes = {
-  /** If used, a close button will be attached to the alert box. */
   onRequestClose: PropTypes.func,
-
-  /** Secondary text */
   subtitle: PropTypes.string,
-
-  /** Primary text */
   title: PropTypes.string,
-
-  /** A unique id used for accessibility purposes */
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-  /** Optionally render children if a title is not specified. Used for custom alerts. */
   children: PropTypes.node,
-
-  /** Changes the icon and colour of the alert. */
   intent: PropTypes.oneOf([
     "info",
     "success",

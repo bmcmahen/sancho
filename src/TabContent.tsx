@@ -13,7 +13,9 @@ import PropTypes from "prop-types";
 
 interface TabContentProps {
   children: React.ReactNode;
+  /** The callback for controlling which tab is being viewed */
   onChange: OnChangeIndexCallback;
+  /** The index of the visible view */
   value: number;
   animateHeight?: boolean;
   animateTransitions?: boolean;
@@ -47,11 +49,7 @@ export const TabContent: React.FunctionComponent<TabContentProps> = ({
 };
 
 TabContent.propTypes = {
-  /** The index of the visible view */
   value: PropTypes.number.isRequired,
-
-  /** The callback for controlling which tab is being viewed */
   onChange: PropTypes.func,
-
   children: PropTypes.node
 };

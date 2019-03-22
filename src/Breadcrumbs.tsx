@@ -3,16 +3,21 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
 import { Text } from "./Text";
-import PropTypes, { string } from "prop-types";
+import PropTypes from "prop-types";
 
 interface BreadcrumbsProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "md" | "lg";
+  /** A list of BreadcrumbItem children */
   children:
     | React.ReactElement<BreadcrumbItemProps>
     | React.ReactElement<BreadcrumbItemProps>[];
   overflowX?: number;
 }
 
+/**
+ * Breadcrumbs are useful to orient the user on your site,
+ * especially when working with hierarchies of content.
+ */
 export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
   children,
   size = "md",
@@ -68,7 +73,6 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
 };
 
 Breadcrumbs.propTypes = {
-  /** A list of BreadcrumbItem children */
   children: PropTypes.node
 };
 
@@ -82,6 +86,10 @@ interface BreadcrumbItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   inverted?: boolean;
   size?: "md" | "lg";
 }
+
+/**
+ *  Each item in a list of breadcrumbs.
+ */
 
 export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
   children,

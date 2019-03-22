@@ -4,10 +4,11 @@ import * as React from "react";
 import theme from "./Theme";
 import PropTypes from "prop-types";
 
-type Positions = "fixed" | "static";
+type Positions = "fixed" | "static" | "absolute" | "sticky";
 
 export interface NavbarProps {
   children: React.ReactNode;
+  /** The position of the navbar. */
   position?: Positions;
 }
 
@@ -16,13 +17,30 @@ const styles: { [key in Positions]: SerializedStyles } = {
     position: "fixed",
     top: 0,
     left: 0,
-    width: "100%"
+    width: "100%",
+    zIndex: theme.zIndex.fixed
   }),
   static: css({
     position: "static",
     boxShadow: "none"
+  }),
+  absolute: css({
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%"
+  }),
+  sticky: css({
+    position: "sticky",
+    top: 0,
+    zIndex: theme.zIndex.sticky
   })
 };
+
+/**
+ * A Navbar is used to provide app based navigation. Typically
+ * used in combination with a Toolbar.
+ */
 
 export const Navbar: React.FunctionComponent<NavbarProps> = ({
   position = "fixed",
@@ -47,6 +65,5 @@ export const Navbar: React.FunctionComponent<NavbarProps> = ({
 };
 
 Navbar.propTypes = {
-  /** The position of the navbar. */
   position: PropTypes.oneOf(["fixed", "static"] as Positions[])
 };

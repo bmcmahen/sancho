@@ -8,8 +8,11 @@ import { useHideBody } from "./Hooks/hide-body";
 import PropTypes from "prop-types";
 
 interface OverlayProps {
+  /** Whether the overlay is open */
   isOpen: boolean;
+  /** Whatever you'd like to appear on top */
   children: React.ReactNode;
+  /** Callback to handle closing the overlay */
   onRequestClose: () => void;
 }
 
@@ -86,12 +89,7 @@ export const Overlay: React.RefForwardingComponent<
 Overlay.displayName = "Overlay";
 
 Overlay.propTypes = {
-  /** Whether the overlay is open */
   isOpen: PropTypes.bool.isRequired,
-
-  /** Callback to handle closing the overlay */
   onRequestClose: PropTypes.func.isRequired,
-
-  /** Whatever you'd like to appear on top */
   children: PropTypes.node
 };

@@ -7,6 +7,9 @@ import PropTypes from "prop-types";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {}
 
+/**
+ * Use a badge to indicate a count in a menu, such as unread messages.
+ */
 export const Badge: React.FunctionComponent<BadgeProps> = ({
   children,
   ...other

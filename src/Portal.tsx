@@ -1,10 +1,9 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 
 export interface PortalProps {
+  /** The element to be rendered in the portal */
   children: React.ReactNode;
 }
 
@@ -38,6 +37,5 @@ export const Portal: React.FunctionComponent<PortalProps> = ({ children }) => {
 };
 
 Portal.propTypes = {
-  /** The element to be rendered in the portal */
   children: PropTypes.node
 };

@@ -11,8 +11,11 @@ import { isMobile } from "is-mobile";
 import { useUid } from "./Hooks/use-uid";
 
 interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The content of the tooltip */
   content: React.ReactNode;
+  /** Where the tooltip should be placed */
   placement?: Placements;
+  /** the target element for the tooltip */
   children: React.ReactNode;
   maxWidth?: string;
 }
@@ -108,11 +111,8 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
 };
 
 Tooltip.propTypes = {
-  /** The content of the tooltip */
   content: PropTypes.node.isRequired,
-  /** the target element for the tooltip */
   children: PropTypes.node.isRequired,
-  /** Where the tooltip should be placed */
   placement: PropTypes.oneOf([
     "auto-start",
     "auto",

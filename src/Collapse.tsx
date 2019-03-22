@@ -31,11 +31,18 @@ export function useCollapse(defaultShow: boolean = false) {
 }
 
 interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** A unique id required for accessibility purposes. */
   id: string;
+  /** Controls whether the children should be visible */
   show: boolean;
+  /** Any element that you want to reveal */
   children: React.ReactNode;
 }
 
+/**
+ * Hide and reveal content with an animation. Supports dynamic
+ * heights.
+ */
 export const Collapse: React.FunctionComponent<CollapseProps> = ({
   children,
   id,
@@ -67,17 +74,8 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
 };
 
 Collapse.propTypes = {
-  /**
-   * Any element that you want to reveal
-   */
   children: PropTypes.node,
-  /**
-   * A unique id required for accessibility purposes
-   */
   id: PropTypes.string.isRequired,
-  /**
-   * Whether the children should be visible
-   */
   show: PropTypes.bool.isRequired
 };
 

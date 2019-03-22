@@ -21,9 +21,12 @@ const sizeStyles = {
 };
 
 interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The delay (in ms) before the spinner will appear */
   delay?: number;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
+  /** Attempt to center the spinner in the parent element */
   center?: boolean;
+  /** Use an optional label */
   label?: string;
 }
 
@@ -107,12 +110,7 @@ export const Spinner: React.FunctionComponent<SpinnerProps> = ({
 };
 
 Spinner.propTypes = {
-  /** The delay (in ms) before the spinner will appear */
   delay: PropTypes.number,
-
-  /** Attempt to center the spinner in the parent element */
   center: PropTypes.bool,
-
-  /** Use an optional label */
   label: PropTypes.string
 };

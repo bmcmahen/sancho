@@ -11,12 +11,22 @@ import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Whether the modal is showing */
   isOpen: boolean;
+  /** An optional title. If set, a header will be added to your dialog. */
   title?: string;
+  /** Fill the entire screen on mobile devices */
   mobileFullscreen?: boolean;
+  /** A callback for closing the modal. */
   onRequestClose: () => void;
+  /** The contents of the dialog */
   children: React.ReactNode;
 }
+
+/**
+ * A modal (or dialog) is useful for displaying infomation that
+ * commands the user's attention.
+ */
 
 export const Modal: React.FunctionComponent<ModalProps> = ({
   isOpen,
@@ -125,24 +135,17 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
 };
 
 Modal.propTypes = {
-  /** Whether the modal is showing */
   isOpen: PropTypes.bool.isRequired,
-
-  /** A callback for closing the modal. */
   onRequestClose: PropTypes.func.isRequired,
-
-  /** An optional title. If set, a header will be added to your dialog. */
   title: PropTypes.string,
-
-  /** Fill the entire screen on mobile devices */
   mobileFullscreen: PropTypes.bool,
-
-  /** The contents of the dialog */
   children: PropTypes.node
 };
 
 interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The title of the header */
   title: string;
+  /** An optional callback for closing the dialog. If set, a close button will be added to the header */
   onRequestClose?: () => void;
 }
 
@@ -160,10 +163,7 @@ export const ModalHeader: React.FunctionComponent<ModalHeaderProps> = ({
 );
 
 ModalHeader.propTypes = {
-  /** The title of the header */
   title: PropTypes.string.isRequired,
-
-  /** An optional callback for closing the dialog. If set, a close button will be added to the header */
   onRequestClose: PropTypes.func
 };
 

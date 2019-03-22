@@ -28,10 +28,14 @@ export type InputSize = keyof typeof inputSizes;
 
 export interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   id?: string;
+  /** A label is required for accessibility purposes. Use `hideLabel` to hide it. */
   label: string;
+  /** Visually hide the label. It remains accessible to screen readers. */
   hideLabel?: boolean;
   error?: string | React.ReactNode;
+  /** Optional help text */
   helpText?: string;
+  /** A single input element */
   children?: React.ReactNode;
 }
 
@@ -113,12 +117,10 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
 };
 
 InputGroup.propTypes = {
-  /** A label is required for accessibility purposes. Use `hideLabel` to hide it. */
   label: PropTypes.string.isRequired,
-  /** Visually hide the label. It remains accessible to screen readers. */
   hideLabel: PropTypes.bool,
-  /** Optional help text */
-  helpText: PropTypes.string
+  helpText: PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 };
 
 const gray = theme.colors.palette.gray.base;
@@ -179,6 +181,7 @@ function useActiveStyle() {
 
 export interface InputBaseProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
+  /** The size of the input element */
   inputSize?: InputSize;
 }
 
@@ -208,20 +211,20 @@ export const InputBase: React.FunctionComponent<InputBaseProps> = ({
 };
 
 InputBase.propTypes = {
-  /** The size of the input element */
   inputSize: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[])
 };
 
 export const Input = InputBase;
 
+export interface TextAreaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** The size of the textarea element */
+  inputSize?: InputSize;
+}
+
 /**
  * Textarea version of InputBase
  */
-
-export interface TextAreaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  inputSize?: InputSize;
-}
 
 export const TextArea: React.FunctionComponent<TextAreaProps> = ({
   inputSize = "md",
@@ -248,19 +251,18 @@ export const TextArea: React.FunctionComponent<TextAreaProps> = ({
 };
 
 TextArea.propTypes = {
-  /** The size of the input element */
   inputSize: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[])
 };
-
-/**
- * A styled Label to go along with input elements
- */
 
 export interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
   hide?: boolean;
   htmlFor: string;
 }
+
+/**
+ * A styled Label to go along with input elements
+ */
 
 export const Label: React.FunctionComponent<LabelProps> = ({
   children,
@@ -289,12 +291,9 @@ Label.propTypes = {
   hide: PropTypes.bool
 };
 
-/**
- * A standard Select menu
- */
-
 export interface SelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  /** The size of the select box */
   inputSize?: InputSize;
 }
 
@@ -303,6 +302,10 @@ const selectSize = {
   md: inputSizes.md,
   lg: inputSizes.lg
 };
+
+/**
+ * A styled select menu
+ */
 
 export const Select: React.FunctionComponent<SelectProps> = ({
   multiple,
@@ -375,12 +378,12 @@ export const Select: React.FunctionComponent<SelectProps> = ({
 };
 
 Select.propTypes = {
-  /** The size of the select box */
   inputSize: PropTypes.oneOf(Object.keys(selectSize))
 };
 
 export interface CheckProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
+  /** A label for the checkmark. */
   label: string;
 }
 
@@ -410,6 +413,5 @@ export const Check: React.FunctionComponent<CheckProps> = ({
 };
 
 Check.propTypes = {
-  /** a label for the Checkmark */
   label: PropTypes.string.isRequired
 };

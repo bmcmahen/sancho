@@ -5,6 +5,7 @@ import theme from "./Theme";
 import PropTypes from "prop-types";
 
 export interface DividerProps {
+  /** Use a muted border */
   muted?: boolean;
   children?: never;
 }
@@ -30,6 +31,5 @@ export const Divider: React.FunctionComponent<DividerProps> = ({
 };
 
 Divider.propTypes = {
-  /** Use a muted border */
   muted: PropTypes.bool
 };

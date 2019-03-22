@@ -17,10 +17,18 @@ import PropTypes from "prop-types";
 const AnimatedLayer = animated(Layer) as React.FunctionComponent<any>;
 
 interface PopoverProps {
+  /** Whether the popover is currently open */
   isOpen?: boolean;
+  /** The trigger of the popover */
   children: React.ReactElement<ButtonProps | IconButtonProps>;
+  /** the content of the popover */
   content: React.ReactNode;
+  /** Whether the menu should close when clicked */
   closeOnMenuItemClick?: boolean;
+  /**
+   * The default placement of the popover. This will change if
+   * the popover cannot properly display in the default position.
+   */
   placement?: Placements;
 }
 
@@ -162,13 +170,9 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
 };
 
 Popover.propTypes = {
-  /** Whether the popover is currently open */
   isOpen: PropTypes.bool,
-  /** The trigger of the popover */
   children: PropTypes.node,
-  /** the content of the popover */
   content: PropTypes.node,
-  /** Whether the menu should close when clicked */
   closeOnMenuItemClick: PropTypes.bool
 };
 

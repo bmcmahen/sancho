@@ -32,7 +32,9 @@ const tableStyle = css({
  */
 
 interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
+  /** An optional minimum width for table content. */
   minWidth?: string;
+  /** An optional array of fixed layout widths for each column */
   fixed?: string[];
 }
 
@@ -73,9 +75,7 @@ export const Table: React.FunctionComponent<TableProps> = ({
 };
 
 Table.propTypes = {
-  /** An optional minimum width for table content. */
   minWidth: PropTypes.string,
-  /** An optional array of fixed layout widths for each column */
   fixed: PropTypes.arrayOf(PropTypes.string),
   children: PropTypes.node
 };
@@ -103,6 +103,7 @@ export function TableHead({ children, ...other }: TableHeadProps) {
 }
 
 interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  /** A callback when a row is selected */
   onClick?: () => void;
 }
 
@@ -132,9 +133,6 @@ export const TableRow: React.FunctionComponent<TableRowProps> = ({
         ":hover": {
           background: onClick ? theme.colors.background.tint1 : "none"
         }
-        // ":last-child *": {
-        //   borderBottom: tableSectionType === "TableBody" ? "none" : undefined
-        // }
       }}
       {...buttonProps}
       {...other}
@@ -145,7 +143,6 @@ export const TableRow: React.FunctionComponent<TableRowProps> = ({
 };
 
 TableRow.propTypes = {
-  /** A callback when a row is selected */
   onClick: PropTypes.func
 };
 
@@ -276,6 +273,7 @@ export function TableBody({ children, ...other }: TableBodyProps) {
  */
 
 interface ExpandingRowProps {
+  /** The expanded content to show when the user selects the row */
   content: (close: () => void) => React.ReactNode | React.ReactNode;
   children: React.ReactNode;
 }
@@ -350,6 +348,5 @@ export const ExpandingRow: React.FunctionComponent<ExpandingRowProps> = ({
 };
 
 ExpandingRow.propTypes = {
-  /** The expanded content to show when the user selects the row */
   content: PropTypes.oneOfType([PropTypes.func, PropTypes.node])
 };

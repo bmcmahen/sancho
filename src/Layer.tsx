@@ -8,7 +8,9 @@ import PropTypes from "prop-types";
 export type LayerElevations = keyof typeof theme.shadows;
 
 interface LayerProps extends React.HTMLAttributes<HTMLElement> {
+  /** The size of the shadow to use */
   elevation?: LayerElevations;
+  /** The contents of the layer */
   children: React.ReactNode;
 }
 
@@ -40,14 +42,12 @@ export const Layer: React.RefForwardingComponent<
 Layer.displayName = "Layer";
 
 Layer.propTypes = {
-  /** The size of the shadow to use */
   elevation: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
-
-  /** The contents of the layer */
   children: PropTypes.node
 };
 
-interface LayerLoadingProps {
+interface LayerLoadingProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Whether the layer is currently loading */
   loading: boolean;
 }
 
@@ -73,6 +73,7 @@ export const LayerLoading: React.FunctionComponent<LayerLoadingProps> = ({
         pointerEvents: loading ? "auto" : "none",
         opacity: loading ? 1 : 0
       }}
+      {...other}
     >
       <Spinner />
     </div>
@@ -80,6 +81,5 @@ export const LayerLoading: React.FunctionComponent<LayerLoadingProps> = ({
 };
 
 LayerLoading.propTypes = {
-  /** Whether the layer is currently loading */
   loading: PropTypes.bool
 };

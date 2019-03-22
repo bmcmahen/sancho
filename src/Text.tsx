@@ -147,9 +147,13 @@ const styles: { [key: string]: SerializedStyles } = {
 };
 
 export interface TextProps extends React.HTMLAttributes<HTMLElement> {
+  /** The text style */
   variant?: TextVariants;
+  /** Use text-overflow: ellipsis styling when set to false */
   wrap?: boolean;
+  /** Use muted colors */
   muted?: boolean;
+  /** Set to false to remove any bottom margins */
   gutter?: boolean;
   component?: React.ReactType<TextProps>;
 }
@@ -179,12 +183,8 @@ export const Text: React.FunctionComponent<TextProps> = ({
 };
 
 Text.propTypes = {
-  /** The text style */
   variant: PropTypes.oneOf(Object.keys(variants)),
-  /** Use text-overflow: ellipsis styling when set to false */
   wrap: PropTypes.bool,
-  /** Use muted colors */
   muted: PropTypes.bool,
-  /** Set to false to remove any bottom margins */
   gutter: PropTypes.bool
 };
