@@ -8,7 +8,7 @@
 
 Sancho is a responsive and accessible design system built with React, Typescript and Emotion. Named after the ever-faithful, hilariously acerbic sidekick of Don Quixote, Sancho is designed to help you no matter how quixotic your dreams may be.
 
-[View the docs](/https://sancho.surge.sh) for full usage details.
+[View the docs](https://sancho-ui.com) for full usage details.
 
 ## Install
 
