@@ -55,6 +55,7 @@ export const buttonReset = css({
   textDecoration: "none",
   background: "none",
   WebkitAppearance: "none",
+  textAlign: "center",
   WebkitFontSmoothing: "antialiased",
   border: "none",
   outline: "none",
@@ -478,7 +479,8 @@ export function getButtonStyles({
   return css([
     buttonReset,
     {
-      fontWeight: 400,
+      width: block ? "100%" : undefined,
+      fontWeight: 500,
       position: "relative",
       fontFamily: theme.fonts.base,
       borderRadius: theme.radii.sm,

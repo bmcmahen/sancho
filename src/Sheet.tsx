@@ -71,15 +71,16 @@ const positions = {
     right: 0,
     height: "auto",
     width: "100%",
-    padding: `0 ${theme.spaces.sm}`,
+    padding: 0,
     boxSizing: "border-box",
     [theme.breakpoints.md]: {
       maxHeight: "400px"
     },
     "& > div": {
-      borderTopRightRadius: theme.radii.md,
-      borderTopLeftRadius: theme.radii.md,
-      paddingBottom: theme.spaces.md
+      borderTopRightRadius: theme.radii.lg,
+      borderTopLeftRadius: theme.radii.lg,
+      paddingBottom: theme.spaces.md,
+      paddingTop: theme.spaces.xs
     }
   }),
   top: css({
@@ -88,13 +89,15 @@ const positions = {
     right: 0,
     height: "auto",
     width: "100%",
-    padding: `0 ${theme.spaces.sm}`,
+    padding: 0,
     [theme.breakpoints.md]: {
       maxHeight: "400px"
     },
     "& > div": {
-      borderBottomRightRadius: theme.radii.md,
-      borderBottomLeftRadius: theme.radii.md
+      borderBottomRightRadius: theme.radii.lg,
+      borderBottomLeftRadius: theme.radii.lg,
+      paddingBottom: theme.spaces.xs,
+      paddingTop: theme.spaces.md
     }
   })
 };
