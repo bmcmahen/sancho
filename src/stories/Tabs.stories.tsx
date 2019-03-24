@@ -41,46 +41,7 @@ const Example = () => {
 
 export const TabsExamples = storiesOf("Tabs", module)
   .add("Light background", () => <Example />)
-  .add("Dark background", () => {
-    const [value, setValue] = React.useState(0);
-    return (
-      <div
-        css={{ background: theme.colors.background.tint1, minHeight: "100vh" }}
-      >
-        <div
-          css={{
-            background: theme.colors.palette.blue.base
-          }}
-        >
-          <Container>
-            <Text
-              variant="h2"
-              css={{
-                color: "white",
-                paddingTop: theme.spaces.lg,
-                paddingBottom: theme.spaces.md
-              }}
-            >
-              Visual Thinking Strategies
-            </Text>
-          </Container>
-          <Tabs dark value={value} onChange={i => setValue(i)}>
-            <Tab id="hello">Events</Tab>
-            <Tab id="cool">Settings</Tab>
-            <Tab id="yup">Templates</Tab>
-            <Tab id="yup">Courses</Tab>
-            <Tab id="yup">Team</Tab>
-          </Tabs>
-        </div>
-        <Container>
-          <div css={{ paddingTop: "2rem" }}>
-            {value === 0 && <TabPanel id="hello">What's up?</TabPanel>}
-            {value === 1 && <TabPanel id="cool">yah it is?</TabPanel>}
-          </div>
-        </Container>
-      </div>
-    );
-  })
+
   .add("Evenly spaced", () => {
     return <EvenlySpaced />;
   })
