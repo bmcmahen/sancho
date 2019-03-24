@@ -55,6 +55,7 @@ export const buttonReset = css({
   textDecoration: "none",
   background: "none",
   WebkitAppearance: "none",
+  boxSizing: "border-box",
   textAlign: "center",
   WebkitFontSmoothing: "antialiased",
   border: "none",
@@ -476,7 +477,8 @@ export function getButtonStyles({
       borderRadius: theme.radii.sm,
       fontSize: getFontSize(size),
       padding: getPadding(size),
-      display: getDisplay(block)
+      display: getDisplay(block),
+      justifyContent: "center"
     },
     variants[variant],
     getIntent(variant, intent),
@@ -490,10 +492,10 @@ export function getButtonStyles({
         transition: "opacity 0.1s ease"
       }
     },
-    iconBefore && {
+    (iconBefore || (block && iconAfter)) && {
       paddingLeft: iconSpaceForSize[size]
     },
-    iconAfter && {
+    (iconAfter || (block && iconBefore)) && {
       paddingRight: iconSpaceForSize[size]
     }
   ]);
