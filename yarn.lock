@@ -11678,10 +11678,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-toasted-notes@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/toasted-notes/-/toasted-notes-2.0.3.tgz#cd43ebdb5d224d9239f41e696ba0f814e85b4c2f"
-  integrity sha512-NRy1BCWmVGASGbU2ZkJTPb4JCm8E7gfSXPa0JadzKUxbpjvnhO/d/IZ1OAqH6mRZOnvl6KIonlZn7aDUFIb85A==
+toasted-notes@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/toasted-notes/-/toasted-notes-2.1.1.tgz#a4b8214dd75b28d5979761bcb03d89c7a34686e1"
+  integrity sha512-iezyLdsE2b/gTngYHkN0vT4dyeDgdpNQHqi4/0RMbd8doJ9RckwgOrs/OWuTR+FgMDUefbtIbol+9181MY+6Cg==
   dependencies:
     "@reach/alert" "^0.1.2"
     react-spring "^8.0.7"
