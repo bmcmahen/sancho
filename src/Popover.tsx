@@ -6,7 +6,6 @@ import { IconButtonProps } from "./IconButton";
 import { Layer } from "./Layer";
 import { Positioner, Placements } from "./Positions";
 import { ReferenceChildrenProps } from "react-popper";
-import theme from "./Theme";
 import { arrowStyles } from "./Tooltip";
 import { useFocusElement } from "./Hooks/focus";
 import { animated } from "react-spring";
@@ -175,7 +174,24 @@ Popover.propTypes = {
   isOpen: PropTypes.bool,
   children: PropTypes.node,
   content: PropTypes.node,
-  closeOnMenuItemClick: PropTypes.bool
+  closeOnMenuItemClick: PropTypes.bool,
+  placement: PropTypes.oneOf([
+    "auto-start",
+    "auto",
+    "auto-end",
+    "top-start",
+    "top",
+    "top-end",
+    "right-start",
+    "right",
+    "right-end",
+    "bottom-end",
+    "bottom",
+    "bottom-start",
+    "left-end",
+    "left",
+    "left-start"
+  ] as Placements[])
 };
 
 /**

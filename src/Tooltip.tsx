@@ -148,7 +148,6 @@ export const arrowStyles = (color: string) =>
     bottom: 100%;
     left: 0;
     margin-top: 0em;
-    
     width: 1em;
     height: 0.25em;
     &::before {

@@ -369,10 +369,12 @@ export const Select: React.FunctionComponent<SelectProps> = ({
               ? theme.colors.background.tint1
               : theme.colors.background.default,
             fontFamily: theme.fonts.base,
-            boxShadow: `inset 0 0 0 1px ${alpha(
-              gray,
-              0.15
-            )}, inset 0 1px 2px ${alpha(gray, 0.2)}`,
+            boxShadow: dark
+              ? "none"
+              : `inset 0 0 0 1px ${alpha(gray, 0.15)}, inset 0 1px 2px ${alpha(
+                  gray,
+                  0.2
+                )}`,
             border: "none",
             backgroundClip: "padding-box",
             borderRadius: theme.radii.sm,

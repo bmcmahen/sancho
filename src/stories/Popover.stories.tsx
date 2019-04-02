@@ -7,6 +7,7 @@ import { MenuList, MenuItem, MenuDivider } from "../Menu";
 import { IconButton } from "../IconButton";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
+import { Placement } from "popper.js";
 
 interface LinkProps {
   href: string;
@@ -42,6 +43,50 @@ export const PopoverStories = storiesOf("Popover", module)
             <Button>Hello world!</Button>
           </Popover>
         </div>
+      </ToggleDarkMode>
+    );
+  })
+  .add("positions", () => {
+    return (
+      <ToggleDarkMode>
+        {[
+          "auto-start",
+          "auto",
+          "auto-end",
+          "top-start",
+          "top",
+          "top-end",
+          "right-start",
+          "right",
+          "right-end",
+          "bottom-end",
+          "bottom",
+          "bottom-start",
+          "left-end",
+          "left",
+          "left-start"
+        ].map(placement => (
+          <div css={{ marginTop: "1rem", textAlign: "center" }} key={placement}>
+            <Popover
+              placement={placement as Placement}
+              content={
+                <MenuList>
+                  <MenuItem onSelect={() => alert("Hello 1")}>
+                    I will trigger an alert
+                  </MenuItem>
+                  <MenuItem component="a" href="/bacon">
+                    I'm a link
+                  </MenuItem>
+
+                  <MenuDivider />
+                  <MenuItem>Item three</MenuItem>
+                </MenuList>
+              }
+            >
+              <Button>{placement}</Button>
+            </Popover>
+          </div>
+        ))}
       </ToggleDarkMode>
     );
   })
