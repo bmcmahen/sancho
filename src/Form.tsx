@@ -2,14 +2,15 @@
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
-import theme from "./Theme";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
 import { Icon } from "./Icons";
 import { useUid } from "./Hooks/use-uid";
+import { Theme } from "./Theme";
+import { useTheme } from "./Theme/Providers";
 
-const inputSizes = {
+const getInputSizes = (theme: Theme) => ({
   sm: css({
     fontSize: theme.sizes[0],
     padding: "0.25rem 0.5rem"
@@ -22,9 +23,9 @@ const inputSizes = {
     fontSize: theme.sizes[2],
     padding: "0.5rem 1rem"
   })
-};
+});
 
-export type InputSize = keyof typeof inputSizes;
+export type InputSize = "sm" | "md" | "lg";
 
 export interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   id?: string;
@@ -49,6 +50,11 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
   ...other
 }) => {
   const uid = useUid(id);
+  const theme = useTheme();
+  const isDark = theme.colors.mode === "dark";
+  const danger = isDark
+    ? theme.colors.intent.danger.light
+    : theme.colors.intent.danger.base;
 
   return (
     <div
@@ -78,17 +84,13 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
             display: "flex"
           }}
         >
-          <Icon
-            icon="error"
-            color={theme.colors.intent.danger.base}
-            size={14}
-          />
+          <Icon icon="error" color={danger} size={14} />
           <Text
             css={{
               display: "block",
               marginLeft: theme.spaces.xs,
               fontSize: theme.sizes[0],
-              color: theme.colors.intent.danger.base
+              color: danger
             }}
           >
             {error}
@@ -123,50 +125,61 @@ InputGroup.propTypes = {
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 };
 
-const gray = theme.colors.palette.gray.base;
-const blue = theme.colors.palette.blue.base;
+function getBaseStyles(theme: Theme) {
+  const dark = theme.colors.mode === "dark";
+  const gray = dark
+    ? theme.colors.palette.gray.light
+    : theme.colors.palette.gray.base;
+  const blue = dark
+    ? theme.colors.palette.blue.light
+    : theme.colors.palette.blue.base;
 
-export const baseStyles = css({
-  display: "block",
-  width: "100%",
-  lineHeight: "1.5",
-  color: theme.colors.text.default,
-  backgroundColor: "white",
-  backgroundImage: "none",
-  backgroundClip: "padding-box",
-  WebkitFontSmoothing: "antialiased",
-  WebkitTapHighlightColor: "transparent",
-  WebkitAppearance: "none",
-  boxSizing: "border-box",
-  touchAction: "manipulation",
-  fontFamily: theme.fonts.base,
-  border: "none",
-  boxShadow: `inset 0 0 0 1px ${alpha(gray, 0.15)}, inset 0 1px 2px ${alpha(
-    gray,
-    0.2
-  )}`,
-  borderRadius: theme.radii.sm,
-  transition:
-    "background 0.25s cubic-bezier(0.35,0,0.25,1), border-color 0.15s cubic-bezier(0.35,0,0.25,1), box-shadow 0.15s cubic-bezier(0.35,0,0.25,1)",
-  "::placeholder": {
-    color: alpha(gray, 0.7)
-  },
-  ":focus": {
-    boxShadow: `inset 0 0 2px ${alpha(gray, 0.4)}, inset 0 0 0 1px ${alpha(
-      blue,
-      0.3
-    )}, 0 0 0 3px ${alpha(blue, 0.2)}`,
-    outline: "none"
-  },
-  ":disabled": {
-    boxShadow: `inset 0 0 0 1px ${alpha(gray, 0.45)}`
-  },
-  ":active": {
-    background: theme.colors.background.tint1
-  }
-});
+  const baseStyles = css({
+    display: "block",
+    width: "100%",
+    lineHeight: theme.lineHeight,
+    color: theme.colors.text.default,
+    backgroundColor: dark
+      ? theme.colors.background.tint1
+      : theme.colors.background.default,
+    backgroundImage: "none",
+    backgroundClip: "padding-box",
+    WebkitFontSmoothing: "antialiased",
+    WebkitTapHighlightColor: "transparent",
+    WebkitAppearance: "none",
+    boxSizing: "border-box",
+    touchAction: "manipulation",
+    fontFamily: theme.fonts.base,
+    border: "none",
+    boxShadow: dark
+      ? "none"
+      : `inset 0 0 0 1px ${alpha(gray, 0.15)}, inset 0 1px 2px ${alpha(
+          gray,
+          0.2
+        )}`,
+    borderRadius: theme.radii.sm,
+    transition:
+      "background 0.25s cubic-bezier(0.35,0,0.25,1), border-color 0.15s cubic-bezier(0.35,0,0.25,1), box-shadow 0.15s cubic-bezier(0.35,0,0.25,1)",
+    "::placeholder": {
+      color: alpha(theme.colors.text.default, 0.45)
+    },
+    ":focus": {
+      boxShadow: `inset 0 0 2px ${alpha(gray, 0.4)}, inset 0 0 0 1px ${alpha(
+        blue,
+        0.3
+      )}, 0 0 0 3px ${alpha(blue, dark ? 0.3 : 0.2)}`,
+      outline: "none"
+    },
+    ":disabled": {
+      boxShadow: `inset 0 0 0 1px ${alpha(gray, 0.45)}`
+    },
+    ":active": {
+      background: theme.colors.background.tint1
+    }
+  });
 
-const activeBackground = css({ background: theme.colors.background.tint1 });
+  return baseStyles;
+}
 
 function useActiveStyle() {
   const [active, setActive] = React.useState(false);
@@ -176,6 +189,18 @@ function useActiveStyle() {
       onTouchEnd: () => setActive(false)
     },
     active
+  };
+}
+
+function useSharedStyle() {
+  const theme = useTheme();
+  const baseStyles = React.useMemo(() => getBaseStyles(theme), [theme]);
+  const inputSizes = React.useMemo(() => getInputSizes(theme), [theme]);
+  const activeBackground = css({ background: theme.colors.background.tint1 });
+  return {
+    baseStyles,
+    inputSizes,
+    activeBackground
   };
 }
 
@@ -197,7 +222,7 @@ export const InputBase: React.FunctionComponent<InputBaseProps> = ({
   ...other
 }) => {
   const { bind, active } = useActiveStyle();
-
+  const { baseStyles, inputSizes, activeBackground } = useSharedStyle();
   return (
     <input
       className="Input"
@@ -231,6 +256,7 @@ export const TextArea: React.FunctionComponent<TextAreaProps> = ({
   ...other
 }) => {
   const { bind, active } = useActiveStyle();
+  const { baseStyles, inputSizes, activeBackground } = useSharedStyle();
 
   return (
     <textarea
@@ -269,6 +295,7 @@ export const Label: React.FunctionComponent<LabelProps> = ({
   hide,
   ...other
 }) => {
+  const theme = useTheme();
   const child = (
     <label
       className="Label"
@@ -297,12 +324,6 @@ export interface SelectProps
   inputSize?: InputSize;
 }
 
-const selectSize = {
-  sm: inputSizes.sm,
-  md: inputSizes.md,
-  lg: inputSizes.lg
-};
-
 /**
  * A styled select menu
  */
@@ -312,6 +333,21 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   inputSize = "md",
   ...other
 }) => {
+  const theme = useTheme();
+  const inputSizes = getInputSizes(theme);
+  const selectSize = {
+    sm: inputSizes.sm,
+    md: inputSizes.md,
+    lg: inputSizes.lg
+  };
+  const dark = theme.colors.mode === "dark";
+  const gray = dark
+    ? theme.colors.palette.gray.light
+    : theme.colors.palette.gray.base;
+  const blue = dark
+    ? theme.colors.palette.blue.light
+    : theme.colors.palette.blue.base;
+
   return (
     <div
       className="Select"
@@ -329,7 +365,9 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             width: "100%",
             lineHeight: theme.lineHeight,
             color: theme.colors.text.default,
-            background: "white",
+            background: dark
+              ? theme.colors.background.tint1
+              : theme.colors.background.default,
             fontFamily: theme.fonts.base,
             boxShadow: `inset 0 0 0 1px ${alpha(
               gray,
@@ -351,7 +389,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
                 0.4
               )}, inset 0 0 0 1px ${alpha(blue, 0.3)}, 0 0 0 3px ${alpha(
                 blue,
-                0.2
+                dark ? 0.3 : 0.2
               )}`,
               outline: 0
             }
@@ -378,7 +416,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
 };
 
 Select.propTypes = {
-  inputSize: PropTypes.oneOf(Object.keys(selectSize))
+  inputSize: PropTypes.oneOf(["sm", "md", "lg"])
 };
 
 export interface CheckProps
@@ -393,6 +431,7 @@ export const Check: React.FunctionComponent<CheckProps> = ({
   ...other
 }) => {
   const uid = useUid(id);
+  const theme = useTheme();
 
   return (
     <div

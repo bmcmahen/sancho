@@ -70,6 +70,8 @@ export interface ColorMode {
 
 const ColorMode = ({ colors, children }: ColorMode) => {
   const theme = useTheme();
+  // memo is necessary to prevent unnecessary rerenders
+  // https://reactjs.org/docs/context.html#caveats
   const adjustedTheme = React.useMemo(() => mergeColors(theme, colors), [
     theme,
     colors
