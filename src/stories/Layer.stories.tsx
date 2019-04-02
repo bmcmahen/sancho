@@ -7,13 +7,14 @@ import theme from "../Theme";
 import { Button } from "../Button";
 import { DarkMode } from "../Theme/Providers";
 import { Text } from "../Text";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 export const LayerStories = storiesOf("Layer", module)
   .add("Elevation options", () => {
     const elevations: Array<LayerElevations> = ["xs", "sm", "md", "lg"];
 
     return (
-      <div>
+      <ToggleDarkMode>
         {elevations.map(e => (
           <Layer
             css={{ width: "400px", height: "200px", marginBottom: "2rem" }}
@@ -22,7 +23,7 @@ export const LayerStories = storiesOf("Layer", module)
             <div />
           </Layer>
         ))}
-      </div>
+      </ToggleDarkMode>
     );
   })
   .add("Loading", () => {
