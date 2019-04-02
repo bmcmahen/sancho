@@ -8,6 +8,10 @@ import { Button } from "../Button";
 import { DarkMode } from "../Theme/Providers";
 import { Text } from "../Text";
 import { ToggleDarkMode } from "./ToggleDarkMode";
+import { Tooltip } from "../Tooltip";
+import { Popover } from "../Popover";
+import { Placement } from "popper.js";
+import { MenuList, MenuItem, MenuDivider } from "../Menu";
 
 export const LayerStories = storiesOf("Layer", module)
   .add("Elevation options", () => {
@@ -17,10 +21,46 @@ export const LayerStories = storiesOf("Layer", module)
       <ToggleDarkMode>
         {elevations.map(e => (
           <Layer
-            css={{ width: "400px", height: "200px", marginBottom: "2rem" }}
+            css={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "400px",
+              height: "200px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: "2rem"
+            }}
             elevation={e}
           >
-            <div />
+            <Tooltip content="This is some tooltip content">
+              <Button variant="outline">Hello world. Hover me!!</Button>
+            </Tooltip>
+            {["auto"].map(placement => (
+              <div
+                css={{ marginTop: "1rem", textAlign: "center" }}
+                key={placement}
+              >
+                <Popover
+                  placement={placement as Placement}
+                  content={
+                    <MenuList>
+                      <MenuItem onSelect={() => alert("Hello 1")}>
+                        I will trigger an alert
+                      </MenuItem>
+                      <MenuItem component="a" href="/bacon">
+                        I'm a link
+                      </MenuItem>
+
+                      <MenuDivider />
+                      <MenuItem>Item three</MenuItem>
+                    </MenuList>
+                  }
+                >
+                  <Button>{placement}</Button>
+                </Popover>
+              </div>
+            ))}
           </Layer>
         ))}
       </ToggleDarkMode>

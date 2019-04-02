@@ -123,7 +123,7 @@ function generateDarkMode(scales: ScalesType, palette: PaletteType) {
       default: "white",
       selected: palette.blue.base
     },
-    shadows: createDarkShadows(scales.gray[0])
+    shadows: createDarkShadows("black")
   };
 }
 
