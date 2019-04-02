@@ -2,19 +2,20 @@
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
-import theme from "./Theme";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
+import { Theme } from "./Theme";
+import { useTheme } from "./Theme/Providers";
 
-const sizes = {
+export type AvatarSizes = "xs" | "sm" | "md" | "lg" | "xl";
+
+const sizes = (theme: Theme) => ({
   xs: css({ width: "1.5rem", height: "1.5rem", fontSize: theme.sizes[0] }),
   sm: css({ width: "2.5rem", height: "2.5rem", fontSize: theme.sizes[1] }),
   md: css({ width: "3.5rem", height: "3.5rem", fontSize: theme.sizes[1] }),
   lg: css({ width: "4.5rem", height: "4.5rem", fontSize: theme.sizes[3] }),
   xl: css({ width: "5.5rem", height: "5.5rem", fontSize: theme.sizes[4] })
-};
-
-export type AvatarSizes = keyof typeof sizes;
+});
 
 interface AvatarProps {
   /** Determine the size of the avatar */
@@ -27,8 +28,6 @@ interface AvatarProps {
   name?: string;
 }
 
-const colors = Object.keys(theme.colors.palette);
-
 /**
  * Display a profile image to represent a user. Initials can be shown as a fallback
  */
@@ -39,6 +38,10 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
   srcSet,
   ...other
 }) => {
+  const theme = useTheme();
+  const dark = theme.colors.mode === "dark";
+
+  const colors = Object.keys(theme.colors.palette);
   const img = src || srcSet;
   let initials = getInitials(name);
   if (size === "xs") initials = initials.substring(0, 1);
@@ -63,9 +66,9 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
           borderRadius: "50%",
           backgroundColor: img
             ? theme.colors.background.tint2
-            : theme.colors.palette[color].base
+            : theme.colors.palette[color][dark ? "light" : "base"]
         },
-        sizes[size]
+        sizes(theme)[size]
       ]}
       {...other}
     >
@@ -90,7 +93,7 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
             css={{
               fontWeight: size === "xs" ? 500 : 400,
               fontSize: "inherit",
-              color: "white"
+              color: dark ? "rgba(0,0,0,0.75)" : "white"
             }}
           >
             {initials}

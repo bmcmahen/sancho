@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 interface BreadcrumbsProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "md" | "lg";
@@ -24,6 +24,8 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
   overflowX,
   ...other
 }) => {
+  const theme = useTheme();
+
   return (
     <nav
       className="Breadcrumbs"
@@ -93,11 +95,11 @@ interface BreadcrumbItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
 
 export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
   children,
-  inverted,
   size = "md",
   ...other
 }) => {
   const current = other["aria-current"];
+
   return (
     <li
       className="BreadcrumbItem"
@@ -112,16 +114,13 @@ export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
       <Text
         className="BreadcrumbItem__text"
         wrap={false}
-        css={{
-          color: inverted ? "rgba(255,255,255,0.8)" : undefined
-        }}
         component="div"
         variant={size === "md" ? "body" : "h5"}
         gutter={false}
       >
         {children}
       </Text>
-      {!current && <BreadcrumbDivider inverted={inverted} />}
+      {!current && <BreadcrumbDivider />}
     </li>
   );
 };
@@ -130,35 +129,37 @@ BreadcrumbItem.propTypes = {
   children: PropTypes.node
 };
 
-const BreadcrumbDivider: React.FunctionComponent<{ inverted?: boolean }> = ({
-  inverted = false
-}) => (
-  <div
-    className="BreadcrumbDivider"
-    aria-hidden
-    css={{
-      flex: "0 0 auto",
-      margin: `0 ${theme.spaces.sm}`,
-      color: !inverted ? theme.colors.text.muted : "rgba(255,255,255,0.8)"
-    }}
-  >
-    <svg
-      className="BreadcrumbDivider__icon"
-      css={{ marginTop: "2px" }}
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+const BreadcrumbDivider: React.FunctionComponent = () => {
+  const theme = useTheme();
+
+  return (
+    <div
+      className="BreadcrumbDivider"
+      aria-hidden
+      css={{
+        flex: "0 0 auto",
+        margin: `0 ${theme.spaces.sm}`,
+        color: theme.colors.text.muted
+      }}
     >
-      <polyline points="9 18 15 12 9 6" />
-    </svg>
-  </div>
-);
+      <svg
+        className="BreadcrumbDivider__icon"
+        css={{ marginTop: "2px" }}
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </div>
+  );
+};
 
 BreadcrumbDivider.propTypes = {
   inverted: PropTypes.bool
