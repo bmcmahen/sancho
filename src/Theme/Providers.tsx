@@ -61,9 +61,11 @@ export function useTheme() {
  * Switch color modes (typically between light (default) and dark)
  */
 
+type RenderCallbackType = (theme: Theme) => React.ReactNode;
+
 export interface ColorMode {
   colors: ThemeColors;
-  children: React.ReactNode;
+  children: RenderCallbackType | React.ReactNode;
 }
 
 const ColorMode = ({ colors, children }: ColorMode) => {
@@ -72,9 +74,10 @@ const ColorMode = ({ colors, children }: ColorMode) => {
     theme,
     colors
   ]);
+
   return (
     <ThemeContext.Provider value={adjustedTheme}>
-      {children}
+      {typeof children === "function" ? children(adjustedTheme) : children}
     </ThemeContext.Provider>
   );
 };
@@ -90,7 +93,11 @@ function mergeColors(theme: Theme, colors: ThemeColors) {
  * Provide a light theme
  */
 
-export const Light = ({ children }: ColorMode) => {
+interface ModeProps {
+  children: React.ReactNode;
+}
+
+export const Light = ({ children }: ModeProps) => {
   const theme = useTheme();
   return <ColorMode colors={theme.modes.light}>{children}</ColorMode>;
 };
@@ -99,7 +106,7 @@ export const Light = ({ children }: ColorMode) => {
  * Provide a dark theme
  */
 
-export const Dark = ({ children }: ColorMode) => {
+export const Dark = ({ children }: ModeProps) => {
   const theme = useTheme();
   return <ColorMode colors={theme.modes.dark}>{children}</ColorMode>;
 };
