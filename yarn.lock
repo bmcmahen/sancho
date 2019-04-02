@@ -1808,6 +1808,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-dom@^16.8.3":
+  version "16.8.3"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.8.3.tgz#6131b7b6158bc7ed1925a3374b88b7c00481f0cb"
+  integrity sha512-HF5hD5YR3z9Mn6kXcW1VKe4AQ04ZlZj1EdLBae61hzQ3eEWWxMgNLUbIxeZp40BnSxqY1eAYLsH9QopQcxzScA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-swipeable-views@^0.12.2":
   version "0.12.2"
   resolved "https://registry.yarnpkg.com/@types/react-swipeable-views/-/react-swipeable-views-0.12.2.tgz#5b50bfbe2e42043f5de85a11087bcfbcb813610e"
@@ -1819,6 +1826,14 @@
   version "16.8.4"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.4.tgz#134307f5266e866d5e7c25e47f31f9abd5b2ea34"
   integrity sha512-Mpz1NNMJvrjf0GcDqiK8+YeOydXfD8Mgag3UtqQ5lXYTsMnOiHcKmO48LiSWMb1rSHB9MV/jlgyNzeAVxWMZRQ==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@^16.8.10":
+  version "16.8.10"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.10.tgz#1ccb6fde17f71a62ef055382ec68bdc379d4d8d9"
+  integrity sha512-7bUQeZKP4XZH/aB4i7k1i5yuwymDu/hnLMhD9NjVZvQQH7ZUgRN3d6iu8YXzx4sN/tNr0bj8jgguk8hhObzGvA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -11683,12 +11698,14 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-toasted-notes@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/toasted-notes/-/toasted-notes-2.1.1.tgz#a4b8214dd75b28d5979761bcb03d89c7a34686e1"
-  integrity sha512-iezyLdsE2b/gTngYHkN0vT4dyeDgdpNQHqi4/0RMbd8doJ9RckwgOrs/OWuTR+FgMDUefbtIbol+9181MY+6Cg==
+toasted-notes@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/toasted-notes/-/toasted-notes-2.1.4.tgz#11f1133866e49e4ac38011a860dc25702c5b88eb"
+  integrity sha512-xSJcWWfF8v1/6Mby1zkM9+wU+FIOooInxhRYZ7F2rHaKyFyww3nvP84wjQCBBtFQp1HEvwocmlcUV/SxznY28Q==
   dependencies:
     "@reach/alert" "^0.1.2"
+    "@types/react" "^16.8.10"
+    "@types/react-dom" "^16.8.3"
     react-spring "^8.0.7"
 
 topo@2.x.x:
