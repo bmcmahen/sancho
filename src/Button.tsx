@@ -266,12 +266,18 @@ export type ButtonIntent =
 // variations to the ghost buttons based on intent
 const ghostIntents = (theme: Theme, intent: ButtonIntent) => {
   const none = intent === "none";
-  const base = none
+  const dark = theme.colors.mode === "dark";
+
+  let base = none
     ? theme.colors.text.default
     : theme.colors.intent[intent].base;
 
+  if (dark && !none) {
+    base = theme.colors.intent[intent].light;
+  }
+
   return css({
-    color: none ? theme.colors.text.muted : theme.colors.intent[intent].base,
+    color: none ? theme.colors.text.muted : base,
     opacity: 1,
     background: "transparent",
     boxShadow: "none",
@@ -300,17 +306,19 @@ const ghostIntents = (theme: Theme, intent: ButtonIntent) => {
 // variations to the outline buttons based on intent
 const outlineIntents = (theme: Theme, intent: ButtonIntent) => {
   const none = intent === "none";
+  const dark = theme.colors.mode === "dark";
 
-  const base = none
+  let base = none
     ? theme.colors.text.default
     : theme.colors.intent[intent].base;
 
+  if (dark && !none) {
+    base = theme.colors.intent[intent].light;
+  }
+
   return css({
-    color: none ? theme.colors.text.default : theme.colors.intent[intent].base,
-    borderColor: alpha(
-      none ? theme.colors.text.default : theme.colors.intent[intent].base,
-      0.2
-    ),
+    color: base,
+    borderColor: alpha(base, 0.2),
     boxShadow: "none",
     transition:
       "box-shadow 0.07s cubic-bezier(0.35,0,0.25,1), background 0.07s cubic-bezier(0.35,0,0.25,1)",
