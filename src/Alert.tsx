@@ -71,7 +71,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
   const intentions = React.useMemo(() => alertIntentions(theme), [theme]);
   const dark = theme.colors.mode === "dark";
   const color = intentions[intent];
-  let accent = dark ? color.base : color.base;
+  let accent = dark ? color.light : color.base;
 
   if (dark && intent === "info") {
     accent = color.light;

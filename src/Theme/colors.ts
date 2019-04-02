@@ -38,13 +38,13 @@ function generatePalette(scales: ScalesType): PaletteType {
     },
     blue: {
       lightest: scales.blue[1],
-      light: scales.blue[4],
+      light: scales.blue[5],
       base: scales.blue[8],
       dark: scales.blue[9]
     },
     red: {
       lightest: scales.red[1],
-      light: scales.red[4],
+      light: scales.red[6],
       base: scales.red[8],
       dark: scales.red[9]
     },
@@ -62,7 +62,7 @@ function generatePalette(scales: ScalesType): PaletteType {
     },
     green: {
       lightest: scales.green[1],
-      light: scales.green[4],
+      light: scales.green[5],
       base: scales.green[8],
       dark: scales.green[9]
     },
