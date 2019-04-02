@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import { Spinner } from "./Spinner";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
-export type LayerElevations = keyof typeof theme.shadows;
+export type LayerElevations = "xs" | "sm" | "md" | "lg" | "xl";
 
 interface LayerProps extends React.HTMLAttributes<HTMLElement> {
   /** The size of the shadow to use */
@@ -22,12 +22,14 @@ export const Layer: React.RefForwardingComponent<
     { elevation = "md", children, ...other }: LayerProps,
     ref: React.Ref<HTMLDivElement>
   ) => {
+    const theme = useTheme();
+
     return (
       <div
         ref={ref}
         css={{
           position: "relative",
-          background: "white",
+          background: theme.colors.background.default,
           boxShadow: theme.shadows[elevation],
           borderRadius: theme.radii.lg
         }}
@@ -49,12 +51,19 @@ Layer.propTypes = {
 interface LayerLoadingProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Whether the layer is currently loading */
   loading: boolean;
+
+  /** An optional label to display below the loading spinner */
+  label?: string;
 }
 
 export const LayerLoading: React.FunctionComponent<LayerLoadingProps> = ({
   loading,
+  label,
   ...other
 }) => {
+  const theme = useTheme();
+  const isDark = theme.colors.mode === "dark";
+
   return (
     <div
       css={{
@@ -67,7 +76,7 @@ export const LayerLoading: React.FunctionComponent<LayerLoadingProps> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "rgba(255,255,255,0.7)",
+        background: isDark ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.7)",
         zIndex: 5,
         transition: "opacity 0.3s ease",
         pointerEvents: loading ? "auto" : "none",
@@ -75,7 +84,7 @@ export const LayerLoading: React.FunctionComponent<LayerLoadingProps> = ({
       }}
       {...other}
     >
-      <Spinner />
+      <Spinner label={label} />
     </div>
   );
 };

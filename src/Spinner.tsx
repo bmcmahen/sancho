@@ -4,7 +4,7 @@ import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 import { Text } from "./Text";
-import theme from "./Theme";
+import { useTheme } from "./Theme/Providers";
 
 const spin = keyframes`
   to { 
@@ -40,6 +40,7 @@ export const Spinner: React.FunctionComponent<SpinnerProps> = ({
   label,
   ...other
 }) => {
+  const theme = useTheme();
   const [show, setShow] = React.useState(delay === 0 ? true : false);
 
   React.useEffect(() => {
@@ -76,7 +77,11 @@ export const Spinner: React.FunctionComponent<SpinnerProps> = ({
       <div
         className="Spinner__container"
         role="status"
-        css={{ textAlign: "center", display: "inline-block" }}
+        css={{
+          color: theme.colors.text.default,
+          textAlign: "center",
+          display: "inline-block"
+        }}
       >
         <div
           className="Spinner__spinner"

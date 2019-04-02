@@ -5,6 +5,8 @@ import { LayerElevations, Layer, LayerLoading } from "../Layer";
 import { storiesOf } from "@storybook/react";
 import theme from "../Theme";
 import { Button } from "../Button";
+import { DarkMode } from "../Theme/Providers";
+import { Text } from "../Text";
 
 export const LayerStories = storiesOf("Layer", module)
   .add("Elevation options", () => {
@@ -25,6 +27,24 @@ export const LayerStories = storiesOf("Layer", module)
   })
   .add("Loading", () => {
     return <Loading />;
+  })
+  .add("Dark", () => {
+    return (
+      <DarkMode>
+        <Layer
+          css={{
+            padding: "2rem",
+            width: "400px",
+            height: "200px",
+            marginBottom: "2rem"
+          }}
+          elevation={"md"}
+        >
+          <Text>Hello world. This is dark mode.</Text>
+          <LayerLoading loading={true} />
+        </Layer>
+      </DarkMode>
+    );
   });
 
 function Loading() {
