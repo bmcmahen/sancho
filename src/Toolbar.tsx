@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
+import theme from "./Theme";
 
 /**
  * A Toolbar is typically used in something like the Navbar component.
@@ -21,6 +22,7 @@ export const Toolbar: React.FunctionComponent<ToolbarProps> = ({
   compressed,
   ...other
 }) => {
+  const theme = useTheme();
   return (
     <div
       css={[

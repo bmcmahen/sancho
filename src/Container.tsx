@@ -3,6 +3,7 @@ import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import theme from "./Theme";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 export const responsiveContainerPadding = css({
   padding: `0 ${theme.spaces.md}`,

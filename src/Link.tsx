@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** The content of the link */
@@ -20,11 +20,16 @@ export const Link: React.FunctionComponent<LinkProps> = ({
   component: Component = "a",
   ...other
 }) => {
+  const theme = useTheme();
+
   return (
     <Component
       css={{
         textDecoration: "none",
-        color: theme.colors.palette.blue.base
+        color:
+          theme.colors.mode === "dark"
+            ? theme.colors.palette.blue.light
+            : theme.colors.palette.blue.base
       }}
       {...other}
     >

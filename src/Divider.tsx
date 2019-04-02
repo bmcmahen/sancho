@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 export interface DividerProps {
   /** Use a muted border */
@@ -14,6 +14,7 @@ export const Divider: React.FunctionComponent<DividerProps> = ({
   muted,
   ...other
 }) => {
+  const theme = useTheme();
   return (
     <div
       css={{

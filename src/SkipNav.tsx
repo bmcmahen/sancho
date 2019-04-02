@@ -8,14 +8,15 @@ import {
   SkipNavContent as ReachSkipNavContent,
   ISkipNavProps
 } from "@reach/skip-nav";
-import theme from "./Theme";
 import { focusShadow } from "./Button";
 import { Text } from "./Text";
+import { useTheme } from "./Theme/Providers";
 
 export const SkipNavLink: React.FunctionComponent<ISkipNavProps> = ({
   children = "Skip to content",
   ...other
 }) => {
+  const theme = useTheme();
   return (
     <ReachSkipNavLink
       css={{
@@ -26,7 +27,6 @@ export const SkipNavLink: React.FunctionComponent<ISkipNavProps> = ({
         overflow: "hidden",
         padding: 0,
         position: "absolute",
-        outline: "none",
         color: theme.colors.text.default,
         textDecoration: "none",
         width: "1px",
@@ -40,8 +40,7 @@ export const SkipNavLink: React.FunctionComponent<ISkipNavProps> = ({
           zIndex: 40,
           width: "auto",
           padding: theme.spaces.md,
-          borderRadius: theme.radii.md,
-          boxShadow: focusShadow()
+          borderRadius: theme.radii.md
         }
       }}
       {...other}

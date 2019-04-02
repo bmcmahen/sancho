@@ -2,8 +2,8 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
-import theme from "./Theme";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {}
 
@@ -14,6 +14,7 @@ export const Badge: React.FunctionComponent<BadgeProps> = ({
   children,
   ...other
 }) => {
+  const theme = useTheme();
   return (
     <Text
       variant="body"
