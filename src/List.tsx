@@ -2,9 +2,9 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
-import theme from "./Theme";
 import PropTypes from "prop-types";
 import { MenuLabel } from "./Menu";
+import { useTheme } from "./Theme/Providers";
 
 export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
   /** A series of ListItem elements */
@@ -58,6 +58,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
         tabIndex: 0
       }
     : {};
+  const theme = useTheme();
 
   return (
     <Component
@@ -177,6 +178,8 @@ export const ListSection: React.FunctionComponent<ListSectionProps> = ({
   sticky = true,
   ...other
 }) => {
+  const theme = useTheme();
+  const bg = theme.colors.background.default;
   return (
     <div
       css={{
@@ -189,7 +192,7 @@ export const ListSection: React.FunctionComponent<ListSectionProps> = ({
         css={{
           position: sticky ? "sticky" : "static",
           top: 0,
-          backgroundColor: sticky ? "white" : "transparent",
+          backgroundColor: sticky ? bg : "transparent",
           borderTop: `1px solid ${theme.colors.border.muted}`,
           borderBottom: `1px solid ${theme.colors.border.muted}`,
           padding: theme.spaces.sm,

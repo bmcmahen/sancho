@@ -23,16 +23,13 @@ export const Layer: React.RefForwardingComponent<
     ref: React.Ref<HTMLDivElement>
   ) => {
     const theme = useTheme();
-    const dark = theme.colors.mode === "dark";
 
     return (
       <div
         ref={ref}
         css={{
           position: "relative",
-          background: dark
-            ? theme.colors.background.tint1
-            : theme.colors.background.default,
+          background: theme.colors.background.default,
           boxShadow: theme.shadows[elevation],
           borderRadius: theme.radii.lg
         }}

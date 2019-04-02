@@ -113,8 +113,8 @@ function generateDarkMode(scales: ScalesType, palette: PaletteType) {
       default: scales.gray[8]
     },
     border: {
-      default: scales.gray[7],
-      muted: scales.gray[8]
+      default: scales.gray[6],
+      muted: scales.gray[7]
     },
     text: {
       muted: "rgba(255,255,255,0.7)",

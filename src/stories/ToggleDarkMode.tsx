@@ -36,7 +36,7 @@ export const ToggleDarkMode: React.FunctionComponent<ToggleDarkModeProps> = ({
           paddingTop: "1rem",
           background:
             mode === "dark"
-              ? theme.modes.dark.background.default
+              ? theme.modes.dark.palette.gray.dark
               : theme.modes.light.background.default
         }}
       >

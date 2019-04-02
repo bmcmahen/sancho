@@ -2,68 +2,87 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Button } from "../Button";
-import { List, ListItem } from "../List";
+import { List, ListItem, ListSection } from "../List";
 import { storiesOf } from "@storybook/react";
 import { Icon } from "../Icons";
 import { Layer } from "../Layer";
 import theme from "../Theme";
 import faker from "faker";
 import { Avatar } from "../Avatar";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 export const CollapseStories = storiesOf("List", module)
   .add("basic", () => {
     return (
-      <Layer css={{ overflow: "hidden", width: "450px" }}>
-        <div
-          css={{
-            height: "1.5rem",
-            borderBottom: "1px solid",
-            borderBottomColor: theme.colors.border.muted
-          }}
-        />
-        <List>
-          <ListItem
-            iconBefore={
-              <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
-            }
-            primary="Ben McMahen"
-            secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-            iconAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
-          />
-          <ListItem
-            iconBefore={
-              <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
-            }
-            primary="Joe Chen"
-            secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
-          />
-          <ListItem
-            iconBefore={
-              <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
-            }
-            primary="Joe Chen"
-            secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
-          />
-          <ListItem
-            iconBefore={
-              <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
-            }
-            primary="Joe Chen"
-            secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
-          />
-        </List>
-      </Layer>
+      <ToggleDarkMode>
+        <div css={{ padding: "3rem" }}>
+          <Layer css={{ overflow: "hidden", width: "450px" }}>
+            <div
+              css={{
+                height: "1.5rem"
+              }}
+            />
+            <List>
+              <ListSection title="Hello world">
+                <ListItem
+                  contentBefore={
+                    <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+                  }
+                  primary="Ben McMahen"
+                  secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
+                  contentAfter={
+                    <Icon
+                      color={theme.colors.text.muted}
+                      icon="chevron-right"
+                    />
+                  }
+                />
+                <ListItem
+                  contentBefore={
+                    <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+                  }
+                  primary="Joe Chen"
+                  secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+                  contentAfter={
+                    <Icon
+                      color={theme.colors.text.muted}
+                      icon="chevron-right"
+                    />
+                  }
+                />
+              </ListSection>
+              <ListSection title="Hello world">
+                <ListItem
+                  contentBefore={
+                    <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+                  }
+                  primary="Joe Chen"
+                  secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+                  contentAfter={
+                    <Icon
+                      color={theme.colors.text.muted}
+                      icon="chevron-right"
+                    />
+                  }
+                />
+                <ListItem
+                  contentBefore={
+                    <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+                  }
+                  primary="Joe Chen"
+                  secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+                  contentAfter={
+                    <Icon
+                      color={theme.colors.text.muted}
+                      icon="chevron-right"
+                    />
+                  }
+                />
+              </ListSection>
+            </List>
+          </Layer>
+        </div>
+      </ToggleDarkMode>
     );
   })
   .add("no wrap", () => {
@@ -78,46 +97,46 @@ export const CollapseStories = storiesOf("List", module)
         />
         <List>
           <ListItem
-            iconBefore={
+            contentBefore={
               <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
             }
             primary="Ben McMahen"
             wrap={false}
             secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-            iconAfter={
+            contentAfter={
               <Icon color={theme.colors.text.muted} icon="chevron-right" />
             }
           />
           <ListItem
             wrap={false}
-            iconBefore={
+            contentBefore={
               <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
+            contentAfter={
               <Icon color={theme.colors.text.muted} icon="chevron-right" />
             }
           />
           <ListItem
             wrap={false}
-            iconBefore={
+            contentBefore={
               <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
+            contentAfter={
               <Icon color={theme.colors.text.muted} icon="chevron-right" />
             }
           />
           <ListItem
             wrap={false}
-            iconBefore={
+            contentBefore={
               <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
+            contentAfter={
               <Icon color={theme.colors.text.muted} icon="chevron-right" />
             }
           />
@@ -139,46 +158,46 @@ export const CollapseStories = storiesOf("List", module)
           <ListItem
             component="a"
             href="/"
-            iconBefore={
+            contentBefore={
               <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
             }
             primary="Ben McMahen"
             wrap={false}
             secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-            iconAfter={
+            contentAfter={
               <Icon color={theme.colors.text.muted} icon="chevron-right" />
             }
           />
           <ListItem
             wrap={false}
-            iconBefore={
+            contentBefore={
               <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
+            contentAfter={
               <Icon color={theme.colors.text.muted} icon="chevron-right" />
             }
           />
           <ListItem
             wrap={false}
-            iconBefore={
+            contentBefore={
               <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
+            contentAfter={
               <Icon color={theme.colors.text.muted} icon="chevron-right" />
             }
           />
           <ListItem
             wrap={false}
-            iconBefore={
+            contentBefore={
               <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            iconAfter={
+            contentAfter={
               <Icon color={theme.colors.text.muted} icon="chevron-right" />
             }
           />
