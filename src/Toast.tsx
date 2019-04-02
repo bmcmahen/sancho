@@ -9,6 +9,7 @@ import { useTheme, ThemeProvider } from "./Theme/Providers";
 const toastStyles = css`
   .Toaster__message-wrapper {
     padding: 8px;
+    text-align: left;
   }
 `;
 

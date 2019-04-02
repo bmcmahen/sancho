@@ -10154,13 +10154,6 @@ react-spring@^8.0.18:
   dependencies:
     "@babel/runtime" "^7.3.1"
 
-react-spring@^8.0.7:
-  version "8.0.8"
-  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.8.tgz#67b81f0f2d28923a15b6ce99f7eb50c93fe16e39"
-  integrity sha512-nXLFizNgGNZzrSTkpBn2yiDNnQ3HH9K256LThAzp67eh9aCzDtbzSnXrrO2VCrO6bGBJuxi8Dj7M9XiLupSAZw==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-
 react-style-proptype@^3.0.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/react-style-proptype/-/react-style-proptype-3.2.2.tgz#d8e998e62ce79ec35b087252b90f19f1c33968a0"
@@ -11698,15 +11691,15 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-toasted-notes@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/toasted-notes/-/toasted-notes-2.1.4.tgz#11f1133866e49e4ac38011a860dc25702c5b88eb"
-  integrity sha512-xSJcWWfF8v1/6Mby1zkM9+wU+FIOooInxhRYZ7F2rHaKyFyww3nvP84wjQCBBtFQp1HEvwocmlcUV/SxznY28Q==
+toasted-notes@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/toasted-notes/-/toasted-notes-2.1.5.tgz#885236d5d07635da6dd69e648216a9b87679b03a"
+  integrity sha512-bBDlW9KnG+grqhosEIoZ3+Dh/mSSuF7t+P7mT6p9azt8qm1qlusUBcF4/C1JxCedHf5jRGnL4X3wjo5XvASWCQ==
   dependencies:
     "@reach/alert" "^0.1.2"
     "@types/react" "^16.8.10"
     "@types/react-dom" "^16.8.3"
-    react-spring "^8.0.7"
+    react-spring "^8.0.18"
 
 topo@2.x.x:
   version "2.0.2"
