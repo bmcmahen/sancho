@@ -34,3 +34,4 @@ export * from "./SkipNav";
 export * from "./VisuallyHidden";
 
 export * from "./Theme";
+export * from "./Theme/Providers";

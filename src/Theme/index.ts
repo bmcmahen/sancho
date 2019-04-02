@@ -1,5 +1,5 @@
 import { defaultColors } from "./colors";
-import { shadows } from "./shadows";
+import { createShadows } from "./shadows";
 import { breakpoints } from "./breakpoints";
 
 const spacer = 1;
@@ -75,7 +75,7 @@ export const theme = {
   sizes,
   radii,
   fonts,
-  shadows,
+  shadows: createShadows(defaultColors.colors.scales),
   lineHeight: "1.5"
 };
 
