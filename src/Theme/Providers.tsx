@@ -94,10 +94,10 @@ function mergeColors(theme: Theme, colors: ThemeColors) {
  */
 
 interface ModeProps {
-  children: React.ReactNode;
+  children: RenderCallbackType | React.ReactNode;
 }
 
-export const Light = ({ children }: ModeProps) => {
+export const LightMode = ({ children }: ModeProps) => {
   const theme = useTheme();
   return <ColorMode colors={theme.modes.light}>{children}</ColorMode>;
 };
@@ -106,7 +106,7 @@ export const Light = ({ children }: ModeProps) => {
  * Provide a dark theme
  */
 
-export const Dark = ({ children }: ModeProps) => {
+export const DarkMode = ({ children }: ModeProps) => {
   const theme = useTheme();
   return <ColorMode colors={theme.modes.dark}>{children}</ColorMode>;
 };

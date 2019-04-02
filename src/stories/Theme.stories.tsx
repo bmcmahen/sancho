@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { storiesOf } from "@storybook/react";
-import { useTheme, Dark, Light } from "../Theme/Providers";
+import { useTheme, DarkMode, LightMode } from "../Theme/Providers";
 import { Theme } from "../Theme";
 
 function Example({ children }: { children: React.ReactNode }) {
@@ -35,30 +35,32 @@ function Basic() {
       >
         Hello world, this is the default theme. You can compose modes:
       </span>
-      <Dark>
-        <Example>
-          <div>
-            <Light>
-              {(theme: Theme) => (
-                <div
-                  css={{
-                    background: theme.colors.background.default,
-                    color: theme.colors.text.default
-                  }}
-                >
-                  Using render callback, light mode
-                </div>
-              )}
-            </Light>
-            This will be in dark mode
-            <Light>
-              <Example>
-                <div>But this will be in light mode!</div>
-              </Example>
-            </Light>
-          </div>
-        </Example>
-      </Dark>
+      <DarkMode>
+        <div css={{ border: "1px solid", padding: "1rem" }}>
+          <Example>
+            <div>
+              <LightMode>
+                {(theme: Theme) => (
+                  <div
+                    css={{
+                      background: theme.colors.background.default,
+                      color: theme.colors.text.default
+                    }}
+                  >
+                    Using render callback, LightMode mode
+                  </div>
+                )}
+              </LightMode>
+              This will be in DarkMode mode
+              <LightMode>
+                <Example>
+                  <div>But this will be in LightMode mode!</div>
+                </Example>
+              </LightMode>
+            </div>
+          </Example>
+        </div>
+      </DarkMode>
     </div>
   );
 }
