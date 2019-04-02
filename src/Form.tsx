@@ -328,7 +328,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             display: "block",
             width: "100%",
             lineHeight: theme.lineHeight,
-            color: theme.colors.text.dark,
+            color: theme.colors.text.default,
             background: "white",
             fontFamily: theme.fonts.base,
             boxShadow: `inset 0 0 0 1px ${alpha(

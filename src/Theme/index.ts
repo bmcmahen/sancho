@@ -1,4 +1,4 @@
-import colors, { palette, scales } from "./colors";
+import { defaultColors } from "./colors";
 import { shadows } from "./shadows";
 import { breakpoints } from "./breakpoints";
 
@@ -65,13 +65,10 @@ const fonts = {
   monospace: `SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`
 };
 
+export type ThemeColors = typeof defaultColors.colors;
+
 export const theme = {
-  colors: {
-    mode: "light",
-    ...colors,
-    palette,
-    scales
-  },
+  ...defaultColors,
   spaces,
   zIndex,
   breakpoints,

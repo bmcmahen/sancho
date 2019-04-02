@@ -20,6 +20,7 @@
     "@types/react-dom": "16.8.2",
     "@types/react-swipeable-views": "^0.12.2",
     "color": "^3.1.0",
+    "deepmerge": "^3.2.0",
     "focus-trap": "^4.0.2",
     "is-mobile": "^2.0.0",
     "lodash.uniqueid": "^4.0.1",
