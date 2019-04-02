@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import { jsx, css, SerializedStyles } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import theme, { Theme } from "./Theme";
+import { Theme } from "./Theme";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
 

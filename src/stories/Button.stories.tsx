@@ -4,9 +4,11 @@ import * as React from "react";
 import { Button, ButtonIntent, ButtonVariant, ButtonSize } from "../Button";
 import { storiesOf } from "@storybook/react";
 import theme from "../Theme";
+import { DarkMode } from "../Theme/Providers";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 export const ButtonStories = storiesOf("Button", module)
-  .add("basic", () => {
+  .add("variants", () => {
     const sizes: Array<ButtonSize> = ["xs", "sm", "md", "lg", "xl"];
 
     const appearance: Array<ButtonVariant> = ["default", "ghost", "outline"];
@@ -19,7 +21,7 @@ export const ButtonStories = storiesOf("Button", module)
     ];
 
     return (
-      <div>
+      <ToggleDarkMode>
         {appearance.map(appearance => (
           <div key={appearance}>
             {sizes.map(size => (
@@ -40,9 +42,10 @@ export const ButtonStories = storiesOf("Button", module)
             ))}
           </div>
         ))}
-      </div>
+      </ToggleDarkMode>
     );
   })
+
   .add("disabled", () => {
     const variants: Array<ButtonVariant> = ["default", "ghost", "outline"];
     const intents: Array<ButtonIntent> = [
@@ -54,7 +57,7 @@ export const ButtonStories = storiesOf("Button", module)
     ];
 
     return (
-      <div>
+      <ToggleDarkMode>
         {variants.map(variant => {
           return (
             <div key={variant}>
@@ -72,32 +75,34 @@ export const ButtonStories = storiesOf("Button", module)
             </div>
           );
         })}
-      </div>
+      </ToggleDarkMode>
     );
   })
   .add("with icons", () => (
-    <div
-      css={{
-        "& > *": {
-          margin: theme.spaces.md
-        }
-      }}
-    >
-      <Button iconBefore="chart">Icon before</Button>
-      <Button iconAfter="arrow-right">Icon after</Button>
-      <Button iconBefore="chart" iconAfter="arrow-right">
-        Icon before and after
-      </Button>
-      <Button intent="primary" iconAfter="arrow-right">
-        Icon after
-      </Button>
-      <Button intent="primary" variant="outline" iconAfter="arrow-right">
-        Icon after
-      </Button>
-      <Button intent="primary" variant="ghost" iconAfter="arrow-right">
-        Icon after
-      </Button>
-    </div>
+    <ToggleDarkMode>
+      <div
+        css={{
+          "& > *": {
+            margin: theme.spaces.md
+          }
+        }}
+      >
+        <Button iconBefore="chart">Icon before</Button>
+        <Button iconAfter="arrow-right">Icon after</Button>
+        <Button iconBefore="chart" iconAfter="arrow-right">
+          Icon before and after
+        </Button>
+        <Button intent="primary" iconAfter="arrow-right">
+          Icon after
+        </Button>
+        <Button intent="primary" variant="outline" iconAfter="arrow-right">
+          Icon after
+        </Button>
+        <Button intent="primary" variant="ghost" iconAfter="arrow-right">
+          Icon after
+        </Button>
+      </div>
+    </ToggleDarkMode>
   ))
   .add("block", () => {
     return (
