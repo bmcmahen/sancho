@@ -9,8 +9,8 @@ import { Badge } from "../Badge";
 import { storiesOf } from "@storybook/react";
 import { Layer } from "../Layer";
 import { TabContent } from "../TabContent";
-import { Icon } from "../Icons";
 import { Button } from "../Button";
+import { DarkMode } from "../Theme/Providers";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
@@ -87,34 +87,32 @@ export const TabsExamples = storiesOf("Tabs", module)
             >
               hello
             </div>
-            <div
-              css={{
-                background: theme.colors.palette.blue.base
-              }}
-            >
-              <Tabs
-                variant="evenly-spaced"
-                dark
-                slider={false}
-                value={0}
-                onChange={i => console.log(i)}
-              >
-                <Tab id="hello">
-                  <TabIcon icon="chat" label="Chat" />
-                </Tab>
-                <Tab id="cool">
-                  <TabIcon icon="annotation" label="Annotation" />
-                </Tab>
-                <Tab id="tables">
-                  <TabIcon icon="application" label="Application" />
-                </Tab>
-                <Tab id="players">
-                  <TabIcon icon="build" label="Build" />
-                </Tab>
-                <Tab id="dsf">
-                  <TabIcon icon="chart" label="Chart" />
-                </Tab>
-              </Tabs>
+            <div>
+              <DarkMode>
+                <Tabs
+                  variant="evenly-spaced"
+                  slider={false}
+                  css={{ background: "black" }}
+                  value={0}
+                  onChange={i => console.log(i)}
+                >
+                  <Tab id="hello">
+                    <TabIcon icon="chat" label="Chat" />
+                  </Tab>
+                  <Tab id="cool">
+                    <TabIcon icon="annotation" label="Annotation" />
+                  </Tab>
+                  <Tab id="tables">
+                    <TabIcon icon="application" label="Application" />
+                  </Tab>
+                  <Tab id="players">
+                    <TabIcon icon="build" label="Build" />
+                  </Tab>
+                  <Tab id="dsf">
+                    <TabIcon icon="chart" label="Chart" />
+                  </Tab>
+                </Tabs>
+              </DarkMode>
             </div>
           </div>
         </Layer>
@@ -145,61 +143,61 @@ function EvenlySpaced() {
           overflow: "hidden"
         }}
       >
-        <div
-          css={{
-            background: theme.colors.background.tint1,
-            boxSizing: "border-box",
-            width: "100%",
-            overflow: "hidden",
-            height: "200px"
-          }}
-        >
+        <DarkMode>
           <div
             css={{
-              background: theme.colors.palette.blue.base
+              background: theme.colors.background.tint1,
+              boxSizing: "border-box",
+              width: "100%",
+              overflow: "hidden",
+              height: "200px"
             }}
           >
-            <Container>
-              <Text
-                variant="h5"
-                css={{
-                  color: "white",
-                  textAlign: "center",
-                  padding: theme.spaces.md
-                }}
-              >
-                NHL Hockey
-              </Text>
-            </Container>
-            <Tabs
-              variant="evenly-spaced"
-              dark
-              value={value}
-              onChange={i => setValue(i)}
+            <div
+              css={{
+                background: theme.colors.palette.blue.base
+              }}
             >
-              <Tab badge={7} id="hello">
-                Games
-              </Tab>
-              <Tab id="cool">News</Tab>
-              <Tab id="tables">Tables</Tab>
-              <Tab id="players">Players</Tab>
-            </Tabs>
+              <Container>
+                <Text
+                  variant="h5"
+                  css={{
+                    textAlign: "center",
+                    padding: theme.spaces.md
+                  }}
+                >
+                  NHL Hockey
+                </Text>
+              </Container>
+              <Tabs
+                variant="evenly-spaced"
+                value={value}
+                onChange={i => setValue(i)}
+              >
+                <Tab badge={7} id="hello">
+                  Games
+                </Tab>
+                <Tab id="cool">News</Tab>
+                <Tab id="tables">Tables</Tab>
+                <Tab id="players">Players</Tab>
+              </Tabs>
+            </div>
+            <TabContent value={value} onChange={i => setValue(i)}>
+              <TabPanel id="hello" css={{ padding: "24px" }}>
+                What's up?
+              </TabPanel>
+              <TabPanel id="cool" css={{ padding: "24px" }}>
+                Some breaking news
+              </TabPanel>
+              <TabPanel id="tables" css={{ padding: "24px" }}>
+                Some breaking news
+              </TabPanel>
+              <TabPanel id="players" css={{ padding: "24px" }}>
+                Some player info
+              </TabPanel>
+            </TabContent>
           </div>
-          <TabContent value={value} onChange={i => setValue(i)}>
-            <TabPanel id="hello" css={{ padding: "24px" }}>
-              What's up?
-            </TabPanel>
-            <TabPanel id="cool" css={{ padding: "24px" }}>
-              Some breaking news
-            </TabPanel>
-            <TabPanel id="tables" css={{ padding: "24px" }}>
-              Some breaking news
-            </TabPanel>
-            <TabPanel id="players" css={{ padding: "24px" }}>
-              Some player info
-            </TabPanel>
-          </TabContent>
-        </div>
+        </DarkMode>
       </Layer>
     </div>
   );

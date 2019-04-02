@@ -2,7 +2,6 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
-import theme from "./Theme";
 import { buttonReset } from "./Button";
 import { useMeasure } from "./Collapse";
 import { Icon } from "./Icons";
@@ -13,6 +12,7 @@ import { alpha } from "./Theme/colors";
 import { useSpring, animated } from "react-spring";
 import { usePrevious } from "./Hooks/previous";
 import { Badge } from "./Badge";
+import { useTheme } from "./Theme/Providers";
 
 /**
  * Ideas for improving accessibility:
@@ -32,8 +32,6 @@ interface SliderPositions {
 export interface TabsProps {
   /** The currently selected index */
   value: number;
-  /** Whether the tab is on a dark background */
-  dark?: boolean;
   /** Toggle slider visibiliby */
   slider?: boolean;
   /** Whether tabs should be left-aligned or justified */
@@ -50,14 +48,15 @@ export interface TabsProps {
 export const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
   variant = "default",
-  dark = false,
   slider: enableSlider = true,
   value,
   onChange,
   ...other
 }) => {
+  const theme = useTheme();
   const tablist = React.useRef<HTMLDivElement>(null);
   const refs = React.useRef<Map<number, HTMLButtonElement | null>>(new Map());
+  const dark = theme.colors.mode === "dark";
 
   // We store the 'value' prop to determine when we should actually
   // animated our slider. ie., only when the index changes.
@@ -200,7 +199,6 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
               ref: (el: HTMLButtonElement | null) => {
                 refs.current!.set(i, el);
               },
-              dark,
               onParentSelect: () => {
                 onChange(i);
               }
@@ -229,7 +227,6 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 Tabs.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func,
-  dark: PropTypes.bool,
   slider: PropTypes.bool,
   variant: PropTypes.oneOf(["default", "evenly-spaced"]),
   children: PropTypes.node
@@ -243,7 +240,6 @@ interface LocalTabProps {
   ref: React.Ref<HTMLButtonElement>;
   onParentSelect: () => void;
   isActive: boolean;
-  dark: boolean;
 }
 
 export interface TabProps
@@ -275,12 +271,14 @@ export const Tab: React.RefForwardingComponent<
       component: Component = "button",
       badge,
       onClick,
-      dark,
       children,
       ...other
     }: TabProps,
     forwarded: React.Ref<HTMLButtonElement>
   ) => {
+    const theme = useTheme();
+    const dark = theme.colors.mode === "dark";
+
     function getTextColor(isDark: boolean | undefined) {
       if (isDark) {
         return isActive ? "white" : "rgba(255,255,255,0.65)";
@@ -289,14 +287,26 @@ export const Tab: React.RefForwardingComponent<
       return isActive ? theme.colors.text.selected : theme.colors.text.muted;
     }
 
-    function getBadgeBackground(isDark: boolean | undefined) {
+    function getBadgeColors(isDark: boolean | undefined) {
+      let background = "white";
+      let color = "white";
+
       if (isDark) {
-        return isActive ? "white" : "rgba(255,255,255,0.65)";
+        background = isActive ? "white" : "rgba(255,255,255,0.65)";
+        color = isActive
+          ? theme.colors.text.selected
+          : theme.colors.text.selected;
+      } else {
+        background = isActive
+          ? theme.colors.text.selected
+          : theme.colors.scales.gray[6];
+        color = isActive ? "white" : theme.colors.text.selected;
       }
 
-      return isActive
-        ? theme.colors.text.selected
-        : theme.colors.scales.gray[6];
+      return {
+        background,
+        color
+      };
     }
 
     const mounted = React.useRef(false);
@@ -396,14 +406,7 @@ export const Tab: React.RefForwardingComponent<
         {badge && (
           <div css={{ display: "inline", marginLeft: theme.spaces.sm }}>
             {typeof badge === "string" || typeof badge === "number" ? (
-              <Badge
-                css={{
-                  background: getBadgeBackground(dark),
-                  color: getTextColor(!dark)
-                }}
-              >
-                {badge}
-              </Badge>
+              <Badge css={getBadgeColors(dark)}>{badge}</Badge>
             ) : (
               badge
             )}
