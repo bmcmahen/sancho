@@ -6,6 +6,7 @@ import { Button } from "../Button";
 import { MenuList, MenuItem, MenuDivider } from "../Menu";
 import { IconButton } from "../IconButton";
 import { storiesOf } from "@storybook/react";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 interface LinkProps {
   href: string;
@@ -29,40 +30,44 @@ const Link = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => (
 export const PopoverStories = storiesOf("Popover", module)
   .add("Focus management", () => {
     return (
-      <div css={{ padding: "300px", background: "#eee" }}>
-        <Popover
-          content={
-            <div css={{ padding: "2rem" }}>
-              <Button>I should focus</Button>
-            </div>
-          }
-        >
-          <Button>Hello world!</Button>
-        </Popover>
-      </div>
+      <ToggleDarkMode>
+        <div css={{ padding: "300px", background: "#eee" }}>
+          <Popover
+            content={
+              <div css={{ padding: "2rem" }}>
+                <Button>I should focus</Button>
+              </div>
+            }
+          >
+            <Button>Hello world!</Button>
+          </Popover>
+        </div>
+      </ToggleDarkMode>
     );
   })
   .add("Dropdown menu", () => {
     return (
-      <div css={{ padding: "300px", minHeight: "150vh", background: "#eee" }}>
-        <Popover
-          content={
-            <MenuList>
-              <MenuItem onSelect={() => alert("Hello 1")}>
-                I will trigger an alert
-              </MenuItem>
-              <MenuItem component="a" href="/bacon">
-                I'm a link
-              </MenuItem>
+      <ToggleDarkMode>
+        <div css={{ padding: "300px", minHeight: "80vh" }}>
+          <Popover
+            content={
+              <MenuList>
+                <MenuItem onSelect={() => alert("Hello 1")}>
+                  I will trigger an alert
+                </MenuItem>
+                <MenuItem component="a" href="/bacon">
+                  I'm a link
+                </MenuItem>
 
-              <MenuDivider />
-              <MenuItem>Item three</MenuItem>
-            </MenuList>
-          }
-        >
-          <Button>I should trigger popover</Button>
-        </Popover>
-      </div>
+                <MenuDivider />
+                <MenuItem>Item three</MenuItem>
+              </MenuList>
+            }
+          >
+            <Button>I should trigger popover</Button>
+          </Popover>
+        </div>
+      </ToggleDarkMode>
     );
   })
   .add("Triggered with an icon button", () => {

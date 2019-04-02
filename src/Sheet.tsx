@@ -2,12 +2,13 @@
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { useTransition, animated } from "react-spring";
-import theme from "./Theme";
 import { useFocusElement } from "./Hooks/focus";
 import { Overlay } from "./Overlay";
 
 import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
+import { useTheme } from "./Theme/Providers";
+import { Theme } from "./Theme";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -46,7 +47,7 @@ function getTransitionForPosition(position: SheetPositions) {
   }
 }
 
-const positions = {
+const positions = (theme: Theme) => ({
   left: css({
     top: 0,
     left: 0,
@@ -102,11 +103,11 @@ const positions = {
       paddingTop: theme.spaces.md
     }
   })
-};
+});
 
 const noop = () => {};
 
-export type SheetPositions = keyof typeof positions;
+export type SheetPositions = "left" | "top" | "bottom" | "right";
 
 interface SheetProps {
   /** Whether the sheet is visible */
@@ -142,7 +143,9 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   onRequestClose,
   ...props
 }) => {
+  const theme = useTheme();
   const { bind: bindFocus } = useFocusElement(isOpen);
+  const positionsStyle = React.useMemo(() => positions(theme), [theme]);
 
   const transitions = useTransition(
     isOpen,
@@ -179,7 +182,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                       opacity: 1,
                       position: "fixed"
                     },
-                    positions[position]
+                    positionsStyle[position]
                   ]}
                   {...other}
                   {...props}
@@ -188,7 +191,10 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                     <RemoveScroll forwardProps>
                       <div
                         className="Sheet__container"
-                        css={{ background: "white", height: "100%" }}
+                        css={{
+                          background: theme.colors.background.default,
+                          height: "100%"
+                        }}
                       >
                         {children}
                       </div>

@@ -3,12 +3,13 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import { MenuList, MenuItem, MenuDivider } from "../Menu";
 import { storiesOf } from "@storybook/react";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 export const MenuStories = storiesOf("MenuList", module).add(
   "keyboard controls",
   () => {
     return (
-      <div>
+      <ToggleDarkMode>
         <MenuList>
           <MenuItem>Hello world number 1</MenuItem>
           <MenuItem>Hello world number 2</MenuItem>
@@ -25,7 +26,7 @@ export const MenuStories = storiesOf("MenuList", module).add(
           <MenuItem>Hello world number 2</MenuItem>
           <MenuItem>Hello world number 2</MenuItem>
         </MenuList>
-      </div>
+      </ToggleDarkMode>
     );
   }
 );

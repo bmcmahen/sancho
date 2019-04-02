@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import { Text } from "./Text";
 import color from "color";
 import PropTypes from "prop-types";
 import { RequestCloseContext } from "./Sheet";
+import { useTheme } from "./Theme/Providers";
 
 const KeyCodes = {
   ArrowUp: 38,
@@ -28,6 +28,7 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
   focusableChildren = [],
   ...other
 }) => {
+  const theme = useTheme();
   const disabled = new Map();
   const [focusIndex, setFocusIndex] = React.useState<number | null>(null);
   const kids = React.Children.toArray(children);
@@ -160,6 +161,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   disabled,
   ...other
 }) => {
+  const theme = useTheme();
   const localRef = React.useRef<HTMLDivElement>(null);
   const closeParent = React.useContext(RequestCloseContext);
 
@@ -195,9 +197,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
           outline: "none"
         },
         ":active": {
-          backgroundColor: color(theme.colors.background.tint1)
-            .darken(0.1)
-            .string()
+          backgroundColor: theme.colors.background.tint2
         },
         [theme.breakpoints.md]: {
           padding: `${theme.spaces.xs} ${theme.spaces.md}`
@@ -242,6 +242,7 @@ MenuItem.propTypes = {
 interface MenuDividerProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function MenuDivider(props: MenuDividerProps) {
+  const theme = useTheme();
   return (
     <div
       css={{
@@ -262,6 +263,7 @@ interface MenuLabelProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const MenuLabel: React.FunctionComponent<MenuLabelProps> = props => {
+  const theme = useTheme();
   return (
     <Text
       variant="uppercase"

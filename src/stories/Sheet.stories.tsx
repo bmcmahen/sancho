@@ -5,6 +5,7 @@ import { storiesOf } from "@storybook/react";
 import { Sheet, SheetPositions } from "../Sheet";
 import { Button } from "../Button";
 import { MenuList, MenuItem, MenuDivider } from "../Menu";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 export const SheetExamples = storiesOf("Sheet", module)
   .add("Different positions", () => {
@@ -27,21 +28,23 @@ export const SheetExamples = storiesOf("Sheet", module)
     });
 
     return (
-      <div
-        css={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignItems: "center",
-          height: "100%",
-          "& > *": {
-            margin: "1rem",
-            width: "200px"
-          }
-        }}
-      >
-        {examples}
-      </div>
+      <ToggleDarkMode>
+        <div
+          css={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "100%",
+            "& > *": {
+              margin: "1rem",
+              width: "200px"
+            }
+          }}
+        >
+          {examples}
+        </div>
+      </ToggleDarkMode>
     );
   })
   .add("Sheet menu", () => {

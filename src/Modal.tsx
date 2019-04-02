@@ -3,12 +3,12 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import { CloseButton } from "./IconButton";
-import theme from "./Theme";
 import { useTransition, animated } from "react-spring";
 import { Overlay } from "./Overlay";
 import { useFocusElement } from "./Hooks/focus";
 import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
+import { useTheme } from "./Theme/Providers";
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Whether the modal is showing */
@@ -36,6 +36,7 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
   children,
   ...other
 }) => {
+  const theme = useTheme();
   const transitions = useTransition(isOpen, null, {
     from: { opacity: 0, transform: "scale(0.9)" },
     enter: { opacity: 1, transform: "scale(1)" },
@@ -68,7 +69,7 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
                   css={[
                     {
                       zIndex: theme.zIndex.modal,
-                      background: "white",
+                      background: theme.colors.background.default,
                       boxShadow: theme.shadows.md,
                       borderRadius: theme.radii.lg,
                       margin: "16px",
