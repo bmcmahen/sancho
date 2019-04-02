@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import { IconButton } from "../IconButton";
+import { IconButton, CloseButton } from "../IconButton";
 import { storiesOf } from "@storybook/react";
 import { ButtonSize } from "../Button";
 import { ToggleDarkMode } from "./ToggleDarkMode";
@@ -46,6 +46,8 @@ export const IconButtonStories = storiesOf("IconButton", module)
               />
             );
           })}
+
+          <CloseButton />
         </React.Fragment>
       </ToggleDarkMode>
     );

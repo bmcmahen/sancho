@@ -3,6 +3,7 @@ import { jsx, Global, css } from "@emotion/core";
 import * as React from "react";
 import toaster, { Position } from "toasted-notes";
 import { Alert, AlertIntentions } from "./Alert";
+import { Theme } from "./Theme";
 
 const toastStyles = css`
   .Toaster__manager-top {
@@ -94,6 +95,7 @@ interface Toast {
   duration?: number | null;
   title?: string;
   subtitle?: string;
+  theme?: Theme;
   intent?: AlertIntentions;
   render?: (options: renderArgs) => React.ReactNode;
 }

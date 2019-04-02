@@ -82,17 +82,7 @@ export const CloseButton: React.FunctionComponent<CloseButtonProps> = ({
   label = "Close",
   ...other
 }) => {
-  return (
-    <IconButton
-      variant="ghost"
-      css={{
-        color: theme.colors.text.default
-      }}
-      label={label}
-      icon="cross"
-      {...other}
-    />
-  );
+  return <IconButton variant="ghost" label={label} icon="cross" {...other} />;
 };
 
 CloseButton.propTypes = {

@@ -13,6 +13,7 @@ import { animated } from "react-spring";
 import { Sheet } from "./Sheet";
 import { useMedia } from "use-media";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 const AnimatedLayer = animated(Layer) as React.FunctionComponent<any>;
 
@@ -39,6 +40,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
   closeOnMenuItemClick = true,
   isOpen: defaultShow = false
 }) => {
+  const theme = useTheme();
   const [show, setShow] = React.useState(defaultShow);
   const child = React.Children.only(children);
   const triggerRef = React.useRef<HTMLButtonElement | null>(null);
@@ -158,7 +160,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
         >
           <div
             data-placement={placement}
-            css={arrowStyles("white")}
+            css={arrowStyles(theme.colors.background.default)}
             ref={arrowProps.ref}
             style={arrowProps.style}
           />
