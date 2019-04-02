@@ -4,6 +4,7 @@ import * as React from "react";
 import { Alert, AlertIntentions } from "../Alert";
 import theme from "../Theme";
 import { storiesOf } from "@storybook/react";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 const appearances: Array<AlertIntentions> = [
   "info",
@@ -16,7 +17,7 @@ const appearances: Array<AlertIntentions> = [
 export const AlertStories = storiesOf("Alert", module).add(
   "color variants",
   () => (
-    <div>
+    <ToggleDarkMode>
       {appearances.map(key => (
         <Alert
           css={{
@@ -43,6 +44,6 @@ export const AlertStories = storiesOf("Alert", module).add(
           console.log("close");
         }}
       />
-    </div>
+    </ToggleDarkMode>
   )
 );

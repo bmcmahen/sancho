@@ -3,22 +3,28 @@ import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import ReachAlert from "@reach/alert";
 import { Text } from "./Text";
-import theme from "./Theme";
 import { Icon } from "./Icons";
 import { IconName } from "@blueprintjs/icons";
 import { CloseButton } from "./IconButton";
 import { LayerElevations } from "./Layer";
 import PropTypes from "prop-types";
+import { Theme } from "./Theme";
+import { useTheme } from "./Theme/Providers";
 
-const alertIntentions = {
-  info: theme.colors.intent.none.base,
-  success: theme.colors.intent.success.base,
-  question: theme.colors.intent.primary.base,
-  danger: theme.colors.intent.danger.base,
-  warning: theme.colors.intent.warning.base
-};
+const alertIntentions = (theme: Theme) => ({
+  info: theme.colors.intent.none,
+  success: theme.colors.intent.success,
+  question: theme.colors.intent.primary,
+  danger: theme.colors.intent.danger,
+  warning: theme.colors.intent.warning
+});
 
-export type AlertIntentions = keyof typeof alertIntentions;
+export type AlertIntentions =
+  | "info"
+  | "success"
+  | "question"
+  | "danger"
+  | "warning";
 
 const icons: { [key in AlertIntentions]: IconName } = {
   info: "info-sign",
@@ -61,13 +67,23 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
   intent = "info",
   ...other
 }) => {
+  const theme = useTheme();
+  const intentions = React.useMemo(() => alertIntentions(theme), [theme]);
+  const dark = theme.colors.mode === "dark";
+  const color = intentions[intent];
+  let accent = dark ? color.base : color.base;
+
+  if (dark && intent === "info") {
+    accent = color.light;
+  }
+
   const contents = title ? (
     <div
       className="Alert__title"
       css={{ display: "flex", alignItems: "flex-start" }}
     >
       <div css={{ flex: "0 0 auto", marginTop: "4px" }}>
-        <Icon color={alertIntentions[intent]} icon={icons[intent]} />
+        <Icon color={accent} icon={icons[intent]} />
       </div>
       <div css={{ marginLeft: theme.spaces.md }}>
         <Text
@@ -101,7 +117,9 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
     <Component
       className="Alert"
       css={{
-        backgroundColor: "white",
+        backgroundColor: dark
+          ? theme.colors.background.tint1
+          : theme.colors.background.default,
         overflow: "hidden",
         maxWidth: "650px",
         position: "relative",
@@ -119,7 +137,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
             top: 0,
             left: 0,
             bottom: 0,
-            backgroundColor: alertIntentions[intent]
+            backgroundColor: accent
           }}
         />
         <div
