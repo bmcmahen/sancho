@@ -1,5 +1,6 @@
 import open from "open-color";
 import color from "color";
+import { createShadows, createDarkShadows } from "./shadows";
 
 export function alpha(c: string, amount: number) {
   return color(c)
@@ -100,7 +101,8 @@ function generateLightMode(scales: ScalesType, palette: PaletteType) {
         .toString(),
       default: scales.gray[9],
       selected: palette.blue.base
-    }
+    },
+    shadows: createShadows(scales.gray[8])
   };
 }
 
@@ -120,7 +122,8 @@ function generateDarkMode(scales: ScalesType, palette: PaletteType) {
       muted: "rgba(255,255,255,0.7)",
       default: "white",
       selected: palette.blue.base
-    }
+    },
+    shadows: createDarkShadows(scales.gray[0])
   };
 }
 

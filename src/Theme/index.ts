@@ -75,7 +75,7 @@ export const theme = {
   sizes,
   radii,
   fonts,
-  shadows: createShadows(defaultColors.colors.scales),
+  shadows: defaultColors.modes.light.shadows,
   lineHeight: "1.5"
 };
 

@@ -87,6 +87,7 @@ const ColorMode = ({ colors, children }: ColorMode) => {
 function mergeColors(theme: Theme, colors: ThemeColors) {
   return {
     ...theme,
+    shadows: colors.shadows,
     colors
   };
 }
