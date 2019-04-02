@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import { Layer } from "./Layer";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 type SectionTypeVariants = "TableHead" | "TableBody";
 
@@ -16,16 +16,6 @@ const TableSectionContext = React.createContext<TableSectionContextType>({
 });
 
 const TableContext = React.createContext({ fixed: false });
-
-const tableStyle = css({
-  borderSpacing: 0,
-  borderCollapse: "separate",
-  width: "100%",
-  fontFamily: theme.fonts.base,
-  WebkitAppearance: "none",
-  WebkitFontSmoothing: "antialiased",
-  display: "table"
-});
 
 /**
  * A Table provides a useful abstraction for managing rows and columns.
@@ -44,6 +34,8 @@ export const Table: React.FunctionComponent<TableProps> = ({
   fixed,
   ...other
 }) => {
+  const theme = useTheme();
+
   return (
     <div
       css={{
@@ -53,10 +45,17 @@ export const Table: React.FunctionComponent<TableProps> = ({
       }}
     >
       <table
-        css={[
-          tableStyle,
-          { minWidth, tableLayout: fixed ? "fixed" : undefined }
-        ]}
+        css={{
+          borderSpacing: 0,
+          borderCollapse: "separate",
+          width: "100%",
+          fontFamily: theme.fonts.base,
+          WebkitAppearance: "none",
+          WebkitFontSmoothing: "antialiased",
+          display: "table",
+          minWidth,
+          tableLayout: fixed ? "fixed" : undefined
+        }}
         {...other}
       >
         {fixed && (
@@ -112,6 +111,7 @@ export const TableRow: React.FunctionComponent<TableRowProps> = ({
   children,
   ...other
 }) => {
+  const theme = useTheme();
   const { type: tableSectionType } = React.useContext(TableSectionContext);
 
   const buttonProps = onClick
@@ -166,18 +166,7 @@ const tableCellAlignments = {
   })
 };
 
-const tableCellVariants = {
-  head: css({
-    fontWeight: 500,
-    fontSize: theme.sizes[0],
-    color: theme.colors.text.muted
-  }),
-  body: css({
-    fontWeight: 400,
-    fontSize: theme.sizes[0],
-    color: theme.colors.text.default
-  })
-};
+type tableCellVariants = "head" | "body";
 
 type TableCellBaseProps = React.ThHTMLAttributes<HTMLTableHeaderCellElement> &
   React.TdHTMLAttributes<HTMLTableDataCellElement>;
@@ -197,6 +186,7 @@ export const TableCell: React.FunctionComponent<TableCellProps> = ({
   children,
   ...other
 }) => {
+  const theme = useTheme();
   const { type: tableSectionType } = React.useContext(TableSectionContext);
 
   const Component =
@@ -230,7 +220,17 @@ export const TableCell: React.FunctionComponent<TableCellProps> = ({
           textOverflow: "ellipsis",
           overflow: "hidden"
         },
-        tableCellVariants[type],
+        type === "head"
+          ? {
+              fontWeight: 500,
+              fontSize: theme.sizes[0],
+              color: theme.colors.text.muted
+            }
+          : {
+              fontWeight: 400,
+              fontSize: theme.sizes[0],
+              color: theme.colors.text.default
+            },
         tableCellAlignments[align]
       ]}
       scope="col"
@@ -243,7 +243,7 @@ export const TableCell: React.FunctionComponent<TableCellProps> = ({
 
 TableCell.propTypes = {
   align: PropTypes.oneOf(Object.keys(tableCellAlignments)),
-  variant: PropTypes.oneOf(Object.keys(tableCellVariants))
+  variant: PropTypes.oneOf(["body", "head"])
 };
 
 /**
@@ -282,6 +282,7 @@ export const ExpandingRow: React.FunctionComponent<ExpandingRowProps> = ({
   content,
   children
 }) => {
+  const theme = useTheme();
   const [selected, setSelected] = React.useState(false);
 
   function close() {
@@ -329,7 +330,6 @@ export const ExpandingRow: React.FunctionComponent<ExpandingRowProps> = ({
             <Layer
               css={{
                 position: "absolute",
-                backgroundColor: "white",
                 top: "-49px",
                 left: "-16px",
                 right: "-16px",

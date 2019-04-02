@@ -4,11 +4,11 @@ import * as React from "react";
 import { Positioner, Placements } from "./Positions";
 import { ReferenceChildrenProps } from "react-popper";
 import { Text } from "./Text";
-import theme from "./Theme";
 import { animated } from "react-spring";
 import PropTypes from "prop-types";
 import { isMobile } from "is-mobile";
 import { useUid } from "./Hooks/use-uid";
+import { useTheme } from "./Theme/Providers";
 
 interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The content of the tooltip */
@@ -28,7 +28,8 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   ...other
 }) => {
   const id = useUid();
-
+  const theme = useTheme();
+  const dark = theme.colors.mode === "dark";
   const [show, setShow] = React.useState(false);
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
@@ -80,7 +81,11 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
           <div
             className="Tooltip__content"
             data-placement={placement}
-            css={arrowStyles(theme.colors.palette.gray.dark)}
+            css={arrowStyles(
+              dark
+                ? theme.colors.background.tint1
+                : theme.colors.palette.gray.dark
+            )}
             ref={arrowProps.ref}
             style={arrowProps.style}
           />
@@ -98,7 +103,9 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
                 borderRadius: theme.radii.sm,
                 padding: `${theme.spaces.xs} ${theme.spaces.md}`,
                 color: "white",
-                background: theme.colors.palette.gray.dark
+                background: dark
+                  ? theme.colors.background.tint1
+                  : theme.colors.palette.gray.dark
               }
             ]}
           >

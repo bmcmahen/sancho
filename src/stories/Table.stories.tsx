@@ -15,6 +15,7 @@ import {
 import { Text } from "../Text";
 import { Button } from "../Button";
 import { Toolbar } from "../Toolbar";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 let id = 0;
 function createData(
@@ -38,42 +39,42 @@ const rows = [
 
 export const TableExamples = storiesOf("Tables", module)
   .add("Minimum size with scroll", () => (
-    <div css={{ padding: "48px" }}>
-      <Layer elevation="xs" css={{ overflow: "hidden" }}>
-        <div
-          css={{
-            borderBottom: `1px solid ${theme.colors.border.default}`,
-            background: theme.colors.background.tint1,
-            height: "150px",
-            width: "100%"
-          }}
-        />
-        <Table minWidth="800px">
-          <TableHead>
-            <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat (g)</TableCell>
-              <TableCell align="right">Carbs (g)</TableCell>
-              <TableCell align="right">Protein (g)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+    <ToggleDarkMode>
+      <div css={{ padding: "48px" }}>
+        <Layer elevation="xs" css={{ overflow: "hidden" }}>
+          <div
+            css={{
+              height: "150px",
+              width: "100%"
+            }}
+          />
+          <Table minWidth="800px">
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert (100g serving)</TableCell>
+                <TableCell align="right">Calories</TableCell>
+                <TableCell align="right">Fat (g)</TableCell>
+                <TableCell align="right">Carbs (g)</TableCell>
+                <TableCell align="right">Protein (g)</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Layer>
-    </div>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right">{row.calories}</TableCell>
+                  <TableCell align="right">{row.fat}</TableCell>
+                  <TableCell align="right">{row.carbs}</TableCell>
+                  <TableCell align="right">{row.protein}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Layer>
+      </div>
+    </ToggleDarkMode>
   ))
   .add("Fixed layout", () => (
     <div
