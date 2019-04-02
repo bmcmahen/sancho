@@ -41,7 +41,7 @@ export const LayerStories = storiesOf("Layer", module)
           elevation={"md"}
         >
           <Text>Hello world. This is dark mode.</Text>
-          <LayerLoading loading={true} />
+          <LayerLoading label="Loading in the dark" loading={true} />
         </Layer>
       </DarkMode>
     );

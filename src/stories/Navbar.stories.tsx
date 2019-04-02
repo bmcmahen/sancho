@@ -8,10 +8,10 @@ import theme from "../Theme";
 import { Layer } from "../Layer";
 import { storiesOf } from "@storybook/react";
 import { Toolbar } from "../Toolbar";
+import { DarkMode } from "../Theme/Providers";
 
-export const NavbarStories = storiesOf("Navbar", module).add(
-  "elevations",
-  () => {
+export const NavbarStories = storiesOf("Navbar", module)
+  .add("elevations", () => {
     return (
       <div
         css={{
@@ -48,5 +48,34 @@ export const NavbarStories = storiesOf("Navbar", module).add(
         </Layer>
       </div>
     );
-  }
-);
+  })
+  .add("dark", () => {
+    return (
+      <div>
+        <DarkMode>
+          <Navbar
+            css={{
+              color: theme.colors.text.default
+            }}
+          >
+            <Toolbar>
+              <Text gutter={false} variant="h5">
+                Subtitles
+              </Text>
+              <div css={{ flex: "1" }} />
+              <Button
+                size="md"
+                css={{ marginRight: theme.spaces.sm }}
+                variant="ghost"
+              >
+                Sign up
+              </Button>
+              <Button size="md" intent="primary">
+                Login
+              </Button>
+            </Toolbar>
+          </Navbar>
+        </DarkMode>
+      </div>
+    );
+  });

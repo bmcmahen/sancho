@@ -76,7 +76,7 @@ export const LayerLoading: React.FunctionComponent<LayerLoadingProps> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: isDark ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.7)",
+        background: isDark ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.7)",
         zIndex: 5,
         transition: "opacity 0.3s ease",
         pointerEvents: loading ? "auto" : "none",

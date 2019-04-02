@@ -107,10 +107,10 @@ function generateLightMode(scales: ScalesType, palette: PaletteType) {
 function generateDarkMode(scales: ScalesType, palette: PaletteType) {
   return {
     background: {
-      tint1: scales.gray[8],
-      tint2: scales.gray[7],
+      tint1: scales.gray[7],
+      tint2: scales.gray[6],
       overlay: alpha(scales.gray[9], 0.6),
-      default: scales.gray[9]
+      default: scales.gray[8]
     },
     border: {
       default: scales.gray[7],

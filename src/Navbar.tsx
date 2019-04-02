@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx, css, SerializedStyles } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
+import theme, { Theme } from "./Theme";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 type Positions = "fixed" | "static" | "absolute" | "sticky";
 
@@ -12,7 +13,7 @@ export interface NavbarProps {
   position?: Positions;
 }
 
-const styles: { [key in Positions]: SerializedStyles } = {
+const getStyles = (theme: Theme) => ({
   fixed: css({
     position: "fixed",
     top: 0,
@@ -35,7 +36,7 @@ const styles: { [key in Positions]: SerializedStyles } = {
     top: 0,
     zIndex: theme.zIndex.sticky
   })
-};
+});
 
 /**
  * A Navbar is used to provide app based navigation. Typically
@@ -47,11 +48,14 @@ export const Navbar: React.FunctionComponent<NavbarProps> = ({
   children,
   ...other
 }) => {
+  const theme = useTheme();
+  const styles = React.useMemo(() => getStyles(theme), [theme]);
+
   return (
     <nav
       css={[
         {
-          background: "white",
+          background: theme.colors.background.default,
           zIndex: position === "fixed" ? theme.zIndex.fixed : undefined,
           boxShadow: theme.shadows.sm
         },
