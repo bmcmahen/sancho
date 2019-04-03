@@ -152,7 +152,10 @@ function getBaseStyles(theme: Theme) {
     fontFamily: theme.fonts.base,
     border: "none",
     boxShadow: dark
-      ? "none"
+      ? `inset 0 0 0 1px ${alpha(
+          theme.colors.palette.gray.dark,
+          1
+        )}, inset 0 1px 2px ${alpha(theme.colors.palette.gray.dark, 1)}`
       : `inset 0 0 0 1px ${alpha(gray, 0.15)}, inset 0 1px 2px ${alpha(
           gray,
           0.2
@@ -370,9 +373,18 @@ export const Select: React.FunctionComponent<SelectProps> = ({
               : theme.colors.background.default,
             fontFamily: theme.fonts.base,
             boxShadow: dark
-              ? "none"
-              : `inset 0 0 0 1px ${alpha(gray, 0.15)}, inset 0 1px 2px ${alpha(
-                  gray,
+              ? `inset 0 0 0 1px ${alpha(
+                  theme.colors.palette.gray.dark,
+                  0.8
+                )}, inset 0 1px 2px ${alpha(
+                  theme.colors.palette.gray.dark,
+                  0.85
+                )}`
+              : `inset 0 0 0 1px ${alpha(
+                  theme.colors.palette.gray.dark,
+                  0.15
+                )}, inset 0 1px 2px ${alpha(
+                  theme.colors.palette.gray.dark,
                   0.2
                 )}`,
             border: "none",

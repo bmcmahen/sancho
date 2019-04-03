@@ -9,8 +9,8 @@ import { Text } from "../Text";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
 
-export const FormStories = storiesOf("Forms", module).add("input types", () => (
-  <ToggleDarkMode>
+export const FormStories = storiesOf("Forms", module)
+  .add("input types", () => (
     <div
       css={{
         display: "flex",
@@ -53,5 +53,49 @@ export const FormStories = storiesOf("Forms", module).add("input types", () => (
         </form>
       </Layer>
     </div>
-  </ToggleDarkMode>
-));
+  ))
+  .add("contrast testing", () => {
+    return (
+      <div
+        css={{
+          display: "flex",
+          background: theme.modes.dark.background.tint2,
+          justifyContent: "center",
+          paddingTop: theme.spaces.xl,
+          paddingBottom: theme.spaces.xl
+        }}
+      >
+        <div css={{ maxWidth: "400px", width: "100%" }}>
+          <form css={{ padding: theme.spaces.lg }}>
+            <InputGroup error="Required field" label="Email address">
+              <Input placeholder="ben.mcmahen@gmail.com" />
+            </InputGroup>
+            <InputGroup label="Gender">
+              <Select>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </Select>
+            </InputGroup>
+            <InputGroup label="Gender">
+              <div>
+                <Check label="Male" checked />
+                <Check label="Female" />
+                <Check label="Other" />
+              </div>
+            </InputGroup>
+            <InputGroup
+              label="Example textarea"
+              helpText="Please provide a brief description of yourself. This will go on your profile."
+            >
+              <TextArea placeholder="Something about me" />
+            </InputGroup>
+            <div css={{ textAlign: "right", marginTop: `${theme.spaces.md}` }}>
+              <Button intent="primary">Submit</Button>
+            </div>
+            f
+          </form>
+        </div>
+      </div>
+    );
+  });
