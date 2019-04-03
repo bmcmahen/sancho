@@ -138,7 +138,7 @@ function defaultGenerateLightMode(scales: ScalesType, palette: PaletteType) {
     },
     border: {
       default: alpha(scales.gray[9], 0.12),
-      muted: alpha(scales.gray[9], 0.06)
+      muted: alpha(scales.gray[9], 0.08)
     },
     text: {
       muted: color(scales.gray[7])
@@ -175,7 +175,7 @@ function defaultGenerateDarkMode(scales: ScalesType, palette: PaletteType) {
     },
     text: {
       muted: "rgba(255,255,255,0.7)",
-      default: "white",
+      default: "rgba(255,255,255,0.88)",
       selected: palette.blue.base
     },
     shadows: createDarkShadows("black")

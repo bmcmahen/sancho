@@ -3,7 +3,7 @@ import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import color from "color";
 import PropTypes from "prop-types";
-import { alpha } from "./Theme/colors";
+import { alpha, lighten } from "./Theme/colors";
 import { Spinner } from "./Spinner";
 import { IconName } from "@blueprintjs/icons";
 import { Icon, sizesForIcon } from "./Icons";
@@ -72,17 +72,45 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
   const { palette } = theme.colors;
 
   switch (intent) {
-    case "none":
+    case "none": {
+      if (dark)
+        return css({
+          backgroundColor: theme.colors.scales.gray[5],
+          color: getTextColor(theme.colors.intent.none.base, theme),
+          background: gradient(
+            theme.colors.intent.none.base,
+            lighten(theme.colors.intent.none.base, 0.8)
+          ),
+          boxShadow: insetShadow(
+            alpha(theme.colors.palette.gray.dark, 0.9),
+            alpha(theme.colors.palette.gray.dark, 0.8)
+          ),
+          ":focus": {
+            zIndex: 2,
+            boxShadow: focusShadow(
+              alpha(palette.blue.light, 0.2),
+              alpha(palette.gray.dark, 0.2),
+              alpha(palette.gray.light, 0.2)
+            )
+          },
+          ':active, &[aria-expanded="true"]': {
+            background: "none",
+            backgroundColor: theme.colors.intent.none.base,
+            boxShadow: insetShadow(
+              alpha(palette.gray.base, 0.3),
+              alpha(palette.gray.base, 0.15)
+            )
+          }
+        });
+
       return css({
         backgroundColor: "white",
         color: getTextColor(theme.colors.intent.none.lightest, theme),
         background: gradient(theme.colors.intent.none.lightest, "white"),
-        boxShadow: dark
-          ? "none"
-          : insetShadow(
-              alpha(theme.colors.palette.gray.dark, 0.2),
-              alpha(theme.colors.palette.gray.dark, 0.1)
-            ),
+        boxShadow: insetShadow(
+          alpha(theme.colors.palette.gray.dark, 0.2),
+          alpha(theme.colors.palette.gray.dark, 0.1)
+        ),
         ":focus": {
           zIndex: 2,
           boxShadow: focusShadow(
@@ -100,7 +128,7 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
           )
         }
       });
-
+    }
     case "primary":
       return css({
         backgroundColor: theme.colors.intent.primary.base,
@@ -112,7 +140,10 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             .toString()
         ),
         boxShadow: dark
-          ? "none"
+          ? insetShadow(
+              theme.colors.palette.gray.dark,
+              theme.colors.palette.gray.dark
+            )
           : insetShadow(
               alpha(palette.gray.dark, 0.2),
               alpha(palette.gray.dark, 0.2)
@@ -147,7 +178,10 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             .toString()
         ),
         boxShadow: dark
-          ? "none"
+          ? insetShadow(
+              theme.colors.palette.gray.dark,
+              theme.colors.palette.gray.dark
+            )
           : insetShadow(
               alpha(palette.gray.dark, 0.2),
               alpha(palette.gray.dark, 0.2)
@@ -186,7 +220,10 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             .toString()
         ),
         boxShadow: dark
-          ? "none"
+          ? insetShadow(
+              theme.colors.palette.gray.dark,
+              theme.colors.palette.gray.dark
+            )
           : insetShadow(
               alpha(palette.gray.dark, 0.2),
               alpha(palette.gray.dark, 0.2)
@@ -225,7 +262,10 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             .toString()
         ),
         boxShadow: dark
-          ? "none"
+          ? insetShadow(
+              theme.colors.palette.gray.dark,
+              theme.colors.palette.gray.dark
+            )
           : insetShadow(
               alpha(palette.gray.dark, 0.2),
               alpha(palette.gray.dark, 0.2)

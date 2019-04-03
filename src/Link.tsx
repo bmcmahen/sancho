@@ -24,6 +24,7 @@ export const Link: React.FunctionComponent<LinkProps> = ({
 
   return (
     <Component
+      className="Link"
       css={{
         textDecoration: "underline",
         color:

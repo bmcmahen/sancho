@@ -17,7 +17,7 @@ const appearances: Array<AlertIntentions> = [
 export const AlertStories = storiesOf("Alert", module).add(
   "color variants",
   () => (
-    <ToggleDarkMode>
+    <div>
       {appearances.map(key => (
         <Alert
           css={{
@@ -44,6 +44,6 @@ export const AlertStories = storiesOf("Alert", module).add(
           console.log("close");
         }}
       />
-    </ToggleDarkMode>
+    </div>
   )
 );

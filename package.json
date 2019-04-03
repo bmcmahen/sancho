@@ -46,7 +46,8 @@
     "build": "yarn run clear && tsc",
     "build-commonjs": "rimraf ./commonjs && tsc --module commonjs --outDir commonjs",
     "build-for-docgen": "yarn run clear && tsc --jsx preserve",
-    "prepublishOnly": "yarn run clear && yarn run build && yarn run build-commonjs"
+    "build-all": "yarn run clear && yarn run build && yarn run build-commonjs",
+    "prepublishOnly": "yarn run build"
   },
   "eslintConfig": {
     "extends": "react-app"

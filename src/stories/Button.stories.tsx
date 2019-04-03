@@ -4,7 +4,7 @@ import * as React from "react";
 import { Button, ButtonIntent, ButtonVariant, ButtonSize } from "../Button";
 import { storiesOf } from "@storybook/react";
 import theme from "../Theme";
-import { DarkMode } from "../Theme/Providers";
+import { DarkMode, useTheme, LightMode } from "../Theme/Providers";
 import { ToggleDarkMode } from "./ToggleDarkMode";
 
 export const ButtonStories = storiesOf("Button", module)
@@ -126,4 +126,55 @@ export const ButtonStories = storiesOf("Button", module)
         </Button>
       </div>
     );
+  })
+  .add("contrast checks", () => {
+    return <ContrastExample />;
   });
+
+function ContrastExample() {
+  const theme = useTheme();
+  return (
+    <DarkMode>
+      <div
+        css={{
+          padding: "2rem",
+          background: theme.colors.intent.none.base,
+          "& > *": { margin: "1rem" }
+        }}
+      >
+        <Button>Hello world</Button>
+        <Button intent="primary">Primary</Button>
+        <Button intent="success">Success</Button>
+        <Button intent="warning">Warning</Button>
+        <Button intent="danger">Warning</Button>
+      </div>
+      <div
+        css={{
+          padding: "2rem",
+          background: theme.colors.background.tint2,
+          "& > *": { margin: "1rem" }
+        }}
+      >
+        <Button>Hello world</Button>
+        <Button intent="primary">Primary</Button>
+        <Button intent="success">Success</Button>
+        <Button intent="warning">Warning</Button>
+        <Button intent="danger">Warning</Button>
+      </div>
+
+      <div
+        css={{
+          padding: "2rem",
+          background: theme.colors.intent.primary.dark,
+          "& > *": { margin: "1rem" }
+        }}
+      >
+        <Button>Hello world</Button>
+        <Button intent="primary">Primary</Button>
+        <Button intent="success">Success</Button>
+        <Button intent="warning">Warning</Button>
+        <Button intent="danger">Warning</Button>
+      </div>
+    </DarkMode>
+  );
+}

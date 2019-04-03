@@ -117,6 +117,11 @@ export const BreadcrumbItem: React.FunctionComponent<BreadcrumbItemProps> = ({
         component="div"
         variant={size === "md" ? "body" : "h5"}
         gutter={false}
+        css={{
+          "& > a": {
+            textDecoration: "none"
+          }
+        }}
       >
         {children}
       </Text>

@@ -29,7 +29,7 @@ export const SkipNavLink: React.FunctionComponent<ISkipNavProps> = ({
         textDecoration: "none",
         width: "1px",
         ":focus": {
-          background: "white",
+          background: theme.colors.background.layer,
           clip: "auto",
           height: "auto",
           left: theme.spaces.md,
