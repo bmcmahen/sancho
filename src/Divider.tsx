@@ -17,6 +17,7 @@ export const Divider: React.FunctionComponent<DividerProps> = ({
   const theme = useTheme();
   return (
     <div
+      className="Divider"
       css={{
         borderTopColor: muted
           ? theme.colors.border.muted

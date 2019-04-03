@@ -70,8 +70,6 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
           outline: "none",
           padding: theme.spaces.md,
           background: "transparent",
-          borderBottom: "1px solid",
-          borderColor: theme.colors.border.muted,
           WebkitTapHighlightColor: "transparent",
           transition: "background 0.07s ease",
           [theme.breakpoints.md]: {
@@ -179,7 +177,7 @@ export const ListSection: React.FunctionComponent<ListSectionProps> = ({
   ...other
 }) => {
   const theme = useTheme();
-  const bg = theme.colors.background.default;
+  const bg = theme.colors.background.layer;
   return (
     <div
       css={{
@@ -193,8 +191,6 @@ export const ListSection: React.FunctionComponent<ListSectionProps> = ({
           position: sticky ? "sticky" : "static",
           top: 0,
           backgroundColor: sticky ? bg : "transparent",
-          borderTop: `1px solid ${theme.colors.border.muted}`,
-          borderBottom: `1px solid ${theme.colors.border.muted}`,
           padding: theme.spaces.sm,
           [theme.breakpoints.md]: {
             paddingLeft: theme.spaces.lg,

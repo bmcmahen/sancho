@@ -14,75 +14,61 @@ import { ToggleDarkMode } from "./ToggleDarkMode";
 export const CollapseStories = storiesOf("List", module)
   .add("basic", () => {
     return (
-      <ToggleDarkMode>
-        <div css={{ padding: "3rem" }}>
-          <Layer css={{ overflow: "hidden", width: "450px" }}>
-            <div
-              css={{
-                height: "1.5rem"
-              }}
-            />
-            <List>
-              <ListSection title="Hello world">
-                <ListItem
-                  contentBefore={
-                    <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
-                  }
-                  primary="Ben McMahen"
-                  secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-                  contentAfter={
-                    <Icon
-                      color={theme.colors.text.muted}
-                      icon="chevron-right"
-                    />
-                  }
-                />
-                <ListItem
-                  contentBefore={
-                    <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
-                  }
-                  primary="Joe Chen"
-                  secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-                  contentAfter={
-                    <Icon
-                      color={theme.colors.text.muted}
-                      icon="chevron-right"
-                    />
-                  }
-                />
-              </ListSection>
-              <ListSection title="Hello world">
-                <ListItem
-                  contentBefore={
-                    <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
-                  }
-                  primary="Joe Chen"
-                  secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-                  contentAfter={
-                    <Icon
-                      color={theme.colors.text.muted}
-                      icon="chevron-right"
-                    />
-                  }
-                />
-                <ListItem
-                  contentBefore={
-                    <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
-                  }
-                  primary="Joe Chen"
-                  secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-                  contentAfter={
-                    <Icon
-                      color={theme.colors.text.muted}
-                      icon="chevron-right"
-                    />
-                  }
-                />
-              </ListSection>
-            </List>
-          </Layer>
-        </div>
-      </ToggleDarkMode>
+      <div css={{ padding: "3rem" }}>
+        <Layer elevation="xs" css={{ overflow: "hidden", width: "450px" }}>
+          <div
+            css={{
+              height: "1.5rem"
+            }}
+          />
+          <List>
+            <ListSection title="Hello world">
+              <ListItem
+                contentBefore={
+                  <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+                }
+                primary="Ben McMahen"
+                secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
+                contentAfter={
+                  <Icon color={theme.colors.text.muted} icon="chevron-right" />
+                }
+              />
+              <ListItem
+                contentBefore={
+                  <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+                }
+                primary="Joe Chen"
+                secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+                contentAfter={
+                  <Icon color={theme.colors.text.muted} icon="chevron-right" />
+                }
+              />
+            </ListSection>
+            <ListSection title="Hello world">
+              <ListItem
+                contentBefore={
+                  <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+                }
+                primary="Joe Chen"
+                secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+                contentAfter={
+                  <Icon color={theme.colors.text.muted} icon="chevron-right" />
+                }
+              />
+              <ListItem
+                contentBefore={
+                  <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+                }
+                primary="Joe Chen"
+                secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+                contentAfter={
+                  <Icon color={theme.colors.text.muted} icon="chevron-right" />
+                }
+              />
+            </ListSection>
+          </List>
+        </Layer>
+      </div>
     );
   })
   .add("no wrap", () => {
@@ -204,4 +190,18 @@ export const CollapseStories = storiesOf("List", module)
         </List>
       </Layer>
     );
-  });
+  })
+  .add("Single label", () => (
+    <List>
+      <ListItem
+        contentBefore={
+          <Avatar name={"Ben McMahen"} src={faker.image.avatar()} />
+        }
+        primary="Ben McMahen"
+        wrap={false}
+        contentAfter={
+          <Icon color={theme.colors.text.muted} icon="chevron-right" />
+        }
+      />
+    </List>
+  ));

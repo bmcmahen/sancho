@@ -18,7 +18,7 @@ export const LayerStories = storiesOf("Layer", module)
     const elevations: Array<LayerElevations> = ["xs", "sm", "md", "lg"];
 
     return (
-      <ToggleDarkMode>
+      <div>
         {elevations.map(e => (
           <Layer
             css={{
@@ -63,7 +63,7 @@ export const LayerStories = storiesOf("Layer", module)
             ))}
           </Layer>
         ))}
-      </ToggleDarkMode>
+      </div>
     );
   })
   .add("Loading", () => {

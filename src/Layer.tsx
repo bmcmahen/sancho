@@ -29,7 +29,7 @@ export const Layer: React.RefForwardingComponent<
         ref={ref}
         css={{
           position: "relative",
-          background: theme.colors.background.default,
+          background: theme.colors.background.layer,
           boxShadow: theme.shadows[elevation],
           borderRadius: theme.radii.lg
         }}

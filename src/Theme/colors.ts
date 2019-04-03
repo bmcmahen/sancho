@@ -2,6 +2,13 @@ import open from "open-color";
 import color from "color";
 import { createShadows, createDarkShadows } from "./shadows";
 
+export function lighten(c: string, amount: number) {
+  return color(c)
+    .lighten(amount)
+    .hsl()
+    .string();
+}
+
 export function alpha(c: string, amount: number) {
   return color(c)
     .alpha(amount)
@@ -126,11 +133,12 @@ function defaultGenerateLightMode(scales: ScalesType, palette: PaletteType) {
       tint1: scales.gray[1],
       tint2: scales.gray[3],
       overlay: alpha(scales.gray[9], 0.6),
+      layer: "white",
       default: "white"
     },
     border: {
-      default: scales.gray[3],
-      muted: scales.gray[2]
+      default: alpha(scales.gray[9], 0.12),
+      muted: alpha(scales.gray[9], 0.07)
     },
     text: {
       muted: color(scales.gray[7])
@@ -151,16 +159,19 @@ function defaultGenerateLightMode(scales: ScalesType, palette: PaletteType) {
  */
 
 function defaultGenerateDarkMode(scales: ScalesType, palette: PaletteType) {
+  const base = scales.gray[9];
+
   return {
     background: {
-      tint1: scales.gray[7],
-      tint2: scales.gray[6],
-      overlay: alpha(scales.gray[9], 0.6),
-      default: scales.gray[8]
+      tint1: lighten(base, 0.4),
+      tint2: lighten(base, 0.6),
+      overlay: alpha(scales.gray[9], 0.8),
+      layer: lighten(base, 0.2),
+      default: base
     },
     border: {
-      default: scales.gray[6],
-      muted: scales.gray[7]
+      default: alpha(scales.gray[0], 0.13),
+      muted: alpha(scales.gray[0], 0.08)
     },
     text: {
       muted: "rgba(255,255,255,0.7)",

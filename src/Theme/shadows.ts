@@ -25,8 +25,8 @@ export function createShadows(color: string) {
 export function createDarkShadows(color: string) {
   const shadow = (amount: number) => alpha(color, amount);
   return {
-    xs: `0 0 1px ${shadow(0.2)},
-    0 0 1px 1px ${shadow(0.4)}
+    xs: `0 0 1px ${shadow(0.15)},
+    0 0 1px 1px ${shadow(0.3)}
   `,
     sm: `0 1px 8px 0 ${shadow(0.24)}, 
     0 1px 3px 0 ${shadow(0.13)},
