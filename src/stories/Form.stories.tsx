@@ -68,7 +68,7 @@ export const FormStories = storiesOf("Forms", module)
         <div css={{ maxWidth: "400px", width: "100%" }}>
           <form css={{ padding: theme.spaces.lg }}>
             <InputGroup error="Required field" label="Email address">
-              <Input placeholder="ben.mcmahen@gmail.com" />
+              <Input inputSize="lg" placeholder="ben.mcmahen@gmail.com" />
             </InputGroup>
             <InputGroup label="Gender">
               <Select>
