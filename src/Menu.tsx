@@ -185,7 +185,12 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
     <Component
       css={{
         cursor: "pointer",
-        padding: `${theme.spaces.sm} ${theme.spaces.md}`,
+        padding: `calc(${theme.spaces.sm} + 0.25rem) calc(${
+          theme.spaces.md
+        } + 0.25rem)`,
+        [theme.breakpoints.sm]: {
+          padding: `${theme.spaces.sm} ${theme.spaces.md}`
+        },
         opacity: disabled ? 0.3 : 1,
         display: "block",
         textDecoration: "none",

@@ -1,5 +1,4 @@
 import { defaultColors } from "./colors";
-import { createShadows } from "./shadows";
 import { breakpoints } from "./breakpoints";
 
 const spacer = 1;

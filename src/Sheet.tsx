@@ -82,7 +82,7 @@ const positions = (theme: Theme) => ({
     "& > div": {
       borderTopRightRadius: theme.radii.lg,
       borderTopLeftRadius: theme.radii.lg,
-      paddingBottom: theme.spaces.md,
+      paddingBottom: theme.spaces.lg,
       paddingTop: theme.spaces.xs
     }
   }),
