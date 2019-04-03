@@ -31,7 +31,7 @@ const Link = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => (
 export const PopoverStories = storiesOf("Popover", module)
   .add("Focus management", () => {
     return (
-      <ToggleDarkMode>
+      <div>
         <div css={{ padding: "300px", background: "#eee" }}>
           <Popover
             content={
@@ -43,12 +43,12 @@ export const PopoverStories = storiesOf("Popover", module)
             <Button>Hello world!</Button>
           </Popover>
         </div>
-      </ToggleDarkMode>
+      </div>
     );
   })
   .add("positions", () => {
     return (
-      <ToggleDarkMode>
+      <div>
         {[
           "auto-start",
           "auto",
@@ -87,32 +87,30 @@ export const PopoverStories = storiesOf("Popover", module)
             </Popover>
           </div>
         ))}
-      </ToggleDarkMode>
+      </div>
     );
   })
   .add("Dropdown menu", () => {
     return (
-      <ToggleDarkMode>
-        <div css={{ padding: "300px", minHeight: "80vh" }}>
-          <Popover
-            content={
-              <MenuList>
-                <MenuItem onSelect={() => alert("Hello 1")}>
-                  I will trigger an alert
-                </MenuItem>
-                <MenuItem component="a" href="/bacon">
-                  I'm a link
-                </MenuItem>
+      <div css={{ padding: "300px", minHeight: "80vh" }}>
+        <Popover
+          content={
+            <MenuList>
+              <MenuItem onSelect={() => alert("Hello 1")}>
+                I will trigger an alert
+              </MenuItem>
+              <MenuItem component="a" href="/bacon">
+                I'm a link
+              </MenuItem>
 
-                <MenuDivider />
-                <MenuItem>Item three</MenuItem>
-              </MenuList>
-            }
-          >
-            <Button>I should trigger popover</Button>
-          </Popover>
-        </div>
-      </ToggleDarkMode>
+              <MenuDivider />
+              <MenuItem>Item three</MenuItem>
+            </MenuList>
+          }
+        >
+          <Button>I should trigger popover</Button>
+        </Popover>
+      </div>
     );
   })
   .add("Triggered with an icon button", () => {
@@ -137,25 +135,23 @@ export const PopoverStories = storiesOf("Popover", module)
   })
   .add("ResponsivePopover", () => {
     return (
-      <ToggleDarkMode>
-        <div css={{ padding: "1rem" }}>
-          <ResponsivePopover
-            content={
-              <MenuList>
-                <MenuItem onSelect={() => alert("Hello 1")}>
-                  Drink coffee
-                </MenuItem>
-                <MenuItem>Eat pancakes</MenuItem>
-                <MenuDivider />
-                <MenuItem>Make pizza</MenuItem>
-                <MenuItem>Dance my heart out</MenuItem>
-                <MenuItem>Anything you ask</MenuItem>
-              </MenuList>
-            }
-          >
-            <IconButton variant="ghost" icon="more" label="show more" />
-          </ResponsivePopover>
-        </div>
-      </ToggleDarkMode>
+      <div css={{ padding: "1rem" }}>
+        <ResponsivePopover
+          content={
+            <MenuList>
+              <MenuItem onSelect={() => alert("Hello 1")}>
+                Drink coffee
+              </MenuItem>
+              <MenuItem>Eat pancakes</MenuItem>
+              <MenuDivider />
+              <MenuItem>Make pizza</MenuItem>
+              <MenuItem>Dance my heart out</MenuItem>
+              <MenuItem>Anything you ask</MenuItem>
+            </MenuList>
+          }
+        >
+          <IconButton variant="ghost" icon="more" label="show more" />
+        </ResponsivePopover>
+      </div>
     );
   });

@@ -164,7 +164,7 @@ function defaultGenerateDarkMode(scales: ScalesType, palette: PaletteType) {
   return {
     background: {
       tint1: lighten(base, 0.5),
-      tint2: lighten(base, 0.65),
+      tint2: lighten(base, 0.7),
       overlay: alpha(scales.gray[7], 0.8),
       layer: lighten(base, 0.2),
       default: base

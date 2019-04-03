@@ -166,6 +166,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   ...other
 }) => {
   const theme = useTheme();
+  const dark = theme.colors.mode === "dark";
   const localRef = React.useRef<HTMLDivElement>(null);
   const closeParent = React.useContext(RequestCloseContext);
 
@@ -203,7 +204,9 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         pointerEvents: disabled ? "none" : "initial",
         "@media (hover: hover)": {
           ":hover": {
-            background: theme.colors.background.tint1
+            background: dark
+              ? theme.colors.background.tint2
+              : theme.colors.background.tint1
           }
         },
         ":focus": {
