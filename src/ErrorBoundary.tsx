@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import { Alert } from "./Alert";
 import PropTypes from "prop-types";
 
@@ -46,7 +45,7 @@ export class ErrorBoundary extends React.Component<
     if (this.state.error) {
       //render error message
       return (
-        <div css={{ padding: theme.spaces.md }}>
+        <div css={{ padding: "1rem" }}>
           <Alert
             type="assertive"
             intent="danger"

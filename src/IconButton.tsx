@@ -4,7 +4,6 @@ import * as React from "react";
 import { Button, ButtonProps, ButtonSize } from "./Button";
 import { IconName } from "@blueprintjs/icons";
 import { Icon } from "./Icons";
-import theme from "./Theme";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 

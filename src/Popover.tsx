@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx } from "@emotion/core";
 import * as React from "react";
 import { ButtonProps } from "./Button";
 import { IconButtonProps } from "./IconButton";

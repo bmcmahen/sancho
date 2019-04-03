@@ -2,10 +2,10 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { animated, useTransition } from "react-spring";
-import theme from "./Theme";
 import { Portal } from "./Portal";
 import { useHideBody } from "./Hooks/hide-body";
 import PropTypes from "prop-types";
+import { useTheme } from "./Theme/Providers";
 
 interface OverlayProps {
   /** Whether the overlay is open */
@@ -24,6 +24,7 @@ export const Overlay: React.RefForwardingComponent<
     { isOpen, onRequestClose, children }: OverlayProps,
     ref: React.Ref<HTMLDivElement>
   ) => {
+    const theme = useTheme();
     const transitions = useTransition(isOpen, null, {
       from: { opacity: 0 },
       enter: { opacity: 1 },

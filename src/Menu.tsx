@@ -2,7 +2,6 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
-import color from "color";
 import PropTypes from "prop-types";
 import { RequestCloseContext } from "./Sheet";
 import { useTheme } from "./Theme/Providers";

@@ -2,8 +2,6 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { IconName, IconSvgPaths16, IconSvgPaths20 } from "@blueprintjs/icons";
-import theme from "./Theme";
-import PropTypes from "prop-types";
 import { ButtonSize } from "./Button";
 
 export { IconNames, IconName } from "@blueprintjs/icons";
@@ -28,58 +26,25 @@ export interface IconProps extends React.SVGAttributes<SVGElement> {
   style?: React.CSSProperties;
 }
 
-export class Icon extends React.Component<IconProps> {
-  static defaultProps = {
-    size: "md",
-    color: theme.colors.palette.gray.base
-  };
+export const Icon: React.FunctionComponent<IconProps> = ({
+  size = "md",
+  color,
+  icon,
+  title,
+  ...other
+}) => {
+  if (icon == null) return null;
+  // support non blueprint icons
+  else if (typeof icon !== "string") return icon;
 
-  static propTypes = {
-    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-    size: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
-    ]),
-    title: PropTypes.string
-  };
+  // button size
+  const s = typeof size === "string" ? sizesForIcon[size as ButtonSize] : size;
 
-  render() {
-    const { title, color, icon, size, ...other } = this.props;
+  const pixelGridSize =
+    s >= sizesForIcon.lg ? sizesForIcon.lg : sizesForIcon.md;
 
-    if (icon == null) return null;
-    else if (typeof icon !== "string") return icon;
-
-    const s =
-      typeof size === "string" ? sizesForIcon[size as ButtonSize] : size;
-
-    const pixelGridSize =
-      s >= sizesForIcon.lg ? sizesForIcon.lg : sizesForIcon.md;
-    const paths = this.renderSvgPaths(pixelGridSize, icon);
-    if (paths == null) {
-      return null;
-    }
-
-    const viewBox = `0 0 ${pixelGridSize} ${pixelGridSize}`;
-
-    return (
-      <svg
-        data-icon={icon}
-        width={s}
-        height={s}
-        color={color}
-        viewBox={viewBox}
-        css={{
-          fill: color
-        }}
-        {...other}
-      >
-        {title ? <title>{title}</title> : null}
-        {paths}
-      </svg>
-    );
-  }
-
-  private renderSvgPaths(pathsSize: number, iconName: IconName) {
+  // get the icon path
+  function renderSvgPaths(pathsSize: number, iconName: IconName) {
     const svgPathsRecord =
       pathsSize === sizesForIcon.md ? IconSvgPaths16 : IconSvgPaths20;
     const pathStrings = svgPathsRecord[iconName];
@@ -88,4 +53,29 @@ export class Icon extends React.Component<IconProps> {
     }
     return pathStrings.map((d, i) => <path key={i} d={d} fillRule="evenodd" />);
   }
-}
+
+  const paths = renderSvgPaths(pixelGridSize, icon);
+
+  if (paths == null) {
+    return null;
+  }
+
+  const viewBox = `0 0 ${pixelGridSize} ${pixelGridSize}`;
+
+  return (
+    <svg
+      data-icon={icon}
+      width={s}
+      height={s}
+      color={color}
+      viewBox={viewBox}
+      css={{
+        fill: color
+      }}
+      {...other}
+    >
+      {title ? <title>{title}</title> : null}
+      {paths}
+    </svg>
+  );
+};

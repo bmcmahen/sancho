@@ -3,7 +3,6 @@ import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
-import theme from "./Theme";
 
 /**
  * A Toolbar is typically used in something like the Navbar component.
@@ -51,9 +50,12 @@ Toolbar.propTypes = {
   children: PropTypes.node
 };
 
-export const responsiveBodyPadding = css({
-  paddingTop: MOBILE_HEIGHT,
-  [theme.breakpoints.md]: {
-    paddingTop: DESKTOP_HEIGHT
-  }
-});
+export const useResponsiveBodyPadding = () => {
+  const theme = useTheme();
+  return css({
+    paddingTop: MOBILE_HEIGHT,
+    [theme.breakpoints.md]: {
+      paddingTop: DESKTOP_HEIGHT
+    }
+  });
+};

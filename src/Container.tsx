@@ -1,22 +1,25 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import theme from "./Theme";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
 
-export const responsiveContainerPadding = css({
-  padding: `0 ${theme.spaces.md}`,
-  [theme.breakpoints.lg]: {
-    padding: `0 ${theme.spaces.lg}`
-  }
-});
+export const useResponsiveContainerPadding = () => {
+  const theme = useTheme();
+  return css({
+    padding: `0 ${theme.spaces.md}`,
+    [theme.breakpoints.lg]: {
+      padding: `0 ${theme.spaces.lg}`
+    }
+  });
+};
 
 interface ContainerProps extends React.HTMLAttributes<HTMLElement> {}
 
 export const Container: React.FunctionComponent<ContainerProps> = (
   props: ContainerProps
 ) => {
+  const responsiveContainerPadding = useResponsiveContainerPadding();
   return (
     <div
       css={[
