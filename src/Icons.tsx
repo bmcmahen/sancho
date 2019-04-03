@@ -4,7 +4,7 @@ import * as React from "react";
 import { IconName, IconSvgPaths16, IconSvgPaths20 } from "@blueprintjs/icons";
 import { ButtonSize } from "./Button";
 
-export { IconNames, IconName } from "@blueprintjs/icons";
+export { IconNames } from "@blueprintjs/icons";
 
 export const sizesForIcon = {
   xs: 10,
@@ -20,7 +20,7 @@ export interface IconProps extends React.SVGAttributes<SVGElement> {
   icon: IconName | JSX.Element | null;
   children?: never;
   /** The size of the icon. Either a number or string (sm, md, etc.) */
-  size: number | ButtonSize;
+  size?: number | ButtonSize;
   /** An optional title for the icon */
   title?: string;
   style?: React.CSSProperties;

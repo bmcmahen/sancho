@@ -152,6 +152,11 @@ function generateIntents(palette: PaletteType) {
   };
 }
 
+// convert second to a factory object:
+// {
+//   createIntents = generateIntents,
+//   createPalette = generatePalette
+// }
 export function createColorsFromScales(
   scales: ScalesType,
   createIntents = generateIntents,

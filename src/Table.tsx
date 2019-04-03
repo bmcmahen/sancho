@@ -173,7 +173,7 @@ type TableCellBaseProps = React.ThHTMLAttributes<HTMLTableHeaderCellElement> &
 
 interface TableCellProps extends TableCellBaseProps {
   align?: keyof typeof tableCellAlignments;
-  variant?: keyof typeof tableCellVariants;
+  variant?: tableCellVariants;
   ellipsis?: boolean;
   component?: React.ReactType<TableCellBaseProps>;
 }

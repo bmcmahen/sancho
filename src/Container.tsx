@@ -41,6 +41,7 @@ Container.propTypes = {
 };
 
 export function NegativeMarginsContainer(props: ContainerProps) {
+  const theme = useTheme();
   return (
     <div
       css={{
