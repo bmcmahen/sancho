@@ -14,17 +14,17 @@ import { Popover } from "../Popover";
 import { MenuList, MenuDivider, MenuItem } from "../Menu";
 import { Button } from "../Button";
 import { Text } from "../Text";
-import { createTheme, createColorsFromScales } from "../Theme/createTheme";
+import { createTheme, generateColorsFromScales } from "../Theme/createTheme";
 import palx from "palx";
 import { PaletteType } from "../Theme/colors";
 
 const customPalette = palx("#a2005e");
 
-console.log(customPalette);
+const colors = generateColorsFromScales(customPalette, {
+  generateIntents
+});
 
-const colors = createColorsFromScales(customPalette, createIntents);
-
-function createIntents(palette: PaletteType) {
+function generateIntents(palette: PaletteType) {
   return {
     none: palette.gray,
     primary: palette.teal,

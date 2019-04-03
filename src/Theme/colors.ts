@@ -9,6 +9,12 @@ export function alpha(c: string, amount: number) {
     .string();
 }
 
+/**
+ * normalize open-color to remove some colours,
+ * such as 'grape'. This should be compatible with a tool
+ * like palx.
+ */
+
 const defaultScales = {
   gray: open.gray,
   blue: open.blue,
@@ -44,7 +50,18 @@ export type PaletteType = {
   violet: PaletteItem;
 };
 
-function generatePalette(scales: ScalesType): PaletteType {
+/**
+ * Generate a palette from scales.
+ *
+ * `light` is typically used in dark mode for things like
+ *  outline buttons, ghost buttons, etc.
+ *
+ * `base` is typically used for buttons, avatar colors, etc.
+ *
+ * @param scales
+ */
+
+function defaultGeneratePalette(scales: ScalesType): PaletteType {
   return {
     gray: {
       lightest: scales.gray[1],
@@ -97,7 +114,13 @@ function generatePalette(scales: ScalesType): PaletteType {
   };
 }
 
-function generateLightMode(scales: ScalesType, palette: PaletteType) {
+/**
+ * Generate lightmode colors
+ * @param scales
+ * @param palette
+ */
+
+function defaultGenerateLightMode(scales: ScalesType, palette: PaletteType) {
   return {
     background: {
       tint1: scales.gray[1],
@@ -121,7 +144,13 @@ function generateLightMode(scales: ScalesType, palette: PaletteType) {
   };
 }
 
-function generateDarkMode(scales: ScalesType, palette: PaletteType) {
+/**
+ * Generate dark mode colors
+ * @param scales
+ * @param palette
+ */
+
+function defaultGenerateDarkMode(scales: ScalesType, palette: PaletteType) {
   return {
     background: {
       tint1: scales.gray[7],
@@ -141,8 +170,12 @@ function generateDarkMode(scales: ScalesType, palette: PaletteType) {
     shadows: createDarkShadows("black")
   };
 }
+/**
+ * Intents map a color palette to a particular intent (ie, primary, success)
+ * @param palette
+ */
 
-function generateIntents(palette: PaletteType) {
+function defaultGenerateIntents(palette: PaletteType) {
   return {
     none: palette.gray,
     primary: palette.blue,
@@ -152,18 +185,38 @@ function generateIntents(palette: PaletteType) {
   };
 }
 
-// convert second to a factory object:
-// {
-//   createIntents = generateIntents,
-//   createPalette = generatePalette
-// }
-export function createColorsFromScales(
+/**
+ * You can override the default generators by
+ * providing them as a second argument. This is useful for
+ * providing custom intents (primary === teal, maybe)
+ */
+
+interface Builders {
+  generateIntents?: typeof defaultGenerateIntents;
+  generatePalette?: typeof defaultGeneratePalette;
+  generateLightMode?: typeof defaultGenerateLightMode;
+  generateDarkMode?: typeof defaultGenerateDarkMode;
+}
+
+export function generateColorsFromScales(
   scales: ScalesType,
-  createIntents = generateIntents,
-  createPalette = generatePalette
+  generators: Builders = {}
 ) {
-  const palette = createPalette(scales);
-  const intent = createIntents(palette);
+  const {
+    generateIntents,
+    generatePalette,
+    generateLightMode,
+    generateDarkMode
+  } = {
+    generateIntents: defaultGenerateIntents,
+    generatePalette: defaultGeneratePalette,
+    generateLightMode: defaultGenerateLightMode,
+    generateDarkMode: defaultGenerateDarkMode,
+    ...generators
+  };
+
+  const palette = generatePalette(scales);
+  const intent = generateIntents(palette);
 
   const modes = {
     light: {
@@ -188,4 +241,4 @@ export function createColorsFromScales(
   };
 }
 
-export const defaultColors = createColorsFromScales(defaultScales);
+export const defaultColors = generateColorsFromScales(defaultScales);
