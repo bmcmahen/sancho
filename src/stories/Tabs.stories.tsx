@@ -18,10 +18,7 @@ const Example = () => {
   return (
     <div
       css={{
-        paddingTop: theme.spaces.xl,
-        // borderBottom: "1px solid ",
-        // borderColor: theme.colors.border.default,
-        background: theme.colors.background.tint1
+        paddingTop: theme.spaces.xl
       }}
     >
       <Tabs value={value} onChange={i => setValue(i)}>
@@ -40,7 +37,7 @@ const Example = () => {
 };
 
 export const TabsExamples = storiesOf("Tabs", module)
-  .add("Light background", () => <Example />)
+  .add("Basic usage", () => <Example />)
 
   .add("Evenly spaced", () => {
     return <EvenlySpaced />;

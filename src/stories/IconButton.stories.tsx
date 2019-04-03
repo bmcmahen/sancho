@@ -12,43 +12,41 @@ export const IconButtonStories = storiesOf("IconButton", module)
   })
   .add("sizes", () => {
     return (
-      <ToggleDarkMode>
-        <React.Fragment>
-          {["xs", "sm", "md", "lg", "xl"].map(size => {
-            return (
-              <IconButton
-                css={{ margin: "1rem" }}
-                size={size as ButtonSize}
-                icon={"menu"}
-                label="Menu"
-              />
-            );
-          })}
-          {["xs", "sm", "md", "lg", "xl"].map(size => {
-            return (
-              <IconButton
-                variant="ghost"
-                css={{ margin: "1rem" }}
-                size={size as ButtonSize}
-                icon={"menu"}
-                label="Menu"
-              />
-            );
-          })}
-          {["xs", "sm", "md", "lg", "xl"].map(size => {
-            return (
-              <IconButton
-                variant="outline"
-                css={{ margin: "1rem" }}
-                size={size as ButtonSize}
-                icon={"menu"}
-                label="Menu"
-              />
-            );
-          })}
+      <React.Fragment>
+        {["xs", "sm", "md", "lg", "xl"].map(size => {
+          return (
+            <IconButton
+              css={{ margin: "1rem" }}
+              size={size as ButtonSize}
+              icon={"menu"}
+              label="Menu"
+            />
+          );
+        })}
+        {["xs", "sm", "md", "lg", "xl"].map(size => {
+          return (
+            <IconButton
+              variant="ghost"
+              css={{ margin: "1rem" }}
+              size={size as ButtonSize}
+              icon={"menu"}
+              label="Menu"
+            />
+          );
+        })}
+        {["xs", "sm", "md", "lg", "xl"].map(size => {
+          return (
+            <IconButton
+              variant="outline"
+              css={{ margin: "1rem" }}
+              size={size as ButtonSize}
+              icon={"menu"}
+              label="Menu"
+            />
+          );
+        })}
 
-          <CloseButton />
-        </React.Fragment>
-      </ToggleDarkMode>
+        <CloseButton />
+      </React.Fragment>
     );
   });

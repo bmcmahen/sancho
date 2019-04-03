@@ -137,6 +137,9 @@ export const ThemeExamples = storiesOf("Theme", module)
         <SampleTheme />
       </ThemeProvider>
     );
+  })
+  .add("contrast", () => {
+    return <ContrastExample />;
   });
 
 function SampleTheme() {
@@ -145,5 +148,27 @@ function SampleTheme() {
     <div
       css={{ background: theme.colors.palette.blue.base, padding: "3rem" }}
     />
+  );
+}
+
+function ContrastExample() {
+  const theme = useTheme();
+  const dark = theme.colors.mode === "dark";
+
+  return (
+    <div css={{ display: "flex" }}>
+      <div
+        css={{
+          height: "400px",
+          flex: "1 1 30%",
+          background: dark
+            ? theme.colors.background.layer
+            : theme.colors.background.tint1
+        }}
+      >
+        <Text>Hello</Text>
+      </div>
+      <div css={{ flex: "1 1 70%" }}>Basic</div>
+    </div>
   );
 }

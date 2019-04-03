@@ -3,6 +3,7 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import { IconName, IconSvgPaths16, IconSvgPaths20 } from "@blueprintjs/icons";
 import { ButtonSize } from "./Button";
+import { useTheme } from "./Theme/Providers";
 
 export { IconNames } from "@blueprintjs/icons";
 
@@ -33,6 +34,7 @@ export const Icon: React.FunctionComponent<IconProps> = ({
   title,
   ...other
 }) => {
+  const theme = useTheme();
   if (icon == null) return null;
   // support non blueprint icons
   else if (typeof icon !== "string") return icon;
@@ -61,16 +63,16 @@ export const Icon: React.FunctionComponent<IconProps> = ({
   }
 
   const viewBox = `0 0 ${pixelGridSize} ${pixelGridSize}`;
+  let resolvedColor = color || theme.colors.text.default;
 
   return (
     <svg
       data-icon={icon}
       width={s}
       height={s}
-      color={color}
       viewBox={viewBox}
       css={{
-        fill: color
+        fill: resolvedColor
       }}
       {...other}
     >

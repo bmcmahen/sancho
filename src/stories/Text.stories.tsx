@@ -5,7 +5,7 @@ import { Text } from "../Text";
 import { Link } from "../Link";
 
 export const ThemeExamples = storiesOf("Text", module).add(
-  "Basic usage",
+  "Link contrast",
   () => (
     <div css={{ padding: "1rem" }}>
       <Text variant="paragraph">
