@@ -137,23 +137,25 @@ export const PopoverStories = storiesOf("Popover", module)
   })
   .add("ResponsivePopover", () => {
     return (
-      <div css={{ padding: "300px", minHeight: "150vh", background: "#eee" }}>
-        <ResponsivePopover
-          content={
-            <MenuList>
-              <MenuItem onSelect={() => alert("Hello 1")}>
-                Drink coffee
-              </MenuItem>
-              <MenuItem>Eat pancakes</MenuItem>
-              <MenuDivider />
-              <MenuItem>Make pizza</MenuItem>
-              <MenuItem>Dance my heart out</MenuItem>
-              <MenuItem>Anything you ask</MenuItem>
-            </MenuList>
-          }
-        >
-          <IconButton variant="ghost" icon="more" label="show more" />
-        </ResponsivePopover>
-      </div>
+      <ToggleDarkMode>
+        <div css={{ padding: "1rem" }}>
+          <ResponsivePopover
+            content={
+              <MenuList>
+                <MenuItem onSelect={() => alert("Hello 1")}>
+                  Drink coffee
+                </MenuItem>
+                <MenuItem>Eat pancakes</MenuItem>
+                <MenuDivider />
+                <MenuItem>Make pizza</MenuItem>
+                <MenuItem>Dance my heart out</MenuItem>
+                <MenuItem>Anything you ask</MenuItem>
+              </MenuList>
+            }
+          >
+            <IconButton variant="ghost" icon="more" label="show more" />
+          </ResponsivePopover>
+        </div>
+      </ToggleDarkMode>
     );
   });

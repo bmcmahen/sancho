@@ -45,8 +45,18 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
   return (
     <div
       role="menu"
-      tabIndex={-1}
+      tabIndex={0}
+      onKeyDown={(e: React.KeyboardEvent) => {
+        if (
+          e.keyCode === KeyCodes.ArrowDown ||
+          (e.keyCode === KeyCodes.ArrowUp && focusIndex === null)
+        ) {
+          e.preventDefault();
+          setFocusIndex(0);
+        }
+      }}
       css={{
+        outline: "none",
         minWidth: "200px",
         display: "block",
         padding: `${theme.spaces.sm} 0`
@@ -90,11 +100,6 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
 
         return React.cloneElement(k, {
           focus: i === focusIndex,
-          onMouseEnter: () => {
-            if (i !== focusIndex) {
-              setFocusIndex(i);
-            }
-          },
           onFocus: () => {
             if (i !== focusIndex) {
               setFocusIndex(i);
@@ -196,6 +201,11 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         WebkitTapHighlightColor: "transparent",
         color: theme.colors.text.default,
         pointerEvents: disabled ? "none" : "initial",
+        "@media (hover: hover)": {
+          ":hover": {
+            background: theme.colors.background.tint1
+          }
+        },
         ":focus": {
           backgroundColor: theme.colors.background.tint1,
           outline: "none"
@@ -207,7 +217,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
           padding: `${theme.spaces.xs} ${theme.spaces.md}`
         }
       }}
-      onFocus={onFocus}
+      // onFocus={onFocus}
       role={role}
       tabIndex={0}
       data-trigger-close={true}
@@ -216,6 +226,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         select();
       }}
       onKeyDown={(e: React.KeyboardEvent) => {
+        e.stopPropagation();
         if (onKeyDown) onKeyDown(e);
         if (e.key === "Enter") {
           if (!isLink) {
