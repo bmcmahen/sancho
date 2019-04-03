@@ -1,13 +1,15 @@
-import * as React from "react";
-import uniqueId from "lodash.uniqueid";
+import { useState, useEffect } from "react";
+
+let id = 0;
+const genId = () => ++id;
 
 /**
  * Generate a unique id for a component.
  * Useful for accessibility controls (htmlFor, describedBy)
- * @param id string
  */
 
-export function useUid(id?: string) {
-  const idRef = React.useRef(id || uniqueId());
-  return idRef.current;
-}
+export const useUid = (id: string = "") => {
+  const [generatedId, setGeneratedId] = useState<string>(id);
+  useEffect(() => setGeneratedId(id || genId().toString()), [id]);
+  return generatedId;
+};

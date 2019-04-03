@@ -1,3 +1,7 @@
+declare module "@reach/auto-id" {
+  export default function autoId(): number;
+}
+
 declare module "@reach/dialog" {
   interface DialogOverlayProps {
     isOpen?: boolean;
