@@ -48,6 +48,10 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
     escapeDeactivates: true,
     clickOutsideDeactivates: true
   });
+  const bg =
+    theme.colors.mode === "dark"
+      ? theme.colors.background.tint1
+      : theme.colors.background.layer;
 
   function open() {
     setShow(true);
@@ -154,12 +158,13 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
           css={{
             zIndex: theme.zIndex.popover,
             margin: theme.spaces.sm,
-            borderRadius: theme.radii.md
+            borderRadius: theme.radii.md,
+            background: bg
           }}
         >
           <div
             data-placement={placement}
-            css={arrowStyles(theme.colors.background.default)}
+            css={arrowStyles(bg)}
             ref={arrowProps.ref}
             style={arrowProps.style}
           />

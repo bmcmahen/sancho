@@ -192,7 +192,8 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                       <div
                         className="Sheet__container"
                         css={{
-                          background: theme.colors.background.default,
+                          boxShadow: theme.shadows.md,
+                          background: theme.colors.background.layer,
                           height: "100%"
                         }}
                       >

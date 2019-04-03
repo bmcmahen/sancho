@@ -138,7 +138,7 @@ function defaultGenerateLightMode(scales: ScalesType, palette: PaletteType) {
     },
     border: {
       default: alpha(scales.gray[9], 0.12),
-      muted: alpha(scales.gray[9], 0.07)
+      muted: alpha(scales.gray[9], 0.06)
     },
     text: {
       muted: color(scales.gray[7])
@@ -163,9 +163,9 @@ function defaultGenerateDarkMode(scales: ScalesType, palette: PaletteType) {
 
   return {
     background: {
-      tint1: lighten(base, 0.4),
-      tint2: lighten(base, 0.6),
-      overlay: alpha(scales.gray[9], 0.8),
+      tint1: lighten(base, 0.5),
+      tint2: lighten(base, 0.65),
+      overlay: alpha(scales.gray[7], 0.8),
       layer: lighten(base, 0.2),
       default: base
     },

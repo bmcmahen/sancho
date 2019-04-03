@@ -25,7 +25,7 @@ export const Link: React.FunctionComponent<LinkProps> = ({
   return (
     <Component
       css={{
-        textDecoration: "none",
+        textDecoration: "underline",
         color:
           theme.colors.mode === "dark"
             ? theme.colors.palette.blue.light

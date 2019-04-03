@@ -1,36 +1,21 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { storiesOf } from "@storybook/react";
-import { useTheme, DarkMode, LightMode } from "../Theme/Providers";
-import { Theme } from "../Theme";
 import { Text } from "../Text";
-import { useState, useEffect } from "react";
-
-function Basic() {
-  const theme = useTheme();
-  const [timer, setTimer] = useState(0);
-
-  useEffect(() => {
-    let interval = setInterval(() => {
-      setTimer(timer + 1);
-    }, 1000);
-    return () => clearTimeout(interval);
-  }, [timer]);
-  return (
-    <DarkMode>
-      <div css={{ background: "black", border: "1px solid", padding: "1rem" }}>
-        <Text variant="h1">H1 {timer}</Text>
-        <LightMode>
-          <Text css={{ background: "white" }} variant="h1">
-            H1 2
-          </Text>
-        </LightMode>
-      </div>
-    </DarkMode>
-  );
-}
+import { Link } from "../Link";
 
 export const ThemeExamples = storiesOf("Text", module).add(
   "Basic usage",
-  () => <Basic />
+  () => (
+    <div css={{ padding: "1rem" }}>
+      <Text variant="paragraph">
+        Deserunt dolore consequat labore aute{" "}
+        <Link href="#">est excepteur sit ut esse laboris</Link> amet eiusmod.
+        Tempor est officia cillum culpa velit. Esse do magna nostrud sunt minim
+        ullamco id cillum ex. Officia cillum tempor adipisicing officia
+        excepteur enim nostrud. Veniam Lorem ad minim est veniam duis. Magna
+        Lorem commodo commodo amet non sint sunt aliquip voluptate.
+      </Text>
+    </div>
+  )
 );

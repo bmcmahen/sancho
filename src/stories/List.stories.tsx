@@ -10,12 +10,13 @@ import theme from "../Theme";
 import faker from "faker";
 import { Avatar } from "../Avatar";
 import { ToggleDarkMode } from "./ToggleDarkMode";
+import { Divider } from "../Divider";
 
 export const CollapseStories = storiesOf("List", module)
   .add("basic", () => {
     return (
       <div css={{ padding: "3rem" }}>
-        <Layer elevation="xs" css={{ overflow: "hidden", width: "450px" }}>
+        <Layer elevation="sm" css={{ overflow: "hidden", width: "450px" }}>
           <div
             css={{
               height: "1.5rem"
@@ -44,6 +45,7 @@ export const CollapseStories = storiesOf("List", module)
                 }
               />
             </ListSection>
+            <Divider muted />
             <ListSection title="Hello world">
               <ListItem
                 contentBefore={

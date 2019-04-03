@@ -28,23 +28,21 @@ export const SheetExamples = storiesOf("Sheet", module)
     });
 
     return (
-      <ToggleDarkMode>
-        <div
-          css={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-            height: "100%",
-            "& > *": {
-              margin: "1rem",
-              width: "200px"
-            }
-          }}
-        >
-          {examples}
-        </div>
-      </ToggleDarkMode>
+      <div
+        css={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+          height: "100%",
+          "& > *": {
+            margin: "1rem",
+            width: "200px"
+          }
+        }}
+      >
+        {examples}
+      </div>
     );
   })
   .add("Sheet menu", () => {

@@ -21,7 +21,7 @@ export const ButtonStories = storiesOf("Button", module)
     ];
 
     return (
-      <ToggleDarkMode>
+      <div>
         {appearance.map(appearance => (
           <div key={appearance}>
             {sizes.map(size => (
@@ -42,7 +42,7 @@ export const ButtonStories = storiesOf("Button", module)
             ))}
           </div>
         ))}
-      </ToggleDarkMode>
+      </div>
     );
   })
 
@@ -57,7 +57,7 @@ export const ButtonStories = storiesOf("Button", module)
     ];
 
     return (
-      <ToggleDarkMode>
+      <div>
         {variants.map(variant => {
           return (
             <div key={variant}>
@@ -75,7 +75,7 @@ export const ButtonStories = storiesOf("Button", module)
             </div>
           );
         })}
-      </ToggleDarkMode>
+      </div>
     );
   })
   .add("with icons", () => (
