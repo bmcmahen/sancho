@@ -9,7 +9,22 @@ export function alpha(c: string, amount: number) {
     .string();
 }
 
-export type ScalesType = typeof open;
+const defaultScales = {
+  gray: open.gray,
+  blue: open.blue,
+  green: open.green,
+  red: open.red,
+  orange: open.orange,
+  yellow: open.yellow,
+  teal: open.teal,
+  cyan: open.cyan,
+  lime: open.lime,
+  pink: open.pink,
+  violet: open.violet,
+  indigo: open.indigo
+};
+
+export type ScalesType = typeof defaultScales;
 
 type PaletteItem = {
   lightest: string;
@@ -18,7 +33,7 @@ type PaletteItem = {
   dark: string;
 };
 
-type PaletteType = {
+export type PaletteType = {
   gray: PaletteItem;
   blue: PaletteItem;
   red: PaletteItem;
@@ -168,4 +183,4 @@ export function createColorsFromScales(
   };
 }
 
-export const defaultColors = createColorsFromScales(open);
+export const defaultColors = createColorsFromScales(defaultScales);

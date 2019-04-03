@@ -1,13 +1,47 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import { storiesOf } from "@storybook/react";
-import { useTheme, DarkMode, LightMode } from "../Theme/Providers";
+import {
+  useTheme,
+  DarkMode,
+  LightMode,
+  ThemeProvider
+} from "../Theme/Providers";
 import { Theme } from "../Theme";
 import { ToggleDarkMode } from "./ToggleDarkMode";
 import { Layer } from "../Layer";
 import { Popover } from "../Popover";
 import { MenuList, MenuDivider, MenuItem } from "../Menu";
 import { Button } from "../Button";
+import { Text } from "../Text";
+import { createTheme, createColorsFromScales } from "../Theme/createTheme";
+import palx from "palx";
+import { PaletteType } from "../Theme/colors";
+
+const customPalette = palx("#a2005e");
+
+console.log(customPalette);
+
+const colors = createColorsFromScales(customPalette, createIntents);
+
+function createIntents(palette: PaletteType) {
+  return {
+    none: palette.gray,
+    primary: palette.teal,
+    success: palette.violet,
+    danger: palette.red,
+    warning: palette.yellow
+  };
+}
+
+const custom = createTheme({
+  ...colors,
+  fonts: {
+    base: "helvetica",
+    monospace: "monospace",
+    sans: "helvetica"
+  }
+});
 
 function Example({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
@@ -96,4 +130,24 @@ export const ThemeExamples = storiesOf("Theme", module)
         </Layer>
       </div>
     </ToggleDarkMode>
-  ));
+  ))
+  .add("Custom theme", () => {
+    return (
+      <ThemeProvider theme={custom}>
+        <ToggleDarkMode>
+          <Button intent="primary">Hello</Button>
+          <Text>Yeah, I should use Helvetica</Text>
+          <SampleTheme />
+        </ToggleDarkMode>
+      </ThemeProvider>
+    );
+  });
+
+function SampleTheme() {
+  const theme = useTheme();
+  return (
+    <div
+      css={{ background: theme.colors.palette.blue.base, padding: "3rem" }}
+    />
+  );
+}
