@@ -10,15 +10,17 @@ import { storiesOf } from "@storybook/react";
 import { Layer } from "../Layer";
 import { TabContent } from "../TabContent";
 import { Button } from "../Button";
-import { DarkMode } from "../Theme/Providers";
+import { DarkMode, useTheme } from "../Theme/Providers";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
+  const theme = useTheme();
 
   return (
     <div
       css={{
-        paddingTop: theme.spaces.xl
+        paddingTop: theme.spaces.xl,
+        background: theme.colors.background.tint1
       }}
     >
       <Tabs value={value} onChange={i => setValue(i)}>

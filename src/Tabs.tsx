@@ -209,9 +209,11 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
               className="Tabs__slider"
               style={spring}
               css={{
-                height: "3px",
+                height: "4px",
                 borderTopRightRadius: "8px",
                 borderTopLeftRadius: "8px",
+                marginLeft: theme.spaces.lg,
+                marginRight: theme.spaces.lg,
                 bottom: 0,
                 position: "absolute",
                 background: dark ? "white" : theme.colors.text.selected
