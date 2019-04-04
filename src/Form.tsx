@@ -9,6 +9,7 @@ import { Icon } from "./Icons";
 import { useUid } from "./Hooks/use-uid";
 import { Theme } from "./Theme";
 import { useTheme } from "./Theme/Providers";
+import { getHeight } from "./Button";
 
 const getInputSizes = (theme: Theme) => ({
   sm: css({
@@ -17,11 +18,11 @@ const getInputSizes = (theme: Theme) => ({
   }),
   md: css({
     fontSize: theme.sizes[1],
-    padding: "0.375rem 0.75rem"
+    padding: "0.5rem 0.75rem"
   }),
   lg: css({
     fontSize: theme.sizes[2],
-    padding: "0.5rem 1rem"
+    padding: "0.65rem 1rem"
   })
 });
 
@@ -226,13 +227,19 @@ export const InputBase: React.FunctionComponent<InputBaseProps> = ({
 }) => {
   const { bind, active } = useActiveStyle();
   const { baseStyles, inputSizes, activeBackground } = useSharedStyle();
+  const height = getHeight(inputSize);
   return (
     <input
       className="Input"
       autoComplete={autoComplete}
       autoFocus={autoFocus}
       {...bind}
-      css={[baseStyles, inputSizes[inputSize], active && activeBackground]}
+      css={[
+        baseStyles,
+        inputSizes[inputSize],
+        active && activeBackground,
+        { height }
+      ]}
       {...other}
     />
   );
@@ -351,6 +358,8 @@ export const Select: React.FunctionComponent<SelectProps> = ({
     ? theme.colors.palette.blue.light
     : theme.colors.palette.blue.base;
 
+  const height = getHeight(inputSize);
+
   return (
     <div
       className="Select"
@@ -367,6 +376,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             display: "block",
             width: "100%",
             lineHeight: theme.lineHeight,
+            height,
             color: theme.colors.text.default,
             background: dark
               ? theme.colors.background.tint1

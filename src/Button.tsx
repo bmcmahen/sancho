@@ -16,12 +16,20 @@ const getTextColor = (background: string, theme: Theme) => {
   return color(background).isDark() ? "white" : theme.modes.light.text.default;
 };
 
+export const getHeight = (size: ButtonSize) => {
+  if (size === "xs") return "25px";
+  if (size === "sm") return "30px";
+  if (size === "lg") return "48px";
+  if (size === "xl") return "60px";
+  return "40px";
+};
+
 const getPadding = (size: ButtonSize) => {
   if (size === "xs") return "0.1rem 0.5rem";
   if (size === "sm") return "0.25rem 0.8rem";
   if (size === "lg") return "0.6rem 1.5rem";
   if (size === "xl") return "0.8rem 2.2rem";
-  return "0.5rem 1rem";
+  return "0.688rem 1rem";
 };
 
 const getFontSize = (size: ButtonSize, theme: Theme) => {
@@ -471,6 +479,7 @@ export const Button: React.RefForwardingComponent<
             borderRadius: theme.radii.sm,
             fontSize: getFontSize(size, theme),
             padding: getPadding(size),
+            height: getHeight(size),
             display: getDisplay(block),
             justifyContent: "center"
           },

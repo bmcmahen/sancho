@@ -98,4 +98,30 @@ export const FormStories = storiesOf("Forms", module)
         </div>
       </div>
     );
+  })
+  .add("sizes", () => {
+    return (
+      <div
+        css={{
+          margin: "2rem",
+          width: "400px"
+        }}
+      >
+        <InputGroup label="small">
+          <Input defaultValue="hello world" inputSize="sm" />
+        </InputGroup>
+        <InputGroup label="md">
+          <Input defaultValue="hello world" inputSize="md" />
+        </InputGroup>
+        <InputGroup label="lg">
+          <Input defaultValue="hello world" inputSize="lg" />
+        </InputGroup>
+
+        <div>
+          <Button size="sm">Small</Button>
+          <Button size="md">Medium</Button>
+          <Button size="lg">Large</Button>
+        </div>
+      </div>
+    );
   });
