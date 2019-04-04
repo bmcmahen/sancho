@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import { MenuList, MenuItem, MenuDivider } from "../Menu";
+import { MenuList, MenuItem, MenuDivider, MenuLabel } from "../Menu";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
 import { Icon } from "../Icons";
@@ -24,6 +24,7 @@ export const MenuStories = storiesOf("MenuList", module).add(
         </MenuItem>
         <MenuItem>Hello world number 2</MenuItem>
         <MenuDivider />
+        <MenuLabel>Some label</MenuLabel>
         <MenuItem contentAfter="⌘R">Hello world number 2</MenuItem>
         <MenuItem contentAfter={<Icon icon="briefcase" aria-hidden />}>
           Hello world number 2

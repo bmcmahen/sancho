@@ -296,8 +296,7 @@ export const MenuLabel: React.FunctionComponent<MenuLabelProps> = props => {
     <Text
       variant="uppercase"
       css={{
-        padding: `${theme.spaces.xs} ${theme.spaces.md}`,
-        paddingTop: theme.spaces.md
+        padding: `${theme.spaces.xs} ${theme.spaces.md}`
       }}
       {...props}
     />
