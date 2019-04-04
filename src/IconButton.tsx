@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import { Button, ButtonProps, ButtonSize } from "./Button";
+import { Button, ButtonProps, ButtonSize, getHeight } from "./Button";
 import { IconName } from "@blueprintjs/icons";
 import { Icon } from "./Icons";
 import VisuallyHidden from "@reach/visually-hidden";
@@ -50,7 +50,10 @@ export const IconButton: React.RefForwardingComponent<
       <Button
         ref={ref}
         size={size}
-        css={{ padding: paddingForIconSizes[size] }}
+        css={{
+          padding: paddingForIconSizes[size],
+          width: getHeight(size)
+        }}
         {...other}
       >
         <VisuallyHidden>{label}</VisuallyHidden>
