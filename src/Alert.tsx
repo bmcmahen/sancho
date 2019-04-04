@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx } from "@emotion/core";
 import * as React from "react";
 import ReachAlert from "@reach/alert";
 import { Text } from "./Text";
@@ -146,14 +146,14 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
             display: "flex",
             alignItems: "flex-start",
             padding: `${theme.spaces.md} ${theme.spaces.md}`,
-            paddingRight: onRequestClose ? "3rem" : undefined
+            paddingRight: onRequestClose ? "3.5rem" : undefined
           }}
         >
           {contents}
           {onRequestClose && (
             <CloseButton
               css={{
-                marginTop: "-0.25rem",
+                marginTop: "-0.45rem",
                 right: theme.spaces.sm,
                 position: "absolute"
               }}

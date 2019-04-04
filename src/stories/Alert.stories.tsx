@@ -14,9 +14,8 @@ const appearances: Array<AlertIntentions> = [
   "warning"
 ];
 
-export const AlertStories = storiesOf("Alert", module).add(
-  "color variants",
-  () => (
+export const AlertStories = storiesOf("Alert", module)
+  .add("color variants", () => (
     <div>
       {appearances.map(key => (
         <Alert
@@ -45,5 +44,19 @@ export const AlertStories = storiesOf("Alert", module).add(
         }}
       />
     </div>
-  )
-);
+  ))
+  .add("close button", () => {
+    return (
+      <Alert
+        css={{
+          margin: theme.spaces.lg
+        }}
+        title={
+          "This is an alert with a close button. Ullamco magna cillum quis ipsum tempor tempor do commodo nisi eu cupidatat ex duis ea."
+        }
+        onRequestClose={() => {
+          console.log("close");
+        }}
+      />
+    );
+  });
