@@ -104,24 +104,59 @@ export const FormStories = storiesOf("Forms", module)
       <div
         css={{
           margin: "2rem",
-          width: "400px"
+          width: "800px",
+          "& > div": {
+            padding: "1rem",
+            "& > *": {
+              margin: "1rem"
+            }
+          }
         }}
       >
-        <InputGroup label="small">
-          <Input defaultValue="hello world" inputSize="sm" />
-        </InputGroup>
-        <InputGroup label="md">
-          <Input defaultValue="hello world" inputSize="md" />
-        </InputGroup>
-        <InputGroup label="lg">
-          <Input defaultValue="hello world" inputSize="lg" />
-        </InputGroup>
-
         <div>
+          <Input
+            css={{ display: "inline-block", width: "auto" }}
+            defaultValue="hello world"
+            inputSize="sm"
+          />
           <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
+          <Button component="a" href="#" size="sm">
+            Small
+          </Button>
+          <Button component="a" href="#" size="sm" iconAfter="arrow-right">
+            Small
+          </Button>
         </div>
+        <div>
+          <Input
+            css={{ display: "inline-block", width: "auto" }}
+            defaultValue="hello world"
+            inputSize="md"
+          />
+          <Button size="md">Medium</Button>
+          <Button component="a" href="#" size="md">
+            Medium
+          </Button>
+          <Button component="a" href="#" size="md" iconAfter="arrow-right">
+            Medium
+          </Button>
+        </div>
+        <div>
+          <Input
+            css={{ display: "inline-block", width: "auto" }}
+            defaultValue="hello world"
+            inputSize="lg"
+          />
+          <Button size="lg">Large</Button>
+          <Button component="a" href="#" size="lg">
+            Large
+          </Button>
+          <Button component="a" href="#" size="lg" iconAfter="arrow-right">
+            Large
+          </Button>
+        </div>
+
+        <div />
       </div>
     );
   });

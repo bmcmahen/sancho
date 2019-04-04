@@ -26,8 +26,8 @@ export const getHeight = (size: ButtonSize) => {
 
 const getPadding = (size: ButtonSize) => {
   if (size === "xs") return "0.1rem 0.5rem";
-  if (size === "sm") return "0.25rem 0.8rem";
-  if (size === "lg") return "0.6rem 1.5rem";
+  if (size === "sm") return "0.4rem 0.8rem";
+  if (size === "lg") return "0.8rem 1.5rem";
   if (size === "xl") return "0.8rem 2.2rem";
   return "0.688rem 1rem";
 };
@@ -96,8 +96,8 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
           ":focus": {
             zIndex: 2,
             boxShadow: focusShadow(
-              alpha(palette.blue.light, 0.2),
-              alpha(palette.gray.dark, 0.2),
+              alpha(palette.blue.light, 0.5),
+              alpha(palette.gray.dark, 0.4),
               alpha(palette.gray.light, 0.2)
             )
           },
@@ -158,11 +158,17 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             ),
         ":focus": {
           zIndex: 2,
-          boxShadow: focusShadow(
-            alpha(theme.colors.intent.primary.base, 0.3),
-            alpha(palette.gray.dark, 0.3),
-            alpha(palette.gray.dark, 0.07)
-          )
+          boxShadow: dark
+            ? focusShadow(
+                alpha(theme.colors.intent.primary.light, 0.5),
+                alpha(palette.gray.dark, 0.4),
+                alpha(palette.gray.light, 0.2)
+              )
+            : focusShadow(
+                alpha(theme.colors.intent.primary.base, 0.3),
+                alpha(palette.gray.dark, 0.3),
+                alpha(palette.gray.dark, 0.07)
+              )
         },
         ':active, &[aria-expanded="true"]': {
           boxShadow: insetShadow(
@@ -196,13 +202,19 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             ),
         ":focus": {
           zIndex: 2,
-          boxShadow: focusShadow(
-            color(theme.colors.intent.success.base)
-              .alpha(0.4)
-              .toString(),
-            alpha(palette.gray.dark, 0.3),
-            alpha(palette.gray.dark, 0.1)
-          )
+          boxShadow: dark
+            ? focusShadow(
+                alpha(theme.colors.intent.success.light, 0.5),
+                alpha(palette.gray.dark, 0.4),
+                alpha(palette.gray.light, 0.2)
+              )
+            : focusShadow(
+                color(theme.colors.intent.success.base)
+                  .alpha(0.4)
+                  .toString(),
+                alpha(palette.gray.dark, 0.3),
+                alpha(palette.gray.dark, 0.1)
+              )
         },
         ':active, &[aria-expanded="true"]': {
           boxShadow: insetShadow(
@@ -238,13 +250,19 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             ),
         ":focus": {
           zIndex: 2,
-          boxShadow: focusShadow(
-            color(theme.colors.intent.danger.base)
-              .alpha(0.4)
-              .toString(),
-            alpha(palette.gray.dark, 0.3),
-            alpha(palette.gray.dark, 0.1)
-          )
+          boxShadow: dark
+            ? focusShadow(
+                alpha(theme.colors.intent.danger.light, 0.5),
+                alpha(palette.gray.dark, 0.4),
+                alpha(palette.gray.light, 0.2)
+              )
+            : focusShadow(
+                color(theme.colors.intent.danger.base)
+                  .alpha(0.4)
+                  .toString(),
+                alpha(palette.gray.dark, 0.3),
+                alpha(palette.gray.dark, 0.1)
+              )
         },
         ':active, &[aria-expanded="true"]': {
           boxShadow: insetShadow(
@@ -280,13 +298,19 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             ),
         ":focus": {
           zIndex: 2,
-          boxShadow: focusShadow(
-            color(theme.colors.intent.warning.base)
-              .alpha(0.4)
-              .toString(),
-            alpha(palette.gray.dark, 0.2),
-            alpha(palette.gray.dark, 0.1)
-          )
+          boxShadow: dark
+            ? focusShadow(
+                alpha(theme.colors.intent.warning.light, 0.5),
+                alpha(palette.gray.dark, 0.4),
+                alpha(palette.gray.light, 0.2)
+              )
+            : focusShadow(
+                color(theme.colors.intent.warning.base)
+                  .alpha(0.4)
+                  .toString(),
+                alpha(palette.gray.dark, 0.2),
+                alpha(palette.gray.dark, 0.1)
+              )
         },
         ':active, &[aria-expanded="true"]': {
           boxShadow: insetShadow(

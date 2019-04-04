@@ -12,27 +12,28 @@ import { ToggleDarkMode } from "./ToggleDarkMode";
 import { Layer } from "../Layer";
 import { Popover } from "../Popover";
 import { MenuList, MenuDivider, MenuItem } from "../Menu";
-import { Button } from "../Button";
+import { Button, ButtonSize, ButtonVariant, ButtonIntent } from "../Button";
 import { Text } from "../Text";
 import { createTheme, generateColorsFromScales } from "../Theme/createTheme";
 import palx from "palx";
 import { PaletteType } from "../Theme/colors";
+import { Link } from "../Link";
 
-const customPalette = palx("#a2005e");
+const customPalette = palx("#007bff");
 
 const colors = generateColorsFromScales(customPalette, {
-  generateIntents
+  // generateIntents
 });
 
-function generateIntents(palette: PaletteType) {
-  return {
-    none: palette.gray,
-    primary: palette.teal,
-    success: palette.violet,
-    danger: palette.red,
-    warning: palette.yellow
-  };
-}
+// function generateIntents(palette: PaletteType) {
+//   return {
+//     none: palette.gray,
+//     primary: palette.teal,
+//     success: palette.violet,
+//     danger: palette.red,
+//     warning: palette.yellow
+//   };
+// }
 
 const custom = createTheme({
   ...colors,
@@ -130,12 +131,56 @@ export const ThemeExamples = storiesOf("Theme", module)
     </div>
   ))
   .add("Custom theme", () => {
+    const sizes: Array<ButtonSize> = ["xs", "sm", "md", "lg", "xl"];
+
+    const appearance: Array<ButtonVariant> = ["default", "ghost", "outline"];
+    const intents: Array<ButtonIntent> = [
+      "none",
+      "primary",
+      "success",
+      "danger",
+      "warning"
+    ];
+
     return (
-      <ThemeProvider theme={custom}>
-        <Button intent="primary">Hello</Button>
-        <Text>Yeah, I should use Helvetica</Text>
-        <SampleTheme />
-      </ThemeProvider>
+      <div>
+        {appearance.map(appearance => (
+          <div key={appearance}>
+            {sizes.map(size => (
+              <div key={size} style={{ padding: "0.5rem" }}>
+                {intents.map(intent => (
+                  <Button
+                    key={size + appearance}
+                    size={size}
+                    css={{
+                      marginRight: "1rem",
+                      textTransform: "capitalize"
+                    }}
+                    variant={appearance}
+                    intent={intent}
+                    onClick={() => alert("hello there")}
+                  >
+                    {intent}
+                  </Button>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+        <div
+          css={{
+            margin: "2rem",
+            maxWidth: "38rem"
+          }}
+        >
+          <Text variant="paragraph">
+            Non proident est elit <Link href="#">aliqua reprehenderit</Link>. Eu
+            amet nostrud qui ex velit mollit velit eiusmod consequat aliquip
+            enim et mollit. Sint eiusmod mollit Lorem et eiusmod exercitation
+            anim esse.
+          </Text>
+        </div>
+      </div>
     );
   })
   .add("contrast", () => {

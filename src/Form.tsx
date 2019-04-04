@@ -171,7 +171,7 @@ function getBaseStyles(theme: Theme) {
       boxShadow: `inset 0 0 2px ${alpha(gray, 0.4)}, inset 0 0 0 1px ${alpha(
         blue,
         0.3
-      )}, 0 0 0 3px ${alpha(blue, dark ? 0.3 : 0.2)}`,
+      )}, 0 0 0 3px ${alpha(blue, dark ? 0.5 : 0.2)}`,
       outline: "none"
     },
     ":disabled": {
