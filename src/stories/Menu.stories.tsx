@@ -4,12 +4,14 @@ import * as React from "react";
 import { MenuList, MenuItem, MenuDivider } from "../Menu";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
+import { Icon } from "../Icons";
+import { Text } from "../Text";
 
 export const MenuStories = storiesOf("MenuList", module).add(
   "keyboard controls",
   () => {
     return (
-      <MenuList>
+      <MenuList css={{ maxWidth: "340px" }}>
         <MenuItem>Hello world number 1</MenuItem>
         <MenuItem>Hello world number 2</MenuItem>
         <MenuItem disabled>Hello world number 2</MenuItem>
@@ -22,8 +24,10 @@ export const MenuStories = storiesOf("MenuList", module).add(
         </MenuItem>
         <MenuItem>Hello world number 2</MenuItem>
         <MenuDivider />
-        <MenuItem>Hello world number 2</MenuItem>
-        <MenuItem>Hello world number 2</MenuItem>
+        <MenuItem contentAfter="⌘R">Hello world number 2</MenuItem>
+        <MenuItem contentAfter={<Icon icon="briefcase" aria-hidden />}>
+          Hello world number 2
+        </MenuItem>
       </MenuList>
     );
   }

@@ -1,6 +1,5 @@
 import { theme as defaultTheme, Theme } from ".";
 export { generateColorsFromScales } from "./colors";
-import merge from "deepmerge";
 
 export type CustomThemeOptions = Partial<Theme>;
 
@@ -23,5 +22,8 @@ export type CustomThemeOptions = Partial<Theme>;
  */
 
 export function createTheme(customThemeValues: CustomThemeOptions) {
-  return merge(defaultTheme, customThemeValues);
+  return {
+    ...defaultTheme,
+    ...customThemeValues
+  };
 }
