@@ -4,9 +4,7 @@ import defaultTheme, { Theme, ThemeColors } from ".";
 /**
  * API:
  *
- * You can create custom themes using the createTheme function:
- *
- * const customTheme = createTheme({})
+ * You can create custom themes using Object.assign:
  *
  *
  * Pass that theme to the theme provider. A theme should always

@@ -7,17 +7,15 @@ import {
   LightMode,
   ThemeProvider
 } from "../Theme/Providers";
-import { Theme } from "../Theme";
-import { ToggleDarkMode } from "./ToggleDarkMode";
+import defaultTheme, { Theme } from "../Theme";
 import { Layer } from "../Layer";
 import { Popover } from "../Popover";
 import { MenuList, MenuDivider, MenuItem } from "../Menu";
 import { Button, ButtonSize, ButtonVariant, ButtonIntent } from "../Button";
 import { Text } from "../Text";
-import { createTheme, generateColorsFromScales } from "../Theme/createTheme";
 import palx from "palx";
-import { PaletteType } from "../Theme/colors";
 import { Link } from "../Link";
+import { generateColorsFromScales } from "../Theme/colors";
 
 const customPalette = palx("#007bff");
 
@@ -35,14 +33,15 @@ const colors = generateColorsFromScales(customPalette, {
 //   };
 // }
 
-const custom = createTheme({
+const custom = {
+  ...defaultTheme,
   ...colors,
   fonts: {
     base: "helvetica",
     monospace: "monospace",
     sans: "helvetica"
   }
-});
+};
 
 function Example({ children }: { children: React.ReactNode }) {
   const theme = useTheme();

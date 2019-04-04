@@ -1,5 +1,6 @@
 import { defaultColors } from "./colors";
 import { breakpoints } from "./breakpoints";
+export { generateColorsFromScales } from "./colors";
 
 const spacer = 1;
 
@@ -66,7 +67,7 @@ const fonts = {
 
 export type ThemeColors = typeof defaultColors.colors;
 
-export const theme = {
+export const defaultTheme = {
   ...defaultColors,
   spaces,
   zIndex,
@@ -78,6 +79,6 @@ export const theme = {
   lineHeight: "1.5"
 };
 
-export type Theme = typeof theme;
+export type Theme = typeof defaultTheme;
 
-export default theme;
+export default defaultTheme;
