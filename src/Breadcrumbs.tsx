@@ -4,8 +4,7 @@ import * as React from "react";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
-import { Icon } from "./Icon";
-import { FiChevronRight } from "react-icons/fi";
+import { IconChevronRight } from "./Icons";
 
 interface BreadcrumbsProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "md" | "lg";
@@ -149,9 +148,7 @@ const BreadcrumbDivider: React.FunctionComponent = () => {
         color: theme.colors.text.muted
       }}
     >
-      <Icon>
-        <FiChevronRight />
-      </Icon>
+      <IconChevronRight />
     </div>
   );
 };

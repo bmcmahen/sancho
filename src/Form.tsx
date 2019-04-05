@@ -9,8 +9,7 @@ import { useUid } from "./Hooks/use-uid";
 import { Theme } from "./Theme";
 import { useTheme } from "./Theme/Providers";
 import { getHeight, focusShadow } from "./Button";
-import { FiAlertCircle, FiChevronDown } from "react-icons/fi";
-import { Icon } from "./Icon";
+import { IconAlertCircle, IconChevronDown } from "./Icons";
 
 const getInputSizes = (theme: Theme) => ({
   sm: css({
@@ -86,9 +85,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
             display: "flex"
           }}
         >
-          <Icon size="sm" color={danger}>
-            <FiAlertCircle />
-          </Icon>
+          <IconAlertCircle size="sm" color={danger} />
           <Text
             css={{
               display: "block",
@@ -427,7 +424,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
         {...other}
       />
       {!multiple && (
-        <Icon
+        <IconChevronDown
           className="Select__icon"
           color={theme.colors.text.muted}
           css={{
@@ -436,9 +433,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             right: "0.75rem",
             transform: "translateY(-50%)"
           }}
-        >
-          <FiChevronDown />
-        </Icon>
+        />
       )}
     </div>
   );

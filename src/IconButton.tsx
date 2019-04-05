@@ -4,9 +4,9 @@ import * as React from "react";
 import { Button, ButtonProps, ButtonSize, getHeight } from "./Button";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
-import { FiX } from "react-icons/fi";
 import { useTheme } from "./Theme/Providers";
-import { Icon } from "./Icon";
+import { IconWrapper } from "./IconWrapper";
+import { IconX } from "./Icons";
 
 export interface IconButtonProps extends Partial<ButtonProps> {
   /** A label required for accessibility  */
@@ -62,7 +62,7 @@ export const IconButton: React.RefForwardingComponent<
         {...other}
       >
         <VisuallyHidden>{label}</VisuallyHidden>
-        <Icon size={size}>{icon}</Icon>
+        <IconWrapper size={size}>{icon}</IconWrapper>
       </Button>
     );
   }
@@ -89,7 +89,9 @@ export const CloseButton: React.FunctionComponent<CloseButtonProps> = ({
   label = "Close",
   ...other
 }) => {
-  return <IconButton variant="ghost" label={label} icon={<FiX />} {...other} />;
+  return (
+    <IconButton variant="ghost" label={label} icon={<IconX />} {...other} />
+  );
 };
 
 CloseButton.propTypes = {

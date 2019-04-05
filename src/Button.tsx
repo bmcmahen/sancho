@@ -7,7 +7,7 @@ import { alpha, lighten } from "./Theme/colors";
 import { Spinner } from "./Spinner";
 import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
-import { Icon } from "./Icon";
+import { IconWrapper } from "./IconWrapper";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -543,9 +543,13 @@ export const Button: React.RefForwardingComponent<
         )}
 
         {iconBefore && (
-          <Icon css={{ marginRight: theme.spaces.sm }} size={size} aria-hidden>
+          <IconWrapper
+            css={{ marginRight: theme.spaces.sm }}
+            size={size}
+            aria-hidden
+          >
             {iconBefore}
-          </Icon>
+          </IconWrapper>
         )}
 
         {typeof children === "string" ? (
@@ -572,9 +576,9 @@ export const Button: React.RefForwardingComponent<
         )}
 
         {iconAfter && (
-          <Icon css={{ marginLeft: theme.spaces.sm }} size={size}>
+          <IconWrapper css={{ marginLeft: theme.spaces.sm }} size={size}>
             {iconAfter}
-          </Icon>
+          </IconWrapper>
         )}
       </Component>
     );

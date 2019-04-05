@@ -11,7 +11,8 @@ import { useSpring, animated } from "react-spring";
 import { usePrevious } from "./Hooks/previous";
 import { Badge } from "./Badge";
 import { useTheme } from "./Theme/Providers";
-import { Icon, IconSize } from "./Icon";
+import { IconWrapper } from "./IconWrapper";
+import { IconSizes } from "./Icons/IconTypes";
 
 /**
  * Ideas for improving accessibility:
@@ -456,7 +457,7 @@ TabPanel.propTypes = {
 export interface TabIconProps {
   icon: React.ReactNode;
   label: string;
-  size?: IconSize;
+  size?: IconSizes;
 }
 
 export const TabIcon: React.FunctionComponent<TabIconProps> = ({
@@ -466,7 +467,7 @@ export const TabIcon: React.FunctionComponent<TabIconProps> = ({
 }) => {
   return (
     <React.Fragment>
-      <Icon size={size}>{icon}</Icon>
+      <IconWrapper size={size}>{icon}</IconWrapper>
       <VisuallyHidden>{label}</VisuallyHidden>
     </React.Fragment>
   );

@@ -29,11 +29,19 @@ glob(`${featherRootDir}/**.svg`, (err, icons) => {
     const $ = cheerio.load(svg, {
       xmlMode: true
     });
-    const fileName = path.basename(i).replace(".svg", ".tsx");
-    const location = path.join(destinationDir, "icons", fileName);
+    const fileName = path.basename(i).replace(".svg", "");
+    const location = path.join(
+      destinationDir,
+      "icons",
+      "Icon" + uppercamelcase(fileName) + ".tsx"
+    );
 
     $("*").each((index, el) => {
       Object.keys(el.attribs).forEach(x => {
+        if (x === "class") {
+          $(el).removeAttr("class");
+        }
+
         if (x.includes("-")) {
           $(el)
             .attr(camelcase(x), el.attribs[x])
@@ -52,14 +60,14 @@ glob(`${featherRootDir}/**.svg`, (err, icons) => {
     const element = `
       import * as React from 'react';
       import PropTypes from 'prop-types';
-      import { IconProps } from './IconTypes';
-      import { useTheme } from '../Theme/Providers';
+      import { IconProps } from '../IconTypes';
+      import { useTheme } from '../../Theme/Providers';
 
-      export const ${ComponentName}: React.FunctionComponent<IconProps> = 
+      export const Icon${ComponentName}: React.FunctionComponent<IconProps> = 
         ({ 
           size = 'md', 
           color = 'currentColor', 
-          ...other 
+          ...otherProps 
         }) 
       => {
         const theme = useTheme()
@@ -75,7 +83,7 @@ glob(`${featherRootDir}/**.svg`, (err, icons) => {
         )
       };
 
-      ${ComponentName}.propTypes = {
+      Icon${ComponentName}.propTypes = {
         color: PropTypes.string,
         size: PropTypes.oneOfType([
           PropTypes.string,
@@ -93,9 +101,11 @@ glob(`${featherRootDir}/**.svg`, (err, icons) => {
 
     fs.writeFileSync(location, component, "utf-8");
 
-    const exportString = `export * from './icons/${id}';\r\n`;
+    const exportString = `export * from './icons/Icon${uppercamelcase(
+      fileName
+    )}';\r\n`;
     fs.appendFileSync(
-      path.join(rootDir, "src", "index.ts"),
+      path.join(destinationDir, "index.ts"),
       exportString,
       "utf-8"
     );

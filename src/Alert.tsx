@@ -3,19 +3,19 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import ReachAlert from "@reach/alert";
 import { Text } from "./Text";
-import {
-  FiInfo,
-  FiCheckCircle,
-  FiAlertCircle,
-  FiAlertOctagon,
-  FiHelpCircle
-} from "react-icons/fi";
 import { CloseButton } from "./IconButton";
 import { LayerElevations } from "./Layer";
 import PropTypes from "prop-types";
 import { Theme } from "./Theme";
 import { useTheme } from "./Theme/Providers";
-import { Icon } from "./Icon";
+import { IconWrapper } from "./IconWrapper";
+import {
+  IconInfo,
+  IconCheckCircle,
+  IconAlertCircle,
+  IconAlertOctagon,
+  IconHelpCircle
+} from "./Icons";
 
 const alertIntentions = (theme: Theme) => ({
   info: theme.colors.intent.none,
@@ -33,11 +33,11 @@ export type AlertIntentions =
   | "warning";
 
 const icons: { [key in AlertIntentions]: React.ReactNode } = {
-  info: <FiInfo />,
-  success: <FiCheckCircle />,
-  warning: <FiAlertCircle />,
-  danger: <FiAlertOctagon />,
-  question: <FiHelpCircle />
+  info: <IconInfo />,
+  success: <IconCheckCircle />,
+  warning: <IconAlertCircle />,
+  danger: <IconAlertOctagon />,
+  question: <IconHelpCircle />
 };
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -91,9 +91,9 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
       css={{ display: "flex", alignItems: "flex-start" }}
     >
       <div css={{ flex: "0 0 auto", marginTop: "2px" }}>
-        <Icon size="md" color={accent}>
+        <IconWrapper size="md" color={accent}>
           {icon}
-        </Icon>
+        </IconWrapper>
       </div>
       <div css={{ marginLeft: theme.spaces.md }}>
         <Text

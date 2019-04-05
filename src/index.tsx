@@ -10,7 +10,7 @@ export * from "./Embed";
 export * from "./ErrorBoundary";
 export * from "./Form";
 export * from "./IconButton";
-export * from "./Icon";
+export * from "./IconWrapper";
 export * from "./Layer";
 export * from "./Link";
 export * from "./List";
@@ -37,6 +37,5 @@ export * from "./VisuallyHidden";
 export * from "./Theme";
 export * from "./Theme/Providers";
 
-// Export icons from react-icons. Make sure this
-// is tree-shakable
-export * from "react-icons/fi";
+// Export feather icons
+export * from "./Icons";

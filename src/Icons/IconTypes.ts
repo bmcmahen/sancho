@@ -1,6 +1,6 @@
 export type IconSizes = "xs" | "sm" | "md" | "lg" | "xl";
 
-export interface IconProps {
+export interface IconProps extends React.SVGAttributes<SVGElement> {
   color?: string;
-  size: number | IconSizes;
+  size?: number | IconSizes;
 }

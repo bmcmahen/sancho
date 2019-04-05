@@ -1,25 +1,27 @@
 import * as React from "react";
-import { useTheme } from "./Theme/Providers";
 
-export type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
+type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
 
-export interface IconProps {
+export interface IconWrapperProps {
   size?: IconSize;
   color?: string;
   children: React.ReactNode;
   className?: string;
 }
 
-export const Icon: React.FunctionComponent<IconProps> = ({
+/**
+ * This wrapper allows us to also render non-sancho icons. It should probably
+ * remain a private component.
+ */
+
+export const IconWrapper: React.FunctionComponent<IconWrapperProps> = ({
   size = "md",
   color,
   children,
   ...other
 }) => {
-  const theme = useTheme();
-
   return React.cloneElement(children as React.ReactElement<any>, {
-    size: theme.iconSizes[size],
+    size,
     color,
     "aria-hidden": true,
     style: { display: "block" },
