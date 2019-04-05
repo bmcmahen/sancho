@@ -8,6 +8,7 @@ import { Layer } from "../Layer";
 import { Text } from "../Text";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
+import { FiArrowRight } from "react-icons/fi";
 
 export const FormStories = storiesOf("Forms", module)
   .add("input types", () => (
@@ -123,7 +124,7 @@ export const FormStories = storiesOf("Forms", module)
           <Button component="a" href="#" size="sm">
             Small
           </Button>
-          <Button component="a" href="#" size="sm" iconAfter="arrow-right">
+          <Button component="a" href="#" size="sm" iconAfter={<FiArrowRight />}>
             Small
           </Button>
         </div>
@@ -137,7 +138,7 @@ export const FormStories = storiesOf("Forms", module)
           <Button component="a" href="#" size="md">
             Medium
           </Button>
-          <Button component="a" href="#" size="md" iconAfter="arrow-right">
+          <Button component="a" href="#" size="md" iconAfter={<FiArrowRight />}>
             Medium
           </Button>
         </div>
@@ -151,7 +152,7 @@ export const FormStories = storiesOf("Forms", module)
           <Button component="a" href="#" size="lg">
             Large
           </Button>
-          <Button component="a" href="#" size="lg" iconAfter="arrow-right">
+          <Button component="a" href="#" size="lg" iconAfter={<FiArrowRight />}>
             Large
           </Button>
         </div>

@@ -8,7 +8,7 @@ import { alpha } from "./Theme/colors";
 import { useUid } from "./Hooks/use-uid";
 import { Theme } from "./Theme";
 import { useTheme } from "./Theme/Providers";
-import { getHeight } from "./Button";
+import { getHeight, focusShadow } from "./Button";
 import { FiAlertCircle, FiChevronDown } from "react-icons/fi";
 import { Icon } from "./Icon";
 
@@ -171,10 +171,17 @@ function getBaseStyles(theme: Theme) {
       color: alpha(theme.colors.text.default, 0.45)
     },
     ":focus": {
-      boxShadow: `inset 0 0 2px ${alpha(gray, 0.4)}, inset 0 0 0 1px ${alpha(
-        blue,
-        0.3
-      )}, 0 0 0 2px ${alpha(blue, dark ? 0.5 : 0.2)}`,
+      boxShadow: dark
+        ? focusShadow(
+            alpha(theme.colors.palette.blue.light, 0.5),
+            alpha(theme.colors.palette.gray.dark, 0.4),
+            alpha(theme.colors.palette.gray.light, 0.2)
+          )
+        : focusShadow(
+            alpha(theme.colors.palette.blue.dark, 0.1),
+            alpha(theme.colors.palette.gray.dark, 0.2),
+            alpha(theme.colors.palette.gray.dark, 0.05)
+          ),
       outline: "none"
     },
     ":disabled": {

@@ -34,7 +34,7 @@ interface Toast {
  * onto our render function
  */
 
-function useToast() {
+export function useToast() {
   const theme = useTheme();
 
   function notify({
@@ -87,5 +87,3 @@ function useToast() {
 
   return notify;
 }
-
-export default useToast;

@@ -91,7 +91,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
       css={{ display: "flex", alignItems: "flex-start" }}
     >
       <div css={{ flex: "0 0 auto" }}>
-        <Icon size="lg" color={accent}>
+        <Icon size="md" color={accent}>
           {icon}
         </Icon>
       </div>

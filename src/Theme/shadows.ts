@@ -1,4 +1,11 @@
-import { alpha } from "./colors";
+import color from "color";
+
+function alpha(c: string, amount: number) {
+  return color(c)
+    .alpha(amount)
+    .hsl()
+    .string();
+}
 
 export function createShadows(color: string) {
   const shadow = (amount: number) => alpha(color, amount);

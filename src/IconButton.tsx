@@ -6,7 +6,6 @@ import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 import { FiX } from "react-icons/fi";
 import { useTheme } from "./Theme/Providers";
-import { IconBase } from "react-icons/lib/cjs";
 import { Icon } from "./Icon";
 
 export interface IconButtonProps extends Partial<ButtonProps> {

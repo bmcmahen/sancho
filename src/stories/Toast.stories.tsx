@@ -3,7 +3,7 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Button } from "../Button";
 import { storiesOf } from "@storybook/react";
-import useToast from "../Toast";
+import { useToast } from "../Toast";
 import { ToggleDarkMode } from "./ToggleDarkMode";
 
 function Example() {
