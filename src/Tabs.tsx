@@ -389,9 +389,9 @@ export const Tab: React.RefForwardingComponent<
             component="span"
             variant="subtitle"
             css={{
-              fontSize: theme.sizes[1],
+              fontSize: theme.fontSizes[1],
               [theme.breakpoints.sm]: {
-                fontSize: theme.sizes[0]
+                fontSize: theme.fontSizes[0]
               },
               letterSpacing: "0.25px",
               color: "inherit",

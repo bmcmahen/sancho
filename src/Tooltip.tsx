@@ -73,7 +73,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
             opacity: state.opacity
           }}
           css={{
-            zIndex: theme.zIndex.tooltip,
+            zIndex: theme.zIndices.tooltip,
             margin: theme.spaces.xs
           }}
           {...other}
@@ -94,7 +94,7 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
             variant="body"
             css={[
               {
-                fontSize: theme.sizes[0],
+                fontSize: theme.fontSizes[0],
                 display: "inline-block",
                 margin: 0,
                 textAlign: "center",

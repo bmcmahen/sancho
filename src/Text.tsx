@@ -10,104 +10,104 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
     case "uppercase":
       return css({
         textTransform: "uppercase",
-        fontSize: theme.sizes[0],
+        fontSize: theme.fontSizes[0],
         fontWeight: 600,
         color: theme.colors.text.muted,
         letterSpacing: "-0.02em"
       });
     case "body":
       return css({
-        fontSize: theme.sizes[1]
+        fontSize: theme.fontSizes[1]
       });
     case "paragraph":
       return css({
-        fontSize: theme.sizes[1],
+        fontSize: theme.fontSizes[1],
         marginBottom: theme.spaces.md
       });
     case "subtitle":
       return css({
-        fontSize: theme.sizes[0],
+        fontSize: theme.fontSizes[0],
         fontWeight: 500,
-        lineHeight: 1.5
+        lineHeight: theme.lineHeights.body
       });
     case "lead":
       return css({
         fontWeight: 400,
-        fontSize: theme.sizes[2]
+        fontSize: theme.fontSizes[2]
       });
     case "h6":
       return css({
-        fontWeight: 500,
+        fontWeight: theme.fontWeights.heading,
         lineHeight: 1.5,
-        fontSize: theme.sizes[1],
+        fontSize: theme.fontSizes[1],
         marginBottom: theme.spaces.sm
       });
     case "h5":
       return css({
-        fontWeight: 500,
-        fontSize: theme.sizes[2],
-        lineHeight: 1.2,
+        fontWeight: theme.fontWeights.heading,
+        fontSize: theme.fontSizes[2],
+        lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm
       });
     case "h4":
       return css({
-        fontWeight: 500,
-        fontSize: theme.sizes[3],
-        lineHeight: 1.2,
+        fontWeight: theme.fontWeights.heading,
+        fontSize: theme.fontSizes[3],
+        lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
         letterSpacing: "-0.2px"
       });
     case "h3":
       return css({
-        fontWeight: 500,
-        fontSize: theme.sizes[4],
-        lineHeight: 1.2,
+        fontWeight: theme.fontWeights.heading,
+        fontSize: theme.fontSizes[4],
+        lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm
       });
     case "h2":
       return css({
-        fontWeight: 500,
-        fontSize: theme.sizes[5],
-        lineHeight: 1.2,
+        fontWeight: theme.fontWeights.heading,
+        fontSize: theme.fontSizes[5],
+        lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
         letterSpacing: "-0.2px"
       });
     case "h1":
       return css({
-        fontWeight: 500,
-        fontSize: theme.sizes[6],
-        lineHeight: 1.2,
+        fontWeight: theme.fontWeights.heading,
+        fontSize: theme.fontSizes[6],
+        lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
         letterSpacing: "-0.2px"
       });
     case "display3":
       return css({
-        fontWeight: 300,
-        fontSize: theme.sizes[5],
-        lineHeight: 1.2,
+        fontWeight: theme.fontWeights.display,
+        fontSize: theme.fontSizes[5],
+        lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
         [theme.breakpoints.md]: {
-          fontSize: theme.sizes[6]
+          fontSize: theme.fontSizes[6]
         }
       });
     case "display2":
       return css({
-        fontWeight: 300,
-        fontSize: theme.sizes[6],
-        lineHeight: 1.2,
+        fontWeight: theme.fontWeights.display,
+        fontSize: theme.fontSizes[6],
+        lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
         [theme.breakpoints.md]: {
-          fontSize: theme.sizes[7]
+          fontSize: theme.fontSizes[7]
         }
       });
     case "display1":
       return css({
-        fontWeight: 300,
-        fontSize: theme.sizes[7],
-        lineHeight: 1.2,
+        fontWeight: theme.fontWeights.display,
+        fontSize: theme.fontSizes[7],
+        lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
         [theme.breakpoints.md]: {
-          fontSize: theme.sizes[8]
+          fontSize: theme.fontSizes[8]
         }
       });
   }
@@ -152,11 +152,11 @@ const basicStyles = (theme: Theme) => ({
   base: css({
     boxSizing: "border-box",
     margin: 0,
-    lineHeight: theme.lineHeight,
+    fontWeight: theme.fontWeights.body,
+    lineHeight: theme.lineHeights.body,
     fontFamily: theme.fonts.base,
-    fontSize: theme.sizes[1],
+    fontSize: theme.fontSizes[1],
     color: theme.colors.text.default,
-    fontWeight: 400,
     WebkitFontSmoothing: "antialiased"
   }),
   noGutter: css({

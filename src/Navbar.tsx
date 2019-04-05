@@ -19,7 +19,7 @@ const getStyles = (theme: Theme) => ({
     top: 0,
     left: 0,
     width: "100%",
-    zIndex: theme.zIndex.fixed
+    zIndex: theme.zIndices.fixed
   }),
   static: css({
     position: "static",
@@ -34,7 +34,7 @@ const getStyles = (theme: Theme) => ({
   sticky: css({
     position: "sticky",
     top: 0,
-    zIndex: theme.zIndex.sticky
+    zIndex: theme.zIndices.sticky
   })
 });
 
@@ -56,7 +56,7 @@ export const Navbar: React.FunctionComponent<NavbarProps> = ({
       css={[
         {
           background: theme.colors.background.default,
-          zIndex: position === "fixed" ? theme.zIndex.fixed : undefined,
+          zIndex: position === "fixed" ? theme.zIndices.fixed : undefined,
           boxShadow: theme.shadows.sm
         },
         styles[position]

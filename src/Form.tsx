@@ -13,15 +13,15 @@ import { getHeight } from "./Button";
 
 const getInputSizes = (theme: Theme) => ({
   sm: css({
-    fontSize: theme.sizes[0],
+    fontSize: theme.fontSizes[0],
     padding: "0.25rem 0.5rem"
   }),
   md: css({
-    fontSize: theme.sizes[1],
+    fontSize: theme.fontSizes[1],
     padding: "0.5rem 0.75rem"
   }),
   lg: css({
-    fontSize: theme.sizes[2],
+    fontSize: theme.fontSizes[2],
     padding: "0.65rem 1rem"
   })
 });
@@ -90,7 +90,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
             css={{
               display: "block",
               marginLeft: theme.spaces.xs,
-              fontSize: theme.sizes[0],
+              fontSize: theme.fontSizes[0],
               color: danger
             }}
           >
@@ -108,7 +108,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
             display: "block",
             marginTop: theme.spaces.xs,
             color: theme.colors.text.muted,
-            fontSize: theme.sizes[0]
+            fontSize: theme.fontSizes[0]
           }}
           variant="body"
         >
@@ -138,7 +138,7 @@ function getBaseStyles(theme: Theme) {
   const baseStyles = css({
     display: "block",
     width: "100%",
-    lineHeight: theme.lineHeight,
+    lineHeight: theme.lineHeights.body,
     color: theme.colors.text.default,
     backgroundColor: dark
       ? theme.colors.background.tint1
@@ -375,7 +375,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             WebkitAppearance: "none",
             display: "block",
             width: "100%",
-            lineHeight: theme.lineHeight,
+            lineHeight: theme.lineHeights.body,
             height,
             color: theme.colors.text.default,
             background: dark

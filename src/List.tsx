@@ -130,7 +130,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
             <Text
               className="ListItem__secondary"
               wrap={wrap}
-              css={{ display: "block", fontSize: theme.sizes[0] }}
+              css={{ display: "block", fontSize: theme.fontSizes[0] }}
               variant="body"
               muted
             >

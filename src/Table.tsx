@@ -223,12 +223,12 @@ export const TableCell: React.FunctionComponent<TableCellProps> = ({
         type === "head"
           ? {
               fontWeight: 500,
-              fontSize: theme.sizes[0],
+              fontSize: theme.fontSizes[0],
               color: theme.colors.text.muted
             }
           : {
               fontWeight: 400,
-              fontSize: theme.sizes[0],
+              fontSize: theme.fontSizes[0],
               color: theme.colors.text.default
             },
         tableCellAlignments[align]

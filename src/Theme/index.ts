@@ -15,30 +15,18 @@ const spaces = {
 };
 
 // font sizes
-const sizes: [
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string
-] = [
-  // "0.7rem",
-  "0.875rem",
-  "1rem",
-  "1.25rem",
-  "1.5rem",
-  "1.75rem",
-  "2rem",
-  "2.5rem",
-  "3.5rem",
-  "4.5rem",
-  "5.5rem"
-];
+const fontSizes = {
+  0: "0.875rem",
+  1: "1rem",
+  2: "1.25rem",
+  3: "1.5rem",
+  4: "1.75rem",
+  5: "2rem",
+  6: "2.5rem",
+  7: "3.5rem",
+  8: "4.5rem",
+  9: "5.5rem"
+};
 
 // radius (for layers, buttons, etc)
 const radii = {
@@ -48,7 +36,7 @@ const radii = {
 };
 
 // bootstrap z-index
-const zIndex = {
+const zIndices = {
   sticky: 1020,
   fixed: 1030,
   overlay: 1040,
@@ -65,18 +53,30 @@ const fonts = {
   monospace: `SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`
 };
 
+const lineHeights = {
+  heading: 1.2,
+  body: 1.5
+};
+
+const fontWeights = {
+  body: 400,
+  heading: 500,
+  display: 300
+};
+
 export type ThemeColors = typeof defaultColors.colors;
 
 export const defaultTheme = {
   ...defaultColors,
   spaces,
-  zIndex,
+  zIndices,
   breakpoints,
-  sizes,
+  fontSizes,
   radii,
   fonts,
   shadows: defaultColors.modes.light.shadows,
-  lineHeight: "1.5"
+  lineHeights,
+  fontWeights
 };
 
 export type Theme = typeof defaultTheme;

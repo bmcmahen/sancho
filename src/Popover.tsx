@@ -156,7 +156,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
           }}
           data-placement={placement}
           css={{
-            zIndex: theme.zIndex.popover,
+            zIndex: theme.zIndices.popover,
             margin: theme.spaces.sm,
             borderRadius: theme.radii.md,
             background: bg

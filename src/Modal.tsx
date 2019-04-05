@@ -68,7 +68,7 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
                   }}
                   css={[
                     {
-                      zIndex: theme.zIndex.modal,
+                      zIndex: theme.zIndices.modal,
                       background: theme.colors.background.default,
                       boxShadow: theme.shadows.md,
                       borderRadius: theme.radii.lg,

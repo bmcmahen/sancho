@@ -178,7 +178,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                   css={[
                     {
                       outline: "none",
-                      zIndex: theme.zIndex.modal,
+                      zIndex: theme.zIndices.modal,
                       opacity: 1,
                       position: "fixed"
                     },

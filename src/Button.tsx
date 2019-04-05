@@ -33,11 +33,11 @@ const getPadding = (size: ButtonSize) => {
 };
 
 const getFontSize = (size: ButtonSize, theme: Theme) => {
-  if (size === "xs") return theme.sizes[0];
-  if (size === "lg") return theme.sizes[2];
-  if (size === "sm") return theme.sizes[0];
-  if (size === "xl") return theme.sizes[3];
-  return theme.sizes[1];
+  if (size === "xs") return theme.fontSizes[0];
+  if (size === "lg") return theme.fontSizes[2];
+  if (size === "sm") return theme.fontSizes[0];
+  if (size === "xl") return theme.fontSizes[3];
+  return theme.fontSizes[1];
 };
 
 const getDisplay = (block?: boolean) => (block ? "flex" : "inline-flex");

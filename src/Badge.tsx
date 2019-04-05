@@ -21,7 +21,7 @@ export const Badge: React.FunctionComponent<BadgeProps> = ({
       component="span"
       css={{
         color: "white",
-        fontSize: `calc(${theme.sizes[0]} - 0.15rem)`,
+        fontSize: `calc(${theme.fontSizes[0]} - 0.15rem)`,
         fontWeight: "bold",
         display: "inline-block",
         borderRadius: "32px",

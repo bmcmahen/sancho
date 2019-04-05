@@ -182,7 +182,7 @@ export const TableExamples = storiesOf("Tables", module)
                       paddingBottom: 0
                     }}
                   >
-                    <Text variant="body" css={{ fontSize: theme.sizes[0] }}>
+                    <Text variant="body" css={{ fontSize: theme.fontSizes[0] }}>
                       Officia laborum deserunt adipisicing reprehenderit esse
                       elit exercitation consectetur ad non. Enim reprehenderit
                       mollit in commodo anim ex consequat magna laboris

@@ -99,7 +99,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
             className="Alert__title-subtitle"
             muted
             css={{
-              fontSize: theme.sizes[0]
+              fontSize: theme.fontSizes[0]
             }}
           >
             {subtitle}
