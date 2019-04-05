@@ -2,9 +2,9 @@
   "name": "sancho",
   "version": "1.0.0-beta.8",
   "licence": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "typings": "esm/index.d.ts",
   "author": "Ben McMahen <ben.mcmahen@gmail.com>",
   "dependencies": {
     "@reach/alert": "^0.1.2",
@@ -39,15 +39,19 @@
     "react-dom": "^16.8.4"
   },
   "files": [
-    "dist/",
-    "src/"
+    "umd",
+    "cjs",
+    "esm",
+    "src"
   ],
   "scripts": {
-    "clear": "rimraf dist",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "build": "yarn run clear && rollup -c",
+    "build-esm": "rimraf esm && tsc",
+    "build-cjs": "rimraf cjs && tsc --module commonjs --outDir commonjs",
+    "build-umd": "rimraf umd && rollup -c",
+    "build": "yarn run build-esm && yarn run build-cjs && yarn run build-umd",
     "prepublishOnly": "yarn run build"
   },
   "eslintConfig": {
@@ -83,6 +87,8 @@
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.20.1",
+    "rollup-plugin-uglify": "^6.0.2",
     "typescript": "3.3.3333"
-  }
+  },
+  "sideEffects": false
 }
