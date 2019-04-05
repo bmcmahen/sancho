@@ -3,13 +3,19 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import ReachAlert from "@reach/alert";
 import { Text } from "./Text";
-import { Icon } from "./Icons";
-import { IconName } from "@blueprintjs/icons";
+import {
+  FiInfo,
+  FiCheckCircle,
+  FiAlertCircle,
+  FiAlertOctagon,
+  FiHelpCircle
+} from "react-icons/fi";
 import { CloseButton } from "./IconButton";
 import { LayerElevations } from "./Layer";
 import PropTypes from "prop-types";
 import { Theme } from "./Theme";
 import { useTheme } from "./Theme/Providers";
+import { Icon } from "./Icon";
 
 const alertIntentions = (theme: Theme) => ({
   info: theme.colors.intent.none,
@@ -26,12 +32,12 @@ export type AlertIntentions =
   | "danger"
   | "warning";
 
-const icons: { [key in AlertIntentions]: IconName } = {
-  info: "info-sign",
-  success: "tick-circle",
-  warning: "warning-sign",
-  danger: "error",
-  question: "help"
+const icons: { [key in AlertIntentions]: React.ReactNode } = {
+  info: <FiInfo />,
+  success: <FiCheckCircle />,
+  warning: <FiAlertCircle />,
+  danger: <FiAlertOctagon />,
+  question: <FiHelpCircle />
 };
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -77,13 +83,17 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
     accent = color.light;
   }
 
+  const icon = icons[intent];
+
   const contents = title ? (
     <div
       className="Alert__title"
       css={{ display: "flex", alignItems: "flex-start" }}
     >
-      <div css={{ flex: "0 0 auto", marginTop: "4px" }}>
-        <Icon color={accent} icon={icons[intent]} />
+      <div css={{ flex: "0 0 auto" }}>
+        <Icon size="lg" color={accent}>
+          {icon}
+        </Icon>
       </div>
       <div css={{ marginLeft: theme.spaces.md }}>
         <Text

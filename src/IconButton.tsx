@@ -1,19 +1,22 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Button, ButtonProps, ButtonSize, getHeight } from "./Button";
-import { IconName } from "@blueprintjs/icons";
-import { Icon } from "./Icons";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
+import { FiX } from "react-icons/fi";
+import { useTheme } from "./Theme/Providers";
+import { IconBase } from "react-icons/lib/cjs";
+import { Icon } from "./Icon";
 
 export interface IconButtonProps extends Partial<ButtonProps> {
   /** A label required for accessibility  */
   label: string;
   /** The name of the icon you wish to render */
-  icon: IconName | JSX.Element;
+  icon?: React.ReactNode;
   /** Change the colour */
   color?: string;
+  children?: React.ReactNode;
 }
 
 // I need to think more about maintaining consistent
@@ -41,11 +44,14 @@ export const IconButton: React.RefForwardingComponent<
       label,
       size = "md" as ButtonSize,
       icon,
+      children,
       color = "currentColor",
       ...other
-    },
+    }: IconButtonProps,
     ref
   ) => {
+    const theme = useTheme();
+
     return (
       <Button
         ref={ref}
@@ -57,7 +63,7 @@ export const IconButton: React.RefForwardingComponent<
         {...other}
       >
         <VisuallyHidden>{label}</VisuallyHidden>
-        <Icon size={size} color={color} aria-hidden icon={icon} />
+        <Icon size={size}>{icon}</Icon>
       </Button>
     );
   }
@@ -84,7 +90,7 @@ export const CloseButton: React.FunctionComponent<CloseButtonProps> = ({
   label = "Close",
   ...other
 }) => {
-  return <IconButton variant="ghost" label={label} icon="cross" {...other} />;
+  return <IconButton variant="ghost" label={label} icon={<FiX />} {...other} />;
 };
 
 CloseButton.propTypes = {

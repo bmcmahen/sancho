@@ -5,10 +5,33 @@ import { IconButton, CloseButton } from "../IconButton";
 import { storiesOf } from "@storybook/react";
 import { ButtonSize } from "../Button";
 import { ToggleDarkMode } from "./ToggleDarkMode";
+import { FiActivity, FiMail, FiAirplay, FiMaximize } from "react-icons/fi";
 
 export const IconButtonStories = storiesOf("IconButton", module)
   .add("basic", () => {
-    return <IconButton icon="add" label="Add" />;
+    return (
+      <div
+        css={{
+          display: "flex",
+          margin: "1rem",
+          "& > *": {
+            margin: "0.5rem"
+          }
+        }}
+      >
+        <IconButton icon={<FiActivity />} label="Activity" />
+        {["xs", "sm", "md", "lg", "xl"].map(size => {
+          return (
+            <IconButton
+              css={{ margin: "1rem" }}
+              size={size as ButtonSize}
+              icon={<FiActivity />}
+              label="Menu"
+            />
+          );
+        })}
+      </div>
+    );
   })
   .add("sizes", () => {
     return (
@@ -18,7 +41,7 @@ export const IconButtonStories = storiesOf("IconButton", module)
             <IconButton
               css={{ margin: "1rem" }}
               size={size as ButtonSize}
-              icon={"menu"}
+              icon={<FiMail />}
               label="Menu"
             />
           );
@@ -29,7 +52,7 @@ export const IconButtonStories = storiesOf("IconButton", module)
               variant="ghost"
               css={{ margin: "1rem" }}
               size={size as ButtonSize}
-              icon={"menu"}
+              icon={<FiAirplay />}
               label="Menu"
             />
           );
@@ -40,7 +63,7 @@ export const IconButtonStories = storiesOf("IconButton", module)
               variant="outline"
               css={{ margin: "1rem" }}
               size={size as ButtonSize}
-              icon={"menu"}
+              icon={<FiMaximize />}
               label="Menu"
             />
           );

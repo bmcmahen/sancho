@@ -128,7 +128,7 @@ export const PopoverStories = storiesOf("Popover", module)
             </MenuList>
           }
         >
-          <IconButton variant="ghost" icon="more" label="show more" />
+          {/* <IconButton variant="ghost" icon="more" label="show more" /> */}
         </Popover>
       </div>
     );
@@ -150,7 +150,7 @@ export const PopoverStories = storiesOf("Popover", module)
             </MenuList>
           }
         >
-          <IconButton variant="ghost" icon="more" label="show more" />
+          {/* <IconButton variant="ghost" icon="more" label="show more" /> */}
         </ResponsivePopover>
       </div>
     );
