@@ -2,10 +2,10 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": true,
+    "declarationDir": "dist",
     "esModuleInterop": true,
     "importHelpers": true,
     "jsx": "react",
-    "lib": ["dom", "es2015", "es2016"],
     "module": "esnext",
     "target": "esnext",
     "outDir": "build",
@@ -19,5 +19,5 @@
   },
 
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist", "stories", "tests", "compiled"]
 }
