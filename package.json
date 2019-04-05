@@ -3,7 +3,7 @@
   "version": "1.0.0-beta.8",
   "licence": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
+  "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
   "author": "Ben McMahen <ben.mcmahen@gmail.com>",
   "dependencies": {
