@@ -2,9 +2,9 @@
   "name": "sancho",
   "version": "1.0.0-beta.8",
   "licence": "MIT",
-  "main": "commonjs/index.js",
-  "module": "build/index.js",
-  "typings": "build/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "typings": "dist/index.d.ts",
   "author": "Ben McMahen <ben.mcmahen@gmail.com>",
   "dependencies": {
     "@blueprintjs/icons": "^3.6.0",
@@ -36,15 +36,16 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },
+  "files": [
+    "dist/",
+    "src/"
+  ],
   "scripts": {
-    "clear": "rimraf ./build && rimraf commonjs",
+    "clear": "rimraf dist",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "build": "yarn run clear && tsc",
-    "build-commonjs": "rimraf ./commonjs && tsc --module commonjs --outDir commonjs",
-    "build-for-docgen": "yarn run clear && tsc --jsx preserve",
-    "build-all": "yarn run clear && yarn run build && yarn run build-commonjs",
+    "build": "yarn run clear && rollup -c",
     "prepublishOnly": "yarn run build"
   },
   "eslintConfig": {
@@ -71,6 +72,12 @@
     "react-dom": "^16.8.5",
     "react-scripts": "2.1.5",
     "rimraf": "^2.6.3",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-filesize": "^6.0.1",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.20.1",
     "typescript": "3.3.3333"
   }
 }

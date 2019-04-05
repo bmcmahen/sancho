@@ -16,6 +16,7 @@ node_modules
 build
 commonjs
 /commonjs
+dist
 
 # misc
 .DS_Store
