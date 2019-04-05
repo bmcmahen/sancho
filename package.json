@@ -49,7 +49,7 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "build-esm": "rimraf esm && tsc",
-    "build-cjs": "rimraf cjs && tsc --module commonjs --outDir commonjs",
+    "build-cjs": "rimraf cjs && tsc --module commonjs --outDir cjs",
     "build-umd": "rimraf umd && rollup -c",
     "build": "yarn run build-esm && yarn run build-cjs && yarn run build-umd",
     "prepublishOnly": "yarn run build"
@@ -84,6 +84,7 @@
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-filesize": "^6.0.1",
+    "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.20.1",

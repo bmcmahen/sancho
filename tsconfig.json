@@ -8,7 +8,7 @@
     "jsx": "react",
     "lib": ["es2015", "esnext.asynciterable", "dom"],
     "module": "esnext",
-    "target": "es6",
+    "target": "es5",
     "outDir": "esm",
     "skipLibCheck": true,
     "moduleResolution": "node",
