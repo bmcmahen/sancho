@@ -20,7 +20,7 @@ const featherRootDir = path.join(
 const destinationDir = path.join(__dirname, "..", "src", "Icons");
 
 glob(`${featherRootDir}/**.svg`, (err, icons) => {
-  fs.writeFileSync(path.join(destinationDir, "index.ts"), "", "utf-8");
+  fs.writeFileSync(path.join(destinationDir, "index.tsx"), "", "utf-8");
 
   icons.forEach(i => {
     const svg = fs.readFileSync(i, "utf-8");
@@ -58,6 +58,8 @@ glob(`${featherRootDir}/**.svg`, (err, icons) => {
     });
 
     const element = `
+      /** @jsx jsx */
+      import { jsx, css } from "@emotion/core";
       import * as React from 'react';
       import PropTypes from 'prop-types';
       import { IconProps } from '../IconTypes';
@@ -105,7 +107,7 @@ glob(`${featherRootDir}/**.svg`, (err, icons) => {
       fileName
     )}';\r\n`;
     fs.appendFileSync(
-      path.join(destinationDir, "index.ts"),
+      path.join(destinationDir, "index.tsx"),
       exportString,
       "utf-8"
     );

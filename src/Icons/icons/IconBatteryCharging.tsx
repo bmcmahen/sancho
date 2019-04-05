@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import PropTypes from "prop-types";
 import { IconProps } from "../IconTypes";
