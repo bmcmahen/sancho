@@ -90,7 +90,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
       className="Alert__title"
       css={{ display: "flex", alignItems: "flex-start" }}
     >
-      <div css={{ flex: "0 0 auto" }}>
+      <div css={{ flex: "0 0 auto", marginTop: "2px" }}>
         <Icon size="md" color={accent}>
           {icon}
         </Icon>

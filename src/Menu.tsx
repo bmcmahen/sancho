@@ -215,7 +215,9 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
           }
         },
         ":focus": {
-          backgroundColor: theme.colors.background.tint1,
+          backgroundColor: dark
+            ? theme.colors.background.tint2
+            : theme.colors.background.tint1,
           outline: "none"
         },
         ":active": {
