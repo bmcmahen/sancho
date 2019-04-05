@@ -26,7 +26,12 @@ export const Link: React.FunctionComponent<LinkProps> = ({
     <Component
       className="Link"
       css={{
-        textDecoration: "underline",
+        textDecoration: "none",
+        "@media (hover:hover)": {
+          ":hover": {
+            textDecoration: "underline"
+          }
+        },
         color:
           theme.colors.mode === "dark"
             ? theme.colors.palette.blue.light
