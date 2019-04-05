@@ -5,10 +5,9 @@ import color from "color";
 import PropTypes from "prop-types";
 import { alpha, lighten } from "./Theme/colors";
 import { Spinner } from "./Spinner";
-import { IconName } from "@blueprintjs/icons";
-import { Icon, sizesForIcon } from "./Icons";
 import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
+import { Icon } from "./Icon";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -424,11 +423,11 @@ const variants = {
 };
 
 const iconSpaceForSize = (theme: Theme) => ({
-  xs: `calc(${sizesForIcon.xs}px + ${theme.spaces.md} + ${theme.spaces.sm})`,
-  sm: `calc(${sizesForIcon.sm}px + ${theme.spaces.md} + ${theme.spaces.sm})`,
-  md: `calc(${sizesForIcon.md}px + ${theme.spaces.md} + 0.65rem)`,
-  lg: `calc(${sizesForIcon.lg}px + ${theme.spaces.md} + 0.8rem)`,
-  xl: `calc(${sizesForIcon.xl}px + ${theme.spaces.md} + ${theme.spaces.md})`
+  xs: `calc(${theme.iconSizes.xs} + 0.6rem)`,
+  sm: `calc(${theme.iconSizes.sm} + 0.6rem)`,
+  md: `calc(${theme.iconSizes.md} + 0.6rem)`,
+  lg: `calc(${theme.iconSizes.lg} + 0.6rem)`,
+  xl: `calc(${theme.iconSizes.xl} + 0.6rem)`
 });
 
 export type ButtonVariant = keyof typeof variants;
@@ -445,9 +444,9 @@ export interface ButtonStyleProps {
   loading?: boolean;
   disabled?: boolean;
   /** The name of the icon to appear to the left of the button text*/
-  iconBefore?: IconName | JSX.Element;
+  iconBefore?: React.ReactNode;
   /** The name of the icon to appear to the right of the button text */
-  iconAfter?: IconName | JSX.Element;
+  iconAfter?: React.ReactNode;
 }
 
 export interface ButtonProps
@@ -505,6 +504,7 @@ export const Button: React.RefForwardingComponent<
             padding: getPadding(size),
             height: getHeight(size),
             display: getDisplay(block),
+            alignItems: "center",
             justifyContent: "center"
           },
           variants[variant],
@@ -520,10 +520,10 @@ export const Button: React.RefForwardingComponent<
             }
           },
           (iconBefore || (block && iconAfter)) && {
-            paddingLeft: iconSpaceForSize(theme)[size]
+            paddingLeft: "0.65rem"
           },
           (iconAfter || (block && iconBefore)) && {
-            paddingRight: iconSpaceForSize(theme)[size]
+            paddingRight: "0.65rem"
           }
         ]}
         {...other}
@@ -543,39 +543,38 @@ export const Button: React.RefForwardingComponent<
         )}
 
         {iconBefore && (
-          <Icon
-            css={{
-              position: "absolute",
-              left: theme.spaces.md,
-              top: "50%",
-              transform: "translateY(-50%)"
-            }}
-            size={size}
-            color="currentColor"
-            aria-hidden
-            icon={iconBefore}
-          />
+          <Icon css={{ marginRight: theme.spaces.sm }} size={size} aria-hidden>
+            {iconBefore}
+          </Icon>
         )}
 
         {typeof children === "string" ? (
-          <span aria-hidden={loading}>{children}</span>
+          <span
+            css={{
+              flex: 1,
+              // kinda lame hack to center our text in block
+              // mode with icons before and after
+              marginRight:
+                block && iconBefore && !iconAfter
+                  ? iconSpaceForSize(theme)[size]
+                  : 0,
+              marginLeft:
+                block && iconAfter && !iconBefore
+                  ? iconSpaceForSize(theme)[size]
+                  : 0
+            }}
+            aria-hidden={loading}
+          >
+            {children}
+          </span>
         ) : (
           children
         )}
 
         {iconAfter && (
-          <Icon
-            css={{
-              position: "absolute",
-              right: theme.spaces.md,
-              top: "50%",
-              transform: "translateY(-50%)"
-            }}
-            size={size}
-            color="currentColor"
-            aria-hidden
-            icon={iconAfter}
-          />
+          <Icon css={{ marginLeft: theme.spaces.sm }} size={size}>
+            {iconAfter}
+          </Icon>
         )}
       </Component>
     );

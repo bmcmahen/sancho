@@ -6,6 +6,7 @@ import { storiesOf } from "@storybook/react";
 import theme from "../Theme";
 import { DarkMode, useTheme, LightMode } from "../Theme/Providers";
 import { ToggleDarkMode } from "./ToggleDarkMode";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 export const ButtonStories = storiesOf("Button", module)
   .add("variants", () => {
@@ -87,20 +88,32 @@ export const ButtonStories = storiesOf("Button", module)
           }
         }}
       >
-        <Button iconBefore="chart">Icon before</Button>
-        <Button iconAfter="arrow-right">Icon after</Button>
-        <Button iconBefore="chart" iconAfter="arrow-right">
+        <Button iconBefore={<FiArrowLeft />}>Icon before</Button>
+        <Button iconAfter={<FiArrowRight />}>Icon after</Button>
+        <Button iconBefore={<FiArrowLeft />} iconAfter={<FiArrowRight />}>
           Icon before and after
         </Button>
-        <Button intent="primary" iconAfter="arrow-right">
+        <Button iconAfter={<FiArrowRight />} intent="primary">
           Icon after
         </Button>
-        <Button intent="primary" variant="outline" iconAfter="arrow-right">
+        <Button iconAfter={<FiArrowRight />} intent="primary" variant="outline">
           Icon after
         </Button>
-        <Button intent="primary" variant="ghost" iconAfter="arrow-right">
+        <Button iconAfter={<FiArrowRight />} intent="primary" variant="ghost">
           Icon after
         </Button>
+        {["xs", "sm", "md", "lg", "xl"].map(size => {
+          return (
+            <Button
+              size={size as ButtonSize}
+              iconAfter={<FiArrowRight />}
+              intent="primary"
+              variant="outline"
+            >
+              Icon after
+            </Button>
+          );
+        })}
       </div>
     </ToggleDarkMode>
   ))
@@ -108,6 +121,7 @@ export const ButtonStories = storiesOf("Button", module)
     return (
       <div
         css={{
+          margin: "1rem",
           "& > *": {
             maxWidth: "300px",
             marginTop: theme.spaces.md
@@ -115,13 +129,17 @@ export const ButtonStories = storiesOf("Button", module)
         }}
       >
         <Button block>Hello</Button>
-        <Button block iconBefore="chevron-left">
+        <Button block iconBefore={<FiArrowRight />}>
           with icon before
         </Button>
-        <Button block iconAfter="chevron-right">
+        <Button block iconAfter={<FiArrowRight />}>
           With icon after
         </Button>
-        <Button block iconBefore="chevron-backward" iconAfter="chart">
+        <Button
+          block
+          iconBefore={<FiArrowRight />}
+          iconAfter={<FiArrowRight />}
+        >
           Two icons
         </Button>
       </div>

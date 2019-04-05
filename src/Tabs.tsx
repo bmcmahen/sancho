@@ -4,15 +4,14 @@ import * as React from "react";
 import { Text } from "./Text";
 import { buttonReset } from "./Button";
 import { useMeasure } from "./Collapse";
-import { Icon } from "./Icons";
 import VisuallyHidden from "@reach/visually-hidden";
-import { IconName } from "@blueprintjs/icons";
 import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
 import { useSpring, animated } from "react-spring";
 import { usePrevious } from "./Hooks/previous";
 import { Badge } from "./Badge";
 import { useTheme } from "./Theme/Providers";
+import { Icon, IconSize } from "./Icon";
 
 /**
  * Ideas for improving accessibility:
@@ -455,19 +454,19 @@ TabPanel.propTypes = {
 };
 
 export interface TabIconProps {
-  icon: IconName;
+  icon: React.ReactNode;
   label: string;
-  size?: number;
+  size?: IconSize;
 }
 
 export const TabIcon: React.FunctionComponent<TabIconProps> = ({
   icon,
   label,
-  size = 24
+  size = "lg"
 }) => {
   return (
     <React.Fragment>
-      <Icon icon={icon} size={size} />
+      <Icon size={size}>{icon}</Icon>
       <VisuallyHidden>{label}</VisuallyHidden>
     </React.Fragment>
   );

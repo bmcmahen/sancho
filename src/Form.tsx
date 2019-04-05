@@ -5,11 +5,12 @@ import { Text } from "./Text";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
-import { Icon } from "./Icons";
 import { useUid } from "./Hooks/use-uid";
 import { Theme } from "./Theme";
 import { useTheme } from "./Theme/Providers";
 import { getHeight } from "./Button";
+import { FiAlertCircle, FiChevronDown } from "react-icons/fi";
+import { Icon } from "./Icon";
 
 const getInputSizes = (theme: Theme) => ({
   sm: css({
@@ -85,7 +86,9 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
             display: "flex"
           }}
         >
-          <Icon icon="error" color={danger} size={14} />
+          <Icon color={danger}>
+            <FiAlertCircle />
+          </Icon>
           <Text
             css={{
               display: "block",
@@ -425,7 +428,6 @@ export const Select: React.FunctionComponent<SelectProps> = ({
       {!multiple && (
         <Icon
           className="Select__icon"
-          icon="double-caret-vertical"
           color={theme.colors.text.muted}
           css={{
             position: "absolute",
@@ -433,7 +435,9 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             right: "0.75rem",
             transform: "translateY(-50%)"
           }}
-        />
+        >
+          <FiChevronDown />
+        </Icon>
       )}
     </div>
   );

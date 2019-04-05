@@ -4,6 +4,8 @@ import * as React from "react";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
+import { Icon } from "./Icon";
+import { FiChevronRight } from "react-icons/fi";
 
 interface BreadcrumbsProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "md" | "lg";
@@ -147,21 +149,9 @@ const BreadcrumbDivider: React.FunctionComponent = () => {
         color: theme.colors.text.muted
       }}
     >
-      <svg
-        className="BreadcrumbDivider__icon"
-        css={{ marginTop: "2px" }}
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 20 20"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <polyline points="9 18 15 12 9 6" />
-      </svg>
+      <Icon>
+        <FiChevronRight />
+      </Icon>
     </div>
   );
 };

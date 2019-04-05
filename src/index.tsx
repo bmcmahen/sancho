@@ -10,7 +10,7 @@ export * from "./Embed";
 export * from "./ErrorBoundary";
 export * from "./Form";
 export * from "./IconButton";
-export * from "./Icons";
+export * from "./Icon";
 export * from "./Layer";
 export * from "./Link";
 export * from "./List";

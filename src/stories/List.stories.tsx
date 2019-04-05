@@ -4,7 +4,6 @@ import * as React from "react";
 import { Button } from "../Button";
 import { List, ListItem, ListSection } from "../List";
 import { storiesOf } from "@storybook/react";
-import { Icon } from "../Icons";
 import { Layer } from "../Layer";
 import theme from "../Theme";
 import faker from "faker";
@@ -30,9 +29,6 @@ export const CollapseStories = storiesOf("List", module)
                 }
                 primary="Ben McMahen"
                 secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-                contentAfter={
-                  <Icon color={theme.colors.text.muted} icon="chevron-right" />
-                }
               />
               <ListItem
                 contentBefore={
@@ -40,9 +36,6 @@ export const CollapseStories = storiesOf("List", module)
                 }
                 primary="Joe Chen"
                 secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-                contentAfter={
-                  <Icon color={theme.colors.text.muted} icon="chevron-right" />
-                }
               />
             </ListSection>
             <Divider muted />
@@ -53,9 +46,6 @@ export const CollapseStories = storiesOf("List", module)
                 }
                 primary="Joe Chen"
                 secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-                contentAfter={
-                  <Icon color={theme.colors.text.muted} icon="chevron-right" />
-                }
               />
               <ListItem
                 contentBefore={
@@ -63,9 +53,6 @@ export const CollapseStories = storiesOf("List", module)
                 }
                 primary="Joe Chen"
                 secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-                contentAfter={
-                  <Icon color={theme.colors.text.muted} icon="chevron-right" />
-                }
               />
             </ListSection>
           </List>
@@ -91,9 +78,6 @@ export const CollapseStories = storiesOf("List", module)
             primary="Ben McMahen"
             wrap={false}
             secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-            contentAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
           />
           <ListItem
             wrap={false}
@@ -102,9 +86,6 @@ export const CollapseStories = storiesOf("List", module)
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            contentAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
           />
           <ListItem
             wrap={false}
@@ -113,9 +94,6 @@ export const CollapseStories = storiesOf("List", module)
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            contentAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
           />
           <ListItem
             wrap={false}
@@ -124,9 +102,6 @@ export const CollapseStories = storiesOf("List", module)
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            contentAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
           />
         </List>
       </Layer>
@@ -152,9 +127,6 @@ export const CollapseStories = storiesOf("List", module)
             primary="Ben McMahen"
             wrap={false}
             secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
-            contentAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
           />
           <ListItem
             wrap={false}
@@ -163,9 +135,6 @@ export const CollapseStories = storiesOf("List", module)
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            contentAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
           />
           <ListItem
             wrap={false}
@@ -174,9 +143,6 @@ export const CollapseStories = storiesOf("List", module)
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            contentAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
           />
           <ListItem
             wrap={false}
@@ -185,9 +151,6 @@ export const CollapseStories = storiesOf("List", module)
             }
             primary="Joe Chen"
             secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
-            contentAfter={
-              <Icon color={theme.colors.text.muted} icon="chevron-right" />
-            }
           />
         </List>
       </Layer>
@@ -201,9 +164,6 @@ export const CollapseStories = storiesOf("List", module)
         }
         primary="Ben McMahen"
         wrap={false}
-        contentAfter={
-          <Icon color={theme.colors.text.muted} icon="chevron-right" />
-        }
       />
     </List>
   ));
