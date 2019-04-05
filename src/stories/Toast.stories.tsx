@@ -27,9 +27,7 @@ function Example() {
 export const ToastStories = storiesOf("Toast", module).add("basic", () => {
   return (
     <div css={{ PADDING: "3REM" }}>
-      <ToggleDarkMode>
-        <Example />
-      </ToggleDarkMode>
+      <Example />
     </div>
   );
 });

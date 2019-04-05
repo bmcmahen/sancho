@@ -33,5 +33,10 @@ export * from "./Table";
 export * from "./SkipNav";
 export * from "./VisuallyHidden";
 
+// Theme stuff
 export * from "./Theme";
 export * from "./Theme/Providers";
+
+// Export icons from react-icons. Make sure this
+// is tree-shakable
+export * from "react-icons/fi";

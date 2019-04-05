@@ -86,7 +86,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
             display: "flex"
           }}
         >
-          <Icon color={danger}>
+          <Icon size="sm" color={danger}>
             <FiAlertCircle />
           </Icon>
           <Text

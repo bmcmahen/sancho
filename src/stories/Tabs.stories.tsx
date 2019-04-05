@@ -11,6 +11,7 @@ import { Layer } from "../Layer";
 import { TabContent } from "../TabContent";
 import { Button } from "../Button";
 import { DarkMode, useTheme } from "../Theme/Providers";
+import { FiActivity } from "react-icons/fi";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
@@ -96,19 +97,19 @@ export const TabsExamples = storiesOf("Tabs", module)
                   onChange={i => console.log(i)}
                 >
                   <Tab id="hello">
-                    <TabIcon icon="chat" label="Chat" />
+                    <TabIcon icon={<FiActivity />} label="Chat" />
                   </Tab>
                   <Tab id="cool">
-                    <TabIcon icon="annotation" label="Annotation" />
+                    <TabIcon icon={<FiActivity />} label="Annotation" />
                   </Tab>
                   <Tab id="tables">
-                    <TabIcon icon="application" label="Application" />
+                    <TabIcon icon={<FiActivity />} label="Application" />
                   </Tab>
                   <Tab id="players">
-                    <TabIcon icon="build" label="Build" />
+                    <TabIcon icon={<FiActivity />} label="Build" />
                   </Tab>
                   <Tab id="dsf">
-                    <TabIcon icon="chart" label="Chart" />
+                    <TabIcon icon={<FiActivity />} label="Chart" />
                   </Tab>
                 </Tabs>
               </DarkMode>
