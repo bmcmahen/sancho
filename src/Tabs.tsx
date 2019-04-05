@@ -345,7 +345,7 @@ export const Tab: React.RefForwardingComponent<
             },
             "& svg": {
               transition: "fill 0.35s cubic-bezier(0.35,0,0.25,1)",
-              fill: getTextColor(dark) + " !important"
+              color: getTextColor(dark) + " !important"
             },
             ":focus": {
               color: dark ? "white" : theme.colors.text.selected
@@ -355,7 +355,7 @@ export const Tab: React.RefForwardingComponent<
                 ? "rgba(255,255,255,0.4)"
                 : alpha(theme.colors.text.selected, 0.4),
               "& svg": {
-                fill:
+                color:
                   (dark
                     ? "rgba(255,255,255,0.4)"
                     : alpha(theme.colors.text.selected, 0.4)) + " !important"
