@@ -76,6 +76,7 @@
     "@types/storybook__react": "^4.0.1",
     "emotion-theming": "^10.0.10",
     "faker": "^4.1.0",
+    "feather-icons": "^4.21.0",
     "palx": "^1.0.3",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
