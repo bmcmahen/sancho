@@ -8,7 +8,8 @@ import { Layer } from "../Layer";
 import { Text } from "../Text";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiAlignCenter } from "react-icons/fi";
+import { IconButton } from "../IconButton";
 
 export const FormStories = storiesOf("Forms", module)
   .add("input types", () => (
@@ -128,7 +129,7 @@ export const FormStories = storiesOf("Forms", module)
             Small
           </Button>
         </div>
-        <div>
+        <div css={{ display: "flex", alignItems: "cente" }}>
           <Input
             css={{ display: "inline-block", width: "auto" }}
             defaultValue="hello world"
@@ -141,6 +142,7 @@ export const FormStories = storiesOf("Forms", module)
           <Button component="a" href="#" size="md" iconAfter={<FiArrowRight />}>
             Medium
           </Button>
+          <IconButton icon={<FiAlignCenter />} label="Align center" />
         </div>
         <div>
           <Input

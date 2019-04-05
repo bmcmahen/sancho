@@ -134,9 +134,6 @@ function getBaseStyles(theme: Theme) {
   const gray = dark
     ? theme.colors.palette.gray.light
     : theme.colors.palette.gray.base;
-  const blue = dark
-    ? theme.colors.palette.blue.light
-    : theme.colors.palette.blue.base;
 
   const baseStyles = css({
     display: "block",
@@ -361,13 +358,6 @@ export const Select: React.FunctionComponent<SelectProps> = ({
     lg: inputSizes.lg
   };
   const dark = theme.colors.mode === "dark";
-  const gray = dark
-    ? theme.colors.palette.gray.light
-    : theme.colors.palette.gray.base;
-  const blue = dark
-    ? theme.colors.palette.blue.light
-    : theme.colors.palette.blue.base;
-
   const height = getHeight(inputSize);
 
   return (
@@ -418,13 +408,17 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             },
             ":focus": {
               borderColor: theme.colors.palette.blue.base,
-              boxShadow: `inset 0 0 2px ${alpha(
-                gray,
-                0.4
-              )}, inset 0 0 0 1px ${alpha(blue, 0.3)}, 0 0 0 3px ${alpha(
-                blue,
-                dark ? 0.3 : 0.2
-              )}`,
+              boxShadow: dark
+                ? focusShadow(
+                    alpha(theme.colors.palette.blue.light, 0.5),
+                    alpha(theme.colors.palette.gray.dark, 0.4),
+                    alpha(theme.colors.palette.gray.light, 0.2)
+                  )
+                : focusShadow(
+                    alpha(theme.colors.palette.blue.dark, 0.1),
+                    alpha(theme.colors.palette.gray.dark, 0.2),
+                    alpha(theme.colors.palette.gray.dark, 0.05)
+                  ),
               outline: 0
             }
           }
