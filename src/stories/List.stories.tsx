@@ -14,13 +14,11 @@ import { Divider } from "../Divider";
 export const CollapseStories = storiesOf("List", module)
   .add("basic", () => {
     return (
-      <div css={{ padding: "3rem" }}>
-        <Layer elevation="sm" css={{ overflow: "hidden", width: "450px" }}>
-          <div
-            css={{
-              height: "1.5rem"
-            }}
-          />
+      <div>
+        <Layer
+          elevation="sm"
+          css={{ overflow: "hidden", width: "100%", borderRadius: 0 }}
+        >
           <List>
             <ListSection title="Hello world">
               <ListItem

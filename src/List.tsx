@@ -195,7 +195,7 @@ export const ListSection: React.FunctionComponent<ListSectionProps> = ({
           backgroundColor: sticky ? bg : "transparent",
           padding: theme.spaces.sm,
           paddingLeft: theme.spaces.md,
-          paddingTop: theme.spaces.md,
+          marginTop: theme.spaces.md,
           [theme.mediaQueries.md]: {
             paddingLeft: theme.spaces.lg,
             paddingRight: theme.spaces.lg
