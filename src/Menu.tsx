@@ -194,6 +194,9 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
 
   return (
     <Component
+      onTouchStart={() => {
+        // such a lame hack to get active events working on ios
+      }}
       css={{
         cursor: "pointer",
         padding: `calc(${theme.spaces.sm} + 0.25rem) calc(${
@@ -205,6 +208,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         opacity: disabled ? 0.3 : 1,
         display: "flex",
         textDecoration: "none",
+        transition: "background-color 0.1s ease",
         WebkitTapHighlightColor: "transparent",
         color: theme.colors.text.default,
         alignItems: "center",
@@ -229,7 +233,6 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
           padding: `${theme.spaces.xs} ${theme.spaces.md}`
         }
       }}
-      // onFocus={onFocus}
       role={role}
       tabIndex={0}
       data-trigger-close={true}

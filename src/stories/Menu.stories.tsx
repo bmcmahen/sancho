@@ -31,7 +31,7 @@ export const MenuStories = storiesOf("MenuList", module)
   })
   .add("with icons", () => {
     return (
-      <MenuList css={{ maxWidth: "340px" }}>
+      <MenuList css={{ maxWidth: "400px", width: "100%" }}>
         <MenuItem contentBefore={<IconUser />}>Share</MenuItem>
         <MenuItem contentBefore={<IconAlertCircle />}>Alert</MenuItem>
         <MenuDivider />
