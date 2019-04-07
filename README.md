@@ -30,13 +30,10 @@ function MyApp() {
 ### Development
 
 ```
+git clone https://github.com/bmcmahen/sancho.git
+cd sancho
+yarn
 yarn run storybook
-```
-
-### Build
-
-```
-yarn run build
 ```
 
 ### License
