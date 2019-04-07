@@ -157,7 +157,8 @@ const basicStyles = (theme: Theme) => ({
     fontFamily: theme.fonts.base,
     fontSize: theme.fontSizes[1],
     color: theme.colors.text.default,
-    WebkitFontSmoothing: "antialiased"
+    WebkitFontSmoothing: "antialiased",
+    WebkitTextSizeAdjust: "none"
   }),
   noGutter: css({
     marginBottom: 0
