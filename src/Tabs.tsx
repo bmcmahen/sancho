@@ -15,6 +15,7 @@ import { IconWrapper } from "./IconWrapper";
 import { IconSizes } from "./Icons/IconTypes";
 import scrollIntoView from "scroll-into-view-if-needed";
 import { scrollTo } from "./misc/tween";
+import { noOp } from "./misc/noop";
 
 const hideScrollbar = css`
   ::-webkit-scrollbar {
@@ -360,9 +361,7 @@ export const Tab: React.RefForwardingComponent<
 
     return (
       <Component
-        onTouchStart={() => {
-          // lame hack to get ios active styles working
-        }}
+        onTouchStart={noOp}
         css={[
           buttonReset,
           {

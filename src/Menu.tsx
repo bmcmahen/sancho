@@ -5,6 +5,7 @@ import { Text } from "./Text";
 import PropTypes from "prop-types";
 import { RequestCloseContext } from "./Sheet";
 import { useTheme } from "./Theme/Providers";
+import { noOp } from "./misc/noop";
 
 const KeyCodes = {
   ArrowUp: 38,
@@ -194,9 +195,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
 
   return (
     <Component
-      onTouchStart={() => {
-        // such a lame hack to get active events working on ios
-      }}
+      onTouchStart={noOp}
       css={{
         cursor: "pointer",
         padding: `calc(${theme.spaces.sm} + 0.25rem) calc(${

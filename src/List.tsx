@@ -5,6 +5,7 @@ import { Text } from "./Text";
 import PropTypes from "prop-types";
 import { MenuLabel } from "./Menu";
 import { useTheme } from "./Theme/Providers";
+import { noOp } from "./misc/noop";
 
 export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
   /** A series of ListItem elements */
@@ -63,6 +64,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
   return (
     <Component
       className="ListItem"
+      onTouchStart={noOp}
       css={[
         {
           display: "block",
