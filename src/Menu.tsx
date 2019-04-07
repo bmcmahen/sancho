@@ -150,8 +150,10 @@ interface MenuItemPropsCloned extends React.HTMLAttributes<Element> {
   ref: React.RefObject<HTMLDivElement>;
   /** Provide a custom component. Eg., ReactRouter Link */
   component?: React.ReactType<any>;
-  /** optional content to appear to the right of the menu */
+  /** optional content to appear to the right of the menu text */
   contentAfter?: React.ReactNode;
+  /** optional content to appear to the left of the menu text */
+  contentBefore?: React.ReactNode;
   [key: string]: any;
 }
 
@@ -160,6 +162,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   onFocus,
   onKeyDown,
   onSelect,
+  contentBefore,
   contentAfter,
   onClick,
   component: Component = "div",
@@ -201,7 +204,6 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         },
         opacity: disabled ? 0.3 : 1,
         display: "flex",
-        justifyContent: "space-between",
         textDecoration: "none",
         WebkitTapHighlightColor: "transparent",
         color: theme.colors.text.default,
@@ -248,8 +250,19 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
       ref={localRef}
       {...other}
     >
+      {contentBefore}
       {typeof children === "string" ? (
-        <Text css={{ color: "inherit" }}>{children}</Text>
+        <Text
+          wrap={false}
+          css={{
+            paddingLeft: contentBefore ? theme.spaces.md : 0,
+            paddingRight: contentAfter ? theme.spaces.md : 0,
+            flex: 1,
+            color: "inherit"
+          }}
+        >
+          {children}
+        </Text>
       ) : (
         children
       )}
