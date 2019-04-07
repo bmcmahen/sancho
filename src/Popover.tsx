@@ -208,8 +208,11 @@ Popover.propTypes = {
 export const ResponsivePopover: React.FunctionComponent<PopoverProps> = (
   props: PopoverProps
 ) => {
+  const theme = useTheme();
+
+  // show popover on iPad+
   const showPopover = useMedia({
-    minWidth: "567px"
+    minWidth: theme.breakpoints.sm
   });
 
   const [isOpen, setIsOpen] = React.useState(false);

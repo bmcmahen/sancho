@@ -336,7 +336,7 @@ export const Tab: React.RefForwardingComponent<
           buttonReset,
           {
             padding: `10px ${theme.spaces.md}`,
-            [theme.breakpoints.lg]: {
+            [theme.mediaQueries.lg]: {
               padding: `10px ${theme.spaces.lg}`
             },
             cursor: "pointer",
@@ -390,7 +390,7 @@ export const Tab: React.RefForwardingComponent<
             variant="subtitle"
             css={{
               fontSize: theme.fontSizes[1],
-              [theme.breakpoints.sm]: {
+              [theme.mediaQueries.sm]: {
                 fontSize: theme.fontSizes[0]
               },
               letterSpacing: "0.25px",

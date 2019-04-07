@@ -196,7 +196,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         padding: `calc(${theme.spaces.sm} + 0.25rem) calc(${
           theme.spaces.md
         } + 0.25rem)`,
-        [theme.breakpoints.sm]: {
+        [theme.mediaQueries.sm]: {
           padding: `${theme.spaces.sm} ${theme.spaces.md}`
         },
         opacity: disabled ? 0.3 : 1,
@@ -223,7 +223,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         ":active": {
           backgroundColor: theme.colors.background.tint2
         },
-        [theme.breakpoints.md]: {
+        [theme.mediaQueries.md]: {
           padding: `${theme.spaces.xs} ${theme.spaces.md}`
         }
       }}

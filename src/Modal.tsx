@@ -75,11 +75,11 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
                       margin: "16px",
                       width: "calc(100% - 32px)",
                       outline: "none",
-                      [theme.breakpoints.sm]: {
+                      [theme.mediaQueries.sm]: {
                         maxWidth: "500px",
                         margin: "30px auto"
                       },
-                      [theme.breakpoints.lg]: {
+                      [theme.mediaQueries.lg]: {
                         maxWidth: "650px",
                         margin: "30px auto"
                       }
@@ -91,11 +91,11 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
                       height: "100vh",
                       borderRadius: 0,
                       boxShadow: "none",
-                      [theme.breakpoints.sm]: {
+                      [theme.mediaQueries.sm]: {
                         maxWidth: "none",
                         margin: "0"
                       },
-                      [theme.breakpoints.md]: {
+                      [theme.mediaQueries.md]: {
                         maxWidth: "500px",
                         margin: "30px auto",
                         height: "auto",

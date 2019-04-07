@@ -72,7 +72,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
           background: "transparent",
           WebkitTapHighlightColor: "transparent",
           transition: "background 0.07s ease",
-          [theme.breakpoints.md]: {
+          [theme.mediaQueries.md]: {
             paddingLeft: theme.spaces.lg,
             paddingRight: theme.spaces.lg
           },
@@ -193,7 +193,7 @@ export const ListSection: React.FunctionComponent<ListSectionProps> = ({
           backgroundColor: sticky ? bg : "transparent",
           padding: theme.spaces.sm,
           paddingTop: theme.spaces.md,
-          [theme.breakpoints.md]: {
+          [theme.mediaQueries.md]: {
             paddingLeft: theme.spaces.lg,
             paddingRight: theme.spaces.lg
           }

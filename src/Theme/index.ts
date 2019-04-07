@@ -1,5 +1,5 @@
 import { defaultColors } from "./colors";
-import { breakpoints } from "./breakpoints";
+import { breakpoints, generateMediaQueries } from "./breakpoints";
 export { generateColorsFromScales } from "./colors";
 
 const spacer = 1;
@@ -79,6 +79,7 @@ export const defaultTheme = {
   spaces,
   zIndices,
   breakpoints,
+  mediaQueries: generateMediaQueries(breakpoints),
   fontSizes,
   radii,
   fonts,

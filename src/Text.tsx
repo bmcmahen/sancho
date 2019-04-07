@@ -86,7 +86,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
         fontSize: theme.fontSizes[5],
         lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
-        [theme.breakpoints.md]: {
+        [theme.mediaQueries.md]: {
           fontSize: theme.fontSizes[6]
         }
       });
@@ -96,7 +96,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
         fontSize: theme.fontSizes[6],
         lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
-        [theme.breakpoints.md]: {
+        [theme.mediaQueries.md]: {
           fontSize: theme.fontSizes[7]
         }
       });
@@ -106,7 +106,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
         fontSize: theme.fontSizes[7],
         lineHeight: theme.lineHeights.heading,
         marginBottom: theme.spaces.sm,
-        [theme.breakpoints.md]: {
+        [theme.mediaQueries.md]: {
           fontSize: theme.fontSizes[8]
         }
       });

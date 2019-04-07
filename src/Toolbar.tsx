@@ -32,7 +32,7 @@ export const Toolbar: React.FunctionComponent<ToolbarProps> = ({
           alignItems: "center",
           paddingLeft: theme.spaces.md,
           paddingRight: theme.spaces.md,
-          [theme.breakpoints.md]: {
+          [theme.mediaQueries.md]: {
             minHeight: DESKTOP_HEIGHT,
             paddingLeft: theme.spaces.lg,
             paddingRight: theme.spaces.lg
@@ -54,7 +54,7 @@ export const useResponsiveBodyPadding = () => {
   const theme = useTheme();
   return css({
     paddingTop: MOBILE_HEIGHT,
-    [theme.breakpoints.md]: {
+    [theme.mediaQueries.md]: {
       paddingTop: DESKTOP_HEIGHT
     }
   });

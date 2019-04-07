@@ -54,7 +54,7 @@ const positions = (theme: Theme) => ({
     bottom: 0,
     width: "auto",
     maxWidth: "100vw",
-    [theme.breakpoints.md]: {
+    [theme.mediaQueries.md]: {
       maxWidth: "400px"
     }
   }),
@@ -64,7 +64,7 @@ const positions = (theme: Theme) => ({
     bottom: 0,
     width: "auto",
     maxWidth: "100vw",
-    [theme.breakpoints.md]: {
+    [theme.mediaQueries.md]: {
       maxWidth: "400px"
     }
   }),
@@ -76,7 +76,7 @@ const positions = (theme: Theme) => ({
     width: "100%",
     padding: 0,
     boxSizing: "border-box",
-    [theme.breakpoints.md]: {
+    [theme.mediaQueries.md]: {
       maxHeight: "400px"
     },
     "& > div": {
@@ -93,7 +93,7 @@ const positions = (theme: Theme) => ({
     height: "auto",
     width: "100%",
     padding: 0,
-    [theme.breakpoints.md]: {
+    [theme.mediaQueries.md]: {
       maxHeight: "400px"
     },
     "& > div": {

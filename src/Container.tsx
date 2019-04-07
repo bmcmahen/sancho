@@ -8,7 +8,7 @@ export const useResponsiveContainerPadding = () => {
   const theme = useTheme();
   return css({
     padding: `0 ${theme.spaces.md}`,
-    [theme.breakpoints.lg]: {
+    [theme.mediaQueries.lg]: {
       padding: `0 ${theme.spaces.lg}`
     }
   });
@@ -47,7 +47,7 @@ export function NegativeMarginsContainer(props: ContainerProps) {
       css={{
         marginLeft: `-${theme.spaces.md}`,
         marginRight: `-${theme.spaces.md}`,
-        [theme.breakpoints.lg]: {
+        [theme.mediaQueries.lg]: {
           marginLeft: `-${theme.spaces.lg}`,
           marginRight: `-${theme.spaces.lg}`
         }
