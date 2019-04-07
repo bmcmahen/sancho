@@ -2,7 +2,7 @@
   <a href="https://sancho-ui.com/">
     <img alt="sancho logo"
     alt="Sancho is a responsive and accessible design system built with React, Typescript and Emotion. Named after the ever-faithful, hilariously acerbic sidekick of Don Quixote, Sancho is designed to help you no matter how quixotic your dreams may be."
-     src="https://raw.githubusercontent.com/bmcmahen/sancho/theme/branding.jpg">
+     src="https://raw.githubusercontent.com/bmcmahen/sancho/theme/branding.png">
   </a>
 </div>
 
