@@ -8,7 +8,7 @@
 
 ## Getting started
 
-Install Sancho and Emotion using Yarn or NPM:
+Install Sancho and Emotion using Yarn or npm:
 
 ```
 yarn add sancho @emotion/core @emotion/css
