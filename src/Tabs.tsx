@@ -13,6 +13,8 @@ import { Badge } from "./Badge";
 import { useTheme } from "./Theme/Providers";
 import { IconWrapper } from "./IconWrapper";
 import { IconSizes } from "./Icons/IconTypes";
+import scrollIntoView from "scroll-into-view-if-needed";
+import { scrollTo } from "./misc/tween";
 
 /**
  * Ideas for improving accessibility:
@@ -54,6 +56,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
   ...other
 }) => {
   const theme = useTheme();
+  const boundary = React.useRef<HTMLDivElement>(null);
   const tablist = React.useRef<HTMLDivElement>(null);
   const refs = React.useRef<Map<number, HTMLButtonElement | null>>(new Map());
   const dark = theme.colors.mode === "dark";
@@ -71,6 +74,24 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 
   // this should be debounced, probably
   const { ref, bounds } = useMeasure();
+
+  React.useEffect(() => {
+    const target = refs.current!.get(value);
+    if (target) {
+      scrollIntoView(target, {
+        behavior: instructions => {
+          if (instructions[0]) {
+            const { el, left } = instructions[0];
+            scrollTo(el, left);
+          }
+        },
+
+        block: "center",
+        inline: "center",
+        boundary: boundary.current
+      });
+    }
+  }, [value]);
 
   // measure our elements
   React.useEffect(() => {
@@ -156,6 +177,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
   return (
     <div
       className="Tabs"
+      ref={boundary}
       css={{
         boxShadow: dark ? `0px 3px 2px rgba(0,0,0,0.15)` : "none"
       }}

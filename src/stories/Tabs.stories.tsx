@@ -26,9 +26,7 @@ const Example = () => {
       }}
     >
       <Tabs value={value} onChange={i => setValue(i)}>
-        <Tab id="course" onClick={() => alert("clicked!")}>
-          Course events
-        </Tab>
+        <Tab id="course">Course events</Tab>
         <Tab id="settings" badge={<Badge>1</Badge>}>
           Settings
         </Tab>
