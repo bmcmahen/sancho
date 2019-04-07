@@ -38,7 +38,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
         scrollbarWidth: "none",
         borderRadius: theme.radii.sm,
         msOverflowStyle: "none",
-        "::-webkit-scrollbar": {
+        "::WebkitScrollbar": {
           width: 0,
           height: 0
         }

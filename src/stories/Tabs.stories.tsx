@@ -20,6 +20,7 @@ const Example = () => {
   return (
     <div
       css={{
+        maxWidth: "100vw",
         paddingTop: theme.spaces.xl,
         background: theme.colors.background.tint1
       }}
@@ -90,9 +91,7 @@ function IconExample() {
             css={{
               flex: 1
             }}
-          >
-            <Text>hello</Text>
-          </div>
+          />
           <div>
             <Tabs
               variant="evenly-spaced"
@@ -178,9 +177,7 @@ function EvenlySpaced() {
                 value={value}
                 onChange={i => setValue(i)}
               >
-                <Tab badge={7} id="hello">
-                  Games
-                </Tab>
+                <Tab id="hello">Games</Tab>
                 <Tab id="cool">News</Tab>
                 <Tab id="tables">Tables</Tab>
                 <Tab id="players">Players</Tab>

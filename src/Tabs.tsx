@@ -173,7 +173,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
           margin: "0 auto",
           scrollbarWidth: "none",
           msOverflowStyle: "none",
-          "::-webkit-scrollbar": {
+          "::WebkitScrollbar": {
             width: 0,
             height: 0
           }
