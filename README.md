@@ -6,13 +6,15 @@
   </a>
 </div>
 
-[View the docs](https://sancho-ui.com) for full usage details.
+## Getting started
 
-## Install
+Install Sancho and Emotion using Yarn or NPM:
 
 ```
-yarn add sancho
+yarn add sancho @emotion/core @emotion/css
 ```
+
+And import your desired components into your React project. If you're using [Create React App](https://github.com/facebook/create-react-app) or a build process that supports tree shaking, only the imported components will end up in your final build.
 
 ```jsx
 import { Button } from "sancho";
@@ -21,6 +23,8 @@ function MyApp() {
   return <Button>Hello world</Button>;
 }
 ```
+
+[View the documentation](https://sancho-ui.com) for full usage details including a complete component list.
 
 ### Development
 
@@ -33,3 +37,7 @@ yarn run storybook
 ```
 yarn run build
 ```
+
+### License
+
+MIT
