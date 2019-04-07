@@ -27,9 +27,7 @@ const Example = () => {
     >
       <Tabs value={value} onChange={i => setValue(i)}>
         <Tab id="course">Course events</Tab>
-        <Tab id="settings" badge={<Badge>1</Badge>}>
-          Settings
-        </Tab>
+        <Tab id="settings">Settings</Tab>
         <Tab id="templates">Templates</Tab>
         <Tab id="courses">Courses</Tab>
         <Tab id="members">Team members</Tab>
@@ -129,8 +127,7 @@ function EvenlySpaced() {
       css={{
         display: "flex",
         justifyContent: "center",
-        background: theme.colors.background.tint2,
-        padding: "0.5rem"
+        background: theme.colors.background.tint2
       }}
     >
       <Layer
@@ -140,6 +137,7 @@ function EvenlySpaced() {
           maxHeight: "500px",
           width: "100%",
           display: "block",
+          borderRadius: 0,
           boxSizing: "border-box",
           overflow: "hidden"
         }}

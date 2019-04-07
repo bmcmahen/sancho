@@ -1,10 +1,17 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
 import { IconChevronRight } from "./Icons";
+
+const hideScrollbar = css`
+  ::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+`;
 
 interface BreadcrumbsProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "md" | "lg";
@@ -31,18 +38,17 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     <nav
       className="Breadcrumbs"
       aria-label="breadcrumb"
-      css={{
-        maxWidth: "100%",
-        overflow: overflowX ? "scroll" : "hidden",
-        WebkitOverflowScrolling: "touch",
-        scrollbarWidth: "none",
-        borderRadius: theme.radii.sm,
-        msOverflowStyle: "none",
-        "::WebkitScrollbar": {
-          width: 0,
-          height: 0
-        }
-      }}
+      css={[
+        {
+          maxWidth: "100%",
+          overflow: overflowX ? "scroll" : "hidden",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          borderRadius: theme.radii.sm,
+          msOverflowStyle: "none"
+        },
+        hideScrollbar
+      ]}
       {...other}
     >
       <ol

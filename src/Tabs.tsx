@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import { buttonReset } from "./Button";
@@ -15,6 +15,13 @@ import { IconWrapper } from "./IconWrapper";
 import { IconSizes } from "./Icons/IconTypes";
 import scrollIntoView from "scroll-into-view-if-needed";
 import { scrollTo } from "./misc/tween";
+
+const hideScrollbar = css`
+  ::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+`;
 
 /**
  * Ideas for improving accessibility:
@@ -186,20 +193,19 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
       <div
         className="Tabs__container"
         ref={ref}
-        css={{
-          width: "100%",
-          whiteSpace: "nowrap",
-          overflowX: "scroll",
-          WebkitOverflowScrolling: "touch",
-          maxWidth: "1200px",
-          margin: "0 auto",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          "::WebkitScrollbar": {
-            width: 0,
-            height: 0
-          }
-        }}
+        css={[
+          {
+            width: "100%",
+            whiteSpace: "nowrap",
+            overflowX: "scroll",
+            WebkitOverflowScrolling: "touch",
+            maxWidth: "1200px",
+            margin: "0 auto",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none"
+          },
+          hideScrollbar
+        ]}
       >
         <div
           className="Tabs__tablist"
@@ -354,6 +360,9 @@ export const Tab: React.RefForwardingComponent<
 
     return (
       <Component
+        onTouchStart={() => {
+          // lame hack to get ios active styles working
+        }}
         css={[
           buttonReset,
           {
@@ -412,7 +421,7 @@ export const Tab: React.RefForwardingComponent<
             variant="subtitle"
             css={{
               fontSize: theme.fontSizes[0],
-
+              fontWeight: 600,
               color: "inherit",
               transition: "color 0.25s cubic-bezier(0.35,0,0.25,1)"
             }}
