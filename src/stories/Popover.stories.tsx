@@ -6,9 +6,15 @@ import { Button } from "../Button";
 import { MenuList, MenuItem, MenuDivider } from "../Menu";
 import { IconButton } from "../IconButton";
 import { storiesOf } from "@storybook/react";
-import { ToggleDarkMode } from "./ToggleDarkMode";
 import { Placement } from "popper.js";
-import { IconMoreHorizontal } from "../Icons";
+import {
+  IconMoreHorizontal,
+  IconUser,
+  IconPackage,
+  IconMapPin,
+  IconActivity,
+  IconArrowUpRight
+} from "../Icons";
 
 interface LinkProps {
   href: string;
@@ -144,14 +150,21 @@ export const PopoverStories = storiesOf("Popover", module)
         <ResponsivePopover
           content={
             <MenuList>
-              <MenuItem onSelect={() => alert("Hello 1")}>
+              <MenuItem
+                contentBefore={<IconUser />}
+                onSelect={() => alert("Hello 1")}
+              >
                 Drink coffee
               </MenuItem>
-              <MenuItem>Eat pancakes</MenuItem>
+              <MenuItem contentBefore={<IconPackage />}>Eat pancakes</MenuItem>
               <MenuDivider />
-              <MenuItem>Make pizza</MenuItem>
-              <MenuItem>Dance my heart out</MenuItem>
-              <MenuItem>Anything you ask</MenuItem>
+              <MenuItem contentBefore={<IconMapPin />}>Make pizza</MenuItem>
+              <MenuItem contentBefore={<IconActivity />}>
+                Dance my heart out
+              </MenuItem>
+              <MenuItem contentBefore={<IconArrowUpRight />}>
+                Anything you ask
+              </MenuItem>
             </MenuList>
           }
         >

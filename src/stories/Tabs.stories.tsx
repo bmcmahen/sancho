@@ -49,76 +49,80 @@ export const TabsExamples = storiesOf("Tabs", module)
     return <ToggleDisplayExample />;
   })
   .add("Icons", () => {
-    return (
-      <div
+    return <IconExample />;
+  });
+
+function IconExample() {
+  const [value, setValue] = React.useState(0);
+  const theme = useTheme();
+  return (
+    <div
+      css={{
+        display: "flex",
+        justifyContent: "center",
+        background: theme.colors.background.tint2,
+        padding: "0.5rem"
+      }}
+    >
+      <Layer
+        elevation="sm"
         css={{
-          display: "flex",
-          justifyContent: "center",
-          background: theme.colors.background.tint2,
-          padding: "0.5rem"
+          maxWidth: "400px",
+          maxHeight: "500px",
+          width: "100%",
+          display: "block",
+          boxSizing: "border-box",
+          overflow: "hidden"
         }}
       >
-        <Layer
-          elevation="sm"
+        <div
           css={{
-            maxWidth: "400px",
-            maxHeight: "500px",
-            width: "100%",
-            display: "block",
+            background: theme.colors.background.tint1,
             boxSizing: "border-box",
-            overflow: "hidden"
+            width: "100%",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            height: "200px"
           }}
         >
           <div
             css={{
-              background: theme.colors.background.tint1,
-              boxSizing: "border-box",
-              width: "100%",
-              overflow: "hidden",
-              display: "flex",
-              flexDirection: "column",
-              height: "200px"
+              flex: 1
             }}
           >
-            <div
-              css={{
-                flex: 1
-              }}
-            >
-              hello
-            </div>
-            <div>
-              <DarkMode>
-                <Tabs
-                  variant="evenly-spaced"
-                  slider={false}
-                  css={{ background: "black" }}
-                  value={0}
-                  onChange={i => console.log(i)}
-                >
-                  <Tab id="hello">
-                    <TabIcon icon={<IconActivity />} label="Chat" />
-                  </Tab>
-                  <Tab id="cool">
-                    <TabIcon icon={<IconAlertCircle />} label="Annotation" />
-                  </Tab>
-                  <Tab id="tables">
-                    <TabIcon icon={<IconAlignLeft />} label="Application" />
-                  </Tab>
-                  <Tab id="players">
-                    <TabIcon icon={<IconActivity />} label="Build" />
-                  </Tab>
-                  <Tab id="dsf">
-                    <TabIcon icon={<IconActivity />} label="Chart" />
-                  </Tab>
-                </Tabs>
-              </DarkMode>
-            </div>
+            <Text>hello</Text>
           </div>
-        </Layer>
-      </div>
-    );
-  });
+          <div>
+            <Tabs
+              variant="evenly-spaced"
+              slider={false}
+              css={{ background: theme.colors.background.default }}
+              value={value}
+              onChange={i => setValue(i)}
+            >
+              <Tab id="hello">
+                <TabIcon icon={<IconActivity />} label="Chat" />
+              </Tab>
+              <Tab id="cool">
+                <TabIcon icon={<IconAlertCircle />} label="Annotation" />
+              </Tab>
+              <Tab id="tables">
+                <TabIcon icon={<IconAlignLeft />} label="Application" />
+              </Tab>
+              <Tab id="players">
+                <TabIcon icon={<IconActivity />} label="Build" />
+              </Tab>
+              <Tab id="dsf">
+                <TabIcon icon={<IconActivity />} label="Chart" />
+              </Tab>
+            </Tabs>
+          </div>
+        </div>
+      </Layer>
+    </div>
+  );
+}
 
 function EvenlySpaced() {
   const [value, setValue] = React.useState(0);

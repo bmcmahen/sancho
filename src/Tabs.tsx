@@ -212,8 +212,8 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
                 height: "4px",
                 borderTopRightRadius: "8px",
                 borderTopLeftRadius: "8px",
-                marginLeft: theme.spaces.lg,
-                marginRight: theme.spaces.lg,
+                marginLeft: theme.spaces.sm,
+                marginRight: theme.spaces.sm,
                 bottom: 0,
                 position: "absolute",
                 background: dark ? "white" : theme.colors.text.selected
@@ -283,7 +283,7 @@ export const Tab: React.RefForwardingComponent<
 
     function getTextColor(isDark: boolean | undefined) {
       if (isDark) {
-        return isActive ? "white" : "rgba(255,255,255,0.65)";
+        return isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.65)";
       }
 
       return isActive ? theme.colors.text.selected : theme.colors.text.muted;
@@ -345,8 +345,8 @@ export const Tab: React.RefForwardingComponent<
               transition: "color 0.25s cubic-bezier(0.35,0,0.25,1)"
             },
             "& svg": {
-              transition: "fill 0.35s cubic-bezier(0.35,0,0.25,1)",
-              color: getTextColor(dark) + " !important"
+              transition: "stroke 0.35s cubic-bezier(0.35,0,0.25,1)",
+              stroke: getTextColor(dark) + " !important"
             },
             ":focus": {
               color: dark ? "white" : theme.colors.text.selected
@@ -356,9 +356,9 @@ export const Tab: React.RefForwardingComponent<
                 ? "rgba(255,255,255,0.4)"
                 : alpha(theme.colors.text.selected, 0.4),
               "& svg": {
-                color:
+                stroke:
                   (dark
-                    ? "rgba(255,255,255,0.4)"
+                    ? "rgba(255,255,255,0.3)"
                     : alpha(theme.colors.text.selected, 0.4)) + " !important"
               }
             }
@@ -389,11 +389,8 @@ export const Tab: React.RefForwardingComponent<
             component="span"
             variant="subtitle"
             css={{
-              fontSize: theme.fontSizes[1],
-              [theme.mediaQueries.sm]: {
-                fontSize: theme.fontSizes[0]
-              },
-              letterSpacing: "0.25px",
+              fontSize: theme.fontSizes[0],
+
               color: "inherit",
               transition: "color 0.25s cubic-bezier(0.35,0,0.25,1)"
             }}
@@ -466,10 +463,10 @@ export const TabIcon: React.FunctionComponent<TabIconProps> = ({
   size = "lg"
 }) => {
   return (
-    <React.Fragment>
+    <div css={{ display: "flex", justifyContent: "center" }}>
       <IconWrapper size={size}>{icon}</IconWrapper>
       <VisuallyHidden>{label}</VisuallyHidden>
-    </React.Fragment>
+    </div>
   );
 };
 
