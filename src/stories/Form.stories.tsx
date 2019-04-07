@@ -8,7 +8,7 @@ import { Layer } from "../Layer";
 import { Text } from "../Text";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
-import { FiArrowRight, FiAlignCenter } from "react-icons/fi";
+import { IconArrowRight, IconAlignCenter } from "../Icons";
 import { IconButton } from "../IconButton";
 
 export const FormStories = storiesOf("Forms", module)
@@ -125,7 +125,12 @@ export const FormStories = storiesOf("Forms", module)
           <Button component="a" href="#" size="sm">
             Small
           </Button>
-          <Button component="a" href="#" size="sm" iconAfter={<FiArrowRight />}>
+          <Button
+            component="a"
+            href="#"
+            size="sm"
+            iconAfter={<IconArrowRight />}
+          >
             Small
           </Button>
         </div>
@@ -139,10 +144,15 @@ export const FormStories = storiesOf("Forms", module)
           <Button component="a" href="#" size="md">
             Medium
           </Button>
-          <Button component="a" href="#" size="md" iconAfter={<FiArrowRight />}>
+          <Button
+            component="a"
+            href="#"
+            size="md"
+            iconAfter={<IconArrowRight />}
+          >
             Medium
           </Button>
-          <IconButton icon={<FiAlignCenter />} label="Align center" />
+          <IconButton icon={<IconAlignCenter />} label="Align center" />
         </div>
         <div>
           <Input
@@ -154,7 +164,12 @@ export const FormStories = storiesOf("Forms", module)
           <Button component="a" href="#" size="lg">
             Large
           </Button>
-          <Button component="a" href="#" size="lg" iconAfter={<FiArrowRight />}>
+          <Button
+            component="a"
+            href="#"
+            size="lg"
+            iconAfter={<IconArrowRight />}
+          >
             Large
           </Button>
         </div>

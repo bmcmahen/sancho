@@ -5,7 +5,7 @@ import { MenuList, MenuItem, MenuDivider, MenuLabel } from "../Menu";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
 import { Text } from "../Text";
-import { FiAirplay } from "react-icons/fi";
+import { IconAirplay } from "../Icons";
 
 export const MenuStories = storiesOf("MenuList", module).add(
   "keyboard controls",
@@ -26,7 +26,7 @@ export const MenuStories = storiesOf("MenuList", module).add(
         <MenuDivider />
         <MenuLabel>Some label</MenuLabel>
         <MenuItem contentAfter="⌘R">Hello world number 2</MenuItem>
-        <MenuItem contentAfter={<FiAirplay />}>Hello world number 2</MenuItem>
+        <MenuItem contentAfter={<IconAirplay />}>Hello world number 2</MenuItem>
       </MenuList>
     );
   }

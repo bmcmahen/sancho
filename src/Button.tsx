@@ -24,11 +24,11 @@ export const getHeight = (size: ButtonSize) => {
 };
 
 const getPadding = (size: ButtonSize) => {
-  if (size === "xs") return "0.1rem 0.5rem";
-  if (size === "sm") return "0.4rem 0.8rem";
-  if (size === "lg") return "0.8rem 1.5rem";
-  if (size === "xl") return "0.8rem 2.2rem";
-  return "0.688rem 1rem";
+  if (size === "xs") return "0 0.5rem";
+  if (size === "sm") return "0 0.8rem";
+  if (size === "lg") return "0 1.5rem";
+  if (size === "xl") return "0 2.2rem";
+  return "0 1rem";
 };
 
 const getFontSize = (size: ButtonSize, theme: Theme) => {
@@ -546,6 +546,7 @@ export const Button: React.RefForwardingComponent<
           <IconWrapper
             css={{ marginRight: theme.spaces.sm }}
             size={size}
+            color="currentColor"
             aria-hidden
           >
             {iconBefore}
@@ -576,7 +577,11 @@ export const Button: React.RefForwardingComponent<
         )}
 
         {iconAfter && (
-          <IconWrapper css={{ marginLeft: theme.spaces.sm }} size={size}>
+          <IconWrapper
+            color="currentColor"
+            css={{ marginLeft: theme.spaces.sm }}
+            size={size}
+          >
             {iconAfter}
           </IconWrapper>
         )}

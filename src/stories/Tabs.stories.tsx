@@ -11,7 +11,7 @@ import { Layer } from "../Layer";
 import { TabContent } from "../TabContent";
 import { Button } from "../Button";
 import { DarkMode, useTheme } from "../Theme/Providers";
-import { FiActivity, FiAlertCircle, FiAlignLeft } from "react-icons/fi";
+import { IconActivity, IconAlertCircle, IconAlignLeft } from "../Icons";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
@@ -97,19 +97,19 @@ export const TabsExamples = storiesOf("Tabs", module)
                   onChange={i => console.log(i)}
                 >
                   <Tab id="hello">
-                    <TabIcon icon={<FiActivity />} label="Chat" />
+                    <TabIcon icon={<IconActivity />} label="Chat" />
                   </Tab>
                   <Tab id="cool">
-                    <TabIcon icon={<FiAlertCircle />} label="Annotation" />
+                    <TabIcon icon={<IconAlertCircle />} label="Annotation" />
                   </Tab>
                   <Tab id="tables">
-                    <TabIcon icon={<FiAlignLeft />} label="Application" />
+                    <TabIcon icon={<IconAlignLeft />} label="Application" />
                   </Tab>
                   <Tab id="players">
-                    <TabIcon icon={<FiActivity />} label="Build" />
+                    <TabIcon icon={<IconActivity />} label="Build" />
                   </Tab>
                   <Tab id="dsf">
-                    <TabIcon icon={<FiActivity />} label="Chart" />
+                    <TabIcon icon={<IconActivity />} label="Chart" />
                   </Tab>
                 </Tabs>
               </DarkMode>

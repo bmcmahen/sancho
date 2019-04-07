@@ -8,7 +8,7 @@ import { IconButton } from "../IconButton";
 import { storiesOf } from "@storybook/react";
 import { ToggleDarkMode } from "./ToggleDarkMode";
 import { Placement } from "popper.js";
-import { FiMoreHorizontal } from "react-icons/fi";
+import { IconMoreHorizontal } from "../Icons";
 
 interface LinkProps {
   href: string;
@@ -131,7 +131,7 @@ export const PopoverStories = storiesOf("Popover", module)
         >
           <IconButton
             variant="ghost"
-            icon={<FiMoreHorizontal />}
+            icon={<IconMoreHorizontal />}
             label="show more"
           />
         </Popover>
@@ -157,7 +157,7 @@ export const PopoverStories = storiesOf("Popover", module)
         >
           <IconButton
             variant="ghost"
-            icon={<FiMoreHorizontal />}
+            icon={<IconMoreHorizontal />}
             label="show more"
           />
         </ResponsivePopover>

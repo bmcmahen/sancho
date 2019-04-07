@@ -4,7 +4,6 @@ import * as React from "react";
 import { Button, ButtonProps, ButtonSize, getHeight } from "./Button";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
-import { useTheme } from "./Theme/Providers";
 import { IconWrapper } from "./IconWrapper";
 import { IconX } from "./Icons";
 
@@ -17,18 +16,6 @@ export interface IconButtonProps extends Partial<ButtonProps> {
   color?: string;
   children?: React.ReactNode;
 }
-
-// I need to think more about maintaining consistent
-// sizes for buttons and iconbuttons so that iconbuttons and buttons
-// appear to be consistent heights.
-// use heights instead of padding?
-const paddingForIconSizes = {
-  xs: "0.32rem",
-  sm: "0.4rem",
-  md: "0.55rem",
-  lg: "0.7rem",
-  xl: "0.7rem"
-};
 
 /**
  * A component which composes Button and Icon to provide
@@ -49,20 +36,20 @@ export const IconButton: React.RefForwardingComponent<
     }: IconButtonProps,
     ref
   ) => {
-    const theme = useTheme();
-
     return (
       <Button
         ref={ref}
         size={size}
         css={{
-          padding: paddingForIconSizes[size],
+          padding: 0,
           width: getHeight(size)
         }}
         {...other}
       >
         <VisuallyHidden>{label}</VisuallyHidden>
-        <IconWrapper size={size}>{icon}</IconWrapper>
+        <IconWrapper color="currentColor" size={size}>
+          {icon}
+        </IconWrapper>
       </Button>
     );
   }

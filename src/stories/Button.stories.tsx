@@ -6,7 +6,7 @@ import { storiesOf } from "@storybook/react";
 import theme from "../Theme";
 import { DarkMode, useTheme, LightMode } from "../Theme/Providers";
 import { ToggleDarkMode } from "./ToggleDarkMode";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { IconArrowLeft, IconArrowRight } from "../Icons";
 
 export const ButtonStories = storiesOf("Button", module)
   .add("variants", () => {
@@ -88,25 +88,37 @@ export const ButtonStories = storiesOf("Button", module)
           }
         }}
       >
-        <Button iconBefore={<FiArrowLeft />}>Icon before</Button>
-        <Button iconAfter={<FiArrowRight />}>Icon after</Button>
-        <Button iconBefore={<FiArrowLeft />} iconAfter={<FiArrowRight />}>
+        <Button iconBefore={<IconArrowLeft />}>Icon before</Button>
+        <Button iconAfter={<IconArrowRight />}>Icon after</Button>
+        <Button iconBefore={<IconArrowLeft />} iconAfter={<IconArrowRight />}>
           Icon before and after
         </Button>
-        <Button iconAfter={<FiArrowRight />} intent="primary">
+        <Button iconAfter={<IconArrowRight />} intent="primary">
           Icon after
         </Button>
-        <Button iconAfter={<FiArrowRight />} intent="primary" variant="outline">
+        <Button
+          component="a"
+          href="#"
+          iconAfter={<IconArrowRight />}
+          intent="primary"
+        >
+          Icon after anchor
+        </Button>
+        <Button
+          iconAfter={<IconArrowRight />}
+          intent="primary"
+          variant="outline"
+        >
           Icon after
         </Button>
-        <Button iconAfter={<FiArrowRight />} intent="primary" variant="ghost">
+        <Button iconAfter={<IconArrowRight />} intent="primary" variant="ghost">
           Icon after
         </Button>
         {["xs", "sm", "md", "lg", "xl"].map(size => {
           return (
             <Button
               size={size as ButtonSize}
-              iconAfter={<FiArrowRight />}
+              iconAfter={<IconArrowRight />}
               intent="primary"
               variant="outline"
             >
@@ -129,18 +141,21 @@ export const ButtonStories = storiesOf("Button", module)
         }}
       >
         <Button block>Hello</Button>
-        <Button block iconBefore={<FiArrowRight />}>
+        <Button block iconBefore={<IconArrowRight />}>
           with icon before
         </Button>
-        <Button block iconAfter={<FiArrowRight />}>
+        <Button block iconAfter={<IconArrowRight />}>
           With icon after
         </Button>
         <Button
           block
-          iconBefore={<FiArrowRight />}
-          iconAfter={<FiArrowRight />}
+          iconBefore={<IconArrowRight />}
+          iconAfter={<IconArrowRight />}
         >
           Two icons
+        </Button>
+        <Button component="a" href="@" block iconAfter={<IconArrowRight />}>
+          Anchor icon after
         </Button>
       </div>
     );
