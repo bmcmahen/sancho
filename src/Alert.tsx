@@ -131,7 +131,6 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
           ? theme.colors.background.tint1
           : theme.colors.background.default,
         overflow: "hidden",
-        maxWidth: "650px",
         position: "relative",
         boxShadow: theme.shadows[elevation],
         borderRadius: theme.radii.md
