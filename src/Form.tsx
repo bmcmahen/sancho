@@ -137,9 +137,7 @@ function getBaseStyles(theme: Theme) {
     width: "100%",
     lineHeight: theme.lineHeights.body,
     color: theme.colors.text.default,
-    backgroundColor: dark
-      ? theme.colors.background.tint1
-      : theme.colors.background.default,
+    backgroundColor: "transparent",
     backgroundImage: "none",
     backgroundClip: "padding-box",
     WebkitFontSmoothing: "antialiased",
@@ -149,15 +147,11 @@ function getBaseStyles(theme: Theme) {
     touchAction: "manipulation",
     fontFamily: theme.fonts.base,
     border: "none",
-    boxShadow: dark
-      ? `inset 0 0 0 1px ${alpha(
-          theme.colors.palette.gray.dark,
-          1
-        )}, inset 0 1px 2px ${alpha(theme.colors.palette.gray.dark, 1)}`
-      : `inset 0 0 0 1px ${alpha(gray, 0.15)}, inset 0 1px 2px ${alpha(
-          gray,
-          0.2
-        )}`,
+    boxShadow: `0 0 0 2px transparent inset, 0 0 0 1px ${
+      dark
+        ? alpha(theme.colors.palette.gray.lightest, 0.14)
+        : alpha(theme.colors.palette.gray.dark, 0.2)
+    } inset`,
     borderRadius: theme.radii.sm,
     transition:
       "background 0.25s cubic-bezier(0.35,0,0.25,1), border-color 0.15s cubic-bezier(0.35,0,0.25,1), box-shadow 0.15s cubic-bezier(0.35,0,0.25,1)",
@@ -375,25 +369,13 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             lineHeight: theme.lineHeights.body,
             height,
             color: theme.colors.text.default,
-            background: dark
-              ? theme.colors.background.tint1
-              : theme.colors.background.default,
+            background: "transparent",
             fontFamily: theme.fonts.base,
-            boxShadow: dark
-              ? `inset 0 0 0 1px ${alpha(
-                  theme.colors.palette.gray.dark,
-                  0.8
-                )}, inset 0 1px 2px ${alpha(
-                  theme.colors.palette.gray.dark,
-                  0.85
-                )}`
-              : `inset 0 0 0 1px ${alpha(
-                  theme.colors.palette.gray.dark,
-                  0.15
-                )}, inset 0 1px 2px ${alpha(
-                  theme.colors.palette.gray.dark,
-                  0.2
-                )}`,
+            boxShadow: `0 0 0 2px transparent inset, 0 0 0 1px ${
+              dark
+                ? alpha(theme.colors.palette.gray.lightest, 0.14)
+                : alpha(theme.colors.palette.gray.dark, 0.2)
+            } inset`,
             border: "none",
             backgroundClip: "padding-box",
             borderRadius: theme.radii.sm,

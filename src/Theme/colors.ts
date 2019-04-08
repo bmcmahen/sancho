@@ -137,7 +137,7 @@ function defaultGenerateLightMode(scales: ScalesType, palette: PaletteType) {
       default: "white"
     },
     border: {
-      default: alpha(scales.gray[9], 0.12),
+      default: alpha(scales.gray[9], 0.13),
       muted: alpha(scales.gray[9], 0.08)
     },
     text: {

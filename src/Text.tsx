@@ -27,7 +27,8 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
     case "subtitle":
       return css({
         fontSize: theme.fontSizes[0],
-        fontWeight: 500,
+        fontWeight: 400,
+        color: theme.colors.text.muted,
         lineHeight: theme.lineHeights.body
       });
     case "lead":
