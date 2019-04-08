@@ -141,6 +141,7 @@ function defaultGenerateLightMode(scales: ScalesType, palette: PaletteType) {
       muted: alpha(scales.gray[9], 0.08)
     },
     text: {
+      heading: scales.gray[9],
       muted: color(scales.gray[7])
         .lighten(0.3)
         .hex()
@@ -174,6 +175,7 @@ function defaultGenerateDarkMode(scales: ScalesType, palette: PaletteType) {
       muted: alpha(scales.gray[0], 0.08)
     },
     text: {
+      heading: "white",
       muted: "rgba(255,255,255,0.7)",
       default: "rgba(255,255,255,0.88)",
       selected: palette.blue.base

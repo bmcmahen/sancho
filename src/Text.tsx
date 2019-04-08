@@ -38,6 +38,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "h6":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.heading,
         lineHeight: 1.5,
         fontSize: theme.fontSizes[1],
@@ -45,6 +46,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "h5":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.heading,
         fontSize: theme.fontSizes[2],
         lineHeight: theme.lineHeights.heading,
@@ -52,6 +54,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "h4":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.heading,
         fontSize: theme.fontSizes[3],
         lineHeight: theme.lineHeights.heading,
@@ -60,6 +63,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "h3":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.heading,
         fontSize: theme.fontSizes[4],
         lineHeight: theme.lineHeights.heading,
@@ -67,6 +71,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "h2":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.heading,
         fontSize: theme.fontSizes[5],
         lineHeight: theme.lineHeights.heading,
@@ -75,6 +80,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "h1":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.heading,
         fontSize: theme.fontSizes[6],
         lineHeight: theme.lineHeights.heading,
@@ -83,6 +89,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "display3":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.display,
         fontSize: theme.fontSizes[5],
         lineHeight: theme.lineHeights.heading,
@@ -93,6 +100,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "display2":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.display,
         fontSize: theme.fontSizes[6],
         lineHeight: theme.lineHeights.heading,
@@ -103,6 +111,7 @@ export const getVariantStyles = (theme: Theme, variant: TextVariants) => {
       });
     case "display1":
       return css({
+        color: theme.colors.text.heading,
         fontWeight: theme.fontWeights.display,
         fontSize: theme.fontSizes[7],
         lineHeight: theme.lineHeights.heading,
