@@ -81,7 +81,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
           className="InputGroup__error"
           css={{
             alignItems: "center",
-            marginTop: theme.spaces.xs,
+            marginTop: theme.spaces.sm,
             display: "flex"
           }}
         >
@@ -315,7 +315,7 @@ export const Label: React.FunctionComponent<LabelProps> = ({
       className="Label"
       css={{
         display: "inline-block",
-        marginBottom: hide ? 0 : theme.spaces.xs
+        marginBottom: hide ? 0 : theme.spaces.sm
       }}
       {...other}
     >
