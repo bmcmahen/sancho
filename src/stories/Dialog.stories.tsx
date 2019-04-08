@@ -2,7 +2,7 @@
 import { jsx, css, SerializedStyles } from "@emotion/core";
 import * as React from "react";
 import { Button } from "../Button";
-import { Modal } from "../Modal";
+import { Dialog } from "../Dialog";
 import { Text } from "../Text";
 import theme from "../Theme";
 import { storiesOf } from "@storybook/react";
@@ -15,7 +15,7 @@ function Demo(props: { mobileFullscreen?: boolean }) {
     <div>
       <Button onClick={() => setShow(true)}>Show</Button>
 
-      <Modal
+      <Dialog
         isOpen={show}
         onRequestClose={() => setShow(false)}
         title="Hello world"
@@ -44,12 +44,12 @@ function Demo(props: { mobileFullscreen?: boolean }) {
             </Button>
           </div>
         </div>
-      </Modal>
+      </Dialog>
     </div>
   );
 }
 
-export const ModalStories = storiesOf("Modal", module)
+export const ModalStories = storiesOf("Dialog", module)
   .add("Standard usage", () => {
     return <Demo />;
   })

@@ -10,25 +10,25 @@ import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
 import { useTheme } from "./Theme/Providers";
 
-export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Whether the modal is showing */
+export interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Whether the dialog is showing */
   isOpen: boolean;
   /** An optional title. If set, a header will be added to your dialog. */
   title?: string;
   /** Fill the entire screen on mobile devices */
   mobileFullscreen?: boolean;
-  /** A callback for closing the modal. */
+  /** A callback for closing the dialog. */
   onRequestClose: () => void;
   /** The contents of the dialog */
   children: React.ReactNode;
 }
 
 /**
- * A modal (or dialog) is useful for displaying infomation that
+ * A dialog is useful for displaying infomation that
  * commands the user's attention.
  */
 
-export const Modal: React.FunctionComponent<ModalProps> = ({
+export const Dialog: React.FunctionComponent<DialogProps> = ({
   isOpen,
   onRequestClose,
   mobileFullscreen,
@@ -55,7 +55,7 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
               item && (
                 <animated.div
                   key={key}
-                  className="Modal"
+                  className="Dialog"
                   aria-modal="true"
                   {...bind}
                   tabIndex={-1}
@@ -109,8 +109,8 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
                 >
                   <React.Fragment>
                     {title && (
-                      <ModalHeader
-                        className="Modal__header"
+                      <DialogHeader
+                        className="Dialog__header"
                         css={{
                           display: "flex",
                           justifyContent: "space-between",
@@ -135,7 +135,7 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
   );
 };
 
-Modal.propTypes = {
+Dialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
   title: PropTypes.string,
@@ -143,14 +143,14 @@ Modal.propTypes = {
   children: PropTypes.node
 };
 
-interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The title of the header */
   title: string;
   /** An optional callback for closing the dialog. If set, a close button will be added to the header */
   onRequestClose?: () => void;
 }
 
-export const ModalHeader: React.FunctionComponent<ModalHeaderProps> = ({
+export const DialogHeader: React.FunctionComponent<DialogHeaderProps> = ({
   title,
   onRequestClose,
   ...other
@@ -163,9 +163,7 @@ export const ModalHeader: React.FunctionComponent<ModalHeaderProps> = ({
   </div>
 );
 
-ModalHeader.propTypes = {
+DialogHeader.propTypes = {
   title: PropTypes.string.isRequired,
   onRequestClose: PropTypes.func
 };
-
-export default Modal;

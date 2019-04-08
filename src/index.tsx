@@ -15,7 +15,7 @@ export * from "./Layer";
 export * from "./Link";
 export * from "./List";
 export * from "./Menu";
-export * from "./Modal";
+export * from "./Dialog";
 export * from "./Navbar";
 export * from "./Overlay";
 export * from "./Popover";
