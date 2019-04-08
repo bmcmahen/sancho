@@ -145,17 +145,14 @@ const BreadcrumbDivider: React.FunctionComponent = () => {
   const theme = useTheme();
 
   return (
-    <div
+    <IconChevronRight
       className="BreadcrumbDivider"
-      aria-hidden
+      color={theme.colors.text.muted}
       css={{
         flex: "0 0 auto",
-        margin: `0 ${theme.spaces.sm}`,
-        color: theme.colors.text.muted
+        margin: `0 ${theme.spaces.sm}`
       }}
-    >
-      <IconChevronRight />
-    </div>
+    />
   );
 };
 
