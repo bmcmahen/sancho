@@ -6,6 +6,7 @@
   "module": "esm/index.js",
   "typings": "esm/index.d.ts",
   "author": "Ben McMahen <ben.mcmahen@gmail.com>",
+  "homepage": "https://sancho-ui.com",
   "dependencies": {
     "@reach/alert": "^0.1.2",
     "@reach/skip-nav": "^0.1.2",
