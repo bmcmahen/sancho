@@ -7,9 +7,25 @@
   </a>
 </div>
 
+![version](https://img.shields.io/badge/version-1.1.1-blue.svg?cacheSeconds=2592000)
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Sancho%20is%20a%20responsive%20and%20accessible%20design%20system%20built%20with%20React%2C%20Typescript%20and%20Emotion&url=https://sancho-ui.com&hashtags=react,design,javascript)
+[![Follow on Twitter](https://img.shields.io/twitter/follow/benmcmahen.svg?style=social&logo=twitter)](
+https://twitter.com/intent/follow?screen_name=benmcmahen
+)
+
+## Features
+
+- Beautiful, generic components that you can make your own.
+- Responsive and accessible.
+- A fully customizable theme, which includes a dark and light mode.
+- Fully typed for use with Typescript.
+- Support for tree shaking. Bundle only those components that you need.
+
+[View the documentation](https://sancho-ui.com) or read the [introductory blog post](https://benmcmahen.com/introducing-sancho/).
+
 ## Getting started
 
-Install Sancho and Emotion using Yarn or npm:
+Install Sancho and Emotion using yarn or npm:
 
 ```
 yarn add sancho @emotion/core @emotion/css
@@ -25,9 +41,7 @@ function MyApp() {
 }
 ```
 
-[View the documentation](https://sancho-ui.com) for full usage details including a complete component list.
-
-### Development
+## Development
 
 ```
 git clone https://github.com/bmcmahen/sancho.git
@@ -36,6 +50,6 @@ yarn
 yarn run storybook
 ```
 
-### License
+## License
 
 MIT
