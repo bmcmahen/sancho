@@ -7,26 +7,28 @@ import { IconProps } from "../IconTypes";
 import { useTheme } from "../../Theme/Providers";
 
 export const IconZoomIn: React.FunctionComponent<IconProps> = ({
-  size = "md",
-  color,
-  ...otherProps
+  color: providedColor,
+  size: providedSize = "md",
+  ...other
 }) => {
   const theme = useTheme();
-  const width = typeof size == "string" ? theme.iconSizes[size] : size;
-  const stroke = color || theme.colors.text.default;
+  const size =
+    typeof providedSize === "string"
+      ? theme.iconSizes[providedSize]
+      : providedSize;
+  const color = providedColor || theme.colors.text.default;
 
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={width}
       viewBox="0 0 24 24"
       fill="none"
-      stroke={stroke}
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...otherProps}
+      height={size}
+      width={size}
+      {...other}
     >
       <circle cx="11" cy="11" r="8" />
       <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -38,5 +40,5 @@ export const IconZoomIn: React.FunctionComponent<IconProps> = ({
 
 IconZoomIn.propTypes = {
   color: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };

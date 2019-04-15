@@ -7,26 +7,28 @@ import { IconProps } from "../IconTypes";
 import { useTheme } from "../../Theme/Providers";
 
 export const IconShieldOff: React.FunctionComponent<IconProps> = ({
-  size = "md",
-  color,
-  ...otherProps
+  color: providedColor,
+  size: providedSize = "md",
+  ...other
 }) => {
   const theme = useTheme();
-  const width = typeof size == "string" ? theme.iconSizes[size] : size;
-  const stroke = color || theme.colors.text.default;
+  const size =
+    typeof providedSize === "string"
+      ? theme.iconSizes[providedSize]
+      : providedSize;
+  const color = providedColor || theme.colors.text.default;
 
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={width}
       viewBox="0 0 24 24"
       fill="none"
-      stroke={stroke}
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...otherProps}
+      height={size}
+      width={size}
+      {...other}
     >
       <path d="M19.69 14a6.9 6.9 0 0 0 .31-2V5l-8-3-3.16 1.18" />
       <path d="M4.73 4.73L4 5v7c0 6 8 10 8 10a20.29 20.29 0 0 0 5.62-4.38" />
@@ -37,5 +39,5 @@ export const IconShieldOff: React.FunctionComponent<IconProps> = ({
 
 IconShieldOff.propTypes = {
   color: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };

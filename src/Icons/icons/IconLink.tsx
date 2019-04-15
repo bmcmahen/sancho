@@ -7,26 +7,28 @@ import { IconProps } from "../IconTypes";
 import { useTheme } from "../../Theme/Providers";
 
 export const IconLink: React.FunctionComponent<IconProps> = ({
-  size = "md",
-  color,
-  ...otherProps
+  color: providedColor,
+  size: providedSize = "md",
+  ...other
 }) => {
   const theme = useTheme();
-  const width = typeof size == "string" ? theme.iconSizes[size] : size;
-  const stroke = color || theme.colors.text.default;
+  const size =
+    typeof providedSize === "string"
+      ? theme.iconSizes[providedSize]
+      : providedSize;
+  const color = providedColor || theme.colors.text.default;
 
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={width}
       viewBox="0 0 24 24"
       fill="none"
-      stroke={stroke}
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...otherProps}
+      height={size}
+      width={size}
+      {...other}
     >
       <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
       <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
@@ -36,5 +38,5 @@ export const IconLink: React.FunctionComponent<IconProps> = ({
 
 IconLink.propTypes = {
   color: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };

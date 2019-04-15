@@ -48,7 +48,7 @@
   ],
   "scripts": {
     "test": "react-scripts test",
-    "generate-icons": "node scripts/generate-icons.js",
+    "generate-icons": "create-react-icons --source './node_modules/feather-icons/dist/icons/**.svg' --destination ./src/Icons --typescript --template ./scripts/icon-template.ejs",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "build-esm": "rimraf esm && tsc",
@@ -80,6 +80,7 @@
     "blog": "^1.0.0",
     "camelcase": "^5.3.1",
     "cheerio": "^1.0.0-rc.2",
+    "create-react-icons": "^1.1.0",
     "emotion-theming": "^10.0.10",
     "faker": "^4.1.0",
     "feather-icons": "^4.21.0",

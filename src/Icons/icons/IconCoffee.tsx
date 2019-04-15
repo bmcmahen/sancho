@@ -7,26 +7,28 @@ import { IconProps } from "../IconTypes";
 import { useTheme } from "../../Theme/Providers";
 
 export const IconCoffee: React.FunctionComponent<IconProps> = ({
-  size = "md",
-  color,
-  ...otherProps
+  color: providedColor,
+  size: providedSize = "md",
+  ...other
 }) => {
   const theme = useTheme();
-  const width = typeof size == "string" ? theme.iconSizes[size] : size;
-  const stroke = color || theme.colors.text.default;
+  const size =
+    typeof providedSize === "string"
+      ? theme.iconSizes[providedSize]
+      : providedSize;
+  const color = providedColor || theme.colors.text.default;
 
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={width}
       viewBox="0 0 24 24"
       fill="none"
-      stroke={stroke}
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...otherProps}
+      height={size}
+      width={size}
+      {...other}
     >
       <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
       <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
@@ -39,5 +41,5 @@ export const IconCoffee: React.FunctionComponent<IconProps> = ({
 
 IconCoffee.propTypes = {
   color: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
