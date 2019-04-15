@@ -25,7 +25,7 @@ https://twitter.com/intent/follow?screen_name=benmcmahen
 - Fully typed for use with Typescript.
 - Support for tree shaking. Bundle only those components that you need.
 
-[View the documentation](https://sancho-ui.com) or read the [introductory blog post](https://benmcmahen.com/introducing-sancho/).
+[View the documentation](https://sancho-ui.com) for full details.
 
 ## Getting started
 
@@ -44,6 +44,21 @@ function MyApp() {
   return <Button>Hello world</Button>;
 }
 ```
+
+## Sample projects
+
+<div align="center">
+ <img alt="Screenshots of Julienne and Captioner"
+    max-width="600px"
+     src="https://benmcmahen.com/static/a611328a899a4d4863a29b09beec0acc/eae0a/preview.jpg">
+  </a>
+</div>
+<br />
+
+[Julienne](https://github.com/bmcmahen/julienne) (pictured left) is a small application built with Sancho and Firebase which helps you share recipes with family and friends.
+
+[Captioner](https://github.com/bmcmahen/captioner) (pictured right) is an in-browser tool for generating captions for your videos. It's also built with Sancho and Firebase.
+
 
 ## Development
 
