@@ -7,11 +7,15 @@
   </a>
 </div>
 
-![version](https://img.shields.io/badge/version-1.1.1-blue.svg?cacheSeconds=2592000)
+<div align="center">
+  
+[![npm package](https://img.shields.io/npm/v/sancho/latest.svg)](https://www.npmjs.com/package/sancho)
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Sancho%20is%20a%20responsive%20and%20accessible%20design%20system%20built%20with%20React%2C%20Typescript%20and%20Emotion&url=https://sancho-ui.com&hashtags=react,design,javascript)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/benmcmahen.svg?style=social&logo=twitter)](
 https://twitter.com/intent/follow?screen_name=benmcmahen
 )
+
+</div>
 
 ## Features
 
