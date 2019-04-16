@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://sancho-ui.com/">
-    <img alt="sancho logo"
+    <img 
     max-width="600px"
     alt="Sancho is a responsive and accessible design system built with React, Typescript and Emotion. Named after the ever-faithful, hilariously acerbic sidekick of Don Quixote, Sancho is designed to help you no matter how quixotic your dreams may be."
      src="https://raw.githubusercontent.com/bmcmahen/sancho/master/hero.jpg">
@@ -47,17 +47,34 @@ function MyApp() {
 
 ## Sample projects
 
+### Julienne
+
 <div align="center">
- <img alt="Screenshots of Julienne and Captioner"
+  <a href="https://julienne.app">
+    <img
     max-width="600px"
-     src="https://benmcmahen.com/static/a611328a899a4d4863a29b09beec0acc/eae0a/preview.jpg">
+    alt="Julienne screenshot showing a list of recipes on the left, and a recipe on the right."
+     src="https://raw.githubusercontent.com/bmcmahen/sancho/master/misc/julienne.jpg">
   </a>
 </div>
 <br />
 
-[Julienne](https://github.com/bmcmahen/julienne) (pictured left) is a small application built with Sancho and Firebase which helps you share recipes with family and friends.
 
-[Captioner](https://github.com/bmcmahen/captioner) (pictured right) is an in-browser tool for generating captions for your videos. It's also built with Sancho and Firebase.
+[Julienne](https://julienne.app) is a small application built with Sancho and Firebase which helps you share recipes with family and friends. View the [source here](https://github.com/bmcmahen/julienne).
+
+### Captioner
+
+<div align="center">
+  <a href="https://captioner.app">
+    <img
+    max-width="600px"
+    alt="Captioner screenshot showing a user adding subtitles to the Godfather movie."
+     src="https://raw.githubusercontent.com/bmcmahen/sancho/master/misc/captioner.jpg">
+  </a>
+</div>
+<br />
+
+[Captioner](https://captioner.app) is an in-browser tool for generating captions for your videos. It's also built with Sancho and Firebase. View the [source here](https://github.com/bmcmahen/captioner).
 
 ## Development
 
