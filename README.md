@@ -3,10 +3,10 @@
     <img alt="sancho logo"
     max-width="600px"
     alt="Sancho is a responsive and accessible design system built with React, Typescript and Emotion. Named after the ever-faithful, hilariously acerbic sidekick of Don Quixote, Sancho is designed to help you no matter how quixotic your dreams may be."
-     src="https://raw.githubusercontent.com/bmcmahen/sancho/theme/branding.png">
+     src="https://raw.githubusercontent.com/bmcmahen/sancho/readme/hero.jpg">
   </a>
 </div>
-
+<br />
 <div align="center">
   
 [![npm package](https://img.shields.io/npm/v/sancho/latest.svg)](https://www.npmjs.com/package/sancho)
@@ -58,7 +58,6 @@ function MyApp() {
 [Julienne](https://github.com/bmcmahen/julienne) (pictured left) is a small application built with Sancho and Firebase which helps you share recipes with family and friends.
 
 [Captioner](https://github.com/bmcmahen/captioner) (pictured right) is an in-browser tool for generating captions for your videos. It's also built with Sancho and Firebase.
-
 
 ## Development
 
