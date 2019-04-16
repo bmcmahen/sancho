@@ -6,7 +6,7 @@
      src="https://raw.githubusercontent.com/bmcmahen/sancho/readme/branding.jpg">
   </a>
 </div>
-
+<br />
 <div align="center">
   
 [![npm package](https://img.shields.io/npm/v/sancho/latest.svg)](https://www.npmjs.com/package/sancho)
