@@ -24,6 +24,7 @@ https://twitter.com/intent/follow?screen_name=benmcmahen
 - A fully customizable theme, which includes a dark and light mode.
 - Fully typed for use with Typescript.
 - Support for tree shaking. Bundle only those components that you need.
+- Included components: Alert, Avatar, Badge, Breadcrumbs, Button, Collapse, Container, Dialog, Divider, Form (and inputs), IconButton, Icons, Layer, Link, List, Menu, Navbar, Popover, Sheet, Spinner, Table, Tabs, Text, Toast, Toolbar, Tooltip, amongst others.
 
 [View the documentation](https://sancho-ui.com) for full details.
 
