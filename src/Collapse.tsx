@@ -23,7 +23,7 @@ export function useCollapse(defaultShow: boolean = false) {
       "aria-expanded": show ? true : false
     },
     collapseProps: {
-      id: id,
+      id,
       show
     }
   };
@@ -61,6 +61,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
 
   return (
     <animated.div
+      id={id}
       css={{
         overflow: "hidden",
         willChange: "height, opacity"
