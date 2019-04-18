@@ -65,6 +65,12 @@ const positions = (theme: Theme) => ({
     ${theme.mediaQueries.md} {
       max-height: 400px;
     }
+    & > div {
+      border-top-right-radius: ${theme.radii.lg};
+      border-top-left-radius: ${theme.radii.lg};
+      padding-bottom: ${theme.spaces.lg};
+      padding-top: ${theme.spaces.xs};
+    }
     &::before {
       content: "";
       position: fixed;
@@ -85,6 +91,12 @@ const positions = (theme: Theme) => ({
     box-sizing: border-box;
     ${theme.mediaQueries.md} {
       max-height: 400px;
+    }
+    & > div {
+      border-bottom-right-radius: ${theme.radii.lg};
+      border-bottom-left-radius: ${theme.radii.lg};
+      padding-bottom: ${theme.spaces.xs};
+      padding-top: ${theme.spaces.md};
     }
     &::before {
       content: "";
@@ -210,15 +222,18 @@ export const GestureSheet: React.FunctionComponent<SheetProps> = ({
    * from gesture events
    */
 
-  function onMouseDown() {
+  function onMouseDown(e: React.MouseEvent | React.TouchEvent) {
+    e.preventDefault();
     setClick(true);
   }
 
-  function onMouseMove() {
+  function onMouseMove(e: React.MouseEvent | React.TouchEvent) {
+    e.preventDefault();
     setClick(false);
   }
 
-  function onMouseUp() {
+  function onMouseUp(e: React.MouseEvent | React.TouchEvent) {
+    e.preventDefault();
     if (click) {
       onRequestClose();
     }
