@@ -145,7 +145,6 @@ export const GestureSheet: React.FunctionComponent<SheetProps> = ({
   ...props
 }) => {
   const theme = useTheme();
-  const [gone, setGone] = React.useState(false)
   const { ref, bounds } = useMeasure();
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
 
@@ -157,27 +156,33 @@ export const GestureSheet: React.FunctionComponent<SheetProps> = ({
 
     if (dx < 0 || gone) {
       if (Math.abs(dx) > (width / 2)) {
-        setGone(true)
-        return width * -1
+        console.log('on request close')
+        onRequestClose()
+        return dx;
       }
     }
 
     return 0
   }
 
-  const [{ x }, setSpring] = useSpring(() => ({ x: 0 }));
+  const [{ x }, setSpring] = useSpring(() => ({ x: bounds.width * -1 }));
+
   const bind = useGesture(({ down, delta, args }) => {
     const [dx] = delta;
     const { width } = args[0]
-    const gone = args[1]
-    const x = getFinalPosition(dx, width, down, gone)
+    const isOpen = args[1]
+    const x = getFinalPosition(dx, width, down, isOpen)
     setSpring({ x, immediate: down });
   });
+
+  React.useEffect(() => {
+    setSpring({ x: isOpen ? 0 : (bounds.width * -1) })
+  }, [bounds, isOpen])
 
   return (
     <React.Fragment>
       <animated.div
-        {...bind(bounds, gone)}
+        {...bind(bounds, isOpen)}
         tabIndex={-1}
         ref={ref}
         className="Sheet"

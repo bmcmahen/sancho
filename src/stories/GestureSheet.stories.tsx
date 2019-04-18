@@ -27,7 +27,10 @@ const Example = ({
     <div>
       <Button onClick={() => setShow(true)}>{label}</Button>
       <GestureSheet
-        onRequestClose={() => setShow(false)}
+        onRequestClose={() => {
+          console.log('close')
+          setShow(false)
+        }}
         isOpen={show}
         position={position}
       >
