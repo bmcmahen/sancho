@@ -201,6 +201,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       const opacity = getOpacity({
         delta,
         width,
+        down,
         height,
         isOpen,
         position
@@ -481,6 +482,7 @@ interface GetOpacityOptions {
   delta: [number, number];
   width: number;
   height: number;
+  down: boolean;
   isOpen: boolean;
   position: SheetPositions;
 }
@@ -489,11 +491,16 @@ function getOpacity({
   delta,
   width,
   height,
+  down,
   isOpen,
   position
 }: GetOpacityOptions) {
   if (!isOpen) {
     return 0;
+  }
+
+  if (isOpen && !down) {
+    return 1;
   }
 
   const [dx, dy] = delta;
