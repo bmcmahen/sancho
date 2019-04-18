@@ -72,7 +72,7 @@ const positions = (theme: Theme) => ({
       left: 0;
       right: 0;
       background: ${theme.colors.background.layer};
-      transform: translateY(100%);
+      top: 100%;
     }
   `,
   top: css`
@@ -191,7 +191,7 @@ export const GestureSheet: React.FunctionComponent<SheetProps> = ({
     });
 
     // set spring values
-    setSpring({ x, immediate: down });
+    setSpring({ x, y, immediate: down });
     setOpacity({ immediate: down, opacity });
   });
 
@@ -277,10 +277,10 @@ export const GestureSheet: React.FunctionComponent<SheetProps> = ({
           }}
           style={{
             transform: interpolate([x, y], (x, y) => {
-              return `translateX(${taper(x, position)}px) translateY(${taper(
-                y,
-                position
-              )})`;
+              return `
+                translateX(${taper(x, position)}px) 
+                translateY(${taper(y, position)}px)
+              `;
             })
           }}
           css={[
@@ -397,7 +397,7 @@ function getFinalPosition({
         return { x: dx, y: 0 };
       }
 
-      if (velocity > 0.2 && direction[0] > 1) {
+      if (velocity > 0.2 && direction[0] > 0) {
         onRequestClose();
         return { x: dx, y: 0 };
       }
@@ -417,7 +417,7 @@ function getFinalPosition({
         return { y: dy, x: 0 };
       }
 
-      if (velocity > 0.2 && direction[1] > 1) {
+      if (velocity > 0.2 && direction[1] > 0) {
         onRequestClose();
         return { y: dy, x: 0 };
       }
@@ -511,7 +511,7 @@ function getDefaultPositions(
     case "bottom": {
       return {
         x: 0,
-        y: isOpen ? -height : 0
+        y: isOpen ? 0 : height
       };
     }
   }

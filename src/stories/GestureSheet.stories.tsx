@@ -8,12 +8,40 @@ import { Button } from "../Button";
 export const SheetExamples = storiesOf("GestureSheet", module).add(
   "Different positions",
   () => {
+    const positions: SheetPositions[] = ["top", "left", "right", "bottom"];
+
+    const examples = positions.map(position => {
+      return (
+        <React.Fragment key={position}>
+          <Example position={position} label={position}>
+            <div css={{ minHeight: "300px" }}>
+              Helloooo world! what is up?
+              <button>one</button>
+              <button>two</button>
+              <button>tjree</button>
+              <button>four</button>
+            </div>
+          </Example>
+        </React.Fragment>
+      );
+    });
+
     return (
-      <Example position="left">
-        <div css={{ height: "300px" }}>
-          Hello world this is some wider text right here
-        </div>
-      </Example>
+      <div
+        css={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+          height: "100%",
+          "& > *": {
+            margin: "1rem",
+            width: "200px"
+          }
+        }}
+      >
+        {examples}
+      </div>
     );
   }
 );
