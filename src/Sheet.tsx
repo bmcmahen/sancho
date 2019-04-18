@@ -1,111 +1,115 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import { useTransition, animated } from "react-spring";
+import { animated, useSpring, interpolate } from "react-spring";
 import { useFocusElement } from "./Hooks/focus";
-import { Overlay } from "./Overlay";
-
+import { Portal } from "./Portal";
+import { useGesture } from "react-with-gesture";
 import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
 import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
+import { useMeasure } from "./Hooks/use-measure";
+import { usePrevious } from "./Hooks/previous";
 
 export const RequestCloseContext = React.createContext(() => {});
 
 const animationConfig = { mass: 1, tension: 185, friction: 26 };
 
-function getTransitionForPosition(position: SheetPositions) {
-  switch (position) {
-    case "left":
-      return {
-        from: { transform: `translate3d(-100%, 0, 0)` },
-        enter: { transform: `translate3d(0, 0, 0)` },
-        leave: { transform: `translate3d(-100%, 0, 0)` },
-        config: animationConfig
-      };
-    case "right":
-      return {
-        from: { transform: `translate3d(100%, 0, 0)` },
-        enter: { transform: `translate3d(0, 0, 0)` },
-        leave: { transform: `translate3d(100%, 0, 0)` },
-        config: animationConfig
-      };
-    case "top":
-      return {
-        from: { transform: `translateY(-100%)` },
-        enter: { transform: `translateY(0)` },
-        leave: { transform: `translateY(-100%)` },
-        config: animationConfig
-      };
-    case "bottom":
-      return {
-        from: { transform: `translateY(100%)` },
-        enter: { transform: `translateY(0)` },
-        leave: { transform: `translateY(100%)` },
-        config: animationConfig
-      };
-  }
-}
-
 const positions = (theme: Theme) => ({
-  left: css({
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: "auto",
-    maxWidth: "100vw",
-    [theme.mediaQueries.md]: {
-      maxWidth: "400px"
+  left: css`
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: auto;
+    max-width: 100vw;
+    ${theme.mediaQueries.md} {
+      max-width: 400px;
     }
-  }),
-  right: css({
-    top: 0,
-    right: 0,
-    bottom: 0,
-    width: "auto",
-    maxWidth: "100vw",
-    [theme.mediaQueries.md]: {
-      maxWidth: "400px"
+    &::before {
+      content: "";
+      position: fixed;
+      width: 100vw;
+      top: 0;
+      background: ${theme.colors.background.layer};
+      bottom: 0;
+      right: 100%;
     }
-  }),
-  bottom: css({
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: "auto",
-    width: "100%",
-    padding: 0,
-    boxSizing: "border-box",
-    [theme.mediaQueries.md]: {
-      maxHeight: "400px"
-    },
-    "& > div": {
-      borderTopRightRadius: theme.radii.lg,
-      borderTopLeftRadius: theme.radii.lg,
-      paddingBottom: theme.spaces.lg,
-      paddingTop: theme.spaces.xs
+  `,
+  right: css`
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-width: 100vw;
+    ${theme.mediaQueries.md} {
+      max-width: 400px;
     }
-  }),
-  top: css({
-    top: 0,
-    left: 0,
-    right: 0,
-    height: "auto",
-    width: "100%",
-    padding: 0,
-    [theme.mediaQueries.md]: {
-      maxHeight: "400px"
-    },
-    "& > div": {
-      borderBottomRightRadius: theme.radii.lg,
-      borderBottomLeftRadius: theme.radii.lg,
-      paddingBottom: theme.spaces.xs,
-      paddingTop: theme.spaces.md
+    &::after {
+      content: "";
+      position: fixed;
+      width: 100vw;
+      top: 0;
+      left: 100%;
+      background: ${theme.colors.background.layer};
+      bottom: 0;
     }
-  })
+  `,
+  bottom: css`
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    ${theme.mediaQueries.md} {
+      max-height: 400px;
+    }
+    & > div {
+      border-top-right-radius: ${theme.radii.lg};
+      border-top-left-radius: ${theme.radii.lg};
+      padding-bottom: ${theme.spaces.lg};
+      padding-top: ${theme.spaces.xs};
+    }
+    &::before {
+      content: "";
+      position: fixed;
+      height: 100vh;
+      left: 0;
+      right: 0;
+      background: ${theme.colors.background.layer};
+      top: 100%;
+    }
+  `,
+  top: css`
+    top: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    ${theme.mediaQueries.md} {
+      max-height: 400px;
+    }
+    & > div {
+      border-bottom-right-radius: ${theme.radii.lg};
+      border-bottom-left-radius: ${theme.radii.lg};
+      padding-bottom: ${theme.spaces.xs};
+      padding-top: ${theme.spaces.md};
+    }
+    &::before {
+      content: "";
+      position: fixed;
+      height: 100vh;
+      left: 0;
+      right: 0;
+      background: ${theme.colors.background.layer};
+      transform: translateY(-100%);
+    }
+  `
 });
-
-const noop = () => {};
 
 export type SheetPositions = "left" | "top" | "bottom" | "right";
 
@@ -144,70 +148,205 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   ...props
 }) => {
   const theme = useTheme();
-  const { bind: bindFocus } = useFocusElement(isOpen);
+  const [click, setClick] = React.useState();
+  const [mounted, setMounted] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  useFocusElement(ref, isOpen);
+  const { bounds } = useMeasure(ref);
+  const previousBounds = usePrevious(bounds);
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
 
-  const transitions = useTransition(
-    isOpen,
-    null,
-    getTransitionForPosition(position)
-  );
+  // A spring which animates the sheet position
+  const [{ x, y }, setSpring] = useSpring(() => {
+    const { x, y } = getDefaultPositions(isOpen, position);
+    return {
+      x,
+      y,
+      config: animationConfig
+    };
+  });
+
+  // A spring which animates the overlay opacity
+  const [{ opacity }, setOpacity] = useSpring(() => {
+    return {
+      opacity: isOpen ? 1 : 0,
+      config: animationConfig
+    };
+  });
+
+  /**
+   * Handle gestures
+   */
+
+  const bind = useGesture(({ down, delta, args, velocity, direction }) => {
+    const { width, height } = args[0];
+    const isOpen = args[1];
+    const position = args[2];
+
+    // determine the sheet position
+    const { x, y } = getFinalPosition({
+      delta,
+      width,
+      height,
+      down,
+      isOpen,
+      velocity,
+      direction,
+      onRequestClose,
+      position
+    });
+
+    // determine the overlay opacity
+    const opacity = getOpacity({
+      delta,
+      width,
+      height,
+      isOpen,
+      position
+    });
+
+    // set spring values
+    setSpring({ x, y, immediate: down });
+    setOpacity({ immediate: down, opacity });
+  });
+
+  /**
+   * Handle close / open non-gestured controls
+   */
+
+  React.useEffect(() => {
+    const { width, height } = bounds;
+
+    // a bit of a hack to prevent the sheet from being
+    // displayed at the wrong position before properly
+    // measuring it.
+    const hasMounted =
+      previousBounds && previousBounds.width === 0 && width !== 0;
+
+    if (hasMounted && !mounted) {
+      setMounted(true);
+    }
+
+    setSpring({
+      ...getDefaultPositions(isOpen, position, width, height),
+      immediate: !!hasMounted
+    });
+    setOpacity({ opacity: isOpen ? 1 : 0 });
+  }, [position, mounted, bounds, previousBounds, isOpen]);
+
+  /**
+   * Emulate a click event to disambiguate it
+   * from gesture events. Not the ideal solution.
+   */
+
+  function onMouseDown(e: React.MouseEvent | React.TouchEvent) {
+    e.preventDefault();
+    setClick(true);
+  }
+
+  function onMouseMove(e: React.MouseEvent | React.TouchEvent) {
+    e.preventDefault();
+    setClick(false);
+  }
+
+  function onMouseUp(e: React.MouseEvent | React.TouchEvent) {
+    e.preventDefault();
+    if (click && closeOnClick) {
+      onRequestClose();
+    }
+  }
 
   return (
-    <React.Fragment>
-      <Overlay
-        isOpen={isOpen}
-        onRequestClose={closeOnClick ? onRequestClose : noop}
+    <Portal>
+      {/** 
+        Ideally we would reuse the Overlay here, but the behaviour is 
+        unique enough that (for now) it's easier just copying it
+      */}
+      <div
+        aria-hidden={!isOpen}
+        {...bind(bounds, isOpen, position)}
+        onKeyDown={(e: React.KeyboardEvent) => {
+          if (e.key === "Escape") {
+            e.stopPropagation();
+            onRequestClose();
+          }
+        }}
+        css={{
+          bottom: 0,
+          left: 0,
+          overflow: "auto",
+          width: "100vw",
+          height: "100vh",
+          pointerEvents: isOpen ? "auto" : "none",
+          zIndex: theme.zIndices.overlay,
+          position: "fixed",
+          content: "''",
+          right: 0,
+          top: 0,
+          WebkitTapHighlightColor: "transparent"
+        }}
       >
-        <React.Fragment>
-          {transitions.map(({ item, key, props: animationProps, ...other }) => {
-            return (
-              item && (
-                <animated.div
-                  key={key}
-                  role={role}
-                  {...bindFocus}
-                  tabIndex={-1}
-                  className="Sheet"
-                  onClick={e => {
-                    e.stopPropagation();
-                  }}
-                  style={{
-                    transform: animationProps.transform
-                  }}
-                  css={[
-                    {
-                      outline: "none",
-                      zIndex: theme.zIndices.modal,
-                      opacity: 1,
-                      position: "fixed"
-                    },
-                    positionsStyle[position]
-                  ]}
-                  {...other}
-                  {...props}
-                >
-                  <RequestCloseContext.Provider value={onRequestClose}>
-                    <RemoveScroll forwardProps>
-                      <div
-                        className="Sheet__container"
-                        css={{
-                          boxShadow: theme.shadows.md,
-                          background: theme.colors.background.layer,
-                          height: "100%"
-                        }}
-                      >
-                        {children}
-                      </div>
-                    </RemoveScroll>
-                  </RequestCloseContext.Provider>
-                </animated.div>
-              )
-            );
-          })}
-        </React.Fragment>
-      </Overlay>
-    </React.Fragment>
+        <animated.div
+          style={{ opacity }}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onTouchStart={onMouseDown}
+          onTouchMove={onMouseMove}
+          onTouchEnd={onMouseUp}
+          css={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            pointerEvents: isOpen ? "auto" : "none",
+            right: 0,
+            bottom: 0,
+            background: theme.colors.background.overlay
+          }}
+        />
+        <animated.div
+          tabIndex={-1}
+          ref={ref}
+          className="Sheet"
+          onClick={e => {
+            e.stopPropagation();
+          }}
+          style={{
+            transform: interpolate([x, y], (x, y) => {
+              return `
+                translateX(${taper(x, position)}px) 
+                translateY(${taper(y, position)}px)
+              `;
+            })
+          }}
+          css={[
+            {
+              visibility: mounted ? "visible" : "hidden",
+              outline: "none",
+              zIndex: theme.zIndices.modal,
+              opacity: 1,
+              position: "fixed"
+            },
+            positionsStyle[position]
+          ]}
+          {...props}
+        >
+          <RequestCloseContext.Provider value={onRequestClose}>
+            <RemoveScroll enabled={isOpen} forwardProps>
+              <div
+                className="Sheet__container"
+                css={{
+                  background: theme.colors.background.layer,
+                  height: "100%"
+                }}
+              >
+                {children}
+              </div>
+            </RemoveScroll>
+          </RequestCloseContext.Provider>
+        </animated.div>
+      </div>
+    </Portal>
   );
 };
 
@@ -218,3 +357,221 @@ Sheet.propTypes = {
   position: PropTypes.oneOf(["left", "top", "right", "bottom"]),
   closeOnClick: PropTypes.bool
 };
+
+/**
+ * Determine the sheet location given
+ * its position and the gesture input
+ */
+
+interface GetPositionOptions {
+  delta: [number, number];
+  width: number;
+  height: number;
+  down: boolean;
+  onRequestClose: () => void;
+  isOpen: boolean;
+  velocity: number;
+  direction: [number, number];
+  position: SheetPositions;
+}
+
+function getFinalPosition({
+  delta,
+  width,
+  height,
+  down,
+  isOpen,
+  velocity,
+  direction,
+  onRequestClose,
+  position
+}: GetPositionOptions) {
+  const [dx, dy] = delta;
+
+  switch (position) {
+    case "left": {
+      if (down) {
+        return { x: dx, y: 0 };
+      }
+
+      if (velocity > 0.2 && direction[0] < 1) {
+        onRequestClose();
+        return { x: dx, y: 0 };
+      }
+
+      if (dx < 0 || !isOpen) {
+        if (Math.abs(dx) > width / 2) {
+          onRequestClose();
+          return { x: dx, y: 0 };
+        }
+      }
+
+      return { x: 0, y: 0 };
+    }
+
+    case "top": {
+      if (down) {
+        return { y: dy, x: 0 };
+      }
+
+      if (velocity > 0.2 && direction[1] < 1) {
+        onRequestClose();
+        return { y: dy, x: 0 };
+      }
+
+      if (dy < 0 || !isOpen) {
+        if (Math.abs(dy) > height / 2) {
+          onRequestClose();
+          return { y: dy, x: 0 };
+        }
+      }
+
+      return { x: 0, y: 0 };
+    }
+
+    case "right": {
+      if (down) {
+        return { x: dx, y: 0 };
+      }
+
+      if (velocity > 0.2 && direction[0] > 0) {
+        onRequestClose();
+        return { x: dx, y: 0 };
+      }
+
+      if (dx > 0 || !isOpen) {
+        if (Math.abs(dx) > width / 2) {
+          onRequestClose();
+          return { x: dx, y: 0 };
+        }
+      }
+
+      return { x: 0, y: 0 };
+    }
+
+    case "bottom": {
+      if (down) {
+        return { y: dy, x: 0 };
+      }
+
+      if (velocity > 0.2 && direction[1] > 0) {
+        onRequestClose();
+        return { y: dy, x: 0 };
+      }
+
+      if (dy > 0 || !isOpen) {
+        if (Math.abs(dy) > height / 2) {
+          onRequestClose();
+          return { y: dy, x: 0 };
+        }
+      }
+
+      return { x: 0, y: 0 };
+    }
+  }
+}
+
+/**
+ * Determine the overlay opacity
+ */
+
+interface GetOpacityOptions {
+  delta: [number, number];
+  width: number;
+  height: number;
+  isOpen: boolean;
+  position: SheetPositions;
+}
+
+function getOpacity({
+  delta,
+  width,
+  height,
+  isOpen,
+  position
+}: GetOpacityOptions) {
+  if (!isOpen) {
+    return 0;
+  }
+
+  const [dx, dy] = delta;
+
+  switch (position) {
+    case "left": {
+      return dx < 0 ? 1 - Math.abs(dx) / width : 1;
+    }
+
+    case "top": {
+      return dy < 0 ? 1 - Math.abs(dy) / height : 1;
+    }
+
+    case "right": {
+      return dx > 0 ? 1 - Math.abs(dx) / width : 1;
+    }
+
+    case "bottom": {
+      return dy > 0 ? 1 - Math.abs(dy) / height : 1;
+    }
+  }
+}
+
+/**
+ * Determine the default x, y position
+ * for the various positions
+ */
+
+function getDefaultPositions(
+  isOpen: boolean,
+  position: SheetPositions,
+  width: number = 400,
+  height: number = 400
+) {
+  switch (position) {
+    case "left": {
+      return {
+        x: isOpen ? 0 : -width,
+        y: 0
+      };
+    }
+    case "top": {
+      return {
+        x: 0,
+        y: isOpen ? 0 : -height
+      };
+    }
+    case "right": {
+      return {
+        x: isOpen ? 0 : width,
+        y: 0
+      };
+    }
+    case "bottom": {
+      return {
+        x: 0,
+        y: isOpen ? 0 : height
+      };
+    }
+  }
+}
+
+/**
+ * Add friction to the sheet position if it's
+ * moving inwards
+ * @param x
+ */
+
+function taper(x: number, position: SheetPositions) {
+  if (position === "left" || position === "top") {
+    if (x <= 0) {
+      return x;
+    }
+
+    return x * 0.4;
+  }
+
+  if (x >= 0) {
+    return x;
+  }
+
+  return x * 0.4;
+}

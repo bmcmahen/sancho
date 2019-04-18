@@ -44,7 +44,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
   const child = React.Children.only(children);
   const triggerRef = React.useRef<HTMLButtonElement | null>(null);
   const popoverRef = React.useRef<HTMLDivElement | null>(null);
-  const { bind } = useFocusElement(show, {
+  useFocusElement(popoverRef, show, {
     escapeDeactivates: true,
     clickOutsideDeactivates: true
   });
@@ -147,7 +147,6 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
           elevation="md"
           ref={(el: any) => {
             ref(el);
-            bind.ref.current = el;
             popoverRef.current = el;
           }}
           style={{

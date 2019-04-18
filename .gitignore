@@ -3,6 +3,7 @@
 # dependencies
 lode_modules
 node_modules
+/node_modules
 .cache
 /.pnp
 .pnp.js

@@ -2,14 +2,13 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { animated, useSpring } from "react-spring";
-import ResizeObserver from "resize-observer-polyfill";
 import PropTypes from "prop-types";
-
-let count = 0;
+import { useMeasure } from "./Hooks/use-measure";
+import { useUid } from "./Hooks/use-uid";
 
 export function useCollapse(defaultShow: boolean = false) {
   const [show, setShow] = React.useState(defaultShow);
-  const id = React.useRef(`collapse-${count++}`);
+  const id = useUid();
 
   function onClick() {
     setShow(!show);
@@ -17,14 +16,14 @@ export function useCollapse(defaultShow: boolean = false) {
 
   return {
     show,
-    id: id.current,
+    id,
     buttonProps: {
       onClick,
-      "aria-controls": id.current,
+      "aria-controls": id,
       "aria-expanded": show ? true : false
     },
     collapseProps: {
-      id: id.current,
+      id,
       show
     }
   };
@@ -49,7 +48,8 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   show,
   ...other
 }) => {
-  const { ref, bounds } = useMeasure();
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const { bounds } = useMeasure(ref);
 
   const { height, opacity } = useSpring({
     from: { height: 0, opacity: 0 },
@@ -61,6 +61,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
 
   return (
     <animated.div
+      id={id}
       css={{
         overflow: "hidden",
         willChange: "height, opacity"
@@ -85,35 +86,4 @@ export function usePrevious<T>(value: T) {
     ref.current = value;
   }, [value]);
   return ref.current;
-}
-
-interface Bounds {
-  left: number;
-  height: number;
-  top: number;
-  width: number;
-}
-
-export function useMeasure() {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [bounds, setBounds] = React.useState<Bounds>({
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0
-  });
-
-  const [observer] = React.useState(
-    () =>
-      new ResizeObserver(([entry]) => {
-        setBounds(entry.contentRect);
-      })
-  );
-
-  React.useEffect(() => {
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return { ref, bounds };
 }

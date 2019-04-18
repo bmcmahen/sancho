@@ -6,8 +6,11 @@ interface Options {
   clickOutsideDeactivates?: boolean;
 }
 
-export function useFocusElement(showing: boolean, options: Options = {}) {
-  const elementRef = React.useRef<HTMLDivElement | null>(null);
+export function useFocusElement(
+  elementRef: React.MutableRefObject<HTMLDivElement | null>,
+  showing: boolean,
+  options: Options = {}
+) {
   const trapRef = React.useRef<FocusTrap | null>(null);
 
   function focusElement() {
@@ -41,7 +44,6 @@ export function useFocusElement(showing: boolean, options: Options = {}) {
   }, [showing]);
 
   return {
-    bind: { ref: elementRef },
     focusElement,
     focusTrigger
   };

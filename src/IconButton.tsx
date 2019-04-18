@@ -58,7 +58,7 @@ export const IconButton: React.RefForwardingComponent<
 IconButton.displayName = "IconButton";
 
 IconButton.propTypes = {
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  icon: PropTypes.node.isRequired,
   color: PropTypes.string,
   label: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(["default", "ghost"]),
