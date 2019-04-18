@@ -44,7 +44,9 @@ export const Dialog: React.FunctionComponent<DialogProps> = ({
     config: { mass: 1, tension: 185, friction: 26 }
   });
 
-  const { bind } = useFocusElement(isOpen);
+  const ref = React.useRef<HTMLDivElement | null>(null);
+
+  useFocusElement(ref, isOpen);
 
   return (
     <React.Fragment>
@@ -57,7 +59,7 @@ export const Dialog: React.FunctionComponent<DialogProps> = ({
                   key={key}
                   className="Dialog"
                   aria-modal="true"
-                  {...bind}
+                  ref={ref}
                   tabIndex={-1}
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation();

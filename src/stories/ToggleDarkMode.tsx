@@ -13,7 +13,7 @@ export interface ToggleDarkModeProps {
 export const ToggleDarkMode: React.FunctionComponent<ToggleDarkModeProps> = ({
   children
 }) => {
-  const [mode, setMode] = React.useState("dark");
+  const [mode, setMode] = React.useState("light");
   const Component = mode === "dark" ? DarkMode : LightMode;
 
   return (

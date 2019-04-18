@@ -3,7 +3,6 @@ import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import { buttonReset } from "./Button";
-import { useMeasure } from "./Collapse";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
@@ -16,6 +15,7 @@ import { IconSizes } from "./Icons/IconTypes";
 import scrollIntoView from "scroll-into-view-if-needed";
 import { scrollTo } from "./misc/tween";
 import { noOp } from "./misc/noop";
+import { useMeasure } from "./Hooks/use-measure";
 
 const hideScrollbar = css`
   ::-webkit-scrollbar {
@@ -79,9 +79,10 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 
   const [showSlider, setShowSlider] = React.useState(false);
   const previousSlider = usePrevious(slider);
+  const ref = React.useRef<HTMLDivElement | null>(null);
 
   // this should be debounced, probably
-  const { ref, bounds } = useMeasure();
+  const { bounds } = useMeasure(ref);
 
   React.useEffect(() => {
     const target = refs.current!.get(value);

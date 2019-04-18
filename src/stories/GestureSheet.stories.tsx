@@ -8,7 +8,13 @@ import { Button } from "../Button";
 export const SheetExamples = storiesOf("GestureSheet", module).add(
   "Different positions",
   () => {
-    return <Example>Hello world this is some wider text right here</Example>;
+    return (
+      <Example position="left">
+        <div css={{ height: "300px" }}>
+          Hello world this is some wider text right here
+        </div>
+      </Example>
+    );
   }
 );
 
@@ -28,8 +34,8 @@ const Example = ({
       <Button onClick={() => setShow(true)}>{label}</Button>
       <GestureSheet
         onRequestClose={() => {
-          console.log('close')
-          setShow(false)
+          console.log("close");
+          setShow(false);
         }}
         isOpen={show}
         position={position}

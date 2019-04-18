@@ -144,7 +144,8 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   ...props
 }) => {
   const theme = useTheme();
-  const { bind: bindFocus } = useFocusElement(isOpen);
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  useFocusElement(ref, isOpen);
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
 
   const transitions = useTransition(
@@ -166,7 +167,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                 <animated.div
                   key={key}
                   role={role}
-                  {...bindFocus}
+                  ref={ref}
                   tabIndex={-1}
                   className="Sheet"
                   onClick={e => {
