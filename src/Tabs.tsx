@@ -502,7 +502,7 @@ export const TabIcon: React.FunctionComponent<TabIconProps> = ({
 };
 
 TabIcon.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.node.isRequired,
   label: PropTypes.string.isRequired,
   size: PropTypes.number
 };

@@ -603,8 +603,8 @@ Button.propTypes = {
     "warning",
     "danger"
   ] as ButtonIntent[]),
-  iconBefore: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  iconAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+  iconBefore: PropTypes.node,
+  iconAfter: PropTypes.node
 };
 
 function getIntent(variant: ButtonVariant, intent: ButtonIntent, theme: Theme) {
