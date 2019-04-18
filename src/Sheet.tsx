@@ -10,6 +10,7 @@ import { RemoveScroll } from "react-remove-scroll";
 import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
 import { useMeasure } from "./Hooks/use-measure";
+import { usePrevious } from "./Hooks/previous";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -148,9 +149,11 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
 }) => {
   const theme = useTheme();
   const [click, setClick] = React.useState();
+  const [mounted, setMounted] = React.useState(false);
   const ref = React.useRef<HTMLDivElement | null>(null);
   useFocusElement(ref, isOpen);
   const { bounds } = useMeasure(ref);
+  const previousBounds = usePrevious(bounds);
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
 
   // A spring which animates the sheet position
@@ -213,13 +216,27 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
 
   React.useEffect(() => {
     const { width, height } = bounds;
-    setSpring(getDefaultPositions(isOpen, position, width, height));
+
+    // a bit of a hack to prevent the sheet from being
+    // displayed at the wrong position before properly
+    // measuring it.
+    const hasMounted =
+      previousBounds && previousBounds.width === 0 && width !== 0;
+
+    if (hasMounted && !mounted) {
+      setMounted(true);
+    }
+
+    setSpring({
+      ...getDefaultPositions(isOpen, position, width, height),
+      immediate: !!hasMounted
+    });
     setOpacity({ opacity: isOpen ? 1 : 0 });
-  }, [position, bounds, isOpen]);
+  }, [position, mounted, bounds, previousBounds, isOpen]);
 
   /**
    * Emulate a click event to disambiguate it
-   * from gesture events
+   * from gesture events. Not the ideal solution.
    */
 
   function onMouseDown(e: React.MouseEvent | React.TouchEvent) {
@@ -304,6 +321,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           }}
           css={[
             {
+              visibility: mounted ? "visible" : "hidden",
               outline: "none",
               zIndex: theme.zIndices.modal,
               opacity: 1,
@@ -314,7 +332,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           {...props}
         >
           <RequestCloseContext.Provider value={onRequestClose}>
-            <RemoveScroll forwardProps>
+            <RemoveScroll enabled={isOpen} forwardProps>
               <div
                 className="Sheet__container"
                 css={{
