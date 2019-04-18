@@ -13,7 +13,6 @@ import { Sheet } from "./Sheet";
 import { useMedia } from "use-media";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
-import { GestureSheet } from "./GestureSheet";
 
 const AnimatedLayer = animated(Layer) as React.FunctionComponent<any>;
 
@@ -228,13 +227,13 @@ export const ResponsivePopover: React.FunctionComponent<PopoverProps> = (
           setIsOpen(true);
         }
       })}
-      <GestureSheet
+      <Sheet
         position="bottom"
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
       >
         {props.content}
-      </GestureSheet>
+      </Sheet>
     </React.Fragment>
   );
 };
