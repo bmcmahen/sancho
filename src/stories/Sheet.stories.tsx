@@ -88,6 +88,28 @@ export const SheetExamples = storiesOf("Sheet", module)
         </MenuList>
       </Example>
     );
+  })
+  .add("vertical swipe test", () => {
+    return (
+      <Example position="bottom">
+        <MenuList css={{ display: "block" }}>
+          <MenuItem>Hello world number 1</MenuItem>
+          <MenuItem>Hello world number 2</MenuItem>
+          <MenuItem disabled>Hello world number 2</MenuItem>
+          <MenuItem
+            onSelect={() => {
+              alert("selected!");
+            }}
+          >
+            try selecting me
+          </MenuItem>
+          <MenuItem>Hello world number 2</MenuItem>
+          <MenuDivider />
+          <MenuItem>Hello world number 2</MenuItem>
+          <MenuItem>Hello world number 2</MenuItem>
+        </MenuList>
+      </Example>
+    );
   });
 
 const Example = ({
@@ -111,6 +133,7 @@ const Example = ({
       <Sheet
         onRequestClose={() => setShow(false)}
         isOpen={show}
+        closeOnClick={true}
         position={position}
       >
         {children}

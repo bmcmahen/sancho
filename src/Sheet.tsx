@@ -178,37 +178,39 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    * Handle gestures
    */
 
-  const bind = useGesture(({ down, delta, args, velocity, direction }) => {
-    const { width, height } = args[0];
-    const isOpen = args[1];
-    const position = args[2];
+  const bind = useGesture(
+    ({ down, delta, args, velocity, distance, direction }) => {
+      const { width, height } = args[0];
+      const isOpen = args[1];
+      const position = args[2];
 
-    // determine the sheet position
-    const { x, y } = getFinalPosition({
-      delta,
-      width,
-      height,
-      down,
-      isOpen,
-      velocity,
-      direction,
-      onRequestClose,
-      position
-    });
+      // determine the sheet position
+      const { x, y } = getFinalPosition({
+        delta,
+        width,
+        height,
+        down,
+        isOpen,
+        velocity,
+        direction,
+        onRequestClose,
+        position
+      });
 
-    // determine the overlay opacity
-    const opacity = getOpacity({
-      delta,
-      width,
-      height,
-      isOpen,
-      position
-    });
+      // determine the overlay opacity
+      const opacity = getOpacity({
+        delta,
+        width,
+        height,
+        isOpen,
+        position
+      });
 
-    // set spring values
-    setSpring({ x, y, immediate: down });
-    setOpacity({ immediate: down, opacity });
-  });
+      // set spring values
+      setSpring({ x, y, immediate: down });
+      setOpacity({ immediate: down, opacity });
+    }
+  );
 
   /**
    * Handle close / open non-gestured controls
@@ -394,7 +396,7 @@ function getFinalPosition({
         return { x: dx, y: 0 };
       }
 
-      if (velocity > 0.2 && direction[0] < 1) {
+      if (velocity > 0.2 && direction[0] < 0) {
         onRequestClose();
         return { x: dx, y: 0 };
       }
@@ -414,7 +416,7 @@ function getFinalPosition({
         return { y: dy, x: 0 };
       }
 
-      if (velocity > 0.2 && direction[1] < 1) {
+      if (velocity > 0.2 && direction[1] <= -1) {
         onRequestClose();
         return { y: dy, x: 0 };
       }
@@ -434,7 +436,7 @@ function getFinalPosition({
         return { x: dx, y: 0 };
       }
 
-      if (velocity > 0.2 && direction[0] > 0) {
+      if (velocity > 0.2 && direction[0] >= 1) {
         onRequestClose();
         return { x: dx, y: 0 };
       }
