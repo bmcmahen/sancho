@@ -155,6 +155,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const { bounds } = useMeasure(ref);
   const previousBounds = usePrevious(bounds);
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
+  const initialDirection = React.useRef(null);
 
   // A spring which animates the sheet position
   const [{ x, y }, setSpring] = useSpring(() => {
@@ -179,10 +180,26 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    */
 
   const bind = useGesture(
-    ({ down, delta, args, velocity, distance, direction }) => {
+    ({ down, delta, args, velocity, initial, xy, direction, first }) => {
       const { width, height } = args[0];
       const isOpen = args[1];
       const position = args[2];
+      const initialDirection = args[3] as React.MutableRefObject<any>;
+
+      // We determine the direction of the gesture within the first
+      // two drag events. This "locks in" the gesture direction for the
+      // remainder of the swipe.
+      if (first) {
+        initialDirection.current = null;
+        return;
+      }
+
+      const gestureDirection =
+        initialDirection.current || getDirection(initial, xy);
+
+      if (!initialDirection.current) {
+        initialDirection.current = gestureDirection;
+      }
 
       // determine the sheet position
       const { x, y } = getFinalPosition({
@@ -193,6 +210,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         isOpen,
         velocity,
         direction,
+        gestureDirection,
         onRequestClose,
         position
       });
@@ -201,6 +219,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       const opacity = getOpacity({
         delta,
         width,
+        gestureDirection,
         down,
         height,
         isOpen,
@@ -267,7 +286,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       */}
       <div
         aria-hidden={!isOpen}
-        {...bind(bounds, isOpen, position)}
+        {...bind(bounds, isOpen, position, initialDirection)}
         onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === "Escape") {
             e.stopPropagation();
@@ -371,6 +390,7 @@ interface GetPositionOptions {
   width: number;
   height: number;
   down: boolean;
+  gestureDirection: null | "horizontal" | "vertical";
   onRequestClose: () => void;
   isOpen: boolean;
   velocity: number;
@@ -384,6 +404,7 @@ function getFinalPosition({
   height,
   down,
   isOpen,
+  gestureDirection,
   velocity,
   direction,
   onRequestClose,
@@ -393,10 +414,18 @@ function getFinalPosition({
 
   switch (position) {
     case "left": {
+      if (gestureDirection !== "horizontal") {
+        return { x: 0, y: 0 };
+      }
+
       if (down) {
         return { x: dx, y: 0 };
       }
 
+      // calculate if our direction is _primarily_ horizontal,
+      // and only update our x coordinate if so. This means that
+      // you can vertically scroll without any obvious
+      // gesture response
       if (velocity > 0.2 && direction[0] < 0) {
         onRequestClose();
         return { x: dx, y: 0 };
@@ -413,6 +442,10 @@ function getFinalPosition({
     }
 
     case "top": {
+      if (gestureDirection !== "vertical") {
+        return { x: 0, y: 0 };
+      }
+
       if (down) {
         return { y: dy, x: 0 };
       }
@@ -433,6 +466,10 @@ function getFinalPosition({
     }
 
     case "right": {
+      if (gestureDirection !== "horizontal") {
+        return { x: 0, y: 0 };
+      }
+
       if (down) {
         return { x: dx, y: 0 };
       }
@@ -453,6 +490,10 @@ function getFinalPosition({
     }
 
     case "bottom": {
+      if (gestureDirection !== "vertical") {
+        return { x: 0, y: 0 };
+      }
+
       if (down) {
         return { y: dy, x: 0 };
       }
@@ -485,10 +526,12 @@ interface GetOpacityOptions {
   down: boolean;
   isOpen: boolean;
   position: SheetPositions;
+  gestureDirection: null | "horizontal" | "vertical";
 }
 
 function getOpacity({
   delta,
+  gestureDirection,
   width,
   height,
   down,
@@ -507,18 +550,32 @@ function getOpacity({
 
   switch (position) {
     case "left": {
+      if (gestureDirection !== "horizontal") {
+        return 1;
+      }
+
       return dx < 0 ? 1 - Math.abs(dx) / width : 1;
     }
 
     case "top": {
+      if (gestureDirection !== "vertical") {
+        return 1;
+      }
       return dy < 0 ? 1 - Math.abs(dy) / height : 1;
     }
 
     case "right": {
+      if (gestureDirection !== "horizontal") {
+        return 1;
+      }
+
       return dx > 0 ? 1 - Math.abs(dx) / width : 1;
     }
 
     case "bottom": {
+      if (gestureDirection !== "vertical") {
+        return 1;
+      }
       return dy > 0 ? 1 - Math.abs(dy) / height : 1;
     }
   }
@@ -583,4 +640,31 @@ function taper(x: number, position: SheetPositions) {
   }
 
   return x * 0.4;
+}
+
+/**
+ * Compare two positions and determine the direction
+ * the gesture is moving (horizontal or vertical)
+ *
+ * If the difference is the same, return null. This happends
+ * when only a click is registered.
+ *
+ * @param initial
+ * @param xy
+ */
+
+function getDirection(initial: [number, number], xy: [number, number]) {
+  const xDiff = Math.abs(initial[0] - xy[0]);
+  const yDiff = Math.abs(initial[1] - xy[1]);
+
+  // just a regular click
+  if (xDiff === yDiff) {
+    return null;
+  }
+
+  if (xDiff > yDiff) {
+    return "horizontal";
+  }
+
+  return "vertical";
 }
