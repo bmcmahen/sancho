@@ -91,7 +91,7 @@ export const SheetExamples = storiesOf("Sheet", module)
   })
   .add("vertical swipe test", () => {
     return (
-      <Example position="bottom">
+      <Example position="top">
         <MenuList css={{ display: "block" }}>
           <MenuItem>Hello world number 1</MenuItem>
           <MenuItem>Hello world number 2</MenuItem>

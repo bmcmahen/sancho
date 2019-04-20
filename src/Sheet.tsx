@@ -11,6 +11,7 @@ import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
 import { useMeasure } from "./Hooks/use-measure";
 import { usePrevious } from "./Hooks/previous";
+import { useHideBody } from "./Hooks/hide-body";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -156,6 +157,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const previousBounds = usePrevious(bounds);
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
   const initialDirection = React.useRef(null);
+  const { bind: bindHideBody } = useHideBody(isOpen);
 
   const startVelocity = React.useRef(null);
 
@@ -298,6 +300,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         unique enough that (for now) it's easier just copying it
       */}
       <div
+        {...bindHideBody}
         aria-hidden={!isOpen}
         {...bind(bounds, isOpen, position, initialDirection, startVelocity)}
         onKeyDown={(e: React.KeyboardEvent) => {
