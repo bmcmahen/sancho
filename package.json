@@ -1,6 +1,6 @@
 {
   "name": "sancho",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "licence": "MIT",
   "main": "cjs/index.js",
   "module": "esm/index.js",
