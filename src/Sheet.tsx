@@ -157,6 +157,8 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
   const initialDirection = React.useRef(null);
 
+  const startVelocity = React.useRef(null);
+
   // A spring which animates the sheet position
   const [{ x, y }, setSpring] = useSpring(() => {
     const { x, y } = getDefaultPositions(isOpen, position);
@@ -185,6 +187,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       const isOpen = args[1];
       const position = args[2];
       const initialDirection = args[3] as React.MutableRefObject<any>;
+      const startVelocity = args[4] as React.MutableRefObject<number | null>;
 
       // We determine the direction of the gesture within the first
       // two drag events. This "locks in" the gesture direction for the
@@ -212,7 +215,8 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         direction,
         gestureDirection,
         onRequestClose,
-        position
+        position,
+        startVelocity
       });
 
       // determine the overlay opacity
@@ -249,7 +253,16 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       setMounted(true);
     }
 
+    // when the user makes the gesture to close we start
+    // our animation with their last velocity
+    const velocity = startVelocity.current;
+    startVelocity.current = null;
+
     setSpring({
+      config: {
+        ...animationConfig,
+        velocity: velocity || 0
+      },
       ...getDefaultPositions(isOpen, position, width, height),
       immediate: !!hasMounted
     });
@@ -286,7 +299,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       */}
       <div
         aria-hidden={!isOpen}
-        {...bind(bounds, isOpen, position, initialDirection)}
+        {...bind(bounds, isOpen, position, initialDirection, startVelocity)}
         onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === "Escape") {
             e.stopPropagation();
@@ -396,6 +409,7 @@ interface GetPositionOptions {
   velocity: number;
   direction: [number, number];
   position: SheetPositions;
+  startVelocity: React.MutableRefObject<number | null>;
 }
 
 function getFinalPosition({
@@ -408,9 +422,15 @@ function getFinalPosition({
   velocity,
   direction,
   onRequestClose,
-  position
+  position,
+  startVelocity
 }: GetPositionOptions) {
   const [dx, dy] = delta;
+
+  function close() {
+    startVelocity.current = velocity;
+    onRequestClose();
+  }
 
   switch (position) {
     case "left": {
@@ -427,13 +447,13 @@ function getFinalPosition({
       // you can vertically scroll without any obvious
       // gesture response
       if (velocity > 0.2 && direction[0] < 0) {
-        onRequestClose();
+        close();
         return { x: dx, y: 0 };
       }
 
       if (dx < 0 || !isOpen) {
         if (Math.abs(dx) > width / 2) {
-          onRequestClose();
+          close();
           return { x: dx, y: 0 };
         }
       }
@@ -451,13 +471,13 @@ function getFinalPosition({
       }
 
       if (velocity > 0.2 && direction[1] <= -1) {
-        onRequestClose();
+        close();
         return { y: dy, x: 0 };
       }
 
       if (dy < 0 || !isOpen) {
         if (Math.abs(dy) > height / 2) {
-          onRequestClose();
+          close();
           return { y: dy, x: 0 };
         }
       }
@@ -475,13 +495,13 @@ function getFinalPosition({
       }
 
       if (velocity > 0.2 && direction[0] >= 1) {
-        onRequestClose();
+        close();
         return { x: dx, y: 0 };
       }
 
       if (dx > 0 || !isOpen) {
         if (Math.abs(dx) > width / 2) {
-          onRequestClose();
+          close();
           return { x: dx, y: 0 };
         }
       }
@@ -499,13 +519,13 @@ function getFinalPosition({
       }
 
       if (velocity > 0.2 && direction[1] > 0) {
-        onRequestClose();
+        close();
         return { y: dy, x: 0 };
       }
 
       if (dy > 0 || !isOpen) {
         if (Math.abs(dy) > height / 2) {
-          onRequestClose();
+          close();
           return { y: dy, x: 0 };
         }
       }
