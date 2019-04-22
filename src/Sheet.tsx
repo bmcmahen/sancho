@@ -233,7 +233,15 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       });
 
       // set spring values
-      setSpring({ x, y, immediate: down });
+      setSpring({
+        x,
+        y,
+        immediate: down,
+        config: {
+          ...animationConfig,
+          velocity: startVelocity.current || 0
+        }
+      });
       setOpacity({ immediate: down, opacity });
     }
   );
