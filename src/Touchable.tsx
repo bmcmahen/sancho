@@ -186,17 +186,16 @@ interface Props {
 
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role
 
-export function Touchable({ children }: Props) {
-  function touchableHandleResponderMove(e: React.TouchEvent) {
-    // get positionOnActivate
-    // get dimensionsOnActivate
-    // get pressRectOffset
-    // extract single touch
-    // isTouchWithinActive?
-    // - yes? signal -> enter_press_rect
-    // - no? leave_press_rect
-  }
+// THREE MAIN STATES
 
+// isActive (press down)
+// isTouchResponder (cancelled via scroll)
+// isVisuallyPressed (after delay, press is within container)
+
+// onPress?
+// onTouchEnd -> isTouchResponder && released within container
+
+export function Touchable({ children }: Props) {
   const ref = React.useRef<HTMLDivElement>(null);
   const timer = React.useRef<number>();
   const [active, setActive] = React.useState(false);
@@ -224,7 +223,7 @@ export function Touchable({ children }: Props) {
 
   function onTouchStart(e: React.TouchEvent | React.MouseEvent, delay = 120) {
     console.log("touch start");
-    e.preventDefault();
+
     timer.current =
       delay > 0 ? window.setTimeout(afterDelay, delay) : undefined;
     setActive(true);
@@ -239,10 +238,14 @@ export function Touchable({ children }: Props) {
   }
 
   function onTouchEnd(e: React.TouchEvent | React.MouseEvent) {
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault(); // necessary to prevent mouse events
+    }
     clearTimeout(timer.current);
     unbindScroll();
 
+    // if not cancelled (by scroll, or another responder)
+    // If released within hitzone
     if (active) {
       console.log("press");
     }
@@ -252,6 +255,7 @@ export function Touchable({ children }: Props) {
   }
 
   function onTouchMove(e: React.TouchEvent) {
+    console.log("move", active);
     if (!active) {
       return;
     }
@@ -259,18 +263,17 @@ export function Touchable({ children }: Props) {
     const { clientX, clientY } = e.nativeEvent.touches[0];
     const b = bounds.current!;
 
-    // const isTouchWithinActive =
-    //   pageX > b.left &&
-    //   pageY > b.top &&
-    //   pageX <
+    const isTouchWithinActive =
+      clientX > b.left &&
+      clientY > b.top &&
+      clientX < b.right &&
+      clientY < b.bottom;
 
-    console.log(clientX, clientY);
-    console.log(bounds.current);
-    // isWithinTouch
-  }
-
-  function onClick() {
-    console.log("click!");
+    if (!isTouchWithinActive) {
+      setPressed(false);
+    } else {
+      setPressed(true);
+    }
   }
 
   return (
