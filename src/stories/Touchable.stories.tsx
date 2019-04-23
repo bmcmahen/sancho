@@ -23,6 +23,7 @@ function TouchableHighlight() {
       <div
         {...bind}
         css={{
+          userSelect: "none",
           background: active ? "#08e" : "transparent"
         }}
       >

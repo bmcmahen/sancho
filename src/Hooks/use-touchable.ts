@@ -45,7 +45,7 @@ const transitions = {
     DELAY: "ERROR",
     RESPONDER_GRANT: "RESPONDER_ACTIVE_IN",
     RESPONDER_RELEASE: "ERROR",
-    RESPONDER_TERMINATED: "ERROR",
+    RESPONDER_TERMINATED: "NOT_RESPONDER",
     ENTER_PRESS_RECT: "ERROR",
     LEAVE_PRESS_RECT: "ERROR"
   },
@@ -115,6 +115,14 @@ export function useTouchable(
   const delayTimer = React.useRef<number>();
   const bounds = React.useRef<ClientRect>();
 
+  function bindScroll() {
+    window.addEventListener("scroll", onScroll, true);
+  }
+
+  function unbindScroll() {
+    window.removeEventListener("scroll", onScroll, true);
+  }
+
   function afterDelay() {
     dispatch("DELAY");
   }
@@ -126,7 +134,6 @@ export function useTouchable(
    */
 
   function onStart(delayPressMs = delay) {
-    console.log("on start");
     dispatch("RESPONDER_GRANT");
     bounds.current = ref.current!.getBoundingClientRect();
     delayTimer.current =
@@ -135,6 +142,8 @@ export function useTouchable(
         : undefined;
     if (delayPressMs === 0) {
       dispatch("DELAY");
+    } else {
+      bindScroll();
     }
   }
 
@@ -143,13 +152,17 @@ export function useTouchable(
   }
 
   function onEnd(e: React.TouchEvent | React.MouseEvent) {
+    // consider unbinding the end event instead
+    if (state === "NOT_RESPONDER") {
+      return;
+    }
+
     if (state === "RESPONDER_ACTIVE_IN" || state === "RESPONDER_PRESSED_IN") {
-      console.log("on press");
       onPress(e);
     }
 
-    console.log("release");
     dispatch("RESPONDER_RELEASE");
+    unbindScroll();
   }
 
   function onTouchEnd(e: React.TouchEvent) {
@@ -220,19 +233,8 @@ export function useTouchable(
    * @param e
    */
 
-  function onMouseMove(e: React.MouseEvent) {
-    const { clientX, clientY } = e.nativeEvent;
-    const withinBounds = isWithinActiveBounds(
-      clientX,
-      clientY,
-      bounds.current!,
-      0 // require more precise positioning with a mouse
-    );
-    if (withinBounds) {
-      dispatch("ENTER_PRESS_RECT");
-    } else {
-      dispatch("LEAVE_PRESS_RECT");
-    }
+  function onMouseLeave(e: React.MouseEvent) {
+    dispatch("RESPONDER_TERMINATED");
   }
 
   /**
@@ -241,6 +243,7 @@ export function useTouchable(
    */
 
   function onScroll() {
+    unbindScroll();
     dispatch("RESPONDER_TERMINATED");
   }
 
@@ -251,15 +254,14 @@ export function useTouchable(
   React.useEffect(() => {
     if (state === "NOT_RESPONDER") {
       clearTimeout(delayTimer.current);
-    } else {
-      window.addEventListener("scroll", onScroll, true);
     }
-
-    return () => window.removeEventListener("scroll", onScroll);
   }, [state]);
 
   React.useEffect(() => {
-    return () => clearTimeout(delayTimer.current);
+    return () => {
+      clearTimeout(delayTimer.current);
+      unbindScroll();
+    };
   }, []);
 
   React.useEffect(() => {
@@ -275,9 +277,9 @@ export function useTouchable(
         onTouchEnd,
         onTouchMove,
         onMouseDown,
-        onMouseMove:
+        onMouseLeave:
           state !== "NOT_RESPONDER" && state !== "ERROR"
-            ? onMouseMove
+            ? onMouseLeave
             : undefined,
         onMouseUp
       };
