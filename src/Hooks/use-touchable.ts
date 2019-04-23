@@ -108,20 +108,22 @@ export interface TouchableOptions {
   pressExpandPx: number;
   behavior: "button" | "link";
   disabled: boolean;
+  onPress: OnPressFunction;
 }
 
 const defaultOptions: TouchableOptions = {
   delay: HIGHLIGHT_DELAY_MS,
   pressExpandPx: PRESS_EXPAND_PX,
   behavior: "button",
-  disabled: false
+  disabled: false,
+  onPress: noOp
 };
 
-export function useTouchable(
-  onPress: OnPressFunction = noOp,
-  options: Partial<TouchableOptions> = {}
-) {
-  const { delay, behavior, disabled } = { ...defaultOptions, ...options };
+export function useTouchable(options: Partial<TouchableOptions> = {}) {
+  const { onPress, delay, behavior, disabled } = {
+    ...defaultOptions,
+    ...options
+  };
   const ref = React.useRef<HTMLAnchorElement | HTMLDivElement | any>(null);
   const [state, dispatch] = React.useReducer(reducer, "NOT_RESPONDER");
   const delayTimer = React.useRef<number>();
@@ -164,7 +166,7 @@ export function useTouchable(
     onStart();
   }
 
-  function onEnd(e: React.TouchEvent | React.MouseEvent) {
+  function onEnd(e: React.TouchEvent | React.MouseEvent | React.KeyboardEvent) {
     // consider unbinding the end event instead
     if (state === "NOT_RESPONDER") {
       return;
@@ -304,10 +306,12 @@ export function useTouchable(
     const ENTER = 13;
     const SPACE = 32;
 
-    if (e.type === "keydown" && e.which === ENTER) {
+    if (e.type === "keydown" && e.which === SPACE) {
+      onStart(0);
+    } else if (e.type === "keydown" && e.which === ENTER) {
       onPress(e);
     } else if (e.type === "keyup" && e.which === SPACE) {
-      onPress(e);
+      onEnd(e);
     } else {
       return;
     }
