@@ -216,6 +216,7 @@ export function Touchable({ children }: Props) {
   function afterDelay() {
     setPressed(true);
   }
+
   function onMouseDown(e: React.MouseEvent) {
     console.log("touch start");
     onTouchStart(e, 0);

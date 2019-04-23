@@ -98,31 +98,25 @@ const defaultOptions = {
 
 type OnPressFunction = (e: React.TouchEvent | React.MouseEvent) => void;
 
+function reducer(state: States, action: Events) {
+  const nextState = transitions[state][action];
+  console.log(`${state} -> ${action} -> ${nextState}`);
+  return nextState;
+}
+
 export function useTouchable(
-  onPress: OnPressFunction,
+  onPress: OnPressFunction, // potentially require this to be useCallback?
   disabled: boolean = false,
   options = {}
 ) {
   const { delay } = { ...options, ...defaultOptions };
   const ref = React.useRef<HTMLDivElement>(null);
-  const [state, setState] = React.useState<States>("NOT_RESPONDER");
+  const [state, dispatch] = React.useReducer(reducer, "NOT_RESPONDER");
   const delayTimer = React.useRef<number>();
   const bounds = React.useRef<ClientRect>();
 
-  /**
-   * Basic state machine transition function
-   * Any benefit to using a reducer here?
-   */
-
-  function emitEvent(signal: Events) {
-    const nextState = transitions[state][signal];
-    if (nextState !== state) {
-      setState(nextState);
-    }
-  }
-
   function afterDelay() {
-    emitEvent("DELAY");
+    dispatch("DELAY");
   }
 
   /**
@@ -132,27 +126,30 @@ export function useTouchable(
    */
 
   function onStart(delayPressMs = delay) {
-    emitEvent("RESPONDER_GRANT");
+    console.log("on start");
+    dispatch("RESPONDER_GRANT");
     bounds.current = ref.current!.getBoundingClientRect();
     delayTimer.current =
       delayPressMs > 0
         ? window.setTimeout(afterDelay, delayPressMs)
         : undefined;
     if (delayPressMs === 0) {
-      emitEvent("DELAY");
+      dispatch("DELAY");
     }
   }
 
-  function onTouchStart(e: React.TouchEvent) {
+  function onTouchStart() {
     onStart();
   }
 
   function onEnd(e: React.TouchEvent | React.MouseEvent) {
     if (state === "RESPONDER_ACTIVE_IN" || state === "RESPONDER_PRESSED_IN") {
+      console.log("on press");
       onPress(e);
     }
 
-    emitEvent("RESPONDER_RELEASE");
+    console.log("release");
+    dispatch("RESPONDER_RELEASE");
   }
 
   function onTouchEnd(e: React.TouchEvent) {
@@ -194,9 +191,9 @@ export function useTouchable(
       bounds.current!
     );
     if (withinBounds) {
-      emitEvent("ENTER_PRESS_RECT");
+      dispatch("ENTER_PRESS_RECT");
     } else {
-      emitEvent("LEAVE_PRESS_RECT");
+      dispatch("LEAVE_PRESS_RECT");
     }
   }
 
@@ -232,9 +229,9 @@ export function useTouchable(
       0 // require more precise positioning with a mouse
     );
     if (withinBounds) {
-      emitEvent("ENTER_PRESS_RECT");
+      dispatch("ENTER_PRESS_RECT");
     } else {
-      emitEvent("LEAVE_PRESS_RECT");
+      dispatch("LEAVE_PRESS_RECT");
     }
   }
 
@@ -244,7 +241,7 @@ export function useTouchable(
    */
 
   function onScroll() {
-    emitEvent("RESPONDER_TERMINATED");
+    dispatch("RESPONDER_TERMINATED");
   }
 
   /**
@@ -267,7 +264,7 @@ export function useTouchable(
 
   React.useEffect(() => {
     if (disabled && state !== "NOT_RESPONDER") {
-      emitEvent("RESPONDER_TERMINATED");
+      dispatch("RESPONDER_TERMINATED");
     }
   }, [disabled]);
 

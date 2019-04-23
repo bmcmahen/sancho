@@ -5,13 +5,39 @@ import { Button } from "../Button";
 import { Tooltip } from "../Tooltip";
 import { storiesOf } from "@storybook/react";
 import { Touchable } from "../Touchable";
+import { useTouchable } from "../Hooks/use-touchable";
+
+function TouchableHighlight() {
+  const [pressCount, setPressCount] = React.useState(0);
+
+  function onPress() {
+    console.log("Pressed!");
+    setPressCount(pressCount + 1);
+  }
+
+  const { bind, active } = useTouchable(onPress);
+
+  return (
+    <div>
+      {pressCount}
+      <div
+        {...bind}
+        css={{
+          background: active ? "#08e" : "transparent"
+        }}
+      >
+        This is a touchable highlight
+      </div>
+    </div>
+  );
+}
 
 export const TouchableStories = storiesOf("Touchable", module).add(
   "basic",
   () => {
     return (
       <div css={{ padding: "100px" }}>
-        <Touchable>Hello world</Touchable>
+        <TouchableHighlight />
         <p>
           Aute Lorem laboris nostrud culpa eiusmod in ipsum laborum. Minim
           cupidatat dolore tempor elit irure officia qui. Anim ea dolor
