@@ -15,7 +15,7 @@ function TouchableHighlight() {
     setPressCount(pressCount + 1);
   }
 
-  const { bind, active } = useTouchable(onPress);
+  const { bind, active, hover } = useTouchable(onPress);
 
   return (
     <div>
@@ -23,6 +23,7 @@ function TouchableHighlight() {
       <div
         {...bind}
         css={{
+          border: hover ? "1px solid black" : "1px solid transparent",
           userSelect: "none",
           background: active ? "#08e" : "transparent"
         }}

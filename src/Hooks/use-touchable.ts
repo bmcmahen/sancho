@@ -1,7 +1,10 @@
 /**
- * The state machine is based on the one provided in react-native-web
+ * The state machine used here is based on the one provided
+ * in react-native-web:
+ *
  * https://github.com/necolas/react-native-web/blob/master/packages/react-native-web/src/exports/Touchable/index.js
  */
+
 import * as React from "react";
 
 /**
@@ -91,21 +94,19 @@ const transitions = {
   }
 } as TransitionsType;
 
+type OnPressFunction = (e: React.TouchEvent | React.MouseEvent) => void;
+
+function reducer(state: States, action: Events) {
+  return transitions[state][action];
+}
+
 const defaultOptions = {
   delay: HIGHLIGHT_DELAY_MS,
   pressExpandPx: PRESS_EXPAND_PX
 };
 
-type OnPressFunction = (e: React.TouchEvent | React.MouseEvent) => void;
-
-function reducer(state: States, action: Events) {
-  const nextState = transitions[state][action];
-  console.log(`${state} -> ${action} -> ${nextState}`);
-  return nextState;
-}
-
 export function useTouchable(
-  onPress: OnPressFunction, // potentially require this to be useCallback?
+  onPress: OnPressFunction,
   disabled: boolean = false,
   options = {}
 ) {
@@ -114,6 +115,7 @@ export function useTouchable(
   const [state, dispatch] = React.useReducer(reducer, "NOT_RESPONDER");
   const delayTimer = React.useRef<number>();
   const bounds = React.useRef<ClientRect>();
+  const [hover, setHover] = React.useState(false);
 
   function bindScroll() {
     window.addEventListener("scroll", onScroll, true);
@@ -234,7 +236,14 @@ export function useTouchable(
    */
 
   function onMouseLeave(e: React.MouseEvent) {
-    dispatch("RESPONDER_TERMINATED");
+    if (state !== "NOT_RESPONDER") {
+      dispatch("RESPONDER_TERMINATED");
+    }
+    setHover(false);
+  }
+
+  function onMouseEnter() {
+    setHover(true);
   }
 
   /**
@@ -277,10 +286,8 @@ export function useTouchable(
         onTouchEnd,
         onTouchMove,
         onMouseDown,
-        onMouseLeave:
-          state !== "NOT_RESPONDER" && state !== "ERROR"
-            ? onMouseLeave
-            : undefined,
+        onMouseEnter,
+        onMouseLeave,
         onMouseUp
       };
 
@@ -289,6 +296,7 @@ export function useTouchable(
       ref,
       ...bind
     },
-    active: state === "RESPONDER_PRESSED_IN"
+    active: state === "RESPONDER_PRESSED_IN",
+    hover
   };
 }
