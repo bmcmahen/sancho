@@ -94,7 +94,9 @@ const transitions = {
   }
 } as TransitionsType;
 
-type OnPressFunction = (e: React.TouchEvent | React.MouseEvent) => void;
+type OnPressFunction = (
+  e: React.TouchEvent | React.MouseEvent | React.KeyboardEvent
+) => void;
 
 function reducer(state: States, action: Events) {
   return transitions[state][action];
@@ -102,7 +104,8 @@ function reducer(state: States, action: Events) {
 
 const defaultOptions = {
   delay: HIGHLIGHT_DELAY_MS,
-  pressExpandPx: PRESS_EXPAND_PX
+  pressExpandPx: PRESS_EXPAND_PX,
+  behavior: "button"
 };
 
 export function useTouchable(
@@ -110,7 +113,7 @@ export function useTouchable(
   disabled: boolean = false,
   options = {}
 ) {
-  const { delay } = { ...options, ...defaultOptions };
+  const { delay, behavior } = { ...options, ...defaultOptions };
   const ref = React.useRef<HTMLDivElement>(null);
   const [state, dispatch] = React.useReducer(reducer, "NOT_RESPONDER");
   const delayTimer = React.useRef<number>();
@@ -279,6 +282,33 @@ export function useTouchable(
     }
   }, [disabled]);
 
+  /**
+   * Keyboard support
+   * button:
+   *   onEnterDown -> onPress
+   *   onSpaceUp -> onPress
+   * Prevent default.
+   *
+   * link: Don't prevent default
+   */
+
+  function onKey(e: React.KeyboardEvent) {
+    const ENTER = 13;
+    const SPACE = 32;
+
+    if (e.type === "keydown" && e.which === ENTER) {
+      onPress(e);
+    } else if (e.type === "keyup" && e.which === SPACE) {
+      onPress(e);
+    }
+
+    e.stopPropagation();
+
+    if (!(e.key === "Enter" && behavior === "link")) {
+      e.preventDefault();
+    }
+  }
+
   const bind = disabled
     ? {}
     : {
@@ -288,7 +318,9 @@ export function useTouchable(
         onMouseDown,
         onMouseEnter,
         onMouseLeave,
-        onMouseUp
+        onMouseUp,
+        onKeyDown: onKey,
+        onKeyUp: onKey
       };
 
   return {

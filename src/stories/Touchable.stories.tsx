@@ -22,6 +22,7 @@ function TouchableHighlight() {
       {pressCount}
       <div
         {...bind}
+        tabIndex={0}
         css={{
           border: hover ? "1px solid black" : "1px solid transparent",
           userSelect: "none",
