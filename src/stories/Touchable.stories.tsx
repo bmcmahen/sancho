@@ -15,14 +15,16 @@ function TouchableHighlight() {
     setPressCount(pressCount + 1);
   }
 
-  const { bind, active, hover } = useTouchable(onPress);
+  const { bind, active, hover } = useTouchable(onPress, {
+    behavior: "link"
+  });
 
   return (
     <div>
       {pressCount}
-      <div
+      <a
+        href="#"
         {...bind}
-        tabIndex={0}
         css={{
           border: hover ? "1px solid black" : "1px solid transparent",
           userSelect: "none",
@@ -30,7 +32,7 @@ function TouchableHighlight() {
         }}
       >
         This is a touchable highlight
-      </div>
+      </a>
     </div>
   );
 }

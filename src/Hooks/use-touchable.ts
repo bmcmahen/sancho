@@ -6,6 +6,7 @@
  */
 
 import * as React from "react";
+import { noOp } from "../misc/noop";
 
 /**
  * useTouchable
@@ -102,19 +103,26 @@ function reducer(state: States, action: Events) {
   return transitions[state][action];
 }
 
-const defaultOptions = {
+export interface TouchableOptions {
+  delay: number;
+  pressExpandPx: number;
+  behavior: "button" | "link";
+  disabled: boolean;
+}
+
+const defaultOptions: TouchableOptions = {
   delay: HIGHLIGHT_DELAY_MS,
   pressExpandPx: PRESS_EXPAND_PX,
-  behavior: "button"
+  behavior: "button",
+  disabled: false
 };
 
 export function useTouchable(
-  onPress: OnPressFunction,
-  disabled: boolean = false,
-  options = {}
+  onPress: OnPressFunction = noOp,
+  options: Partial<TouchableOptions> = {}
 ) {
-  const { delay, behavior } = { ...options, ...defaultOptions };
-  const ref = React.useRef<HTMLDivElement>(null);
+  const { delay, behavior, disabled } = { ...defaultOptions, ...options };
+  const ref = React.useRef<HTMLAnchorElement | HTMLDivElement | any>(null);
   const [state, dispatch] = React.useReducer(reducer, "NOT_RESPONDER");
   const delayTimer = React.useRef<number>();
   const bounds = React.useRef<ClientRect>();
@@ -300,11 +308,13 @@ export function useTouchable(
       onPress(e);
     } else if (e.type === "keyup" && e.which === SPACE) {
       onPress(e);
+    } else {
+      return;
     }
 
     e.stopPropagation();
 
-    if (!(e.key === "Enter" && behavior === "link")) {
+    if (!(e.which === ENTER && behavior === "link")) {
       e.preventDefault();
     }
   }
