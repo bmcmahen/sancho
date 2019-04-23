@@ -184,6 +184,8 @@ interface Props {
   children: React.ReactNode;
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role
+
 export function Touchable({ children }: Props) {
   function touchableHandleResponderMove(e: React.TouchEvent) {
     // get positionOnActivate
@@ -195,10 +197,16 @@ export function Touchable({ children }: Props) {
     // - no? leave_press_rect
   }
 
+  const ref = React.useRef<HTMLDivElement>(null);
+  const timer = React.useRef<number>();
   const [active, setActive] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
+  const bounds = React.useRef<ClientRect>();
 
   function onScroll() {
     setActive(false);
+    setPressed(false);
+    clearTimeout(timer.current);
     unbindScroll();
   }
 
@@ -206,27 +214,78 @@ export function Touchable({ children }: Props) {
     window.removeEventListener("scroll", onScroll, true);
   }
 
-  function onTouchStart() {
+  function afterDelay() {
+    setPressed(true);
+  }
+  function onMouseDown(e: React.MouseEvent) {
+    console.log("touch start");
+    onTouchStart(e, 0);
+  }
+
+  function onTouchStart(e: React.TouchEvent | React.MouseEvent, delay = 120) {
+    console.log("touch start");
+    e.preventDefault();
+    timer.current =
+      delay > 0 ? window.setTimeout(afterDelay, delay) : undefined;
     setActive(true);
+    if (delay === 0) {
+      setPressed(true);
+    }
+    const el = ref.current;
+    if (el) {
+      bounds.current = el.getBoundingClientRect();
+    }
     window.addEventListener("scroll", onScroll, true);
   }
 
-  function onTouchEnd() {
+  function onTouchEnd(e: React.TouchEvent | React.MouseEvent) {
+    e.preventDefault();
+    clearTimeout(timer.current);
     unbindScroll();
+
     if (active) {
-      alert("press");
+      console.log("press");
     }
+
     setActive(false);
+    setPressed(false);
+  }
+
+  function onTouchMove(e: React.TouchEvent) {
+    if (!active) {
+      return;
+    }
+
+    const { clientX, clientY } = e.nativeEvent.touches[0];
+    const b = bounds.current!;
+
+    // const isTouchWithinActive =
+    //   pageX > b.left &&
+    //   pageY > b.top &&
+    //   pageX <
+
+    console.log(clientX, clientY);
+    console.log(bounds.current);
+    // isWithinTouch
+  }
+
+  function onClick() {
+    console.log("click!");
   }
 
   return (
     <div
+      ref={ref}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
+      onTouchMove={onTouchMove}
+      onMouseDown={onMouseDown}
+      // onMouseMove={active ? onMouseLeave : undefined}
+      onMouseUp={onTouchEnd}
       css={{
         height: "40px",
         width: "100%",
-        background: active ? "#08e" : "white"
+        background: pressed ? "#08e" : "white"
       }}
     >
       {children}

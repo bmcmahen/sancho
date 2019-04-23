@@ -10,7 +10,7 @@ export const TouchableStories = storiesOf("Touchable", module).add(
   "basic",
   () => {
     return (
-      <div css={{ padding: "100px", height: "200px", overflowY: "scroll" }}>
+      <div css={{ padding: "100px" }}>
         <Touchable>Hello world</Touchable>
         <p>
           Aute Lorem laboris nostrud culpa eiusmod in ipsum laborum. Minim
