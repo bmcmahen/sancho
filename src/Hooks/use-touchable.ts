@@ -13,6 +13,8 @@ import * as React from "react";
  * const { bind, active } = useTouchable(onPress, disabled, {
  *   delay: 120
  * })
+ *
+ * TODO: keyboard support, hover, focus?
  */
 
 const HIGHLIGHT_DELAY_MS = 130;
@@ -164,13 +166,14 @@ export function useTouchable(
   function isWithinActiveBounds(
     clientX: number,
     clientY: number,
-    rect: ClientRect
+    rect: ClientRect,
+    expandPx: number = PRESS_EXPAND_PX
   ) {
     return (
-      clientX > rect.left &&
-      clientY > rect.top &&
-      clientX < rect.right &&
-      clientY < rect.bottom
+      clientX > rect.left - expandPx &&
+      clientY > rect.top - expandPx &&
+      clientX < rect.right + expandPx &&
+      clientY < rect.bottom + expandPx
     );
   }
 
@@ -225,7 +228,8 @@ export function useTouchable(
     const withinBounds = isWithinActiveBounds(
       clientX,
       clientY,
-      bounds.current!
+      bounds.current!,
+      0 // require more precise positioning with a mouse
     );
     if (withinBounds) {
       emitEvent("ENTER_PRESS_RECT");
