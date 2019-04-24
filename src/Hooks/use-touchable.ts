@@ -118,7 +118,7 @@ const transitions = {
   }
 } as TransitionsType;
 
-type OnPressFunction = (
+export type OnPressFunction = (
   e: React.TouchEvent | React.MouseEvent | React.KeyboardEvent
 ) => void;
 
@@ -288,7 +288,7 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
    * @param e
    */
 
-  function onMouseLeave(e: React.MouseEvent) {
+  function onMouseLeave() {
     if (hover) {
       setHover(false);
     }
@@ -317,7 +317,7 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
   }
 
   /**
-   * Handle timer and scroll sideeffects
+   * Handle timer and disabled side-effects
    */
 
   React.useEffect(() => {

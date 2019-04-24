@@ -34,7 +34,7 @@ export const ButtonStories = storiesOf("Button", module)
                     css={{ marginRight: "1rem", textTransform: "capitalize" }}
                     variant={appearance}
                     intent={intent}
-                    onClick={() => alert("hello there")}
+                    onPress={() => console.log("hello there")}
                   >
                     {intent}
                   </Button>

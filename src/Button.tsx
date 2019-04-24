@@ -8,6 +8,8 @@ import { Spinner } from "./Spinner";
 import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
 import { IconWrapper } from "./IconWrapper";
+import { useTouchable, OnPressFunction } from "./Hooks/use-touchable";
+import { noOp } from "./misc/noop";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -61,7 +63,6 @@ export const buttonReset = css({
   textAlign: "center",
   WebkitFontSmoothing: "antialiased",
   border: "none",
-  outline: "none",
   textRendering: "optimizeLegibility",
   userSelect: "none",
   WebkitTapHighlightColor: "transparent",
@@ -74,33 +75,40 @@ export const buttonReset = css({
  * -- eg., does it indicate danger?
  */
 
-const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
+const getIntentStyles = (
+  theme: Theme,
+  intent: ButtonIntent,
+  hover: boolean,
+  active: boolean
+) => {
   const dark = theme.colors.mode === "dark";
   const { palette } = theme.colors;
 
   switch (intent) {
     case "none": {
       if (dark)
-        return css({
-          backgroundColor: theme.colors.scales.gray[5],
-          color: getTextColor(theme.colors.intent.none.base, theme),
-          background: gradient(
-            theme.colors.intent.none.base,
-            lighten(theme.colors.intent.none.base, 0.8)
-          ),
-          boxShadow: insetShadow(
-            alpha(theme.colors.palette.gray.dark, 0.9),
-            alpha(theme.colors.palette.gray.dark, 0.8)
-          ),
-          ":focus": {
-            zIndex: 2,
-            boxShadow: focusShadow(
-              alpha(palette.blue.light, 0.5),
-              alpha(palette.gray.dark, 0.4),
-              alpha(palette.gray.light, 0.2)
-            )
+        return css([
+          {
+            backgroundColor: theme.colors.scales.gray[5],
+            color: getTextColor(theme.colors.intent.none.base, theme),
+            background: gradient(
+              theme.colors.intent.none.base,
+              lighten(theme.colors.intent.none.base, 0.8)
+            ),
+            boxShadow: insetShadow(
+              alpha(theme.colors.palette.gray.dark, 0.9),
+              alpha(theme.colors.palette.gray.dark, 0.8)
+            ),
+            '&[aria-expanded="true"]': {
+              background: "none",
+              backgroundColor: theme.colors.intent.none.base,
+              boxShadow: insetShadow(
+                alpha(palette.gray.base, 0.3),
+                alpha(palette.gray.base, 0.15)
+              )
+            }
           },
-          ':active, &[aria-expanded="true"]': {
+          active && {
             background: "none",
             backgroundColor: theme.colors.intent.none.base,
             boxShadow: insetShadow(
@@ -108,25 +116,27 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
               alpha(palette.gray.base, 0.15)
             )
           }
-        });
+        ]);
 
-      return css({
-        backgroundColor: "white",
-        color: getTextColor(theme.colors.intent.none.lightest, theme),
-        background: gradient(theme.colors.intent.none.lightest, "white"),
-        boxShadow: insetShadow(
-          alpha(theme.colors.palette.gray.dark, 0.2),
-          alpha(theme.colors.palette.gray.dark, 0.1)
-        ),
-        ":focus": {
-          zIndex: 2,
-          boxShadow: focusShadow(
-            alpha(palette.blue.dark, 0.1),
-            alpha(palette.gray.dark, 0.2),
-            alpha(palette.gray.dark, 0.05)
-          )
+      return css([
+        {
+          backgroundColor: "white",
+          color: getTextColor(theme.colors.intent.none.lightest, theme),
+          background: gradient(theme.colors.intent.none.lightest, "white"),
+          boxShadow: insetShadow(
+            alpha(theme.colors.palette.gray.dark, 0.2),
+            alpha(theme.colors.palette.gray.dark, 0.1)
+          ),
+          '&[aria-expanded="true"]': {
+            background: "none",
+            backgroundColor: theme.colors.intent.none.lightest,
+            boxShadow: insetShadow(
+              alpha(palette.gray.dark, 0.3),
+              alpha(palette.gray.dark, 0.15)
+            )
+          }
         },
-        ':active, &[aria-expanded="true"]': {
+        active && {
           background: "none",
           backgroundColor: theme.colors.intent.none.lightest,
           boxShadow: insetShadow(
@@ -134,42 +144,41 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             alpha(palette.gray.dark, 0.15)
           )
         }
-      });
+      ]);
     }
     case "primary":
-      return css({
-        backgroundColor: theme.colors.intent.primary.base,
-        color: getTextColor(theme.colors.intent.primary.base, theme),
-        backgroundImage: gradient(
-          theme.colors.intent.primary.base,
-          color(theme.colors.intent.primary.base)
-            .lighten(0.4)
-            .toString()
-        ),
-        boxShadow: dark
-          ? insetShadow(
-              theme.colors.palette.gray.dark,
-              theme.colors.palette.gray.dark
-            )
-          : insetShadow(
-              alpha(palette.gray.dark, 0.2),
-              alpha(palette.gray.dark, 0.2)
-            ),
-        ":focus": {
-          zIndex: 2,
+      return css([
+        {
+          backgroundColor: theme.colors.intent.primary.base,
+          color: getTextColor(theme.colors.intent.primary.base, theme),
+          backgroundImage: gradient(
+            theme.colors.intent.primary.base,
+            color(theme.colors.intent.primary.base)
+              .lighten(0.4)
+              .toString()
+          ),
           boxShadow: dark
-            ? focusShadow(
-                alpha(theme.colors.intent.primary.light, 0.5),
-                alpha(palette.gray.dark, 0.4),
-                alpha(palette.gray.light, 0.2)
+            ? insetShadow(
+                theme.colors.palette.gray.dark,
+                theme.colors.palette.gray.dark
               )
-            : focusShadow(
-                alpha(theme.colors.intent.primary.base, 0.3),
-                alpha(palette.gray.dark, 0.3),
-                alpha(palette.gray.dark, 0.07)
-              )
+            : insetShadow(
+                alpha(palette.gray.dark, 0.2),
+                alpha(palette.gray.dark, 0.2)
+              ),
+
+          '&[aria-expanded="true"]': {
+            boxShadow: insetShadow(
+              alpha(palette.gray.dark, 0.1),
+              alpha(palette.gray.dark, 0.1)
+            ),
+            backgroundImage: gradient(
+              theme.colors.intent.primary.dark,
+              theme.colors.intent.primary.base
+            )
+          }
         },
-        ':active, &[aria-expanded="true"]': {
+        active && {
           boxShadow: insetShadow(
             alpha(palette.gray.dark, 0.1),
             alpha(palette.gray.dark, 0.1)
@@ -179,43 +188,42 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             theme.colors.intent.primary.base
           )
         }
-      });
+      ]);
     case "success":
-      return css({
-        backgroundColor: theme.colors.intent.success.base,
-        color: getTextColor(theme.colors.intent.success.base, theme),
-        backgroundImage: gradient(
-          theme.colors.intent.success.base,
-          color(theme.colors.intent.success.base)
-            .lighten(0.5)
-            .toString()
-        ),
-        boxShadow: dark
-          ? insetShadow(
-              theme.colors.palette.gray.dark,
-              theme.colors.palette.gray.dark
-            )
-          : insetShadow(
-              alpha(palette.gray.dark, 0.2),
-              alpha(palette.gray.dark, 0.2)
-            ),
-        ":focus": {
-          zIndex: 2,
+      return css([
+        {
+          backgroundColor: theme.colors.intent.success.base,
+          color: getTextColor(theme.colors.intent.success.base, theme),
+          backgroundImage: gradient(
+            theme.colors.intent.success.base,
+            color(theme.colors.intent.success.base)
+              .lighten(0.5)
+              .toString()
+          ),
           boxShadow: dark
-            ? focusShadow(
-                alpha(theme.colors.intent.success.light, 0.5),
-                alpha(palette.gray.dark, 0.4),
-                alpha(palette.gray.light, 0.2)
+            ? insetShadow(
+                theme.colors.palette.gray.dark,
+                theme.colors.palette.gray.dark
               )
-            : focusShadow(
-                color(theme.colors.intent.success.base)
-                  .alpha(0.4)
-                  .toString(),
-                alpha(palette.gray.dark, 0.3),
-                alpha(palette.gray.dark, 0.1)
-              )
+            : insetShadow(
+                alpha(palette.gray.dark, 0.2),
+                alpha(palette.gray.dark, 0.2)
+              ),
+
+          '&[aria-expanded="true"]': {
+            boxShadow: insetShadow(
+              alpha(palette.gray.dark, 0.1),
+              alpha(palette.gray.dark, 0.1)
+            ),
+            backgroundImage: gradient(
+              color(theme.colors.intent.success.base)
+                .darken(0.2)
+                .toString(),
+              theme.colors.intent.success.base
+            )
+          }
         },
-        ':active, &[aria-expanded="true"]': {
+        active && {
           boxShadow: insetShadow(
             alpha(palette.gray.dark, 0.1),
             alpha(palette.gray.dark, 0.1)
@@ -227,43 +235,42 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             theme.colors.intent.success.base
           )
         }
-      });
+      ]);
     case "danger":
-      return css({
-        backgroundColor: theme.colors.intent.danger.base,
-        color: getTextColor(theme.colors.intent.danger.base, theme),
-        backgroundImage: gradient(
-          theme.colors.intent.danger.base,
-          color(theme.colors.intent.danger.base)
-            .lighten(0.3)
-            .toString()
-        ),
-        boxShadow: dark
-          ? insetShadow(
-              theme.colors.palette.gray.dark,
-              theme.colors.palette.gray.dark
-            )
-          : insetShadow(
-              alpha(palette.gray.dark, 0.2),
-              alpha(palette.gray.dark, 0.2)
-            ),
-        ":focus": {
-          zIndex: 2,
+      return css([
+        {
+          backgroundColor: theme.colors.intent.danger.base,
+          color: getTextColor(theme.colors.intent.danger.base, theme),
+          backgroundImage: gradient(
+            theme.colors.intent.danger.base,
+            color(theme.colors.intent.danger.base)
+              .lighten(0.3)
+              .toString()
+          ),
           boxShadow: dark
-            ? focusShadow(
-                alpha(theme.colors.intent.danger.light, 0.5),
-                alpha(palette.gray.dark, 0.4),
-                alpha(palette.gray.light, 0.2)
+            ? insetShadow(
+                theme.colors.palette.gray.dark,
+                theme.colors.palette.gray.dark
               )
-            : focusShadow(
-                color(theme.colors.intent.danger.base)
-                  .alpha(0.4)
-                  .toString(),
-                alpha(palette.gray.dark, 0.3),
-                alpha(palette.gray.dark, 0.1)
-              )
+            : insetShadow(
+                alpha(palette.gray.dark, 0.2),
+                alpha(palette.gray.dark, 0.2)
+              ),
+
+          '&[aria-expanded="true"]': {
+            boxShadow: insetShadow(
+              alpha(palette.gray.dark, 0.1),
+              alpha(palette.gray.dark, 0.1)
+            ),
+            backgroundImage: gradient(
+              color(theme.colors.intent.danger.base)
+                .darken(0.2)
+                .toString(),
+              theme.colors.intent.danger.base
+            )
+          }
         },
-        ':active, &[aria-expanded="true"]': {
+        active && {
           boxShadow: insetShadow(
             alpha(palette.gray.dark, 0.1),
             alpha(palette.gray.dark, 0.1)
@@ -275,43 +282,42 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             theme.colors.intent.danger.base
           )
         }
-      });
+      ]);
     case "warning":
-      return css({
-        backgroundColor: theme.colors.intent.warning.base,
-        color: getTextColor(theme.colors.intent.warning.base, theme),
-        backgroundImage: gradient(
-          theme.colors.intent.warning.base,
-          color(theme.colors.intent.warning.base)
-            .lighten(0.4)
-            .toString()
-        ),
-        boxShadow: dark
-          ? insetShadow(
-              theme.colors.palette.gray.dark,
-              theme.colors.palette.gray.dark
-            )
-          : insetShadow(
-              alpha(palette.gray.dark, 0.2),
-              alpha(palette.gray.dark, 0.2)
-            ),
-        ":focus": {
-          zIndex: 2,
+      return css([
+        {
+          backgroundColor: theme.colors.intent.warning.base,
+          color: getTextColor(theme.colors.intent.warning.base, theme),
+          backgroundImage: gradient(
+            theme.colors.intent.warning.base,
+            color(theme.colors.intent.warning.base)
+              .lighten(0.4)
+              .toString()
+          ),
           boxShadow: dark
-            ? focusShadow(
-                alpha(theme.colors.intent.warning.light, 0.5),
-                alpha(palette.gray.dark, 0.4),
-                alpha(palette.gray.light, 0.2)
+            ? insetShadow(
+                theme.colors.palette.gray.dark,
+                theme.colors.palette.gray.dark
               )
-            : focusShadow(
-                color(theme.colors.intent.warning.base)
-                  .alpha(0.4)
-                  .toString(),
+            : insetShadow(
                 alpha(palette.gray.dark, 0.2),
-                alpha(palette.gray.dark, 0.1)
-              )
+                alpha(palette.gray.dark, 0.2)
+              ),
+
+          '&[aria-expanded="true"]': {
+            boxShadow: insetShadow(
+              alpha(palette.gray.dark, 0.1),
+              alpha(palette.gray.dark, 0.1)
+            ),
+            backgroundImage: gradient(
+              color(theme.colors.intent.warning.base)
+                .darken(0.2)
+                .toString(),
+              theme.colors.intent.warning.base
+            )
+          }
         },
-        ':active, &[aria-expanded="true"]': {
+        active && {
           boxShadow: insetShadow(
             alpha(palette.gray.dark, 0.1),
             alpha(palette.gray.dark, 0.1)
@@ -323,7 +329,7 @@ const getIntentStyles = (theme: Theme, intent: ButtonIntent) => {
             theme.colors.intent.warning.base
           )
         }
-      });
+      ]);
   }
 };
 
@@ -335,7 +341,12 @@ export type ButtonIntent =
   | "danger";
 
 // variations to the ghost buttons based on intent
-const ghostIntents = (theme: Theme, intent: ButtonIntent) => {
+const ghostIntents = (
+  theme: Theme,
+  intent: ButtonIntent,
+  hover: boolean,
+  active: boolean
+) => {
   const none = intent === "none";
   const dark = theme.colors.mode === "dark";
 
@@ -347,35 +358,38 @@ const ghostIntents = (theme: Theme, intent: ButtonIntent) => {
     base = theme.colors.intent[intent].light;
   }
 
-  return css({
-    color: none ? theme.colors.text.muted : base,
-    opacity: 1,
-    background: "transparent",
-    boxShadow: "none",
-    transition:
-      "box-shadow 0.07s cubic-bezier(0.35,0,0.25,1), background 0.07s cubic-bezier(0.35,0,0.25,1), opacity 0.35s cubic-bezier(0.35,0,0.25,1)",
-    ":active": {
-      opacity: 0.4
-    },
-    "@media (hover: hover)": {
-      ":hover": {
-        background: alpha(base, 0.07)
-      },
-      ":focus": {
-        zIndex: 2,
-        boxShadow: `0 0 0 3px ${alpha(base, 0.15)}`
-      },
-      ':active, &[aria-expanded="true"]': {
+  return css([
+    {
+      color: none ? theme.colors.text.muted : base,
+      opacity: 1,
+      background: "transparent",
+      boxShadow: "none",
+      transition:
+        "box-shadow 0.07s cubic-bezier(0.35,0,0.25,1), background 0.07s cubic-bezier(0.35,0,0.25,1), opacity 0.35s cubic-bezier(0.35,0,0.25,1)",
+      '&[aria-expanded="true"]': {
         background: alpha(base, 0.15),
         boxShadow: "none",
         opacity: 1
       }
+    },
+    hover && {
+      background: alpha(base, 0.07)
+    },
+    active && {
+      background: alpha(base, 0.15),
+      boxShadow: "none",
+      opacity: 1
     }
-  });
+  ]);
 };
 
 // variations to the outline buttons based on intent
-const outlineIntents = (theme: Theme, intent: ButtonIntent) => {
+const outlineIntents = (
+  theme: Theme,
+  intent: ButtonIntent,
+  hover: boolean,
+  active: boolean
+) => {
   const none = intent === "none";
   const dark = theme.colors.mode === "dark";
 
@@ -387,27 +401,24 @@ const outlineIntents = (theme: Theme, intent: ButtonIntent) => {
     base = theme.colors.intent[intent].light;
   }
 
-  return css({
-    color: base,
-    borderColor: alpha(base, 0.2),
-    boxShadow: "none",
-    transition:
-      "box-shadow 0.07s cubic-bezier(0.35,0,0.25,1), background 0.07s cubic-bezier(0.35,0,0.25,1)",
-    "@media (hover:hover)": {
-      ":hover": {
-        background: alpha(base, 0.05)
+  return css([
+    {
+      color: base,
+      borderColor: alpha(base, 0.2),
+      boxShadow: "none",
+      transition:
+        "box-shadow 0.07s cubic-bezier(0.35,0,0.25,1), background 0.07s cubic-bezier(0.35,0,0.25,1)",
+      '&[aria-expanded="true"]': {
+        background: alpha(base, 0.15)
       }
     },
-    ":focus": {
-      zIndex: 2,
-      boxShadow: `0 0 0 3px ${alpha(base, 0.15)}`,
-      borderColor: alpha(base, 0.5)
+    hover && {
+      background: alpha(base, 0.05)
     },
-    ':active, &[aria-expanded="true"]': {
-      boxShadow: "none",
+    active && {
       background: alpha(base, 0.15)
     }
-  });
+  ]);
 };
 
 const variants = {
@@ -447,6 +458,8 @@ export interface ButtonStyleProps {
   iconBefore?: React.ReactNode;
   /** The name of the icon to appear to the right of the button text */
   iconAfter?: React.ReactNode;
+  /** Use onPress instead of onClick to handle both touch and click events */
+  onPress?: OnPressFunction;
 }
 
 export interface ButtonProps
@@ -478,20 +491,27 @@ export const Button: React.RefForwardingComponent<
       iconBefore,
       iconAfter,
       children,
+      onPress = noOp,
       ...other
     }: ButtonProps,
     ref
   ) => {
     const theme = useTheme();
-    const intentStyle = React.useMemo(() => getIntent(variant, intent, theme), [
-      variant,
-      intent,
-      theme
-    ]);
+    const { bind, hover, active } = useTouchable({
+      onPress,
+      disabled,
+      behavior: other.to || other.href ? "link" : "button"
+    });
+
+    const intentStyle = React.useMemo(
+      () => getIntent(variant, intent, theme, hover, active),
+      [variant, intent, theme, hover, active]
+    );
 
     return (
       <Component
         ref={ref}
+        {...bind}
         css={[
           buttonReset,
           {
@@ -505,7 +525,10 @@ export const Button: React.RefForwardingComponent<
             height: getHeight(size),
             display: getDisplay(block),
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
+            ":focus:not([data-focus-visible-added])": {
+              outline: "none"
+            }
           },
           variants[variant],
           intentStyle,
@@ -607,13 +630,19 @@ Button.propTypes = {
   iconAfter: PropTypes.node
 };
 
-function getIntent(variant: ButtonVariant, intent: ButtonIntent, theme: Theme) {
+function getIntent(
+  variant: ButtonVariant,
+  intent: ButtonIntent,
+  theme: Theme,
+  hover: boolean,
+  active: boolean
+) {
   switch (variant) {
     case "default":
-      return getIntentStyles(theme, intent);
+      return getIntentStyles(theme, intent, hover, active);
     case "ghost":
-      return ghostIntents(theme, intent);
+      return ghostIntents(theme, intent, hover, active);
     case "outline":
-      return outlineIntents(theme, intent);
+      return outlineIntents(theme, intent, hover, active);
   }
 }
