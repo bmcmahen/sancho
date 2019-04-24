@@ -12,6 +12,7 @@ import { Theme } from "./Theme";
 import { useMeasure } from "./Hooks/use-measure";
 import { usePrevious } from "./Hooks/previous";
 import { useHideBody } from "./Hooks/hide-body";
+import { ResponderContext } from "./Hooks/use-responder-grant";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -150,6 +151,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
 }) => {
   const theme = useTheme();
   const [click, setClick] = React.useState();
+  const [disableChildGestures, setDisableChildGestures] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
   const ref = React.useRef<HTMLDivElement | null>(null);
   useFocusElement(ref, isOpen);
@@ -183,8 +185,23 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    * Handle gestures
    */
 
-  const bind = useGesture(
-    ({ down, delta, args, velocity, initial, xy, direction, first }) => {
+  const bind = useGesture({
+    onMove: () => {
+      setDisableChildGestures(true);
+    },
+    onUp: () => {
+      setDisableChildGestures(false);
+    },
+    onAction: ({
+      down,
+      delta,
+      args,
+      velocity,
+      initial,
+      xy,
+      direction,
+      first
+    }: any) => {
       const { width, height } = args[0];
       const isOpen = args[1];
       const position = args[2];
@@ -244,7 +261,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       });
       setOpacity({ immediate: down, opacity });
     }
-  );
+  });
 
   /**
    * Handle close / open non-gestured controls
@@ -276,6 +293,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       ...getDefaultPositions(isOpen, position, width, height),
       immediate: !!hasMounted
     });
+
     setOpacity({ opacity: isOpen ? 1 : 0 });
   }, [position, mounted, bounds, previousBounds, isOpen]);
 
@@ -386,7 +404,11 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                   height: "100%"
                 }}
               >
-                {children}
+                <ResponderContext.Provider
+                  value={{ disabled: disableChildGestures }}
+                >
+                  {children}
+                </ResponderContext.Provider>
               </div>
             </RemoveScroll>
           </RequestCloseContext.Provider>

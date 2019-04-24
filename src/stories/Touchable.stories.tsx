@@ -6,6 +6,7 @@ import { Tooltip } from "../Tooltip";
 import { storiesOf } from "@storybook/react";
 import { Touchable } from "../Touchable";
 import { useTouchable } from "../Hooks/use-touchable";
+import { Sheet } from "../Sheet";
 
 function TouchableHighlight() {
   const [pressCount, setPressCount] = React.useState(0);
@@ -30,6 +31,7 @@ function TouchableHighlight() {
         css={{
           border: hover ? "1px solid black" : "1px solid transparent",
           userSelect: "none",
+          outline: "none",
           background: active ? "#08e" : "transparent"
         }}
       >
@@ -39,9 +41,8 @@ function TouchableHighlight() {
   );
 }
 
-export const TouchableStories = storiesOf("Touchable", module).add(
-  "basic",
-  () => {
+export const TouchableStories = storiesOf("Touchable", module)
+  .add("basic", () => {
     return (
       <div css={{ padding: "100px" }}>
         <TouchableHighlight />
@@ -61,5 +62,24 @@ export const TouchableStories = storiesOf("Touchable", module).add(
         </p>
       </div>
     );
-  }
-);
+  })
+  .add("embedded responders", () => {
+    return <SheetExample />;
+  });
+
+function SheetExample() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <div>
+      <Button onClick={() => setOpen(true)}>open</Button>
+      <Sheet
+        position="left"
+        isOpen={open}
+        onRequestClose={() => setOpen(false)}
+      >
+        <TouchableHighlight />
+      </Sheet>
+    </div>
+  );
+}

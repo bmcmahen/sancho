@@ -7,6 +7,7 @@
 
 import * as React from "react";
 import { noOp } from "../misc/noop";
+import { useResponderGrant } from "./use-responder-grant";
 
 /**
  * useTouchable
@@ -14,11 +15,32 @@ import { noOp } from "../misc/noop";
  * useTouchable is a hook that attempt to emulate native touch behaviour for things
  * like list items, buttons, etc.
  *
- * const { bind, active } = useTouchable(onPress, disabled, {
+ * const { bind, active } = useTouchable({
+ *   onPress: () => console.log('hello'),
+ *   disabled: false,
  *   delay: 120
  * })
  *
- * TODO: keyboard support, hover, focus?
+ */
+
+/**
+ * Naive implementation of some mechanism that allows us
+ * to prevent children from being selected.
+ *
+ * You can imagine, for example, having a swipable sheet with
+ * buttons as children. When you swipe the sheet (like, actually have
+ * gesture movement) you should cancel the selection of any buttons.
+ *
+ * Parent can define a responder for children:
+ *
+ * <ResponderContext.Provider value={{
+ *   responderId: 1,
+ *   requestResponderGrant: (id) => {
+ *     return swipingLeftOrRight ? false : true
+ *   }
+ * }}>
+ *  {children}
+ * </ResponderContext.Provider>
  */
 
 const HIGHLIGHT_DELAY_MS = 130;
@@ -120,15 +142,27 @@ const defaultOptions: TouchableOptions = {
 };
 
 export function useTouchable(options: Partial<TouchableOptions> = {}) {
-  const { onPress, delay, behavior, disabled } = {
+  const { disabled: contextDisabled } = useResponderGrant();
+  const { onPress, delay, behavior, disabled: localDisabled } = {
     ...defaultOptions,
     ...options
   };
+  const disabled = contextDisabled || localDisabled;
   const ref = React.useRef<HTMLAnchorElement | HTMLDivElement | any>(null);
   const [state, dispatch] = React.useReducer(reducer, "NOT_RESPONDER");
   const delayTimer = React.useRef<number>();
   const bounds = React.useRef<ClientRect>();
   const [hover, setHover] = React.useState(false);
+  const [showHover, setShowHover] = React.useState(true);
+  const isTouch = React.useRef(false);
+
+  function emitPress(
+    e: React.TouchEvent | React.MouseEvent | React.KeyboardEvent
+  ) {
+    if (!disabled) {
+      onPress(e);
+    }
+  }
 
   function bindScroll() {
     window.addEventListener("scroll", onScroll, true);
@@ -160,6 +194,8 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
     } else {
       bindScroll();
     }
+
+    setShowHover(false);
   }
 
   function onTouchStart() {
@@ -173,18 +209,16 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
     }
 
     if (state === "RESPONDER_ACTIVE_IN" || state === "RESPONDER_PRESSED_IN") {
-      onPress(e);
+      emitPress(e);
     }
 
     dispatch("RESPONDER_RELEASE");
+    setShowHover(true);
     unbindScroll();
   }
 
   function onTouchEnd(e: React.TouchEvent) {
-    if (e.cancelable) {
-      e.preventDefault();
-    }
-
+    isTouch.current = true;
     onEnd(e);
   }
 
@@ -231,7 +265,9 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
    */
 
   function onMouseDown(e: React.MouseEvent) {
-    onStart(0);
+    if (!isTouch.current) {
+      onStart(0);
+    }
   }
 
   /**
@@ -239,7 +275,10 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
    */
 
   function onMouseUp(e: React.MouseEvent) {
-    onEnd(e);
+    if (!isTouch.current) {
+      onEnd(e);
+    }
+    isTouch.current = false;
   }
 
   /**
@@ -249,14 +288,21 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
    */
 
   function onMouseLeave(e: React.MouseEvent) {
+    if (hover) {
+      setHover(false);
+    }
+    if (!showHover) {
+      setShowHover(true);
+    }
     if (state !== "NOT_RESPONDER") {
       dispatch("RESPONDER_TERMINATED");
     }
-    setHover(false);
   }
 
   function onMouseEnter() {
-    setHover(true);
+    if (!hover) {
+      setHover(true);
+    }
   }
 
   /**
@@ -289,6 +335,7 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
   React.useEffect(() => {
     if (disabled && state !== "NOT_RESPONDER") {
       dispatch("RESPONDER_TERMINATED");
+      setShowHover(true);
     }
   }, [disabled]);
 
@@ -309,7 +356,7 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
     if (e.type === "keydown" && e.which === SPACE) {
       onStart(0);
     } else if (e.type === "keydown" && e.which === ENTER) {
-      onPress(e);
+      emitPress(e);
     } else if (e.type === "keyup" && e.which === SPACE) {
       onEnd(e);
     } else {
@@ -323,26 +370,24 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
     }
   }
 
-  const bind = disabled
-    ? {}
-    : {
-        onTouchStart,
-        onTouchEnd,
-        onTouchMove,
-        onMouseDown,
-        onMouseEnter,
-        onMouseLeave,
-        onMouseUp,
-        onKeyDown: onKey,
-        onKeyUp: onKey
-      };
+  const bind = {
+    onTouchStart,
+    onTouchEnd,
+    onTouchMove,
+    onMouseDown,
+    onMouseEnter,
+    onMouseLeave,
+    onMouseUp,
+    onKeyDown: onKey,
+    onKeyUp: onKey
+  };
 
   return {
     bind: {
       ref,
       ...bind
     },
-    active: state === "RESPONDER_PRESSED_IN",
-    hover
+    active: !disabled && state === "RESPONDER_PRESSED_IN",
+    hover: !disabled && hover && showHover
   };
 }
