@@ -16,6 +16,8 @@ import scrollIntoView from "scroll-into-view-if-needed";
 import { scrollTo } from "./misc/tween";
 import { noOp } from "./misc/noop";
 import { useMeasure } from "./Hooks/use-measure";
+import { useTouchable, OnPressFunction } from "./Hooks/use-touchable";
+import { mergeRefs } from "./Hooks/merge-refs";
 
 const hideScrollbar = css`
   ::-webkit-scrollbar {
@@ -134,7 +136,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
     left: slider.left + "px",
     right: slider.right + "px",
     immediate: previousSlider ? previousSlider.value === slider.value : false,
-    config: { mass: 1, tension: 185, friction: 26 } // default friction is 160: speed up our animation slightly
+    config: { mass: 1, tension: 185, friction: 23 } // default friction is 160: speed up our animation slightly
   });
 
   // Thanks to Ryan Florence for this code
@@ -153,6 +155,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
         const nextEnabledIndex =
           (enabledSelectedIndex + 1) % enabledIndexes.length;
         const nextIndex = enabledIndexes[nextEnabledIndex];
+        console.log("next index", nextIndex);
         if (typeof nextIndex === "number") {
           onChange(nextIndex);
         }
@@ -279,6 +282,7 @@ export interface TabProps
     React.HTMLAttributes<HTMLButtonElement> {
   /** The text content of the tab */
   children: React.ReactNode;
+  onPress?: OnPressFunction;
   /** The id of the tab to be shared with TabContent */
   id: string;
   component?: React.ReactType<any>;
@@ -302,13 +306,30 @@ export const Tab: React.RefForwardingComponent<
       id,
       component: Component = "button",
       badge,
-      onClick,
+      onPress = noOp,
+      disabled,
       children,
       ...other
     }: TabProps,
     forwarded: React.Ref<HTMLButtonElement>
   ) => {
     const theme = useTheme();
+    const isLink = other.to || other.href;
+    const {
+      bind: { ref: bindTouchableRef, ...bindTouchableCallbacks },
+      hover,
+      active
+    } = useTouchable({
+      onPress: e => {
+        onPress(e);
+        if (onParentSelect) {
+          onParentSelect();
+        }
+      },
+      disabled,
+      behavior: isLink ? "link" : "button"
+    });
+
     const dark = theme.colors.mode === "dark";
 
     function getTextColor(isDark: boolean | undefined) {
@@ -362,7 +383,7 @@ export const Tab: React.RefForwardingComponent<
 
     return (
       <Component
-        onTouchStart={noOp}
+        {...bindTouchableCallbacks}
         css={[
           buttonReset,
           {
@@ -372,6 +393,8 @@ export const Tab: React.RefForwardingComponent<
             },
             cursor: "pointer",
             color: getTextColor(dark),
+            transition: "background 0.35s ease",
+            background: "transparent",
             "& span": {
               transition: "color 0.25s cubic-bezier(0.35,0,0.25,1)"
             },
@@ -380,38 +403,35 @@ export const Tab: React.RefForwardingComponent<
               stroke: getTextColor(dark) + " !important"
             },
             ":focus": {
-              color: dark ? "white" : theme.colors.text.selected
+              outline: "none",
+              background: dark
+                ? alpha(theme.colors.background.tint2, 0.15)
+                : theme.colors.background.tint2
             },
-            ":active": {
-              color: dark
-                ? "rgba(255,255,255,0.4)"
-                : alpha(theme.colors.text.selected, 0.4),
-              "& svg": {
-                stroke:
-                  (dark
-                    ? "rgba(255,255,255,0.3)"
-                    : alpha(theme.colors.text.selected, 0.4)) + " !important"
-              }
+            ":focus:not([data-focus-visible-added])": {
+              outline: "none",
+              background: "transparent"
+            }
+          },
+
+          active && {
+            color: dark
+              ? "rgba(255,255,255,0.4)"
+              : alpha(theme.colors.text.selected, 0.4),
+            "& svg": {
+              stroke:
+                (dark
+                  ? "rgba(255,255,255,0.3)"
+                  : alpha(theme.colors.text.selected, 0.4)) + " !important"
             }
           }
         ]}
-        ref={(el: any) => {
-          // typescript got me like "what?"
-          if (forwarded) {
-            const f = forwarded as any;
-            f(el);
-          }
-          ref.current = el;
-        }}
+        ref={mergeRefs(ref, forwarded, bindTouchableRef)}
         role="tab"
         id={id + "-tab"}
         aria-controls={id}
         aria-selected={isActive}
         tabIndex={isActive ? 0 : -1}
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-          if (onClick) onClick(e);
-          if (onParentSelect) onParentSelect();
-        }}
         {...other}
       >
         {typeof children === "string" ? (

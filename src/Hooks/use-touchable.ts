@@ -119,7 +119,7 @@ const transitions = {
 } as TransitionsType;
 
 export type OnPressFunction = (
-  e: React.TouchEvent | React.MouseEvent | React.KeyboardEvent
+  e?: React.TouchEvent | React.MouseEvent | React.KeyboardEvent
 ) => void;
 
 function reducer(state: States, action: Events) {
