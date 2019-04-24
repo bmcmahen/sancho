@@ -10,6 +10,7 @@ import { Theme } from "./Theme";
 import { IconWrapper } from "./IconWrapper";
 import { useTouchable, OnPressFunction } from "./Hooks/use-touchable";
 import { noOp } from "./misc/noop";
+import { mergeRefs } from "./Hooks/merge-refs";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -58,6 +59,7 @@ export function focusShadow(first: string, second: string, third: string) {
 export const buttonReset = css({
   textDecoration: "none",
   background: "none",
+  whiteSpace: "nowrap",
   WebkitAppearance: "none",
   boxSizing: "border-box",
   textAlign: "center",
@@ -474,16 +476,21 @@ export const Button: React.RefForwardingComponent<
       onPress = noOp,
       ...other
     }: ButtonProps,
-    ref
+    ref: React.Ref<any>
   ) => {
     const theme = useTheme();
     const isLink = other.to || other.href;
-    const { bind, hover, active } = useTouchable({
+    const {
+      bind: { ref: bindTouchableRef, ...bindTouchableCallbacks },
+      hover,
+      active
+    } = useTouchable({
       onPress,
       disabled,
       behavior: isLink ? "link" : "button"
     });
 
+    // how necessary is this?
     const intentStyle = React.useMemo(
       () => getIntent(variant, intent, theme, hover, active),
       [variant, intent, theme, hover, active]
@@ -491,8 +498,8 @@ export const Button: React.RefForwardingComponent<
 
     return (
       <Component
-        ref={ref}
-        {...bind}
+        {...bindTouchableCallbacks}
+        ref={mergeRefs(ref, bindTouchableRef)}
         role={isLink ? "link" : "button"}
         tabIndex={0}
         css={[
