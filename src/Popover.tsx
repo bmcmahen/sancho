@@ -13,6 +13,8 @@ import { Sheet } from "./Sheet";
 import { useMedia } from "use-media";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
+import { OnPressFunction } from "./Hooks/use-touchable";
+import { mergeRefs } from "./Hooks/merge-refs";
 
 const AnimatedLayer = animated(Layer) as React.FunctionComponent<any>;
 
@@ -119,23 +121,20 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
     return React.cloneElement(child, {
-      onClick: (e: React.MouseEvent) => {
-        onTriggerClicked(e);
-        if (child.props.onClick) {
-          child.props.onClick(e);
+      onPress: (e: OnPressFunction) => {
+        onTriggerClicked();
+        if (child.props.onPress) {
+          child.props.onPress(e);
         }
       },
-      ref: (el: HTMLButtonElement | null) => {
-        ref(el);
-        triggerRef.current = el;
-      },
+      ref: mergeRefs(ref, triggerRef),
       role: "button",
       "aria-expanded": show,
       "aria-haspopup": true
     });
   }
 
-  function onTriggerClicked(e: React.MouseEvent) {
+  function onTriggerClicked() {
     return show ? close() : open();
   }
 
@@ -223,7 +222,7 @@ export const ResponsivePopover: React.FunctionComponent<PopoverProps> = (
   return (
     <React.Fragment>
       {React.cloneElement(props.children, {
-        onClick: () => {
+        onPress: () => {
           setIsOpen(true);
         }
       })}
