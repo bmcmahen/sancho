@@ -31,6 +31,7 @@ export const IconButton: React.RefForwardingComponent<
       size = "md" as ButtonSize,
       icon,
       children,
+      onPress,
       color = "currentColor",
       ...other
     }: IconButtonProps,
@@ -44,6 +45,7 @@ export const IconButton: React.RefForwardingComponent<
           padding: 0,
           width: getHeight(size)
         }}
+        onPress={onPress}
         {...other}
       >
         <VisuallyHidden>{label}</VisuallyHidden>

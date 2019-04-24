@@ -205,7 +205,6 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   return (
     <Component
       {...bindTouchableCallbacks}
-      onTouchStart={noOp}
       css={[
         {
           cursor: "pointer",

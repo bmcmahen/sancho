@@ -72,7 +72,7 @@ function SheetExample() {
 
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>open</Button>
+      <Button onPress={() => setOpen(true)}>open</Button>
       <Sheet
         position="left"
         isOpen={open}

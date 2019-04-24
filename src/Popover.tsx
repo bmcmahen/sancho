@@ -218,7 +218,7 @@ export const ResponsivePopover: React.FunctionComponent<PopoverProps> = (
 
   return (
     <React.Fragment>
-      {React.cloneElement(props.children, {
+      {React.cloneElement(React.Children.only(props.children), {
         onPress: () => {
           setIsOpen(true);
         }
@@ -226,7 +226,9 @@ export const ResponsivePopover: React.FunctionComponent<PopoverProps> = (
       <Sheet
         position="bottom"
         isOpen={isOpen}
-        onRequestClose={() => setIsOpen(false)}
+        onRequestClose={() => {
+          setIsOpen(false);
+        }}
       >
         {props.content}
       </Sheet>

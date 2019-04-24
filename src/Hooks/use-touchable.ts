@@ -123,7 +123,9 @@ export type OnPressFunction = (
 ) => void;
 
 function reducer(state: States, action: Events) {
-  return transitions[state][action];
+  const nextState = transitions[state][action];
+  console.log(`${state} -> ${action} -> ${nextState}`);
+  return nextState;
 }
 
 export interface TouchableOptions {
@@ -166,11 +168,11 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
   }
 
   function bindScroll() {
-    window.addEventListener("scroll", onScroll, true);
+    document.addEventListener("scroll", onScroll, true);
   }
 
   function unbindScroll() {
-    window.removeEventListener("scroll", onScroll, true);
+    document.removeEventListener("scroll", onScroll, true);
   }
 
   function afterDelay() {
@@ -199,7 +201,8 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
     setShowHover(false);
   }
 
-  function onTouchStart() {
+  function onTouchStart(e: React.TouchEvent) {
+    console.log("touch start");
     onStart();
   }
 
@@ -219,6 +222,9 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
   }
 
   function onTouchEnd(e: React.TouchEvent) {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     isTouch.current = true;
     onEnd(e);
   }

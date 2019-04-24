@@ -473,7 +473,7 @@ export const Button: React.RefForwardingComponent<
       iconBefore,
       iconAfter,
       children,
-      onPress = noOp,
+      onPress,
       ...other
     }: ButtonProps,
     ref: React.Ref<any>
