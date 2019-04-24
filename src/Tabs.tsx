@@ -16,8 +16,9 @@ import scrollIntoView from "scroll-into-view-if-needed";
 import { scrollTo } from "./misc/tween";
 import { noOp } from "./misc/noop";
 import { useMeasure } from "./Hooks/use-measure";
-import { useTouchable, OnPressFunction } from "./Hooks/use-touchable";
+import { OnPressFunction } from "./Hooks/use-touchable";
 import { mergeRefs } from "./Hooks/merge-refs";
+import { Touchable } from "./Touchable";
 
 const hideScrollbar = css`
   ::-webkit-scrollbar {
@@ -315,22 +316,11 @@ export const Tab: React.RefForwardingComponent<
   ) => {
     const theme = useTheme();
     const isLink = other.to || other.href;
-    const {
-      bind: { ref: bindTouchableRef, ...bindTouchableCallbacks },
-      hover,
-      active
-    } = useTouchable({
-      onPress: e => {
-        onPress(e);
-        if (onParentSelect) {
-          onParentSelect();
-        }
-      },
-      disabled,
-      behavior: isLink ? "link" : "button"
-    });
-
     const dark = theme.colors.mode === "dark";
+
+    /**
+     * Determine text color
+     */
 
     function getTextColor(isDark: boolean | undefined) {
       if (isDark) {
@@ -339,6 +329,10 @@ export const Tab: React.RefForwardingComponent<
 
       return isActive ? theme.colors.text.selected : theme.colors.text.muted;
     }
+
+    /**
+     * Determine badge colors
+     */
 
     function getBadgeColors(isDark: boolean | undefined) {
       let background = "white";
@@ -365,6 +359,10 @@ export const Tab: React.RefForwardingComponent<
     const mounted = React.useRef(false);
     const ref = React.useRef<any>(null);
 
+    /**
+     * Handle focus side-effects
+     */
+
     React.useEffect(() => {
       // don't autofocus if mounting
       if (!mounted.current) {
@@ -381,9 +379,20 @@ export const Tab: React.RefForwardingComponent<
       }
     }, [isActive]);
 
+    const onPressFn = React.useCallback(
+      e => {
+        onPress(e);
+        if (onParentSelect) {
+          onParentSelect();
+        }
+      },
+      [onParentSelect]
+    );
+
     return (
-      <Component
-        {...bindTouchableCallbacks}
+      <Touchable
+        component={Component}
+        onPress={onPressFn}
         css={[
           buttonReset,
           {
@@ -411,22 +420,21 @@ export const Tab: React.RefForwardingComponent<
             ":focus:not([data-focus-visible-added])": {
               outline: "none",
               background: "transparent"
-            }
-          },
-
-          active && {
-            color: dark
-              ? "rgba(255,255,255,0.4)"
-              : alpha(theme.colors.text.selected, 0.4),
-            "& svg": {
-              stroke:
-                (dark
-                  ? "rgba(255,255,255,0.3)"
-                  : alpha(theme.colors.text.selected, 0.4)) + " !important"
+            },
+            "&.Touchable--active": {
+              color: dark
+                ? "rgba(255,255,255,0.4)"
+                : alpha(theme.colors.text.selected, 0.4),
+              "& svg": {
+                stroke:
+                  (dark
+                    ? "rgba(255,255,255,0.3)"
+                    : alpha(theme.colors.text.selected, 0.4)) + " !important"
+              }
             }
           }
         ]}
-        ref={mergeRefs(ref, forwarded, bindTouchableRef)}
+        ref={mergeRefs(ref, forwarded)}
         role="tab"
         id={id + "-tab"}
         aria-controls={id}
@@ -462,7 +470,7 @@ export const Tab: React.RefForwardingComponent<
             )}
           </div>
         )}
-      </Component>
+      </Touchable>
     );
   }
 );

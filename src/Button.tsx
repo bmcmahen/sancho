@@ -9,7 +9,7 @@ import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
 import { IconWrapper } from "./IconWrapper";
 import { useTouchable, OnPressFunction } from "./Hooks/use-touchable";
-import { noOp } from "./misc/noop";
+import cx from "classnames";
 import { mergeRefs } from "./Hooks/merge-refs";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -80,7 +80,7 @@ export const buttonReset = css({
 const getIntentStyles = (
   theme: Theme,
   intent: ButtonIntent,
-  hover: boolean,
+  _hover: boolean,
   active: boolean
 ) => {
   const dark = theme.colors.mode === "dark";
@@ -426,6 +426,8 @@ const iconSpaceForSize = (theme: Theme) => ({
 export type ButtonVariant = keyof typeof variants;
 
 export interface ButtonStyleProps {
+  /** Use onPress instead of onClick to handle both touch and click events */
+  onPress?: OnPressFunction;
   /** Controls the basic button style. */
   variant?: ButtonVariant;
   /** Controls the colour of the button. */
@@ -434,14 +436,22 @@ export interface ButtonStyleProps {
   block?: boolean;
   /** The size of the button. */
   size?: ButtonSize;
+  /** Show a loading indicator */
   loading?: boolean;
   disabled?: boolean;
   /** The name of the icon to appear to the left of the button text*/
   iconBefore?: React.ReactNode;
   /** The name of the icon to appear to the right of the button text */
   iconAfter?: React.ReactNode;
-  /** Use onPress instead of onClick to handle both touch and click events */
-  onPress?: OnPressFunction;
+  /** By default, a button element will only highlight after a short
+   * delay to prevent unintended highlights when scrolling. You can set this to
+   * 0 if the element is not in a scrollable container */
+  pressDelay?: number;
+  /**
+   * By default, a touchable element will have an expanded press area of 20px
+   * on touch devices. This will only effect touch devices.
+   */
+  pressExpandPx?: number;
 }
 
 export interface ButtonProps
@@ -467,12 +477,15 @@ export const Button: React.RefForwardingComponent<
       block,
       variant = "default",
       intent = "none",
+      className = "",
       disabled = false,
       loading = false,
       component: Component = "div",
       iconBefore,
       iconAfter,
       children,
+      pressDelay,
+      pressExpandPx,
       onPress,
       ...other
     }: ButtonProps,
@@ -486,6 +499,8 @@ export const Button: React.RefForwardingComponent<
       active
     } = useTouchable({
       onPress,
+      delay: pressDelay,
+      pressExpandPx,
       disabled,
       behavior: isLink ? "link" : "button"
     });
@@ -500,6 +515,10 @@ export const Button: React.RefForwardingComponent<
       <Component
         {...bindTouchableCallbacks}
         ref={mergeRefs(ref, bindTouchableRef)}
+        className={cx("Button", "Touchable", className, {
+          "Touchable--hover": hover,
+          "Touchable--active": active
+        })}
         role={isLink ? "link" : "button"}
         tabIndex={0}
         css={[

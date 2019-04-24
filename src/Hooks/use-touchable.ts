@@ -25,6 +25,8 @@ import { isHoverEnabled } from "./hover-enabled";
  */
 
 /**
+ * Proposal:
+ *
  * Naive implementation of some mechanism that allows us
  * to prevent children from being selected.
  *
@@ -44,7 +46,7 @@ import { isHoverEnabled } from "./hover-enabled";
  * </ResponderContext.Provider>
  */
 
-const HIGHLIGHT_DELAY_MS = 130;
+const HIGHLIGHT_DELAY_MS = 100;
 const PRESS_EXPAND_PX = 20;
 
 type States =
@@ -168,11 +170,13 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
   }
 
   function bindScroll() {
-    document.addEventListener("scroll", onScroll, true);
+    console.log("bind scroll");
+    document.addEventListener("scroll", onScroll, false);
   }
 
   function unbindScroll() {
-    document.removeEventListener("scroll", onScroll, true);
+    console.log("unbind scroll");
+    document.removeEventListener("scroll", onScroll, false);
   }
 
   function afterDelay() {
@@ -318,6 +322,7 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
    */
 
   function onScroll() {
+    console.log("on scroll");
     unbindScroll();
     dispatch("RESPONDER_TERMINATED");
   }

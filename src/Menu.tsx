@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
@@ -8,6 +8,7 @@ import { useTheme } from "./Theme/Providers";
 import { noOp } from "./misc/noop";
 import { useTouchable, OnPressFunction } from "./Hooks/use-touchable";
 import { mergeRefs } from "./Hooks/merge-refs";
+import cx from "classnames";
 
 const KeyCodes = {
   ArrowUp: 38,
@@ -165,6 +166,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   contentBefore,
   contentAfter,
   onPress = noOp,
+  className = "",
   component: Component = "div",
   role = "menuitem",
   children,
@@ -204,6 +206,10 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
 
   return (
     <Component
+      className={cx("MenuItem", "Touchable", className, {
+        "Touchable--hover": hover,
+        "Touchable--active": active
+      })}
       {...bindTouchableCallbacks}
       css={[
         {

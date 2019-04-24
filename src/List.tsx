@@ -6,7 +6,8 @@ import PropTypes from "prop-types";
 import { MenuLabel } from "./Menu";
 import { useTheme } from "./Theme/Providers";
 import { noOp } from "./misc/noop";
-import { useTouchable, OnPressFunction } from "./Hooks/use-touchable";
+import { OnPressFunction } from "./Hooks/use-touchable";
+import { Touchable } from "./Touchable";
 
 export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
   /** A series of ListItem elements */
@@ -63,14 +64,12 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
       }
     : {};
   const theme = useTheme();
-  const { bind, hover, active } = useTouchable({
-    onPress
-  });
 
   return (
-    <Component
+    <Touchable
+      component={Component}
       className="ListItem"
-      {...bind}
+      onPress={onPress}
       css={[
         {
           display: "block",
@@ -95,16 +94,14 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
           },
           ":focus:not([data-focus-visible-added])": {
             boxShadow: "none"
-          }
-        },
-        interactive &&
-          hover && {
+          },
+          "&.Touchable--hover": {
             background: theme.colors.background.tint1
           },
-        interactive &&
-          active && {
+          "&.Touchable--active": {
             background: theme.colors.background.tint2
           }
+        }
       ]}
       {...interactiveProps}
       {...other}
@@ -156,7 +153,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
           </div>
         )}
       </div>
-    </Component>
+    </Touchable>
   );
 };
 

@@ -20,3 +20,11 @@ export const ResponderContext = React.createContext(defaultValue);
 export function useResponderGrant() {
   return React.useContext(ResponderContext);
 }
+
+// onTerminationRequest: () => boolean; // something else wants to become the
+// responder. Should this view release the responder?
+
+// onTerminate: () => the responder has been taken by another view.
+
+// onStartShouldSet => This view wants to become responder.
+// onMoveShouldSet
