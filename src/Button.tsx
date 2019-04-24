@@ -84,6 +84,10 @@ const getIntentStyles = (
   const dark = theme.colors.mode === "dark";
   const { palette } = theme.colors;
 
+  const activeShadow = dark
+    ? insetShadow(alpha(palette.gray.dark, 1), alpha(palette.gray.dark, 0.9))
+    : insetShadow(alpha(palette.gray.dark, 0.5), alpha(palette.gray.dark, 0.5));
+
   switch (intent) {
     case "none": {
       if (dark)
@@ -93,7 +97,7 @@ const getIntentStyles = (
             color: getTextColor(theme.colors.intent.none.base, theme),
             background: gradient(
               theme.colors.intent.none.base,
-              lighten(theme.colors.intent.none.base, 0.8)
+              lighten(theme.colors.intent.none.base, 0.6)
             ),
             boxShadow: insetShadow(
               alpha(theme.colors.palette.gray.dark, 0.9),
@@ -103,8 +107,8 @@ const getIntentStyles = (
               background: "none",
               backgroundColor: theme.colors.intent.none.base,
               boxShadow: insetShadow(
-                alpha(palette.gray.base, 0.3),
-                alpha(palette.gray.base, 0.15)
+                alpha(palette.gray.base, 1),
+                alpha(palette.gray.base, 0.9)
               )
             }
           },
@@ -112,8 +116,8 @@ const getIntentStyles = (
             background: "none",
             backgroundColor: theme.colors.intent.none.base,
             boxShadow: insetShadow(
-              alpha(palette.gray.base, 0.3),
-              alpha(palette.gray.base, 0.15)
+              alpha(theme.colors.palette.gray.dark, 1),
+              alpha(theme.colors.palette.gray.dark, 0.9)
             )
           }
         ]);
@@ -168,10 +172,7 @@ const getIntentStyles = (
               ),
 
           '&[aria-expanded="true"]': {
-            boxShadow: insetShadow(
-              alpha(palette.gray.dark, 0.1),
-              alpha(palette.gray.dark, 0.1)
-            ),
+            boxShadow: activeShadow,
             backgroundImage: gradient(
               theme.colors.intent.primary.dark,
               theme.colors.intent.primary.base
@@ -179,10 +180,7 @@ const getIntentStyles = (
           }
         },
         active && {
-          boxShadow: insetShadow(
-            alpha(palette.gray.dark, 0.1),
-            alpha(palette.gray.dark, 0.1)
-          ),
+          boxShadow: activeShadow,
           backgroundImage: gradient(
             theme.colors.intent.primary.dark,
             theme.colors.intent.primary.base
@@ -211,10 +209,7 @@ const getIntentStyles = (
               ),
 
           '&[aria-expanded="true"]': {
-            boxShadow: insetShadow(
-              alpha(palette.gray.dark, 0.1),
-              alpha(palette.gray.dark, 0.1)
-            ),
+            boxShadow: activeShadow,
             backgroundImage: gradient(
               color(theme.colors.intent.success.base)
                 .darken(0.2)
@@ -224,10 +219,7 @@ const getIntentStyles = (
           }
         },
         active && {
-          boxShadow: insetShadow(
-            alpha(palette.gray.dark, 0.1),
-            alpha(palette.gray.dark, 0.1)
-          ),
+          boxShadow: activeShadow,
           backgroundImage: gradient(
             color(theme.colors.intent.success.base)
               .darken(0.2)
@@ -258,10 +250,7 @@ const getIntentStyles = (
               ),
 
           '&[aria-expanded="true"]': {
-            boxShadow: insetShadow(
-              alpha(palette.gray.dark, 0.1),
-              alpha(palette.gray.dark, 0.1)
-            ),
+            boxShadow: activeShadow,
             backgroundImage: gradient(
               color(theme.colors.intent.danger.base)
                 .darken(0.2)
@@ -271,10 +260,7 @@ const getIntentStyles = (
           }
         },
         active && {
-          boxShadow: insetShadow(
-            alpha(palette.gray.dark, 0.1),
-            alpha(palette.gray.dark, 0.1)
-          ),
+          boxShadow: activeShadow,
           backgroundImage: gradient(
             color(theme.colors.intent.danger.base)
               .darken(0.2)
@@ -305,10 +291,7 @@ const getIntentStyles = (
               ),
 
           '&[aria-expanded="true"]': {
-            boxShadow: insetShadow(
-              alpha(palette.gray.dark, 0.1),
-              alpha(palette.gray.dark, 0.1)
-            ),
+            boxShadow: activeShadow,
             backgroundImage: gradient(
               color(theme.colors.intent.warning.base)
                 .darken(0.2)
@@ -318,10 +301,7 @@ const getIntentStyles = (
           }
         },
         active && {
-          boxShadow: insetShadow(
-            alpha(palette.gray.dark, 0.1),
-            alpha(palette.gray.dark, 0.1)
-          ),
+          boxShadow: activeShadow,
           backgroundImage: gradient(
             color(theme.colors.intent.warning.base)
               .darken(0.2)
@@ -513,7 +493,7 @@ export const Button: React.RefForwardingComponent<
       <Component
         ref={ref}
         {...bind}
-        role={isLink ? "button" : "link"}
+        role={isLink ? "link" : "button"}
         tabIndex={0}
         css={[
           buttonReset,
