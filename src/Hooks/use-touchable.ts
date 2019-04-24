@@ -8,6 +8,7 @@
 import * as React from "react";
 import { noOp } from "../misc/noop";
 import { useResponderGrant } from "./use-responder-grant";
+import { isHoverEnabled } from "./hover-enabled";
 
 /**
  * useTouchable
@@ -388,6 +389,6 @@ export function useTouchable(options: Partial<TouchableOptions> = {}) {
       ...bind
     },
     active: !disabled && state === "RESPONDER_PRESSED_IN",
-    hover: !disabled && hover && showHover
+    hover: isHoverEnabled() && !disabled && hover && showHover
   };
 }
