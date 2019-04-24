@@ -1,4 +1,4 @@
-import { defaultColors } from "./colors";
+import { defaultColors, alpha } from "./colors";
 import { breakpoints, generateMediaQueries } from "./breakpoints";
 export { generateColorsFromScales } from "./colors";
 
@@ -86,7 +86,8 @@ export const defaultTheme = {
   shadows: defaultColors.modes.light.shadows,
   lineHeights,
   fontWeights,
-  iconSizes
+  iconSizes,
+  outline: `3px auto ${alpha(defaultColors.colors.palette.blue.base, 0.8)}`
 };
 
 export type Theme = typeof defaultTheme;

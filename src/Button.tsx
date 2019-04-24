@@ -487,7 +487,7 @@ export const Button: React.RefForwardingComponent<
       intent = "none",
       disabled = false,
       loading = false,
-      component: Component = "button",
+      component: Component = "div",
       iconBefore,
       iconAfter,
       children,
@@ -497,10 +497,11 @@ export const Button: React.RefForwardingComponent<
     ref
   ) => {
     const theme = useTheme();
+    const isLink = other.to || other.href;
     const { bind, hover, active } = useTouchable({
       onPress,
       disabled,
-      behavior: other.to || other.href ? "link" : "button"
+      behavior: isLink ? "link" : "button"
     });
 
     const intentStyle = React.useMemo(
@@ -512,6 +513,8 @@ export const Button: React.RefForwardingComponent<
       <Component
         ref={ref}
         {...bind}
+        role={isLink ? "button" : "link"}
+        tabIndex={0}
         css={[
           buttonReset,
           {
@@ -526,6 +529,9 @@ export const Button: React.RefForwardingComponent<
             display: getDisplay(block),
             alignItems: "center",
             justifyContent: "center",
+            ":focus": {
+              outline: theme.outline
+            },
             ":focus:not([data-focus-visible-added])": {
               outline: "none"
             }
@@ -533,7 +539,7 @@ export const Button: React.RefForwardingComponent<
           variants[variant],
           intentStyle,
           disabled && {
-            opacity: 0.7,
+            opacity: 0.6,
             pointerEvents: "none"
           },
           loading && {
