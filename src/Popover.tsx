@@ -144,10 +144,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
         <AnimatedLayer
           role="dialog"
           elevation="md"
-          ref={(el: any) => {
-            ref(el);
-            popoverRef.current = el;
-          }}
+          ref={mergeRefs(ref, popoverRef)}
           style={{
             ...style,
             opacity: animation.opacity
