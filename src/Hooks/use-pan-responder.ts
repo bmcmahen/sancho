@@ -27,35 +27,24 @@ interface Options {
   onTerminate?: (state: StateType) => void;
 }
 
-const initialXY = {
-  xy: [0, 0],
-  velocity: 0,
-  vxvy: [0, 0],
-  distance: 0,
-  direction: [0, 0]
-}; // xy coordinates
-
-const initialCommon = {
+const initialState = {
   event: undefined,
+  args: undefined,
+  temp: undefined,
+  target: undefined,
+  time: Date.now(),
+  xy: [0, 0],
   delta: [0, 0],
   initial: [0, 0],
   previous: [0, 0],
-  transform: undefined,
+  direction: [0, 0],
   local: [0, 0],
   lastLocal: [0, 0],
+  velocity: 0,
+  distance: 0,
+  down: false,
   first: true,
-  last: false,
-  active: true,
-  time: undefined,
-  temp: undefined,
-  cancel: noOp,
-  canceled: false,
-  args: undefined
-};
-
-const initialState = {
-  ...initialCommon,
-  ...initialXY
+  shiftKey: false
 };
 
 type StateType = typeof initialState;
@@ -79,13 +68,23 @@ export function usePanResponder(options: Options = {}, uid?: string) {
     }
 
     const el = ref.current!;
-    el.addEventListener("touchstart", handleStart);
-    el.addEventListener("touchend", handleEnd);
-    el.addEventListener("touchmove", handleMove);
-    console.log("added event listeners", id.current);
-  }, []);
 
-  function claimTouch() {
+    el.addEventListener("touchstart", handleStart, false);
+    el.addEventListener("touchend", handleEnd);
+    el.addEventListener("touchmove", handleMove, false);
+    el.addEventListener("touchstart", handleStartCapture, true);
+    el.addEventListener("touchmove", handleMoveCapture, true);
+
+    return () => {
+      el.removeEventListener("touchstart", handleStart, false);
+      el.removeEventListener("touchend", handleEnd);
+      el.removeEventListener("touchmove", handleMove, false);
+      el.removeEventListener("touchstart", handleStartCapture, true);
+      el.removeEventListener("touchmove", handleMoveCapture, true);
+    };
+  }, [options]);
+
+  function claimTouch(e: Event) {
     if (grantedTouch) {
       grantedTouch.onTerminate();
     }
@@ -98,16 +97,15 @@ export function usePanResponder(options: Options = {}, uid?: string) {
 
     state.current = {
       ...state.current,
-      last: false,
       first: true
     };
 
-    onGrant();
+    onGrant(e);
   }
 
-  function handleGrant() {
+  function handleGrant(e: Event) {
     // if a touch is already active we won't register
-    console.log("already granted?", grantedTouch);
+    // console.log("already granted?", grantedTouch);
     if (grantedTouch) {
       return;
     }
@@ -120,11 +118,17 @@ export function usePanResponder(options: Options = {}, uid?: string) {
 
     state.current = {
       ...state.current,
-      last: false,
       first: true
     };
 
-    onGrant();
+    onGrant(e);
+  }
+
+  function handleStartCapture(e: Event) {
+    const granted = onStartShouldSetCapture();
+    if (granted) {
+      handleGrant(e);
+    }
   }
 
   function handleStart(e: Event) {
@@ -135,10 +139,8 @@ export function usePanResponder(options: Options = {}, uid?: string) {
     const granted = onStartShouldSet();
 
     if (granted) {
-      handleGrant();
+      handleGrant(e);
     }
-
-    console.log("initial state", id.current, state.current.active);
   }
 
   function isGrantedTouch() {
@@ -155,7 +157,6 @@ export function usePanResponder(options: Options = {}, uid?: string) {
 
     state.current = {
       ...state.current,
-      last: true,
       first: false
     };
 
@@ -163,22 +164,37 @@ export function usePanResponder(options: Options = {}, uid?: string) {
       e.preventDefault();
     }
 
-    onRelease();
+    onRelease(e);
+  }
+
+  function handleMoveCapture(e: Event) {
+    if (!isGrantedTouch()) {
+      const grant = onMoveShouldSetCapture();
+      if (grant) claimTouch(e);
+      else return;
+    }
+
+    onMove(e);
   }
 
   function handleMove(e: Event) {
-    console.log("move state", id.current, state, state.current.active);
     if (!isGrantedTouch()) {
       const grant = onMoveShouldSet();
-      console.log("should focus?", id.current, grant);
+      // console.log("should focus?", id.current, grant);
       if (grant) {
-        claimTouch();
+        claimTouch(e);
       } else {
         return;
       }
     }
 
-    onMove();
+    onMove(e);
+  }
+
+  function onStartShouldSetCapture() {
+    return options.onStartShouldSetCapture
+      ? options.onStartShouldSetCapture(state.current)
+      : false;
   }
 
   function onStartShouldSet() {
@@ -193,13 +209,60 @@ export function usePanResponder(options: Options = {}, uid?: string) {
       : false;
   }
 
-  function onGrant() {
+  function onMoveShouldSetCapture() {
+    return options.onMoveShouldSetCapture
+      ? options.onMoveShouldSetCapture(state.current)
+      : false;
+  }
+
+  function onGrant(e: any) {
+    const { target, pageX, pageY } = e.touches ? e.touches[0] : e;
+    const s = state.current;
+    state.current = {
+      ...state.current,
+      event: e,
+      target,
+      lastLocal: s.lastLocal || initialState.lastLocal,
+      xy: [pageX, pageY],
+      initial: [pageX, pageY],
+      previous: [pageX, pageY],
+      down: true,
+      time: Date.now()
+    };
     if (options.onGrant) {
       options.onGrant(state.current);
     }
   }
 
-  function onMove() {
+  function onMove(e: any) {
+    const { pageX, pageY } = e.touches ? e.touches[0] : e;
+    const s = state.current;
+    const time = Date.now();
+    const x_dist = pageX - s.xy[0];
+    const y_dist = pageY - s.xy[1];
+    const delta_x = pageX - s.initial[0];
+    const delta_y = pageY - s.initial[0];
+    const distance = Math.sqrt(delta_x * delta_x + delta_y * delta_y);
+    const len = Math.sqrt(x_dist + x_dist + y_dist * y_dist);
+    const scaler = 1 / (len || 1);
+
+    state.current = {
+      ...state.current,
+      event: e,
+      time,
+      xy: [pageX, pageY],
+      delta: [delta_x, delta_y],
+      local: [
+        s.lastLocal[0] + pageX - s.initial[0],
+        s.lastLocal[1] + pageY - s.initial[1]
+      ],
+      velocity: len / (time - s.time),
+      distance,
+      direction: [x_dist * scaler, y_dist * scaler],
+      previous: s.xy,
+      first: false
+    };
+
     if (options.onMove) {
       options.onMove(state.current);
     }
@@ -211,22 +274,27 @@ export function usePanResponder(options: Options = {}, uid?: string) {
       : true;
   }
 
-  function onRelease() {
+  function onRelease(e: any) {
+    const s = state.current;
     state.current = {
       ...state.current,
-      active: false
+      event: e,
+      lastLocal: s.local
     };
+
     if (options.onRelease) {
       options.onRelease(state.current);
     }
   }
 
   function onTerminate() {
-    console.log("onTerminate", id.current);
+    const s = state.current;
     state.current = {
       ...state.current,
-      active: false
+      event: undefined,
+      lastLocal: s.local
     };
+
     if (options.onTerminate) {
       options.onTerminate(state.current);
     }

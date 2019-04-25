@@ -12,7 +12,6 @@ import { Theme } from "./Theme";
 import { useMeasure } from "./Hooks/use-measure";
 import { usePrevious } from "./Hooks/previous";
 import { useHideBody } from "./Hooks/hide-body";
-import { ResponderContext } from "./Hooks/use-responder-grant";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -404,11 +403,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
                   height: "100%"
                 }}
               >
-                <ResponderContext.Provider
-                  value={{ disabled: disableChildGestures }}
-                >
-                  {children}
-                </ResponderContext.Provider>
+                {children}
               </div>
             </RemoveScroll>
           </RequestCloseContext.Provider>

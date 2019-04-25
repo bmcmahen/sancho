@@ -7,7 +7,6 @@
 
 import * as React from "react";
 import { noOp } from "../misc/noop";
-import { useResponderGrant } from "./use-responder-grant";
 import { isHoverEnabled } from "./hover-enabled";
 
 /**
@@ -147,12 +146,11 @@ const defaultOptions: TouchableOptions = {
 };
 
 export function useTouchable(options: Partial<TouchableOptions> = {}) {
-  const { disabled: contextDisabled } = useResponderGrant();
   const { onPress, delay, behavior, disabled: localDisabled } = {
     ...defaultOptions,
     ...options
   };
-  const disabled = contextDisabled || localDisabled;
+  const disabled = localDisabled;
   const ref = React.useRef<HTMLAnchorElement | HTMLDivElement | any>(null);
   const [state, dispatch] = React.useReducer(reducer, "NOT_RESPONDER");
   const delayTimer = React.useRef<number>();

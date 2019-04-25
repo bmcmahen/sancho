@@ -36,12 +36,15 @@ function Parent() {
     {
       onStartShouldSet: () => true,
       onGrant: state => {
-        console.log(state);
+        console.log("GRANT PARENT");
         setActive(true);
       },
       onRelease: () => setActive(false),
       onMoveShouldSet: () => true,
-      onTerminate: () => setActive(false)
+      onTerminate: () => setActive(false),
+      onMove: state => {
+        console.log("MOVE", state);
+      }
     },
     "parent"
   );
