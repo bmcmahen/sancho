@@ -484,7 +484,7 @@ export const Button: React.RefForwardingComponent<
       iconBefore,
       iconAfter,
       children,
-      pressDelay,
+      pressDelay = 0,
       pressExpandPx,
       onPress,
       ...other

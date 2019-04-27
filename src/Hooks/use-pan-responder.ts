@@ -1,19 +1,32 @@
-import { noOp } from "../misc/noop";
 import * as React from "react";
 
-// https://facebook.github.io/react-native/docs/gesture-responder-system.html
-
-// const bind = usePanResponder({
-//   onStartShouldSetCapture: () => true,
-//   onStartShouldSet: () => true,
-//   onMoveShouldSetCapture: () => true,
-//   onMoveShouldSet: () => true,
-//   onGrant: highlight,
-//   onMove: updatePosition,
-//   onTerminationRequest: () => true,
-//   onRelease: () => unhighlight(),
-//   onTerminate: () => unhighlight(),
-// })
+/**
+ * The pan responder takes its inspiration from react-native's
+ * pan-responder, and react-spring. Learn more about react-native's
+ * system here:
+ *
+ * https://facebook.github.io/react-native/docs/gesture-responder-system.html
+ *
+ * Basic usage:
+ *
+ * const bind = usePanResponder({
+ *  onStartShouldSet: () => true,
+ *  onGrant: () => highlight(),
+ *  onMove: () => updatePosition(),
+ *  onRelease: () => unhighlight(),
+ *  onTerminate: () => unhighlight()
+ * })
+ *
+ * The main benefit this provides is the ability to reconcile
+ * multiple gestures, and give priority to one.
+ *
+ * You can use a combination of useStartShouldSet, useStartShouldSetCapture,
+ * onMoveShouldSetCapture, and onMoveShouldSet to dictate
+ * which gets priority.
+ *
+ * Typically you'd want to avid capture since it's generally
+ * preferable to have child elements gain touch access.
+ */
 
 interface Options {
   onStartShouldSetCapture?: (state: StateType) => boolean;
@@ -29,8 +42,6 @@ interface Options {
 
 const initialState = {
   event: undefined,
-  args: undefined,
-  temp: undefined,
   target: undefined,
   time: Date.now(),
   xy: [0, 0],
@@ -43,8 +54,7 @@ const initialState = {
   velocity: 0,
   distance: 0,
   down: false,
-  first: true,
-  shiftKey: false
+  first: true
 };
 
 type StateType = typeof initialState;
@@ -62,6 +72,10 @@ export function usePanResponder(options: Options = {}, uid?: string) {
   const state = React.useRef(initialState);
   const id = React.useRef(uid || Math.random());
 
+  // potentially do?:
+  // const optionsRef = React.useRef(options)
+  // useEffect(() => { optionsRef.options = options }, [options])
+
   React.useEffect(() => {
     if (!ref.current) {
       throw new Error("Unable to find current ref");
@@ -69,6 +83,7 @@ export function usePanResponder(options: Options = {}, uid?: string) {
 
     const el = ref.current!;
 
+    // todo: mouse events
     el.addEventListener("touchstart", handleStart, false);
     el.addEventListener("touchend", handleEnd);
     el.addEventListener("touchmove", handleMove, false);
@@ -82,30 +97,19 @@ export function usePanResponder(options: Options = {}, uid?: string) {
       el.removeEventListener("touchstart", handleStartCapture, true);
       el.removeEventListener("touchmove", handleMoveCapture, true);
     };
-  }, [options]);
+  }, []);
 
   function claimTouch(e: Event) {
     if (grantedTouch) {
       grantedTouch.onTerminate();
+      grantedTouch = null;
     }
 
-    grantedTouch = {
-      id: id.current,
-      onTerminate,
-      onTerminationRequest
-    };
-
-    state.current = {
-      ...state.current,
-      first: true
-    };
-
-    onGrant(e);
+    attemptGrant(e);
   }
 
-  function handleGrant(e: Event) {
+  function attemptGrant(e: Event) {
     // if a touch is already active we won't register
-    // console.log("already granted?", grantedTouch);
     if (grantedTouch) {
       return;
     }
@@ -127,7 +131,7 @@ export function usePanResponder(options: Options = {}, uid?: string) {
   function handleStartCapture(e: Event) {
     const granted = onStartShouldSetCapture();
     if (granted) {
-      handleGrant(e);
+      attemptGrant(e);
     }
   }
 
@@ -139,7 +143,7 @@ export function usePanResponder(options: Options = {}, uid?: string) {
     const granted = onStartShouldSet();
 
     if (granted) {
-      handleGrant(e);
+      attemptGrant(e);
     }
   }
 
@@ -241,10 +245,11 @@ export function usePanResponder(options: Options = {}, uid?: string) {
     const x_dist = pageX - s.xy[0];
     const y_dist = pageY - s.xy[1];
     const delta_x = pageX - s.initial[0];
-    const delta_y = pageY - s.initial[0];
+    const delta_y = pageY - s.initial[1];
     const distance = Math.sqrt(delta_x * delta_x + delta_y * delta_y);
-    const len = Math.sqrt(x_dist + x_dist + y_dist * y_dist);
+    const len = Math.sqrt(x_dist * x_dist + y_dist * y_dist);
     const scaler = 1 / (len || 1);
+    const velocity = len / (time - s.time);
 
     state.current = {
       ...state.current,
@@ -256,7 +261,7 @@ export function usePanResponder(options: Options = {}, uid?: string) {
         s.lastLocal[0] + pageX - s.initial[0],
         s.lastLocal[1] + pageY - s.initial[1]
       ],
-      velocity: len / (time - s.time),
+      velocity: time - s.time === 0 ? s.velocity : velocity,
       distance,
       direction: [x_dist * scaler, y_dist * scaler],
       previous: s.xy,
