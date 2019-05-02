@@ -11,6 +11,7 @@ import { IconWrapper } from "./IconWrapper";
 import { useTouchable, OnPressFunction } from "touchable-hook";
 import cx from "classnames";
 import { mergeRefs } from "./Hooks/merge-refs";
+import { safeBind } from "./Hooks/compose-bind";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -493,11 +494,7 @@ export const Button: React.RefForwardingComponent<
   ) => {
     const theme = useTheme();
     const isLink = other.to || other.href;
-    const {
-      bind: { ref: bindTouchableRef, ...bindTouchableCallbacks },
-      hover,
-      active
-    } = useTouchable({
+    const { bind, hover, active } = useTouchable({
       onPress,
       delay: pressDelay,
       pressExpandPx,
@@ -513,8 +510,6 @@ export const Button: React.RefForwardingComponent<
 
     return (
       <Component
-        {...bindTouchableCallbacks}
-        ref={mergeRefs(ref, bindTouchableRef)}
         className={cx("Button", "Touchable", className, {
           "Touchable--hover": hover,
           "Touchable--active": active
@@ -561,7 +556,7 @@ export const Button: React.RefForwardingComponent<
             paddingRight: "0.65rem"
           }
         ]}
-        {...other}
+        {...safeBind(bind, { ref }, other)}
       >
         {loading && (
           <div
