@@ -183,7 +183,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    */
 
   const onAction = React.useCallback(
-    (down: boolean, { initial, delta, velocity, direction, xy }: StateType) => {
+    (down: boolean, { delta, velocity, direction }: StateType) => {
       const { width, height } = bounds;
 
       const { x, y } = getFinalPosition({
@@ -194,7 +194,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         down,
         velocity,
         direction,
-
         onRequestClose,
         position,
         startVelocity
@@ -205,7 +204,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         delta,
         width,
         down,
-
         height,
         isOpen,
         position
@@ -220,16 +218,24 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         }
       });
 
-      setOpacity({ immediate: down, opacity });
+      setOpacity({ opacity });
     },
-    [setSpring]
+    [setSpring, isOpen]
   );
 
   const { bind } = usePanResponder({
-    onStartShouldSet: () => false,
+    onStartShouldSet: () => {
+      initialDirection.current = null;
+      return false;
+    },
     onMoveShouldSet: ({ initial, xy }) => {
-      // only set if we are moving in the relevant direction
-      const gestureDirection = getDirection(initial, xy);
+      // we lock in the direction when it's first provided
+      const gestureDirection =
+        initialDirection.current || getDirection(initial, xy);
+
+      if (!initialDirection.current) {
+        initialDirection.current = gestureDirection;
+      }
 
       if (
         gestureDirection === "horizontal" &&
@@ -279,8 +285,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
     startVelocity.current = null;
 
     const { x, y } = getDefaultPositions(isOpen, position, width, height);
-
-    console.log(isOpen);
 
     setSpring({
       config: {
@@ -352,7 +356,9 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         }}
       >
         <animated.div
-          style={{ opacity }}
+          style={{
+            opacity
+          }}
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}

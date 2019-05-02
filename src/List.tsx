@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { MenuLabel } from "./Menu";
 import { useTheme } from "./Theme/Providers";
 import { noOp } from "./misc/noop";
-import { OnPressFunction } from "./Hooks/use-touchable";
+import { OnPressFunction } from "touchable-hook";
 import { Touchable } from "./Touchable";
 
 export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {

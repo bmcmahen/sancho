@@ -13,7 +13,7 @@ import { Sheet } from "./Sheet";
 import { useMedia } from "use-media";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
-import { OnPressFunction } from "./Hooks/use-touchable";
+import { OnPressFunction } from "touchable-hook";
 import { mergeRefs } from "./Hooks/merge-refs";
 
 const AnimatedLayer = animated(Layer) as React.FunctionComponent<any>;

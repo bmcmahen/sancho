@@ -5,7 +5,7 @@ import { Button } from "../Button";
 import { Tooltip } from "../Tooltip";
 import { storiesOf } from "@storybook/react";
 import { Touchable } from "../Touchable";
-import { useTouchable } from "../Hooks/use-touchable";
+import { useTouchable } from "touchable-hook";
 import { Sheet } from "../Sheet";
 
 function TouchableHighlight() {

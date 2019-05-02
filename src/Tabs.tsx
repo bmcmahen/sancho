@@ -16,7 +16,7 @@ import scrollIntoView from "scroll-into-view-if-needed";
 import { scrollTo } from "./misc/tween";
 import { noOp } from "./misc/noop";
 import { useMeasure } from "./Hooks/use-measure";
-import { OnPressFunction } from "./Hooks/use-touchable";
+import { OnPressFunction } from "touchable-hook";
 import { mergeRefs } from "./Hooks/merge-refs";
 import { Touchable } from "./Touchable";
 

@@ -8,7 +8,7 @@ import { Spinner } from "./Spinner";
 import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
 import { IconWrapper } from "./IconWrapper";
-import { useTouchable, OnPressFunction } from "./Hooks/use-touchable";
+import { useTouchable, OnPressFunction } from "touchable-hook";
 import cx from "classnames";
 import { mergeRefs } from "./Hooks/merge-refs";
 
