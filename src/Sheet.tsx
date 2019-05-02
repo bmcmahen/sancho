@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import { animated, useSpring, interpolate } from "react-spring";
+import { animated, useSpring } from "react-spring";
 import { useFocusElement } from "./Hooks/focus";
 import { Portal } from "./Portal";
-import { useGesture } from "react-with-gesture";
 import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
 import { useTheme } from "./Theme/Providers";
@@ -12,6 +11,7 @@ import { Theme } from "./Theme";
 import { useMeasure } from "./Hooks/use-measure";
 import { usePrevious } from "./Hooks/previous";
 import { useHideBody } from "./Hooks/hide-body";
+import { usePanResponder, StateType } from "pan-responder-hook";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -150,24 +150,22 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
 }) => {
   const theme = useTheme();
   const [click, setClick] = React.useState();
-  const [disableChildGestures, setDisableChildGestures] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
   const ref = React.useRef<HTMLDivElement | null>(null);
   useFocusElement(ref, isOpen);
   const { bounds } = useMeasure(ref);
   const previousBounds = usePrevious(bounds);
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
-  const initialDirection = React.useRef(null);
+  const initialDirection = React.useRef<"vertical" | "horizontal" | null>(null);
   const { bind: bindHideBody } = useHideBody(isOpen);
 
   const startVelocity = React.useRef(null);
 
   // A spring which animates the sheet position
-  const [{ x, y }, setSpring] = useSpring(() => {
+  const [{ xy }, setSpring] = useSpring(() => {
     const { x, y } = getDefaultPositions(isOpen, position);
     return {
-      x,
-      y,
+      xy: [x, y],
       config: animationConfig
     };
   });
@@ -184,54 +182,19 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    * Handle gestures
    */
 
-  const bind = useGesture({
-    onMove: () => {
-      setDisableChildGestures(true);
-    },
-    onUp: () => {
-      setDisableChildGestures(false);
-    },
-    onAction: ({
-      down,
-      delta,
-      args,
-      velocity,
-      initial,
-      xy,
-      direction,
-      first
-    }: any) => {
-      const { width, height } = args[0];
-      const isOpen = args[1];
-      const position = args[2];
-      const initialDirection = args[3] as React.MutableRefObject<any>;
-      const startVelocity = args[4] as React.MutableRefObject<number | null>;
+  const onAction = React.useCallback(
+    (down: boolean, { initial, delta, velocity, direction, xy }: StateType) => {
+      const { width, height } = bounds;
 
-      // We determine the direction of the gesture within the first
-      // two drag events. This "locks in" the gesture direction for the
-      // remainder of the swipe.
-      if (first) {
-        initialDirection.current = null;
-        return;
-      }
-
-      const gestureDirection =
-        initialDirection.current || getDirection(initial, xy);
-
-      if (!initialDirection.current) {
-        initialDirection.current = gestureDirection;
-      }
-
-      // determine the sheet position
       const { x, y } = getFinalPosition({
         delta,
         width,
         height,
-        down,
         isOpen,
+        down,
         velocity,
         direction,
-        gestureDirection,
+
         onRequestClose,
         position,
         startVelocity
@@ -241,24 +204,55 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       const opacity = getOpacity({
         delta,
         width,
-        gestureDirection,
         down,
+
         height,
         isOpen,
         position
       });
 
-      // set spring values
       setSpring({
-        x,
-        y,
+        xy: [x, y],
         immediate: down,
         config: {
           ...animationConfig,
           velocity: startVelocity.current || 0
         }
       });
+
       setOpacity({ immediate: down, opacity });
+    },
+    [setSpring]
+  );
+
+  const { bind } = usePanResponder({
+    onStartShouldSet: () => false,
+    onMoveShouldSet: ({ initial, xy }) => {
+      // only set if we are moving in the relevant direction
+      const gestureDirection = getDirection(initial, xy);
+
+      if (
+        gestureDirection === "horizontal" &&
+        (position === "left" || position === "right")
+      ) {
+        return true;
+      } else if (
+        gestureDirection === "vertical" &&
+        (position === "top" || position === "bottom")
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+    onRelease: state => {
+      onAction(false, state);
+    },
+    onTerminate: state => {
+      onAction(false, state);
+    },
+    onMove: state => {
+      onAction(true, state);
     }
   });
 
@@ -284,12 +278,16 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
     const velocity = startVelocity.current;
     startVelocity.current = null;
 
+    const { x, y } = getDefaultPositions(isOpen, position, width, height);
+
+    console.log(isOpen);
+
     setSpring({
       config: {
         ...animationConfig,
         velocity: velocity || 0
       },
-      ...getDefaultPositions(isOpen, position, width, height),
+      xy: [x, y],
       immediate: !!hasMounted
     });
 
@@ -318,6 +316,10 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
     }
   }
 
+  const interpolate = (x: number, y: number) => {
+    return `translate3d(${taper(x, position)}px, ${taper(y, position)}px, 0)`;
+  };
+
   return (
     <Portal>
       {/** 
@@ -327,7 +329,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
       <div
         {...bindHideBody}
         aria-hidden={!isOpen}
-        {...bind(bounds, isOpen, position, initialDirection, startVelocity)}
+        {...bind}
         onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === "Escape") {
             e.stopPropagation();
@@ -375,12 +377,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
             e.stopPropagation();
           }}
           style={{
-            transform: interpolate([x, y], (x, y) => {
-              return `
-                translateX(${taper(x, position)}px) 
-                translateY(${taper(y, position)}px)
-              `;
-            })
+            transform: xy.interpolate(interpolate as any)
           }}
           css={[
             {
@@ -429,9 +426,8 @@ Sheet.propTypes = {
 interface GetPositionOptions {
   delta: [number, number];
   width: number;
-  height: number;
   down: boolean;
-  gestureDirection: null | "horizontal" | "vertical";
+  height: number;
   onRequestClose: () => void;
   isOpen: boolean;
   velocity: number;
@@ -444,9 +440,8 @@ function getFinalPosition({
   delta,
   width,
   height,
-  down,
   isOpen,
-  gestureDirection,
+  down,
   velocity,
   direction,
   onRequestClose,
@@ -462,10 +457,6 @@ function getFinalPosition({
 
   switch (position) {
     case "left": {
-      if (gestureDirection !== "horizontal") {
-        return { x: 0, y: 0 };
-      }
-
       if (down) {
         return { x: dx, y: 0 };
       }
@@ -490,10 +481,6 @@ function getFinalPosition({
     }
 
     case "top": {
-      if (gestureDirection !== "vertical") {
-        return { x: 0, y: 0 };
-      }
-
       if (down) {
         return { y: dy, x: 0 };
       }
@@ -514,10 +501,6 @@ function getFinalPosition({
     }
 
     case "right": {
-      if (gestureDirection !== "horizontal") {
-        return { x: 0, y: 0 };
-      }
-
       if (down) {
         return { x: dx, y: 0 };
       }
@@ -538,10 +521,6 @@ function getFinalPosition({
     }
 
     case "bottom": {
-      if (gestureDirection !== "vertical") {
-        return { x: 0, y: 0 };
-      }
-
       if (down) {
         return { y: dy, x: 0 };
       }
@@ -574,15 +553,13 @@ interface GetOpacityOptions {
   down: boolean;
   isOpen: boolean;
   position: SheetPositions;
-  gestureDirection: null | "horizontal" | "vertical";
 }
 
 function getOpacity({
   delta,
-  gestureDirection,
   width,
-  height,
   down,
+  height,
   isOpen,
   position
 }: GetOpacityOptions) {
@@ -598,32 +575,18 @@ function getOpacity({
 
   switch (position) {
     case "left": {
-      if (gestureDirection !== "horizontal") {
-        return 1;
-      }
-
       return dx < 0 ? 1 - Math.abs(dx) / width : 1;
     }
 
     case "top": {
-      if (gestureDirection !== "vertical") {
-        return 1;
-      }
       return dy < 0 ? 1 - Math.abs(dy) / height : 1;
     }
 
     case "right": {
-      if (gestureDirection !== "horizontal") {
-        return 1;
-      }
-
       return dx > 0 ? 1 - Math.abs(dx) / width : 1;
     }
 
     case "bottom": {
-      if (gestureDirection !== "vertical") {
-        return 1;
-      }
       return dy > 0 ? 1 - Math.abs(dy) / height : 1;
     }
   }

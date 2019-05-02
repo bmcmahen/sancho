@@ -9229,6 +9229,24 @@ palx@^1.0.3:
     chroma-js "^1.2.1"
     micro "^6.1.0"
 
+pan-responder-hook@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/pan-responder-hook/-/pan-responder-hook-1.0.6.tgz#0923d87bc449513ad23056e060301f2bd65377fc"
+  integrity sha512-TmtgHbRAv2tu7hW47RnBxPTTty4EP4X9+3u7AlMqh+URpN8l58Qsg9YoaE3sUilkkDGSlAbylvjgs6qlsVj6KA==
+  dependencies:
+    "@types/react" "^16.8.10"
+    "@types/react-dom" "^16.8.3"
+    tslib "^1.9.3"
+
+pan-responder-hook@^1.0.3:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/pan-responder-hook/-/pan-responder-hook-1.0.4.tgz#2b8e2f4ac5f41cf9c5bf89ed822b16e4a81ae036"
+  integrity sha512-z8lAjRtS3sIo6ZrZodGQf10VcN0Ha+xLUrHdvnPSr8Ea5m9R2gVzNJgGpuID07kJdFjjWkUZO8ANN0TVv9pVpw==
+  dependencies:
+    "@types/react" "^16.8.10"
+    "@types/react-dom" "^16.8.3"
+    tslib "^1.9.3"
+
 parallel-transform@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/parallel-transform/-/parallel-transform-1.1.0.tgz#d410f065b05da23081fcd10f28854c29bda33b06"
@@ -10848,7 +10866,7 @@ react-scripts@2.1.5:
   optionalDependencies:
     fsevents "1.2.4"
 
-react-spring@^8.0.18:
+react-spring@^8.0.18, react-spring@^8.0.19:
   version "8.0.19"
   resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.19.tgz#62f4f396b4b73fa402838200a1c80374338cb12e"
   integrity sha512-DjrwjXqqVEitj6e6GqdW5dUp1BoVyeFQhEcXvPfoQxwyIVSJ9smNt8CNjSvoQqRujVllE7XKaJRWSZO/ewd1/A==
@@ -12664,6 +12682,16 @@ topo@2.x.x:
   integrity sha1-zVYVdSU5BXwNwEkaYhw7xvvh0YI=
   dependencies:
     hoek "4.x.x"
+
+touchable-hook@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/touchable-hook/-/touchable-hook-1.0.0.tgz#f07f0641c49f996c66b3c814d834b4ce5fa5334e"
+  integrity sha512-+hWwZBcskTpCG6uMNlXmMnAtuqYCRBCjqF+hJShvQrSGQ3ukgsi/WWPTOoW2xWpaiWsh9FtLuhsTbPDzUHSQRw==
+  dependencies:
+    "@types/react" "^16.8.10"
+    "@types/react-dom" "^16.8.3"
+    pan-responder-hook "^1.0.3"
+    tslib "^1.9.3"
 
 tough-cookie@>=2.3.3:
   version "3.0.1"

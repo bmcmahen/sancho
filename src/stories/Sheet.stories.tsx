@@ -8,6 +8,19 @@ import { MenuList, MenuItem, MenuDivider } from "../Menu";
 import { ToggleDarkMode } from "./ToggleDarkMode";
 
 export const SheetExamples = storiesOf("Sheet", module)
+  .add("basic example", () => {
+    return (
+      <Example position={"left"} label={"hi"}>
+        <div>
+          Helloooo world!
+          <button>one</button>
+          <button>two</button>
+          <button>tjree</button>
+          <button>four</button>
+        </div>
+      </Example>
+    );
+  })
   .add("Different positions", () => {
     const positions: SheetPositions[] = ["top", "left", "right", "bottom"];
 
@@ -129,7 +142,7 @@ const Example = ({
         minHeight: "150vh"
       }}
     >
-      <Button onClick={() => setShow(true)}>{label}</Button>
+      <Button onPress={() => setShow(true)}>{label}</Button>
       <Sheet
         onRequestClose={() => setShow(false)}
         isOpen={show}
