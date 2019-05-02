@@ -12,6 +12,7 @@ import { useMeasure } from "./Hooks/use-measure";
 import { usePrevious } from "./Hooks/previous";
 import { useHideBody } from "./Hooks/hide-body";
 import { usePanResponder, StateType } from "pan-responder-hook";
+import { useTouchable } from "touchable-hook";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -149,7 +150,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   ...props
 }) => {
   const theme = useTheme();
-  const [click, setClick] = React.useState();
   const [mounted, setMounted] = React.useState(false);
   const ref = React.useRef<HTMLDivElement | null>(null);
   useFocusElement(ref, isOpen);
@@ -158,6 +158,12 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
   const initialDirection = React.useRef<"vertical" | "horizontal" | null>(null);
   const { bind: bindHideBody } = useHideBody(isOpen);
+
+  // our overlay pan responder
+  const { bind: bindTouchable } = usePanResponder({
+    onStartShouldSet: () => true,
+    onRelease: () => onRequestClose()
+  });
 
   const startVelocity = React.useRef(null);
 
@@ -298,28 +304,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
     setOpacity({ opacity: isOpen ? 1 : 0 });
   }, [position, mounted, bounds, previousBounds, isOpen]);
 
-  /**
-   * Emulate a click event to disambiguate it
-   * from gesture events. Not the ideal solution.
-   */
-
-  function onMouseDown(e: React.MouseEvent | React.TouchEvent) {
-    e.preventDefault();
-    setClick(true);
-  }
-
-  function onMouseMove(e: React.MouseEvent | React.TouchEvent) {
-    e.preventDefault();
-    setClick(false);
-  }
-
-  function onMouseUp(e: React.MouseEvent | React.TouchEvent) {
-    e.preventDefault();
-    if (click && closeOnClick) {
-      onRequestClose();
-    }
-  }
-
   const interpolate = (x: number, y: number) => {
     return `translate3d(${taper(x, position)}px, ${taper(y, position)}px, 0)`;
   };
@@ -359,12 +343,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           style={{
             opacity
           }}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onTouchStart={onMouseDown}
-          onTouchMove={onMouseMove}
-          onTouchEnd={onMouseUp}
+          {...bindTouchable}
           css={{
             position: "absolute",
             top: 0,
