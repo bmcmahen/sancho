@@ -9229,19 +9229,10 @@ palx@^1.0.3:
     chroma-js "^1.2.1"
     micro "^6.1.0"
 
-pan-responder-hook@1.0.6:
+pan-responder-hook@1.0.6, pan-responder-hook@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/pan-responder-hook/-/pan-responder-hook-1.0.6.tgz#0923d87bc449513ad23056e060301f2bd65377fc"
   integrity sha512-TmtgHbRAv2tu7hW47RnBxPTTty4EP4X9+3u7AlMqh+URpN8l58Qsg9YoaE3sUilkkDGSlAbylvjgs6qlsVj6KA==
-  dependencies:
-    "@types/react" "^16.8.10"
-    "@types/react-dom" "^16.8.3"
-    tslib "^1.9.3"
-
-pan-responder-hook@^1.0.3:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/pan-responder-hook/-/pan-responder-hook-1.0.4.tgz#2b8e2f4ac5f41cf9c5bf89ed822b16e4a81ae036"
-  integrity sha512-z8lAjRtS3sIo6ZrZodGQf10VcN0Ha+xLUrHdvnPSr8Ea5m9R2gVzNJgGpuID07kJdFjjWkUZO8ANN0TVv9pVpw==
   dependencies:
     "@types/react" "^16.8.10"
     "@types/react-dom" "^16.8.3"
@@ -12683,14 +12674,14 @@ topo@2.x.x:
   dependencies:
     hoek "4.x.x"
 
-touchable-hook@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/touchable-hook/-/touchable-hook-1.0.0.tgz#f07f0641c49f996c66b3c814d834b4ce5fa5334e"
-  integrity sha512-+hWwZBcskTpCG6uMNlXmMnAtuqYCRBCjqF+hJShvQrSGQ3ukgsi/WWPTOoW2xWpaiWsh9FtLuhsTbPDzUHSQRw==
+touchable-hook@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/touchable-hook/-/touchable-hook-1.0.1.tgz#b31d40630ae8a89203fc94488740c090bfbb1eb9"
+  integrity sha512-zBxq54tov/+02ttMZ9yr9xFr19I1jlwo6zjwf3/Lg0nrov2sw6LwKkT9NdqHDimbfF+pOR2bnoannsJ+LiGSCA==
   dependencies:
     "@types/react" "^16.8.10"
     "@types/react-dom" "^16.8.3"
-    pan-responder-hook "^1.0.3"
+    pan-responder-hook "^1.0.6"
     tslib "^1.9.3"
 
 tough-cookie@>=2.3.3:
