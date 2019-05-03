@@ -8,11 +8,10 @@ import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
 import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
-import { useMeasure } from "./Hooks/use-measure";
+import { useMeasure, Bounds } from "./Hooks/use-measure";
 import { usePrevious } from "./Hooks/previous";
 import { useHideBody } from "./Hooks/hide-body";
 import { usePanResponder, StateType } from "pan-responder-hook";
-import { useTouchable } from "touchable-hook";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -158,14 +157,13 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
   const initialDirection = React.useRef<"vertical" | "horizontal" | null>(null);
   const { bind: bindHideBody } = useHideBody(isOpen);
+  const startVelocity = React.useRef<number | null>(null);
 
   // our overlay pan responder
   const { bind: bindTouchable } = usePanResponder({
     onStartShouldSet: () => true,
     onRelease: () => onRequestClose()
   });
-
-  const startVelocity = React.useRef(null);
 
   // A spring which animates the sheet position
   const [{ xy }, setSpring] = useSpring(() => {
@@ -188,105 +186,82 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    * Handle gestures
    */
 
-  const onAction = React.useCallback(
-    (down: boolean, { delta, velocity, direction }: StateType) => {
-      const { width, height } = bounds;
+  function onEnd(state: StateType) {
+    const close = shouldCloseOnRelease(state, bounds, position);
 
-      const { x, y } = getFinalPosition({
-        delta,
-        width,
-        height,
-        isOpen,
-        down,
-        velocity,
-        direction,
-        onRequestClose,
-        position,
-        startVelocity
-      });
+    if (close) {
+      onRequestClose();
+      return;
+    }
 
-      // determine the overlay opacity
-      const opacity = getOpacity({
-        delta,
-        width,
-        down,
-        height,
-        isOpen,
-        position
-      });
+    animateToPosition();
+  }
 
-      setSpring({
-        xy: [x, y],
-        immediate: down,
-        config: {
-          ...animationConfig,
-          velocity: startVelocity.current || 0
+  const { bind } = usePanResponder(
+    {
+      onStartShouldSet: () => {
+        initialDirection.current = null;
+        return false;
+      },
+      onMoveShouldSet: ({ initial, xy }) => {
+        // we lock in the direction when it's first provided
+        const gestureDirection =
+          initialDirection.current || getDirection(initial, xy);
+
+        if (!initialDirection.current) {
+          initialDirection.current = gestureDirection;
         }
-      });
 
-      setOpacity({ opacity });
+        if (
+          gestureDirection === "horizontal" &&
+          (position === "left" || position === "right")
+        ) {
+          return true;
+        } else if (
+          gestureDirection === "vertical" &&
+          (position === "top" || position === "bottom")
+        ) {
+          return true;
+        }
+
+        return false;
+      },
+      onRelease: (state: StateType) => {
+        startVelocity.current = state.velocity;
+        onEnd(state);
+      },
+      onTerminate: onEnd,
+      onMove: state => {
+        const { x, y } = getDragCoordinates(state, position);
+        const opacity = getDragOpacity(state, bounds, position);
+
+        setSpring({
+          xy: [x, y],
+          immediate: true,
+          config: {
+            ...animationConfig,
+            velocity: startVelocity.current || 0
+          }
+        });
+
+        setOpacity({ opacity });
+      }
     },
-    [setSpring, isOpen]
+    {
+      enableMouse: false
+    }
   );
 
-  const { bind } = usePanResponder({
-    onStartShouldSet: () => {
-      initialDirection.current = null;
-      return false;
-    },
-    onMoveShouldSet: ({ initial, xy }) => {
-      // we lock in the direction when it's first provided
-      const gestureDirection =
-        initialDirection.current || getDirection(initial, xy);
-
-      if (!initialDirection.current) {
-        initialDirection.current = gestureDirection;
-      }
-
-      if (
-        gestureDirection === "horizontal" &&
-        (position === "left" || position === "right")
-      ) {
-        return true;
-      } else if (
-        gestureDirection === "vertical" &&
-        (position === "top" || position === "bottom")
-      ) {
-        return true;
-      }
-
-      return false;
-    },
-    onRelease: state => {
-      onAction(false, state);
-    },
-    onTerminate: state => {
-      onAction(false, state);
-    },
-    onMove: state => {
-      onAction(true, state);
-    }
-  });
-
   /**
-   * Handle close / open non-gestured controls
+   * Animate the sheet to open / close position
+   * depending on position and state.
+   * @param immediate
    */
 
-  React.useEffect(() => {
-    const { width, height } = bounds;
-
-    // a bit of a hack to prevent the sheet from being
-    // displayed at the wrong position before properly
-    // measuring it.
-    const hasMounted =
-      previousBounds && previousBounds.width === 0 && width !== 0;
-
-    if (hasMounted && !mounted) {
-      setMounted(true);
-    }
-
+  function animateToPosition(immediate = false) {
     // when the user makes the gesture to close we start
     // our animation with their last velocity
+    const { width, height } = bounds;
     const velocity = startVelocity.current;
     startVelocity.current = null;
 
@@ -298,11 +273,35 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         velocity: velocity || 0
       },
       xy: [x, y],
-      immediate: !!hasMounted
+      immediate
     });
 
     setOpacity({ opacity: isOpen ? 1 : 0 });
+  }
+
+  /**
+   * Handle close / open non-gestured controls
+   */
+
+  React.useEffect(() => {
+    const { width } = bounds;
+
+    // a bit of a hack to prevent the sheet from being
+    // displayed at the wrong position before properly
+    // measuring it.
+    const hasMounted =
+      previousBounds && previousBounds.width === 0 && width !== 0;
+
+    if (hasMounted && !mounted) {
+      setMounted(true);
+    }
+
+    animateToPosition(!mounted);
   }, [position, mounted, bounds, previousBounds, isOpen]);
+
+  /**
+   * Convert our positions to translate3d
+   */
 
   const interpolate = (x: number, y: number) => {
     return `translate3d(${taper(x, position)}px, ${taper(y, position)}px, 0)`;
@@ -310,10 +309,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
 
   return (
     <Portal>
-      {/** 
-        Ideally we would reuse the Overlay here, but the behaviour is 
-        unique enough that (for now) it's easier just copying it
-      */}
       <div
         {...bindHideBody}
         aria-hidden={!isOpen}
@@ -340,9 +335,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         }}
       >
         <animated.div
-          style={{
-            opacity
-          }}
+          style={{ opacity }}
           {...bindTouchable}
           css={{
             position: "absolute",
@@ -408,121 +401,77 @@ Sheet.propTypes = {
  * its position and the gesture input
  */
 
-interface GetPositionOptions {
-  delta: [number, number];
-  width: number;
-  down: boolean;
-  height: number;
-  onRequestClose: () => void;
-  isOpen: boolean;
-  velocity: number;
-  direction: [number, number];
-  position: SheetPositions;
-  startVelocity: React.MutableRefObject<number | null>;
+function getDragCoordinates({ delta }: StateType, position: SheetPositions) {
+  const [dx, dy] = delta;
+  switch (position) {
+    case "left":
+    case "right":
+      return { x: dx, y: 0 };
+    case "top":
+    case "bottom":
+      return { y: dy, x: 0 };
+  }
 }
 
-function getFinalPosition({
-  delta,
-  width,
-  height,
-  isOpen,
-  down,
-  velocity,
-  direction,
-  onRequestClose,
-  position,
-  startVelocity
-}: GetPositionOptions) {
+/**
+ * Determine if the sheet should close on
+ * release given a position.
+ */
+
+function shouldCloseOnRelease(
+  { delta, velocity, direction }: StateType,
+  { width, height }: Bounds,
+  position: SheetPositions
+) {
   const [dx, dy] = delta;
-
-  function close() {
-    startVelocity.current = velocity;
-    onRequestClose();
-  }
-
   switch (position) {
     case "left": {
-      if (down) {
-        return { x: dx, y: 0 };
-      }
-
-      // calculate if our direction is _primarily_ horizontal,
-      // and only update our x coordinate if so. This means that
-      // you can vertically scroll without any obvious
-      // gesture response
+      // quick swipe
       if (velocity > 0.2 && direction[0] < 0) {
-        close();
-        return { x: dx, y: 0 };
+        return true;
       }
 
-      if (dx < 0 || !isOpen) {
-        if (Math.abs(dx) > width / 2) {
-          close();
-          return { x: dx, y: 0 };
-        }
+      if (dx < 0 && Math.abs(dx) > width / 2) {
+        return true;
       }
 
-      return { x: 0, y: 0 };
+      return false;
     }
 
     case "top": {
-      if (down) {
-        return { y: dy, x: 0 };
-      }
-
       if (velocity > 0.2 && direction[1] <= -1) {
-        close();
-        return { y: dy, x: 0 };
+        return true;
       }
 
-      if (dy < 0 || !isOpen) {
-        if (Math.abs(dy) > height / 2) {
-          close();
-          return { y: dy, x: 0 };
-        }
+      if (dy < 0 && Math.abs(dy) > height / 2) {
+        return true;
       }
 
-      return { x: 0, y: 0 };
+      return false;
     }
 
     case "right": {
-      if (down) {
-        return { x: dx, y: 0 };
-      }
-
       if (velocity > 0.2 && direction[0] >= 1) {
-        close();
-        return { x: dx, y: 0 };
+        return true;
       }
 
-      if (dx > 0 || !isOpen) {
-        if (Math.abs(dx) > width / 2) {
-          close();
-          return { x: dx, y: 0 };
-        }
+      if (dx > 0 && Math.abs(dx) > width / 2) {
+        return true;
       }
 
-      return { x: 0, y: 0 };
+      return false;
     }
 
     case "bottom": {
-      if (down) {
-        return { y: dy, x: 0 };
-      }
-
       if (velocity > 0.2 && direction[1] > 0) {
-        close();
-        return { y: dy, x: 0 };
+        return true;
       }
 
-      if (dy > 0 || !isOpen) {
-        if (Math.abs(dy) > height / 2) {
-          close();
-          return { y: dy, x: 0 };
-        }
+      if (dy > 0 && Math.abs(dy) > height / 2) {
+        return true;
       }
 
-      return { x: 0, y: 0 };
+      return false;
     }
   }
 }
@@ -531,31 +480,11 @@ function getFinalPosition({
  * Determine the overlay opacity
  */
 
-interface GetOpacityOptions {
-  delta: [number, number];
-  width: number;
-  height: number;
-  down: boolean;
-  isOpen: boolean;
-  position: SheetPositions;
-}
-
-function getOpacity({
-  delta,
-  width,
-  down,
-  height,
-  isOpen,
-  position
-}: GetOpacityOptions) {
-  if (!isOpen) {
-    return 0;
-  }
-
-  if (isOpen && !down) {
-    return 1;
-  }
-
+function getDragOpacity(
+  { delta }: StateType,
+  { width, height }: Bounds,
+  position: SheetPositions
+) {
   const [dx, dy] = delta;
 
   switch (position) {
