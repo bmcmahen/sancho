@@ -159,12 +159,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const { bind: bindHideBody } = useHideBody(isOpen);
   const startVelocity = React.useRef<number | null>(null);
 
-  // our overlay pan responder
-  const { bind: bindTouchable } = usePanResponder({
-    onStartShouldSet: () => true,
-    onRelease: () => onRequestClose()
-  });
-
   // A spring which animates the sheet position
   const [{ xy }, setSpring] = useSpring(() => {
     const { x, y } = getDefaultPositions(isOpen, position);
@@ -186,6 +180,12 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    * Handle gestures
    */
 
+  // our overlay pan responder
+  const { bind: bindTouchable } = usePanResponder({
+    onStartShouldSet: () => true,
+    onRelease: () => onRequestClose()
+  });
+
   function onEnd(state: StateType) {
     const close = shouldCloseOnRelease(state, bounds, position);
 
@@ -197,6 +197,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
     animateToPosition();
   }
 
+  // our main sheet pan responder
   const { bind } = usePanResponder(
     {
       onStartShouldSet: () => {
@@ -238,10 +239,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         setSpring({
           xy: [x, y],
           immediate: true,
-          config: {
-            ...animationConfig,
-            velocity: startVelocity.current || 0
-          }
+          config: animationConfig
         });
 
         setOpacity({ opacity });
@@ -338,7 +336,9 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           style={{ opacity }}
           {...bindTouchable}
           css={{
+            touchAction: "none",
             position: "absolute",
+            willChange: "opacity",
             top: 0,
             left: 0,
             pointerEvents: isOpen ? "auto" : "none",
@@ -359,6 +359,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           }}
           css={[
             {
+              willChange: "transform",
               visibility: mounted ? "visible" : "hidden",
               outline: "none",
               zIndex: theme.zIndices.modal,
@@ -424,6 +425,7 @@ function shouldCloseOnRelease(
   position: SheetPositions
 ) {
   const [dx, dy] = delta;
+
   switch (position) {
     case "left": {
       // quick swipe

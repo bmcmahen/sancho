@@ -9238,6 +9238,15 @@ pan-responder-hook@^1.1.0:
     "@types/react-dom" "^16.8.3"
     tslib "^1.9.3"
 
+pan-responder-hook@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/pan-responder-hook/-/pan-responder-hook-1.1.1.tgz#bfc6621cec496c0a4f6ddf1addf5d3d7743162e0"
+  integrity sha512-vHUIhk4v0yMQ+1t6elNTLhIrO1/lJgxLwBMXMwtuVF38F+OsPAg6z6FRM4eAaCWxJJQ2K14JZOdl2BFRTgA0jw==
+  dependencies:
+    "@types/react" "^16.8.10"
+    "@types/react-dom" "^16.8.3"
+    tslib "^1.9.3"
+
 parallel-transform@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/parallel-transform/-/parallel-transform-1.1.0.tgz#d410f065b05da23081fcd10f28854c29bda33b06"

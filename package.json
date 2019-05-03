@@ -24,7 +24,7 @@
     "focus-trap": "5",
     "is-mobile": "^2.0.0",
     "open-color": "^1.6.3",
-    "pan-responder-hook": "^1.1.0",
+    "pan-responder-hook": "^1.1.1",
     "popper.js": "^1.14.7",
     "prop-types": "^15.7.2",
     "react-popper": "^1.3.3",
