@@ -1,3 +1,4 @@
+// Components
 export * from "./Alert";
 export * from "./Avatar";
 export * from "./Badge";
@@ -32,6 +33,7 @@ export * from "./Tooltip";
 export * from "./Table";
 export * from "./SkipNav";
 export * from "./VisuallyHidden";
+export * from "./Touchable";
 
 // Theme stuff
 export * from "./Theme";
@@ -39,3 +41,7 @@ export * from "./Theme/Providers";
 
 // Export feather icons
 export * from "./Icons";
+
+// Export some hooks
+export * from "./Hooks/pan-responder";
+export * from "./Hooks/touchable-hook";
