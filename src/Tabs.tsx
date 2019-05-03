@@ -315,7 +315,6 @@ export const Tab: React.RefForwardingComponent<
     forwarded: React.Ref<HTMLButtonElement>
   ) => {
     const theme = useTheme();
-    const isLink = other.to || other.href;
     const dark = theme.colors.mode === "dark";
 
     /**
@@ -393,6 +392,7 @@ export const Tab: React.RefForwardingComponent<
       <Touchable
         component={Component}
         onPress={onPressFn}
+        delay={0}
         css={[
           buttonReset,
           {

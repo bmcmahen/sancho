@@ -2,7 +2,6 @@
 import { jsx } from "@emotion/core";
 import * as React from "react";
 import { useTouchable, OnPressFunction } from "touchable-hook";
-import { mergeRefs } from "./Hooks/merge-refs";
 import cx from "classnames";
 import { safeBind } from "./Hooks/compose-bind";
 
