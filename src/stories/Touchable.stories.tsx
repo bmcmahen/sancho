@@ -65,6 +65,22 @@ export const TouchableStories = storiesOf("Touchable", module)
   })
   .add("embedded responders", () => {
     return <SheetExample />;
+  })
+  .add("Touchable class", () => {
+    return (
+      <Touchable
+        css={{
+          "&.Touchable--hover": {
+            background: "#eee"
+          },
+          "&.Touchable--active": {
+            background: "black"
+          }
+        }}
+      >
+        Hello
+      </Touchable>
+    );
   });
 
 function SheetExample() {

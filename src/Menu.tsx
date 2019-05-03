@@ -9,6 +9,7 @@ import { noOp } from "./misc/noop";
 import { useTouchable, OnPressFunction } from "touchable-hook";
 import { mergeRefs } from "./Hooks/merge-refs";
 import cx from "classnames";
+import { safeBind } from "./Hooks/compose-bind";
 
 const KeyCodes = {
   ArrowUp: 38,
@@ -179,17 +180,10 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   const closeParent = React.useContext(RequestCloseContext);
   const isLink = Component === "a" || other.href || other.to;
 
-  const {
-    bind: {
-      ref: bindTouchableRef,
-      onKeyDown: touchOnKeyDown,
-      ...bindTouchableCallbacks
-    },
-    hover,
-    active
-  } = useTouchable({
+  const { bind, hover, active } = useTouchable({
     onPress: select,
     disabled,
+    delay: 0,
     behavior: isLink ? "link" : "button"
   });
 
@@ -210,7 +204,6 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
         "Touchable--hover": hover,
         "Touchable--active": active
       })}
-      {...bindTouchableCallbacks}
       css={[
         {
           cursor: "pointer",
@@ -249,13 +242,17 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
       role={role}
       tabIndex={disabled ? -1 : 0}
       data-trigger-close={true}
-      onKeyDown={(e: React.KeyboardEvent) => {
-        e.stopPropagation();
-        touchOnKeyDown(e);
-        if (onKeyDown) onKeyDown(e);
-      }}
-      ref={mergeRefs(localRef, bindTouchableRef)}
-      {...other}
+      {...safeBind(
+        bind,
+        {
+          ref: localRef,
+          onKeyDown: (e: React.KeyboardEvent) => {
+            e.stopPropagation();
+            if (onKeyDown) onKeyDown(e);
+          }
+        },
+        other
+      )}
     >
       {contentBefore}
       {typeof children === "string" ? (

@@ -4,6 +4,7 @@ import * as React from "react";
 import { useTouchable, OnPressFunction } from "touchable-hook";
 import { mergeRefs } from "./Hooks/merge-refs";
 import cx from "classnames";
+import { safeBind } from "./Hooks/compose-bind";
 
 /**
  * Touchable is a low level component which implements
@@ -45,11 +46,7 @@ export const Touchable: React.RefForwardingComponent<
     ref: React.Ref<any>
   ) => {
     const isLink = other.to || other.href;
-    const {
-      bind: { ref: bindTouchableRef, ...bindTouchableCallbacks },
-      hover,
-      active
-    } = useTouchable({
+    const { bind, hover, active } = useTouchable({
       onPress,
       disabled,
       delay,
@@ -63,9 +60,7 @@ export const Touchable: React.RefForwardingComponent<
           "Touchable--hover": hover,
           "Touchable--active": active
         })}
-        ref={mergeRefs(ref, bindTouchableRef)}
-        {...bindTouchableCallbacks}
-        {...other}
+        {...safeBind({ ref }, bind, other)}
       >
         {children}
       </Component>

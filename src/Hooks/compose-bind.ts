@@ -2,7 +2,7 @@ import { Ref } from "react";
 import { mergeRefs } from "./merge-refs";
 
 interface FunctionsType {
-  [key: string]: Function;
+  [key: string]: any;
 }
 
 interface GroupedFunctionsType {
@@ -27,6 +27,11 @@ export const safeBind = (...bindGroups: Array<any>) => {
     Object.entries(bind).forEach(([key, value]) => {
       if (key === "ref") {
         refs.push(value as Ref<any>);
+        return;
+      }
+
+      if (typeof value !== "function") {
+        fns[key] = value;
         return;
       }
 
