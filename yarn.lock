@@ -12674,10 +12674,10 @@ topo@2.x.x:
   dependencies:
     hoek "4.x.x"
 
-touchable-hook@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/touchable-hook/-/touchable-hook-1.0.6.tgz#61525216b170dbe92067f53a7938f686084c9291"
-  integrity sha512-O0/y98+FNizrKB/X/3fDSE2XANUH+nSc9yhpReh7lshfJF1m/onkUbKHfcTHOdI1yI9V3KK46I22hkW1su226w==
+touchable-hook@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/touchable-hook/-/touchable-hook-1.0.7.tgz#9e5129aea23795afff05f9dc666ed02b8a3d3b4f"
+  integrity sha512-HhBY+pLNp9sgO2H0MsC8M97uhOKezx7NaOo3mtjUToQcQOb+MWD9OJmF+YGSFexDK29pHFgN7mGenYbFFOAGeA==
   dependencies:
     "@types/react" "^16.8.10"
     "@types/react-dom" "^16.8.3"
