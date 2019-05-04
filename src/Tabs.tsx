@@ -84,12 +84,13 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
   const [showSlider, setShowSlider] = React.useState(false);
   const previousSlider = usePrevious(slider);
   const ref = React.useRef<HTMLDivElement | null>(null);
+  const { bounds } = useMeasure(ref);
 
   /**
    * A spring for animating scroll positions
    */
 
-  const [_scrollProps, setScroll] = useSpring(() => {
+  const [, setScroll] = useSpring(() => {
     return {
       config: tabAnimationConfig,
       from: { x: 0 },
@@ -100,9 +101,8 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
     };
   });
 
-  // this should be debounced, probably
-  const { bounds } = useMeasure(ref);
-
+  // determine if we should scroll into view when our
+  // value changes
   React.useEffect(() => {
     const target = refs.current!.get(value);
     if (target) {
