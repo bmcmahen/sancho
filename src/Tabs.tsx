@@ -6,19 +6,20 @@ import { buttonReset } from "./Button";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated, config } from "react-spring";
 import { usePrevious } from "./Hooks/previous";
 import { Badge } from "./Badge";
 import { useTheme } from "./Theme/Providers";
 import { IconWrapper } from "./IconWrapper";
 import { IconSizes } from "./Icons/IconTypes";
-import scrollIntoView from "scroll-into-view-if-needed";
-import { scrollTo } from "./misc/tween";
+import computeScrollIntoView from "compute-scroll-into-view";
 import { noOp } from "./misc/noop";
 import { useMeasure } from "./Hooks/use-measure";
 import { OnPressFunction } from "touchable-hook";
 import { mergeRefs } from "./Hooks/merge-refs";
 import { Touchable } from "./Touchable";
+
+const tabAnimationConfig = config.default;
 
 const hideScrollbar = css`
   ::-webkit-scrollbar {
@@ -84,23 +85,43 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
   const previousSlider = usePrevious(slider);
   const ref = React.useRef<HTMLDivElement | null>(null);
 
+  /**
+   * A spring for animating scroll positions
+   */
+
+  const [_scrollProps, setScroll] = useSpring(() => {
+    return {
+      config: tabAnimationConfig,
+      from: { x: 0 },
+      to: { x: 0 },
+      onFrame: (animated: any) => {
+        ref.current!.scrollLeft = animated.x;
+      }
+    };
+  });
+
   // this should be debounced, probably
   const { bounds } = useMeasure(ref);
 
   React.useEffect(() => {
     const target = refs.current!.get(value);
     if (target) {
-      scrollIntoView(target, {
-        behavior: instructions => {
-          if (instructions[0]) {
-            const { el, left } = instructions[0];
-            scrollTo(el, left);
-          }
-        },
-
+      const actions = computeScrollIntoView(target, {
         block: "center",
         inline: "center",
         boundary: boundary.current
+      });
+
+      if (!actions.length) {
+        return;
+      }
+
+      const { el, left } = actions[0];
+
+      setScroll({
+        from: { x: el.scrollLeft },
+        to: { x: left },
+        reset: true
       });
     }
   }, [value]);
@@ -137,7 +158,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
     left: slider.left + "px",
     right: slider.right + "px",
     immediate: previousSlider ? previousSlider.value === slider.value : false,
-    config: { mass: 1, tension: 185, friction: 23 } // default friction is 160: speed up our animation slightly
+    config: tabAnimationConfig // default friction is 160: speed up our animation slightly
   });
 
   // Thanks to Ryan Florence for this code
@@ -156,7 +177,6 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
         const nextEnabledIndex =
           (enabledSelectedIndex + 1) % enabledIndexes.length;
         const nextIndex = enabledIndexes[nextEnabledIndex];
-        console.log("next index", nextIndex);
         if (typeof nextIndex === "number") {
           onChange(nextIndex);
         }
