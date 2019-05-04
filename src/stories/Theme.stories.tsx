@@ -15,7 +15,11 @@ import { Button, ButtonSize, ButtonVariant, ButtonIntent } from "../Button";
 import { Text } from "../Text";
 import palx from "palx";
 import { Link } from "../Link";
+import * as React from "react";
 import { generateColorsFromScales } from "../Theme/colors";
+import { Tooltip } from "../Tooltip";
+import { IconButton } from "../IconButton";
+import { IconArrowDown } from "../Icons";
 
 const customPalette = palx("#007bff");
 
@@ -184,6 +188,27 @@ export const ThemeExamples = storiesOf("Theme", module)
   })
   .add("contrast", () => {
     return <ContrastExample />;
+  })
+  .add("DarkMode forwards ref", () => {
+    return <RefExample />;
+  })
+  .add("Tooltip with DarkMode wrrapper", () => {
+    return (
+      <Tooltip content="hello">
+        <DarkMode>
+          <Button>Hello</Button>
+        </DarkMode>
+      </Tooltip>
+    );
+  })
+  .add("Works with IconButton", () => {
+    return (
+      <Tooltip content="hello">
+        <LightMode>
+          <IconButton variant="ghost" label="wtf" icon={<IconArrowDown />} />
+        </LightMode>
+      </Tooltip>
+    );
   });
 
 function SampleTheme() {
@@ -192,6 +217,19 @@ function SampleTheme() {
     <div
       css={{ background: theme.colors.palette.blue.base, padding: "3rem" }}
     />
+  );
+}
+
+function RefExample() {
+  const ref = React.useRef();
+
+  React.useEffect(() => {
+    console.log(ref.current);
+  }, []);
+  return (
+    <DarkMode ref={ref}>
+      <Button>Hello</Button>
+    </DarkMode>
   );
 }
 

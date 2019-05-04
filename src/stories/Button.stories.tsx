@@ -168,24 +168,11 @@ function ContrastExample() {
   const theme = useTheme();
   return (
     <DarkMode>
-      <div
-        css={{
-          padding: "2rem",
-          background: theme.colors.intent.none.base,
-          "& > *": { margin: "1rem" }
-        }}
-      >
-        <Button>Hello world</Button>
-        <Button intent="primary">Primary</Button>
-        <Button intent="success">Success</Button>
-        <Button intent="warning">Warning</Button>
-        <Button intent="danger">Warning</Button>
-      </div>
-      <LightMode>
+      <React.Fragment>
         <div
           css={{
             padding: "2rem",
-            background: theme.colors.background.tint2,
+            background: theme.colors.intent.none.base,
             "& > *": { margin: "1rem" }
           }}
         >
@@ -195,21 +182,36 @@ function ContrastExample() {
           <Button intent="warning">Warning</Button>
           <Button intent="danger">Warning</Button>
         </div>
-      </LightMode>
+        <LightMode>
+          <div
+            css={{
+              padding: "2rem",
+              background: theme.colors.background.tint2,
+              "& > *": { margin: "1rem" }
+            }}
+          >
+            <Button>Hello world</Button>
+            <Button intent="primary">Primary</Button>
+            <Button intent="success">Success</Button>
+            <Button intent="warning">Warning</Button>
+            <Button intent="danger">Warning</Button>
+          </div>
+        </LightMode>
 
-      <div
-        css={{
-          padding: "2rem",
-          background: theme.colors.intent.primary.dark,
-          "& > *": { margin: "1rem" }
-        }}
-      >
-        <Button>Hello world</Button>
-        <Button intent="primary">Primary</Button>
-        <Button intent="success">Success</Button>
-        <Button intent="warning">Warning</Button>
-        <Button intent="danger">Warning</Button>
-      </div>
+        <div
+          css={{
+            padding: "2rem",
+            background: theme.colors.intent.primary.dark,
+            "& > *": { margin: "1rem" }
+          }}
+        >
+          <Button>Hello world</Button>
+          <Button intent="primary">Primary</Button>
+          <Button intent="success">Success</Button>
+          <Button intent="warning">Warning</Button>
+          <Button intent="danger">Warning</Button>
+        </div>
+      </React.Fragment>
     </DarkMode>
   );
 }

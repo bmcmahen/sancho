@@ -61,12 +61,16 @@ export function useTheme() {
 
 type RenderCallbackType = (theme: Theme) => React.ReactNode;
 
-export interface ColorMode {
+export interface ColorModeProps {
   colors: ThemeColors;
   children: RenderCallbackType | React.ReactNode;
+  ref: React.Ref<any>;
 }
 
-const ColorMode = ({ colors, children }: ColorMode) => {
+const ColorMode: React.RefForwardingComponent<
+  React.Ref<any>,
+  ColorModeProps
+> = React.forwardRef(({ colors, children, ...other }: ColorModeProps, ref) => {
   const theme = useTheme();
   // memo is necessary to prevent unnecessary rerenders
   // https://reactjs.org/docs/context.html#caveats
@@ -77,10 +81,18 @@ const ColorMode = ({ colors, children }: ColorMode) => {
 
   return (
     <ThemeContext.Provider value={adjustedTheme}>
-      {typeof children === "function" ? children(adjustedTheme) : children}
+      {typeof children === "function"
+        ? children(adjustedTheme)
+        : React.cloneElement(
+            React.Children.only(children) as React.ReactElement<any>,
+            {
+              ref,
+              ...other
+            }
+          )}
     </ThemeContext.Provider>
   );
-};
+});
 
 function mergeColors(theme: Theme, colors: ThemeColors) {
   return {
@@ -96,18 +108,33 @@ function mergeColors(theme: Theme, colors: ThemeColors) {
 
 interface ModeProps {
   children: RenderCallbackType | React.ReactNode;
+  ref?: any;
 }
 
-export const LightMode = ({ children }: ModeProps) => {
+export const LightMode: React.RefForwardingComponent<
+  React.Ref<any>,
+  ModeProps
+> = React.forwardRef(({ children, ...other }: ModeProps, ref) => {
   const theme = useTheme();
-  return <ColorMode colors={theme.modes.light}>{children}</ColorMode>;
-};
+  return (
+    <ColorMode colors={theme.modes.light} ref={ref} {...other}>
+      {children}
+    </ColorMode>
+  );
+});
 
 /**
  * Provide a dark theme
  */
 
-export const DarkMode = ({ children }: ModeProps) => {
+export const DarkMode: React.RefForwardingComponent<
+  React.Ref<any>,
+  ModeProps
+> = React.forwardRef(({ children, ...other }: ModeProps, ref) => {
   const theme = useTheme();
-  return <ColorMode colors={theme.modes.dark}>{children}</ColorMode>;
-};
+  return (
+    <ColorMode colors={theme.modes.dark} ref={ref} {...other}>
+      {children}
+    </ColorMode>
+  );
+});
