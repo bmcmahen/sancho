@@ -7,6 +7,13 @@
   "typings": "esm/index.d.ts",
   "author": "Ben McMahen <ben.mcmahen@gmail.com>",
   "homepage": "https://sancho-ui.com",
+  "bugs": {
+    "url": "https://github.com/bmcmahen/sancho/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bmcmahen/sancho.git"
+  },
   "dependencies": {
     "@reach/alert": "^0.1.2",
     "@reach/skip-nav": "^0.1.2",
