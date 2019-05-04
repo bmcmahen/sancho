@@ -182,7 +182,10 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
 
   // our overlay pan responder
   const { bind: bindTouchable } = usePanResponder({
-    onStartShouldSet: () => true,
+    onStartShouldSet: (_, e) => {
+      e.stopPropagation();
+      return true;
+    },
     onRelease: ({ initial, xy }) => {
       // ignore swipes on release
       if (initial[0] === xy[0] && initial[1] === xy[1]) {
