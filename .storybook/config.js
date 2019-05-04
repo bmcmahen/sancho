@@ -1,6 +1,7 @@
 import { configure, addDecorator } from "@storybook/react";
 import React from "react";
 import { ThemeProvider } from "../src";
+import "focus-visible";
 import { ToggleDarkMode } from "../src/stories/ToggleDarkMode";
 
 // automatically import all files ending in *.stories.tsx

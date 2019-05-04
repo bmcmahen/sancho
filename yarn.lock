@@ -1738,6 +1738,11 @@
     "@svgr/plugin-svgo" "^4.0.3"
     loader-utils "^1.1.0"
 
+"@types/classnames@^2.2.7":
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.7.tgz#fb68cc9be8487e6ea5b13700e759bfbab7e0fefd"
+  integrity sha512-rzOhiQ55WzAiFgXRtitP/ZUT8iVNyllEpylJ5zHzR4vArUvMB39GTk+Zon/uAM0JxEFAWnwsxC2gH8s+tZ3Myg==
+
 "@types/color-convert@*":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@types/color-convert/-/color-convert-1.9.0.tgz#bfa8203e41e7c65471e9841d7e306a7cd8b5172d"
@@ -3835,7 +3840,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -5887,6 +5892,11 @@ focus-trap@5:
   dependencies:
     tabbable "^4.0.0"
     xtend "^4.0.1"
+
+focus-visible@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/focus-visible/-/focus-visible-4.1.5.tgz#50b44e2e84c24b831ceca3cce84d57c2b311c855"
+  integrity sha512-yo/njtk/BB4Z2euzaZe3CZrg4u5s5uEi7ZwbHBJS2quHx51N0mmcx9nTIiImUGlgy+vf26d0CcQluahBBBL/Fw==
 
 follow-redirects@^1.0.0:
   version "1.6.1"
@@ -9219,6 +9229,15 @@ palx@^1.0.3:
     chroma-js "^1.2.1"
     micro "^6.1.0"
 
+pan-responder-hook@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/pan-responder-hook/-/pan-responder-hook-1.1.4.tgz#fa6cd1a362dd9df8255115c47c760e566f5c7950"
+  integrity sha512-UaBdl1oSkTkcRf7Fuw8ffNJk+Z6qJUwuCGKsBgZcsjkCXwhcgLS7GGTTNFSrbDRiRrpXXWw2Ubzv99zYaV2h5w==
+  dependencies:
+    "@types/react" "^16.8.10"
+    "@types/react-dom" "^16.8.3"
+    tslib "^1.9.3"
+
 parallel-transform@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/parallel-transform/-/parallel-transform-1.1.0.tgz#d410f065b05da23081fcd10f28854c29bda33b06"
@@ -10838,7 +10857,7 @@ react-scripts@2.1.5:
   optionalDependencies:
     fsevents "1.2.4"
 
-react-spring@^8.0.18:
+react-spring@^8.0.18, react-spring@^8.0.19:
   version "8.0.19"
   resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.19.tgz#62f4f396b4b73fa402838200a1c80374338cb12e"
   integrity sha512-DjrwjXqqVEitj6e6GqdW5dUp1BoVyeFQhEcXvPfoQxwyIVSJ9smNt8CNjSvoQqRujVllE7XKaJRWSZO/ewd1/A==
@@ -12654,6 +12673,15 @@ topo@2.x.x:
   integrity sha1-zVYVdSU5BXwNwEkaYhw7xvvh0YI=
   dependencies:
     hoek "4.x.x"
+
+touchable-hook@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/touchable-hook/-/touchable-hook-1.1.2.tgz#b3abcf9ca0da50e2a2e18dce9f978d44c1729fcc"
+  integrity sha512-F7fl5mBq4e/LcHHfrGIZoSh7nsSabgmsxhgqL+KvLY3QhgunQd7dKKWwQpIz/rs8qaMmWMfxNWy3IWmPDIJsMg==
+  dependencies:
+    "@types/react" "^16.8.10"
+    "@types/react-dom" "^16.8.3"
+    tslib "^1.9.3"
 
 tough-cookie@>=2.3.3:
   version "3.0.1"

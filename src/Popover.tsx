@@ -13,6 +13,8 @@ import { Sheet } from "./Sheet";
 import { useMedia } from "use-media";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
+import { OnPressFunction } from "touchable-hook";
+import { mergeRefs } from "./Hooks/merge-refs";
 
 const AnimatedLayer = animated(Layer) as React.FunctionComponent<any>;
 
@@ -119,23 +121,20 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
     return React.cloneElement(child, {
-      onClick: (e: React.MouseEvent) => {
-        onTriggerClicked(e);
-        if (child.props.onClick) {
-          child.props.onClick(e);
+      onPress: (e: OnPressFunction) => {
+        onTriggerClicked();
+        if (child.props.onPress) {
+          child.props.onPress(e);
         }
       },
-      ref: (el: HTMLButtonElement | null) => {
-        ref(el);
-        triggerRef.current = el;
-      },
+      ref: mergeRefs(ref, triggerRef),
       role: "button",
       "aria-expanded": show,
       "aria-haspopup": true
     });
   }
 
-  function onTriggerClicked(e: React.MouseEvent) {
+  function onTriggerClicked() {
     return show ? close() : open();
   }
 
@@ -145,10 +144,7 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
         <AnimatedLayer
           role="dialog"
           elevation="md"
-          ref={(el: any) => {
-            ref(el);
-            popoverRef.current = el;
-          }}
+          ref={mergeRefs(ref, popoverRef)}
           style={{
             ...style,
             opacity: animation.opacity
@@ -222,15 +218,17 @@ export const ResponsivePopover: React.FunctionComponent<PopoverProps> = (
 
   return (
     <React.Fragment>
-      {React.cloneElement(props.children, {
-        onClick: () => {
+      {React.cloneElement(React.Children.only(props.children), {
+        onPress: () => {
           setIsOpen(true);
         }
       })}
       <Sheet
         position="bottom"
         isOpen={isOpen}
-        onRequestClose={() => setIsOpen(false)}
+        onRequestClose={() => {
+          setIsOpen(false);
+        }}
       >
         {props.content}
       </Sheet>

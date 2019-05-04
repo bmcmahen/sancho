@@ -40,8 +40,10 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
       return children;
     }
 
+    const child = React.Children.only(children);
+
     // Enable on non-mobile devices
-    return React.cloneElement(children as React.ReactElement<any>, {
+    return React.cloneElement(child as React.ReactElement<any>, {
       ref,
       "aria-describedby": id,
       onMouseEnter: (e: MouseEvent) => {

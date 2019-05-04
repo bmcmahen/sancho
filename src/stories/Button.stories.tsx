@@ -34,7 +34,7 @@ export const ButtonStories = storiesOf("Button", module)
                     css={{ marginRight: "1rem", textTransform: "capitalize" }}
                     variant={appearance}
                     intent={intent}
-                    onClick={() => alert("hello there")}
+                    onPress={() => console.log("hello there")}
                   >
                     {intent}
                   </Button>
@@ -181,19 +181,21 @@ function ContrastExample() {
         <Button intent="warning">Warning</Button>
         <Button intent="danger">Warning</Button>
       </div>
-      <div
-        css={{
-          padding: "2rem",
-          background: theme.colors.background.tint2,
-          "& > *": { margin: "1rem" }
-        }}
-      >
-        <Button>Hello world</Button>
-        <Button intent="primary">Primary</Button>
-        <Button intent="success">Success</Button>
-        <Button intent="warning">Warning</Button>
-        <Button intent="danger">Warning</Button>
-      </div>
+      <LightMode>
+        <div
+          css={{
+            padding: "2rem",
+            background: theme.colors.background.tint2,
+            "& > *": { margin: "1rem" }
+          }}
+        >
+          <Button>Hello world</Button>
+          <Button intent="primary">Primary</Button>
+          <Button intent="success">Success</Button>
+          <Button intent="warning">Warning</Button>
+          <Button intent="danger">Warning</Button>
+        </div>
+      </LightMode>
 
       <div
         css={{

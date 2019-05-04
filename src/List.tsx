@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 import { MenuLabel } from "./Menu";
 import { useTheme } from "./Theme/Providers";
 import { noOp } from "./misc/noop";
+import { OnPressFunction, useTouchable } from "touchable-hook";
+import { safeBind } from "./Hooks/compose-bind";
 
 export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
   /** A series of ListItem elements */
@@ -24,6 +26,7 @@ List.propTypes = {
 };
 
 interface ListItemProps extends React.HTMLAttributes<any> {
+  onPress?: OnPressFunction;
   component?: React.ReactType<any>;
   /** An icon or avatar to appear to the left of the text content */
   contentBefore?: React.ReactNode;
@@ -50,6 +53,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
   children,
   wrap = true,
   contentAfter,
+  onPress = noOp,
   component: Component = "div",
   ...other
 }) => {
@@ -59,12 +63,16 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
         tabIndex: 0
       }
     : {};
+  const isLink = other.to || other.href;
+  const { bind, hover, active } = useTouchable({
+    onPress,
+    behavior: isLink ? "link" : "button"
+  });
   const theme = useTheme();
 
   return (
     <Component
       className="ListItem"
-      onTouchStart={noOp}
       css={[
         {
           display: "block",
@@ -84,24 +92,24 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
         },
         interactive && {
           cursor: "pointer",
-          ":active": {
-            background: theme.colors.background.tint1
-          },
           ":focus": {
+            boxShadow: `inset 0 0 3px ${theme.colors.text.selected}`
+          },
+          ":focus:not([data-focus-visible-added])": {
+            boxShadow: "none"
+          }
+        },
+        interactive &&
+          hover && {
             background: theme.colors.background.tint1
           },
-          ["@media (hover: hover)"]: {
-            ":hover": {
-              background: theme.colors.background.tint1
-            },
-            ":active": {
-              background: theme.colors.background.tint2
-            }
+        interactive &&
+          active && {
+            background: theme.colors.background.tint2
           }
-        }
       ]}
       {...interactiveProps}
-      {...other}
+      {...safeBind(bind, other)}
     >
       <div
         className="ListItem__container"

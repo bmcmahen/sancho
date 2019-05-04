@@ -1,11 +1,15 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
 import { RequestCloseContext } from "./Sheet";
 import { useTheme } from "./Theme/Providers";
 import { noOp } from "./misc/noop";
+import { useTouchable, OnPressFunction } from "touchable-hook";
+import { mergeRefs } from "./Hooks/merge-refs";
+import cx from "classnames";
+import { safeBind } from "./Hooks/compose-bind";
 
 const KeyCodes = {
   ArrowUp: 38,
@@ -46,7 +50,6 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
   return (
     <div
       role="menu"
-      tabIndex={0}
       onKeyDown={(e: React.KeyboardEvent) => {
         if (
           e.keyCode === KeyCodes.ArrowDown ||
@@ -57,7 +60,6 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
         }
       }}
       css={{
-        outline: "none",
         minWidth: "200px",
         display: "block",
         padding: `${theme.spaces.sm} 0`
@@ -142,7 +144,7 @@ interface MenuItemPropsCloned extends React.HTMLAttributes<Element> {
   focus: boolean;
   onFocus: () => void;
   /** Called when the menu item is selected. Generally use this instead of onClick. */
-  onSelect: () => void;
+  onPress?: OnPressFunction;
   /** Disable this menu item */
   disabled?: boolean;
   /** Pass in a string to use standard text styles. Otherwise, pass in any other node. */
@@ -162,10 +164,10 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   focus,
   onFocus,
   onKeyDown,
-  onSelect,
   contentBefore,
   contentAfter,
-  onClick,
+  onPress = noOp,
+  className = "",
   component: Component = "div",
   role = "menuitem",
   children,
@@ -176,6 +178,14 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   const dark = theme.colors.mode === "dark";
   const localRef = React.useRef<HTMLDivElement>(null);
   const closeParent = React.useContext(RequestCloseContext);
+  const isLink = Component === "a" || other.href || other.to;
+
+  const { bind, hover, active } = useTouchable({
+    onPress: select,
+    disabled,
+    delay: 0,
+    behavior: isLink ? "link" : "button"
+  });
 
   React.useEffect(() => {
     if (focus && localRef.current) {
@@ -183,74 +193,66 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
     }
   }, [focus, localRef]);
 
-  const isLink = Component === "a" || other.href || other.to;
-
   function select() {
-    if (onSelect) {
-      onSelect();
-    }
-
+    onPress();
     closeParent();
   }
 
   return (
     <Component
-      onTouchStart={noOp}
-      css={{
-        cursor: "pointer",
-        padding: `calc(${theme.spaces.sm} + 0.25rem) calc(${
-          theme.spaces.md
-        } + 0.25rem)`,
-        [theme.mediaQueries.sm]: {
-          padding: `${theme.spaces.sm} ${theme.spaces.md}`
-        },
-        opacity: disabled ? 0.3 : 1,
-        display: "flex",
-        textDecoration: "none",
-        transition: "background-color 0.1s ease",
-        WebkitTapHighlightColor: "transparent",
-        color: theme.colors.text.default,
-        alignItems: "center",
-        pointerEvents: disabled ? "none" : "initial",
-        "@media (hover: hover)": {
-          ":hover": {
-            background: dark
-              ? theme.colors.background.tint2
-              : theme.colors.background.tint1
+      className={cx("MenuItem", "Touchable", className, {
+        "Touchable--hover": hover,
+        "Touchable--active": active
+      })}
+      css={[
+        {
+          cursor: "pointer",
+          padding: `calc(${theme.spaces.sm} + 0.25rem) calc(${
+            theme.spaces.md
+          } + 0.25rem)`,
+          [theme.mediaQueries.sm]: {
+            padding: `${theme.spaces.sm} ${theme.spaces.md}`
+          },
+          opacity: disabled ? 0.3 : 1,
+          display: "flex",
+          textDecoration: "none",
+          transition: "background-color 0.1s ease",
+          WebkitTapHighlightColor: "transparent",
+          color: theme.colors.text.default,
+          alignItems: "center",
+          ":focus": {
+            outline: theme.outline
+          },
+          ":focus:not([data-focus-visible-added])": {
+            outline: "none"
+          },
+          [theme.mediaQueries.md]: {
+            padding: `${theme.spaces.xs} ${theme.spaces.md}`
           }
         },
-        ":focus": {
-          backgroundColor: dark
+        hover && {
+          background: dark
             ? theme.colors.background.tint2
-            : theme.colors.background.tint1,
-          outline: "none"
+            : theme.colors.background.tint1
         },
-        ":active": {
-          backgroundColor: theme.colors.background.tint2
-        },
-        [theme.mediaQueries.md]: {
-          padding: `${theme.spaces.xs} ${theme.spaces.md}`
+        active && {
+          background: theme.colors.background.tint2
         }
-      }}
+      ]}
       role={role}
-      tabIndex={0}
+      tabIndex={disabled ? -1 : 0}
       data-trigger-close={true}
-      onClick={(e: React.MouseEvent) => {
-        if (onClick) onClick(e);
-        select();
-      }}
-      onKeyDown={(e: React.KeyboardEvent) => {
-        e.stopPropagation();
-        if (onKeyDown) onKeyDown(e);
-        if (e.key === "Enter") {
-          if (!isLink) {
-            e.preventDefault();
+      {...safeBind(
+        bind,
+        {
+          ref: localRef,
+          onKeyDown: (e: React.KeyboardEvent) => {
+            e.stopPropagation();
+            if (onKeyDown) onKeyDown(e);
           }
-          select();
-        }
-      }}
-      ref={localRef}
-      {...other}
+        },
+        other
+      )}
     >
       {contentBefore}
       {typeof children === "string" ? (

@@ -1,7 +1,7 @@
 import * as React from "react";
 import ResizeObserver from "resize-observer-polyfill";
 
-interface Bounds {
+export interface Bounds {
   left: number;
   height: number;
   top: number;

@@ -103,7 +103,7 @@ export const PopoverStories = storiesOf("Popover", module)
         <Popover
           content={
             <MenuList>
-              <MenuItem onSelect={() => alert("Hello 1")}>
+              <MenuItem onPress={() => alert("Hello 1")}>
                 I will trigger an alert
               </MenuItem>
               <MenuItem component="a" href="/bacon">
