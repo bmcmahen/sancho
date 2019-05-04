@@ -41,7 +41,10 @@ interface PositionsProps {
   /** The render callback which contains positioning and animation info */
   children: (
     props: PopperChildrenProps,
-    state: AnimatedValue<any>
+    state: {
+      [x: string]: AnimatedValue<any>;
+      opacity: AnimatedValue<number>;
+    }
   ) => React.ReactNode;
 }
 

@@ -158,13 +158,29 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const initialDirection = React.useRef<"vertical" | "horizontal" | null>(null);
   const { bind: bindHideBody } = useHideBody(isOpen);
   const startVelocity = React.useRef<number | null>(null);
+  const [visible, setVisible] = React.useState(isOpen);
+  const isOpenRef = React.useRef(isOpen);
+
+  // this is a weird-ass hack to allow us to access isOpen
+  // state within our onRest callback. Closures!!
+  React.useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
 
   // A spring which animates the sheet position
   const [{ xy }, setSpring] = useSpring(() => {
     const { x, y } = getDefaultPositions(isOpen, position);
     return {
       xy: [x, y],
-      config: animationConfig
+      config: animationConfig,
+      onStart: () => {
+        setVisible(true);
+      },
+      onRest: () => {
+        if (!isOpenRef.current) {
+          setVisible(false);
+        }
+      }
     };
   });
 
@@ -331,7 +347,8 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           overflow: "auto",
           width: "100vw",
           height: "100vh",
-          pointerEvents: isOpen ? "auto" : "none",
+          pointerEvents: visible ? "auto" : "none",
+          visible: visible ? "visible" : "hidden",
           zIndex: theme.zIndices.overlay,
           position: "fixed",
           content: "''",
@@ -368,11 +385,11 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           css={[
             {
               willChange: "transform",
-              visibility: mounted ? "visible" : "hidden",
+              visibility: (visible ? "visible" : "hidden") as any,
               outline: "none",
               zIndex: theme.zIndices.modal,
               opacity: 1,
-              position: "fixed"
+              position: "fixed" as any
             },
             positionsStyle[position]
           ]}

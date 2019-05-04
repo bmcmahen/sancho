@@ -54,10 +54,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   const { height, opacity } = useSpring({
     from: { height: 0, opacity: 0 },
     to: { height: show ? bounds.height : 0, opacity: show ? 1 : 0 }
-  }) as {
-    height: number;
-    opacity: number;
-  }; // typings seems wrong for useSpring...
+  });
 
   return (
     <animated.div
