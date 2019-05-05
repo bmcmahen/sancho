@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
-import { animated, useSpring } from "react-spring";
+import { animated, useSpring, SpringConfig } from "react-spring";
 import { useFocusElement } from "./Hooks/focus";
 import { Portal } from "./Portal";
 import PropTypes from "prop-types";
@@ -14,8 +14,6 @@ import { useHideBody } from "./Hooks/hide-body";
 import { usePanResponder, StateType } from "pan-responder-hook";
 
 export const RequestCloseContext = React.createContext(() => {});
-
-const animationConfig = { mass: 1, tension: 185, friction: 26 };
 
 const positions = (theme: Theme) => ({
   left: css`
@@ -129,6 +127,8 @@ interface SheetProps {
    */
   position: SheetPositions;
   closeOnClick?: boolean;
+  /** spring animation configuration */
+  animationConfig?: SpringConfig;
 }
 
 /**
@@ -144,6 +144,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   children,
   role = "document",
   closeOnClick = true,
+  animationConfig = { mass: 0.8, tension: 185, friction: 24 },
   position = "right",
   onRequestClose,
   ...props
@@ -347,7 +348,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           overflow: "auto",
           width: "100vw",
           height: "100vh",
-          pointerEvents: visible ? "auto" : "none",
+          pointerEvents: isOpen ? "auto" : "none",
           visible: visible ? "visible" : "hidden",
           zIndex: theme.zIndices.overlay,
           position: "fixed",

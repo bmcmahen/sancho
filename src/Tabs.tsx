@@ -6,7 +6,7 @@ import { buttonReset } from "./Button";
 import VisuallyHidden from "@reach/visually-hidden";
 import PropTypes from "prop-types";
 import { alpha } from "./Theme/colors";
-import { useSpring, animated, config } from "react-spring";
+import { useSpring, animated, SpringConfig } from "react-spring";
 import { usePrevious } from "./Hooks/previous";
 import { Badge } from "./Badge";
 import { useTheme } from "./Theme/Providers";
@@ -18,8 +18,7 @@ import { useMeasure } from "./Hooks/use-measure";
 import { OnPressFunction } from "touchable-hook";
 import { mergeRefs } from "./Hooks/merge-refs";
 import { Touchable } from "./Touchable";
-
-const tabAnimationConfig = { tension: 190, friction: 15, mass: 0.2 };
+import cx from "classnames";
 
 const hideScrollbar = css`
   ::-webkit-scrollbar {
@@ -54,6 +53,8 @@ export interface TabsProps {
   onChange: (value: number) => void;
   /** Tab elements */
   children: React.ReactElement<TabProps>[] | React.ReactElement<TabProps>;
+  /** spring animation configuration */
+  animationConfig?: SpringConfig;
 }
 
 /**
@@ -64,6 +65,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
   variant = "default",
   slider: enableSlider = true,
   value,
+  animationConfig = { tension: 190, friction: 15, mass: 0.2 },
   onChange,
   ...other
 }) => {
@@ -92,7 +94,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 
   const [, setScroll] = useSpring(() => {
     return {
-      config: tabAnimationConfig,
+      config: animationConfig,
       from: { x: 0 },
       to: { x: 0 },
       onFrame: (animated: any) => {
@@ -158,7 +160,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
     left: slider.left + "px",
     right: slider.right + "px",
     immediate: previousSlider ? previousSlider.value === slider.value : false,
-    config: tabAnimationConfig // default friction is 160: speed up our animation slightly
+    config: animationConfig // default friction is 160: speed up our animation slightly
   });
 
   // Thanks to Ryan Florence for this code
@@ -411,6 +413,9 @@ export const Tab: React.RefForwardingComponent<
 
     return (
       <Touchable
+        className={cx("Tab", {
+          "Tab--active": isActive
+        })}
         component={Component}
         onPress={onPressFn}
         delay={0}
