@@ -19,7 +19,7 @@ import { OnPressFunction } from "touchable-hook";
 import { mergeRefs } from "./Hooks/merge-refs";
 import { Touchable } from "./Touchable";
 
-const tabAnimationConfig = config.default;
+const tabAnimationConfig = { tension: 190, friction: 15, mass: 0.2 };
 
 const hideScrollbar = css`
   ::-webkit-scrollbar {
@@ -212,6 +212,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
       className="Tabs"
       ref={boundary}
       css={{
+        overflowY: "hidden",
         boxShadow: dark ? `0px 3px 2px rgba(0,0,0,0.15)` : "none"
       }}
       {...other}
@@ -225,8 +226,8 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
             whiteSpace: "nowrap",
             overflowX: "scroll",
             WebkitOverflowScrolling: "touch",
-            maxWidth: "1200px",
-            margin: "0 auto",
+            paddingBottom: "20px",
+            marginBottom: "-20px",
             scrollbarWidth: "none",
             msOverflowStyle: "none"
           },

@@ -21,7 +21,7 @@
     "@types/classnames": "^2.2.7",
     "@types/color": "^3.0.0",
     "@types/lodash.uniqueid": "^4.0.5",
-    "@types/prop-types": "^15.7.0",
+    "@types/prop-types": "15.7.0",
     "@types/react": "16.8.4",
     "@types/react-dom": "16.8.2",
     "@types/react-swipeable-views": "^0.12.2",
