@@ -126,17 +126,19 @@ const ScrollViewForward: React.RefForwardingComponent<
   );
 
   return (
-    <div
-      {...bind}
-      ref={ref}
-      css={{
-        overflowX: overflowX ? "scroll" : undefined,
-        overflowY: overflowY ? "scroll" : undefined,
-        WebkitOverflowScrolling: "touch"
-      }}
-      {...other}
-    >
-      {children}
+    <div {...bind}>
+      <div
+        ref={ref}
+        css={{
+          transform: "translateZ(0)",
+          overflowX: overflowX ? "scroll" : undefined,
+          overflowY: overflowY ? "scroll" : undefined,
+          WebkitOverflowScrolling: "touch"
+        }}
+        {...other}
+      >
+        {children}
+      </div>
     </div>
   );
 };
