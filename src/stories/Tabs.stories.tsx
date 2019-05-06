@@ -13,6 +13,7 @@ import { DarkMode, useTheme, LightMode } from "../Theme/Providers";
 import { IconActivity, IconAlertCircle, IconAlignLeft } from "../Icons";
 import { GestureView } from "../GestureView";
 import { ExampleList } from "./List.stories";
+import { StateType } from "pan-responder-hook";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
@@ -41,7 +42,7 @@ export const TabsExamples = storiesOf("Tabs", module)
   .add("Basic usage", () => <Example />)
 
   .add("Evenly spaced", () => {
-    return <EvenlySpaced />;
+    return <ParentSwipe />;
   })
   .add("Toggle display example", () => {
     return <ToggleDisplayExample />;
@@ -120,88 +121,80 @@ function IconExample() {
   );
 }
 
-function EvenlySpaced() {
-  const [value, setValue] = React.useState(0);
-
+function EvenlySpaced({ onRequestChange, value, onTerminationRequest }: any) {
   return (
-    <div
+    <Layer
+      elevation="sm"
       css={{
-        display: "flex",
-        justifyContent: "center",
-        background: theme.colors.background.tint2
+        background: "white",
+        maxWidth: "600px",
+        width: "100%",
+        display: "block",
+        borderRadius: 0,
+        boxSizing: "border-box",
+        overflow: "hidden"
       }}
     >
-      <Layer
-        elevation="sm"
+      <div
         css={{
-          background: "white",
-          maxWidth: "600px",
-          width: "100%",
-          display: "block",
-          borderRadius: 0,
           boxSizing: "border-box",
+          width: "100%",
           overflow: "hidden"
         }}
       >
         <DarkMode>
           <div
             css={{
-              boxSizing: "border-box",
-              width: "100%",
-              overflow: "hidden"
+              position: "relative",
+              zIndex: theme.zIndices.sticky,
+              background: theme.colors.palette.blue.base
             }}
           >
-            <div
-              css={{
-                background: theme.colors.palette.blue.base
-              }}
-            >
-              <Container>
-                <Text
-                  variant="h5"
-                  css={{
-                    textAlign: "center",
-                    padding: theme.spaces.md
-                  }}
-                >
-                  Messenger
-                </Text>
-              </Container>
-              <Tabs
-                variant="evenly-spaced"
-                value={value}
-                onChange={i => setValue(i)}
+            <Container>
+              <Text
+                variant="h5"
+                gutter={false}
+                css={{
+                  textAlign: "center",
+                  padding: theme.spaces.md
+                }}
               >
-                <Tab id="hello">Contacts</Tab>
-                <Tab id="cool">Inbox</Tab>
-                <Tab id="tables">Notifications</Tab>
-                <Tab id="players">Settings</Tab>
-              </Tabs>
-            </div>
-            <GestureView
-              css={{ maxHeight: "400px" }}
+                Messenger
+              </Text>
+            </Container>
+            <Tabs
+              variant="evenly-spaced"
               value={value}
-              onRequestChange={i => setValue(i)}
+              onChange={onRequestChange}
             >
-              <TabPanel id="hello" css={{ flex: 1 }}>
-                <LightMode>
-                  <ExampleList />
-                </LightMode>
-              </TabPanel>
-              <TabPanel id="cool" css={{ flex: 1, padding: "24px" }}>
-                Some breaking news
-              </TabPanel>
-              <TabPanel id="tables" css={{ flex: 1, padding: "24px" }}>
-                Some breaking news
-              </TabPanel>
-              <TabPanel id="players" css={{ flex: 1, padding: "24px" }}>
-                Some player info
-              </TabPanel>
-            </GestureView>
+              <Tab id="hello">Contacts</Tab>
+              <Tab id="cool">Inbox</Tab>
+              <Tab id="tables">Notifications</Tab>
+              <Tab id="players">Settings</Tab>
+            </Tabs>
           </div>
         </DarkMode>
-      </Layer>
-    </div>
+        <GestureView
+          css={{ maxHeight: "400px" }}
+          value={value}
+          onTerminationRequest={onTerminationRequest}
+          onRequestChange={onRequestChange}
+        >
+          <TabPanel id="hello" css={{ flex: 1 }}>
+            <ExampleList />
+          </TabPanel>
+          <TabPanel id="cool" css={{ flex: 1, padding: "24px" }}>
+            Inbox content
+          </TabPanel>
+          <TabPanel id="tables" css={{ flex: 1, padding: "24px" }}>
+            Notification list
+          </TabPanel>
+          <TabPanel id="players" css={{ flex: 1, padding: "24px" }}>
+            Settings tab content
+          </TabPanel>
+        </GestureView>
+      </div>
+    </Layer>
   );
 }
 
@@ -214,6 +207,68 @@ function ToggleDisplayExample() {
       <div css={{ display: show ? "block" : "none" }}>
         <EvenlySpaced />
       </div>
+    </div>
+  );
+}
+
+function ParentSwipe() {
+  const [parentIndex, setParentIndex] = React.useState(1);
+  const [childIndex, setChildIndex] = React.useState(0);
+
+  function onParentTerminationRequest({ delta }: StateType) {
+    if (childIndex !== 0) {
+      return true;
+    }
+
+    const [x] = delta;
+
+    if (x < 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function onChildTerminationRequest({ delta }: StateType) {
+    if (childIndex > 0) {
+      return false;
+    }
+
+    const [x] = delta;
+
+    if (x < 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  return (
+    <div
+      css={{
+        display: "flex",
+        justifyContent: "center",
+        background: theme.colors.background.tint2
+      }}
+    >
+      <GestureView
+        onTerminationRequest={onParentTerminationRequest}
+        value={parentIndex}
+        onRequestChange={i => setParentIndex(i)}
+      >
+        <div
+          css={{
+            backgroundImage: `url(https://images.unsplash.com/photo-1556861460-7d38b2955d05?ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80)`,
+            backgroundSize: "cover",
+            flex: 1
+          }}
+        />
+        <EvenlySpaced
+          value={childIndex}
+          onRequestChange={(i: number) => setChildIndex(i)}
+          onTerminationRequest={onChildTerminationRequest}
+        />
+      </GestureView>
     </div>
   );
 }

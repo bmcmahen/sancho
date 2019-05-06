@@ -10690,10 +10690,10 @@ react-focus-lock@^1.17.7:
     prop-types "^15.6.2"
     react-clientside-effect "^1.2.0"
 
-react-gesture-view@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-gesture-view/-/react-gesture-view-1.0.0.tgz#039b140857f07812359b4c6b88a0674baf2222ac"
-  integrity sha512-/CHFd56xJrMWm3mEDoA12vZbA4J089uewSmBQJxUQzjPtNZ+qKrb10P/J5wSC99hyvSbGTvwinmaS1UO8/mWdg==
+react-gesture-view@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-gesture-view/-/react-gesture-view-1.0.1.tgz#2fbb978a9e72592c25c8fa6dcf4da3f700df50a9"
+  integrity sha512-EH7u25bKO5NMSacdW9wtqpRAnzScA1ukYGPeNVvpgvTP3o+wee5RvHqjKwr8macAWjp43fWy+hNYuC5U9ZCrAA==
   dependencies:
     "@types/react" "^16.8.10"
     "@types/react-dom" "^16.8.3"
