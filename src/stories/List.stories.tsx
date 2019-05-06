@@ -169,45 +169,45 @@ export const CollapseStories = storiesOf("List", module)
 export const ExampleList = () => (
   <List>
     <ListItem
-      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      contentBefore={<Avatar name={"Ben McMahen"} />}
       primary="Ben McMahen"
       wrap={false}
       secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
     />
     <ListItem
       wrap={false}
-      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
-      primary="Joe Chen"
+      contentBefore={<Avatar name={"Charles Taylor"} />}
+      primary="Charles Taylor"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
     />
     <ListItem
       wrap={false}
-      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
-      primary="Joe Chen"
+      contentBefore={<Avatar name={"Karl Marx"} />}
+      primary="Karl Marx"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
     />
     <ListItem
       wrap={false}
-      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
-      primary="Joe Chen"
+      contentBefore={<Avatar name={"Roger Scruton"} />}
+      primary="Roger Scruton"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
     />
     <ListItem
       wrap={false}
-      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
-      primary="Joe Chen"
+      contentBefore={<Avatar name={"Martha Nussbaum"} />}
+      primary="Martha Nussbaum"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
     />
     <ListItem
       wrap={false}
-      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
-      primary="Joe Chen"
+      contentBefore={<Avatar name={"David Hume"} />}
+      primary="David Hume"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
     />
     <ListItem
       wrap={false}
-      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
-      primary="Joe Chen"
+      contentBefore={<Avatar name={"Simone de Beauvior"} />}
+      primary="Simone de Beauvoir"
       secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
     />
   </List>

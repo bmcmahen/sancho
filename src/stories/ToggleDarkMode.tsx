@@ -43,7 +43,6 @@ export const ToggleDarkMode: React.FunctionComponent<ToggleDarkModeProps> = ({
           </Toolbar>
           <div
             css={{
-              paddingTop: "1rem",
               background:
                 mode === "dark"
                   ? theme.modes.dark.palette.gray.dark

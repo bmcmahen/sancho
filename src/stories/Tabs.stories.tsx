@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx, css, Global } from "@emotion/core";
 import * as React from "react";
 import { Tabs, Tab, TabPanel, TabIcon } from "../Tabs";
 import theme from "../Theme";
@@ -10,10 +10,24 @@ import { storiesOf } from "@storybook/react";
 import { Layer } from "../Layer";
 import { Button } from "../Button";
 import { DarkMode, useTheme, LightMode } from "../Theme/Providers";
-import { IconActivity, IconAlertCircle, IconAlignLeft } from "../Icons";
+import {
+  IconActivity,
+  IconAlertCircle,
+  IconAlignLeft,
+  IconArrowRight,
+  IconArrowLeft,
+  IconSettings,
+  IconUser,
+  IconPackage,
+  IconMapPin,
+  IconArrowUp
+} from "../Icons";
 import { GestureView } from "../GestureView";
 import { ExampleList } from "./List.stories";
 import { StateType } from "pan-responder-hook";
+import { IconButton } from "../IconButton";
+import { ResponsivePopover } from "../Popover";
+import { MenuList, MenuItem, MenuDivider } from "../Menu";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
@@ -23,7 +37,7 @@ const Example = () => {
     <div
       css={{
         maxWidth: "100vw",
-        paddingTop: theme.spaces.xl,
+
         background: theme.colors.background.tint1
       }}
     >
@@ -121,13 +135,18 @@ function IconExample() {
   );
 }
 
-function EvenlySpaced({ onRequestChange, value, onTerminationRequest }: any) {
+function EvenlySpaced({
+  onRequestParentChange,
+  onRequestChange,
+  value,
+  onTerminationRequest
+}: any) {
   return (
     <Layer
       elevation="sm"
       css={{
         background: "white",
-        maxWidth: "600px",
+
         width: "100%",
         display: "block",
         borderRadius: 0,
@@ -150,7 +169,19 @@ function EvenlySpaced({ onRequestChange, value, onTerminationRequest }: any) {
               background: theme.colors.palette.blue.base
             }}
           >
-            <Container>
+            <Container
+              css={{
+                justifyContent: "space-between",
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
+              <IconButton
+                variant="ghost"
+                icon={<IconArrowLeft />}
+                onPress={() => onRequestParentChange(0)}
+                label="Go back"
+              />
               <Text
                 variant="h5"
                 gutter={false}
@@ -161,21 +192,54 @@ function EvenlySpaced({ onRequestChange, value, onTerminationRequest }: any) {
               >
                 Messenger
               </Text>
+              <LightMode>
+                <ResponsivePopover
+                  content={
+                    <MenuList>
+                      <MenuItem
+                        contentBefore={<IconUser />}
+                        onSelect={() => alert("Hello 1")}
+                      >
+                        Drink coffee
+                      </MenuItem>
+                      <MenuItem contentBefore={<IconPackage />}>
+                        Eat pancakes
+                      </MenuItem>
+                      <MenuDivider />
+                      <MenuItem contentBefore={<IconMapPin />}>
+                        Make pizza
+                      </MenuItem>
+                      <MenuItem contentBefore={<IconActivity />}>
+                        Dance my heart out
+                      </MenuItem>
+                      <MenuItem contentBefore={<IconArrowUp />}>
+                        Anything you ask
+                      </MenuItem>
+                    </MenuList>
+                  }
+                >
+                  <DarkMode>
+                    <IconButton
+                      variant="ghost"
+                      icon={<IconSettings />}
+                      label="Show settings"
+                    />
+                  </DarkMode>
+                </ResponsivePopover>
+              </LightMode>
             </Container>
-            <Tabs
-              variant="evenly-spaced"
-              value={value}
-              onChange={onRequestChange}
-            >
+            <Tabs value={value} onChange={onRequestChange}>
               <Tab id="hello">Contacts</Tab>
               <Tab id="cool">Inbox</Tab>
               <Tab id="tables">Notifications</Tab>
               <Tab id="players">Settings</Tab>
+              <Tab id="groups">Groups</Tab>
+              <Tab id="family">Family</Tab>
             </Tabs>
           </div>
         </DarkMode>
         <GestureView
-          css={{ maxHeight: "400px" }}
+          css={{ maxHeight: "500px" }}
           value={value}
           onTerminationRequest={onTerminationRequest}
           onRequestChange={onRequestChange}
@@ -190,6 +254,12 @@ function EvenlySpaced({ onRequestChange, value, onTerminationRequest }: any) {
             Notification list
           </TabPanel>
           <TabPanel id="players" css={{ flex: 1, padding: "24px" }}>
+            Settings tab content
+          </TabPanel>
+          <TabPanel id="groups" css={{ flex: 1, padding: "24px" }}>
+            Settings tab content
+          </TabPanel>
+          <TabPanel id="family" css={{ flex: 1, padding: "24px" }}>
             Settings tab content
           </TabPanel>
         </GestureView>
@@ -212,7 +282,7 @@ function ToggleDisplayExample() {
 }
 
 function ParentSwipe() {
-  const [parentIndex, setParentIndex] = React.useState(1);
+  const [parentIndex, setParentIndex] = React.useState(0);
   const [childIndex, setChildIndex] = React.useState(0);
 
   function onParentTerminationRequest({ delta }: StateType) {
@@ -251,24 +321,60 @@ function ParentSwipe() {
         background: theme.colors.background.tint2
       }}
     >
-      <GestureView
-        onTerminationRequest={onParentTerminationRequest}
-        value={parentIndex}
-        onRequestChange={i => setParentIndex(i)}
+      <Global
+        styles={{
+          body: {
+            background: theme.colors.background.tint2
+          }
+        }}
+      />
+      <div
+        css={{
+          maxWidth: "100vw",
+          [theme.mediaQueries.sm]: {
+            maxWidth: "450px"
+          }
+        }}
       >
-        <div
-          css={{
-            backgroundImage: `url(https://images.unsplash.com/photo-1556861460-7d38b2955d05?ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80)`,
-            backgroundSize: "cover",
-            flex: 1
-          }}
-        />
-        <EvenlySpaced
-          value={childIndex}
-          onRequestChange={(i: number) => setChildIndex(i)}
-          onTerminationRequest={onChildTerminationRequest}
-        />
-      </GestureView>
+        <GestureView
+          onTerminationRequest={onParentTerminationRequest}
+          value={parentIndex}
+          onRequestChange={i => setParentIndex(i)}
+        >
+          <div
+            css={{
+              background: theme.colors.palette.green.base,
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <DarkMode>
+              <Text
+                css={{
+                  display: "flex",
+                  alignItems: "center"
+                }}
+              >
+                <Button
+                  variant="ghost"
+                  onPress={() => setParentIndex(1)}
+                  iconAfter={<IconArrowRight />}
+                >
+                  View next
+                </Button>
+              </Text>
+            </DarkMode>
+          </div>
+          <EvenlySpaced
+            value={childIndex}
+            onRequestParentChange={(i: number) => setParentIndex(i)}
+            onRequestChange={(i: number) => setChildIndex(i)}
+            onTerminationRequest={onChildTerminationRequest}
+          />
+        </GestureView>
+      </div>
     </div>
   );
 }
