@@ -605,7 +605,7 @@ function taper(x: number, position: SheetPositions) {
  * @param xy
  */
 
-function getDirection(initial: [number, number], xy: [number, number]) {
+export function getDirection(initial: [number, number], xy: [number, number]) {
   const xDiff = Math.abs(initial[0] - xy[0]);
   const yDiff = Math.abs(initial[1] - xy[1]);
 
