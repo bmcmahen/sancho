@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx, css, InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import { buttonReset } from "./Button";
@@ -265,16 +265,18 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
             <animated.div
               className="Tabs__slider"
               style={spring}
-              css={{
-                height: "4px",
-                borderTopRightRadius: "8px",
-                borderTopLeftRadius: "8px",
-                marginLeft: theme.spaces.sm,
-                marginRight: theme.spaces.sm,
-                bottom: 0,
-                position: "absolute",
-                background: dark ? "white" : theme.colors.text.selected
-              }}
+              css={
+                {
+                  height: "4px",
+                  borderTopRightRadius: "8px",
+                  borderTopLeftRadius: "8px",
+                  marginLeft: theme.spaces.sm,
+                  marginRight: theme.spaces.sm,
+                  bottom: 0,
+                  position: "absolute",
+                  background: dark ? "white" : theme.colors.text.selected
+                } as InterpolationWithTheme<any>
+              }
             />
           )}
         </div>

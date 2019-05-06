@@ -9,7 +9,7 @@ import {
   PopperChildrenProps
 } from "react-popper";
 import { Portal } from "./Portal";
-import { useTransition, AnimatedValue } from "react-spring";
+import { useTransition, SpringValue } from "react-spring";
 import PropTypes from "prop-types";
 
 export type Placements =
@@ -42,8 +42,8 @@ interface PositionsProps {
   children: (
     props: PopperChildrenProps,
     state: {
-      [x: string]: AnimatedValue<any>;
-      opacity: AnimatedValue<number>;
+      [x: string]: SpringValue<any>;
+      opacity: SpringValue<number>;
     }
   ) => React.ReactNode;
 }

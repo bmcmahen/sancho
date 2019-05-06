@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx, css, InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { animated, useSpring, SpringConfig } from "react-spring";
 import { useFocusElement } from "./Hooks/focus";
@@ -358,17 +358,19 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         <animated.div
           style={{ opacity }}
           {...bindTouchable}
-          css={{
-            touchAction: "none",
-            position: "absolute",
-            willChange: "opacity",
-            top: 0,
-            left: 0,
-            pointerEvents: isOpen ? "auto" : "none",
-            right: 0,
-            bottom: 0,
-            background: theme.colors.background.overlay
-          }}
+          css={
+            {
+              touchAction: "none",
+              position: "absolute",
+              willChange: "opacity",
+              top: 0,
+              left: 0,
+              pointerEvents: isOpen ? "auto" : "none",
+              right: 0,
+              bottom: 0,
+              background: theme.colors.background.overlay
+            } as InterpolationWithTheme<any>
+          }
         />
         <animated.div
           tabIndex={-1}

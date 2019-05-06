@@ -165,3 +165,50 @@ export const CollapseStories = storiesOf("List", module)
       />
     </List>
   ));
+
+export const ExampleList = () => (
+  <List>
+    <ListItem
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Ben McMahen"
+      wrap={false}
+      secondary="Minim do minim cupidatat veniam aliquip sunt exercitation enim nisi nulla."
+    />
+    <ListItem
+      wrap={false}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+    />
+    <ListItem
+      wrap={false}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+    />
+    <ListItem
+      wrap={false}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+    />
+    <ListItem
+      wrap={false}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+    />
+    <ListItem
+      wrap={false}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+    />
+    <ListItem
+      wrap={false}
+      contentBefore={<Avatar name={"Ben McMahen"} src={faker.image.avatar()} />}
+      primary="Joe Chen"
+      secondary="Proident irure cupidatat cupidatat elit eiusmod mollit."
+    />
+  </List>
+);

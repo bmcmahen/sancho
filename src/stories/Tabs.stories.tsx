@@ -8,10 +8,11 @@ import { Container } from "../Container";
 import { Badge } from "../Badge";
 import { storiesOf } from "@storybook/react";
 import { Layer } from "../Layer";
-import { TabContent } from "../TabContent";
 import { Button } from "../Button";
-import { DarkMode, useTheme } from "../Theme/Providers";
+import { DarkMode, useTheme, LightMode } from "../Theme/Providers";
 import { IconActivity, IconAlertCircle, IconAlignLeft } from "../Icons";
+import { GestureView } from "../GestureView";
+import { ExampleList } from "./List.stories";
 
 const Example = () => {
   const [value, setValue] = React.useState(0);
@@ -133,8 +134,8 @@ function EvenlySpaced() {
       <Layer
         elevation="sm"
         css={{
+          background: "white",
           maxWidth: "600px",
-          maxHeight: "500px",
           width: "100%",
           display: "block",
           borderRadius: 0,
@@ -145,11 +146,9 @@ function EvenlySpaced() {
         <DarkMode>
           <div
             css={{
-              background: theme.colors.background.tint1,
               boxSizing: "border-box",
               width: "100%",
-              overflow: "hidden",
-              height: "200px"
+              overflow: "hidden"
             }}
           >
             <div
@@ -165,7 +164,7 @@ function EvenlySpaced() {
                     padding: theme.spaces.md
                   }}
                 >
-                  NHL Hockey
+                  Messenger
                 </Text>
               </Container>
               <Tabs
@@ -173,26 +172,32 @@ function EvenlySpaced() {
                 value={value}
                 onChange={i => setValue(i)}
               >
-                <Tab id="hello">Games</Tab>
-                <Tab id="cool">News</Tab>
-                <Tab id="tables">Tables</Tab>
-                <Tab id="players">Players</Tab>
+                <Tab id="hello">Contacts</Tab>
+                <Tab id="cool">Inbox</Tab>
+                <Tab id="tables">Notifications</Tab>
+                <Tab id="players">Settings</Tab>
               </Tabs>
             </div>
-            <TabContent value={value} onChange={i => setValue(i)}>
-              <TabPanel id="hello" css={{ padding: "24px" }}>
-                What's up?
+            <GestureView
+              css={{ maxHeight: "400px" }}
+              value={value}
+              onRequestChange={i => setValue(i)}
+            >
+              <TabPanel id="hello" css={{ flex: 1 }}>
+                <LightMode>
+                  <ExampleList />
+                </LightMode>
               </TabPanel>
-              <TabPanel id="cool" css={{ padding: "24px" }}>
+              <TabPanel id="cool" css={{ flex: 1, padding: "24px" }}>
                 Some breaking news
               </TabPanel>
-              <TabPanel id="tables" css={{ padding: "24px" }}>
+              <TabPanel id="tables" css={{ flex: 1, padding: "24px" }}>
                 Some breaking news
               </TabPanel>
-              <TabPanel id="players" css={{ padding: "24px" }}>
+              <TabPanel id="players" css={{ flex: 1, padding: "24px" }}>
                 Some player info
               </TabPanel>
-            </TabContent>
+            </GestureView>
           </div>
         </DarkMode>
       </Layer>

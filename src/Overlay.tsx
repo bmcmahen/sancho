@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { jsx, InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { animated, useTransition } from "react-spring";
 import { Portal } from "./Portal";
@@ -68,14 +68,16 @@ export const Overlay: React.RefForwardingComponent<
               >
                 <animated.div
                   style={{ opacity: props.opacity }}
-                  css={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: theme.colors.background.overlay
-                  }}
+                  css={
+                    {
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: theme.colors.background.overlay
+                    } as InterpolationWithTheme<any>
+                  }
                 />
 
                 {children}
