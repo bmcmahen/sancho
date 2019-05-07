@@ -11,7 +11,7 @@ import { Theme } from "./Theme";
 import { useMeasure, Bounds } from "./Hooks/use-measure";
 import { usePrevious } from "./Hooks/previous";
 import { useHideBody } from "./Hooks/hide-body";
-import { usePanResponder, StateType } from "pan-responder-hook";
+import { useGestureResponder, StateType } from "react-gesture-responder";
 
 export const RequestCloseContext = React.createContext(() => {});
 
@@ -198,7 +198,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    */
 
   // our overlay pan responder
-  const { bind: bindTouchable } = usePanResponder({
+  const { bind: bindTouchable } = useGestureResponder({
     onStartShouldSet: () => true,
     onRelease: ({ initial, xy }, e) => {
       // ignore swipes on release
@@ -220,7 +220,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   }
 
   // our main sheet pan responder
-  const { bind } = usePanResponder(
+  const { bind } = useGestureResponder(
     {
       onStartShouldSet: () => {
         initialDirection.current = null;

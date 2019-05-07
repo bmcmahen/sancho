@@ -1,1 +1,1 @@
-export * from "pan-responder-hook";
+export * from "react-gesture-responder";

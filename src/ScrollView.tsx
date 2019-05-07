@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
-import { usePanResponder } from "pan-responder-hook";
+import { useGestureResponder } from "react-gesture-responder";
 import { getDirection } from "./Sheet";
 import { useSpring, SpringConfig } from "react-spring";
 
@@ -94,7 +94,7 @@ const ScrollViewForward: React.RefForwardingComponent<
    * enabled on touch devices.
    */
 
-  const { bind } = usePanResponder(
+  const { bind } = useGestureResponder(
     {
       onStartShouldSet: () => {
         initialDirection.current = null;

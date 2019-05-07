@@ -24,7 +24,7 @@ import {
 } from "../Icons";
 import { GestureView } from "../GestureView";
 import { ExampleList } from "./List.stories";
-import { StateType } from "pan-responder-hook";
+import { StateType } from "react-gesture-responder";
 import { IconButton } from "../IconButton";
 import { ResponsivePopover } from "../Popover";
 import { MenuList, MenuItem, MenuDivider } from "../Menu";
