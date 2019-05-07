@@ -330,9 +330,12 @@ function ParentSwipe() {
       />
       <div
         css={{
+          borderRadius: 0,
           maxWidth: "100vw",
+          overflow: "hidden",
           [theme.mediaQueries.sm]: {
-            maxWidth: "450px"
+            maxWidth: "450px",
+            borderRadius: theme.radii.lg
           }
         }}
       >

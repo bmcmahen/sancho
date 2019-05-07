@@ -19,6 +19,7 @@ import { OnPressFunction } from "touchable-hook";
 import { mergeRefs } from "./Hooks/merge-refs";
 import { Touchable } from "./Touchable";
 import cx from "classnames";
+import { ScrollView, ScrollViewHandles } from "./ScrollView";
 
 const hideScrollbar = css`
   ::-webkit-scrollbar {
@@ -85,23 +86,8 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 
   const [showSlider, setShowSlider] = React.useState(false);
   const previousSlider = usePrevious(slider);
-  const ref = React.useRef<HTMLDivElement | null>(null);
-  const { bounds } = useMeasure(ref);
-
-  /**
-   * A spring for animating scroll positions
-   */
-
-  const [, setScroll] = useSpring(() => {
-    return {
-      config: animationConfig,
-      from: { x: 0 },
-      to: { x: 0 },
-      onFrame: (animated: any) => {
-        ref.current!.scrollLeft = animated.x;
-      }
-    };
-  });
+  const scrollRef = React.useRef<ScrollViewHandles>(null);
+  const { bounds } = useMeasure(boundary);
 
   // determine if we should scroll into view when our
   // value changes
@@ -118,13 +104,9 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
         return;
       }
 
-      const { el, left } = actions[0];
+      const { left } = actions[0];
 
-      setScroll({
-        from: { x: el.scrollLeft },
-        to: { x: left },
-        reset: true
-      });
+      scrollRef.current!.scrollTo(left);
     }
   }, [value]);
 
@@ -219,19 +201,16 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
       }}
       {...other}
     >
-      <div
+      <ScrollView
+        overflowX
         className="Tabs__container"
-        ref={ref}
+        ref={scrollRef}
         css={[
           {
             width: "100%",
             whiteSpace: "nowrap",
-            overflowX: "scroll",
-            WebkitOverflowScrolling: "touch",
             paddingBottom: "20px",
-            marginBottom: "-20px",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none"
+            marginBottom: "-20px"
           },
           hideScrollbar
         ]}
@@ -280,7 +259,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
             />
           )}
         </div>
-      </div>
+      </ScrollView>
     </div>
   );
 };
@@ -419,6 +398,7 @@ export const Tab: React.RefForwardingComponent<
           "Tab--active": isActive
         })}
         component={Component}
+        terminateOnScroll={false}
         onPress={onPressFn}
         delay={0}
         css={[

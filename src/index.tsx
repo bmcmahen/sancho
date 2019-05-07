@@ -34,6 +34,7 @@ export * from "./Table";
 export * from "./SkipNav";
 export * from "./VisuallyHidden";
 export * from "./Touchable";
+export * from "./ScrollView";
 
 // Theme stuff
 export * from "./Theme";
