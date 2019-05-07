@@ -23,6 +23,8 @@ export interface TouchableProps {
    * on touch devices. This will only effect touch devices.
    */
   pressExpandPx?: number;
+  /** Whether active presses should be terminated when scrolling occurs. Typically this should be true. */
+  terminateOnScroll?: boolean;
   component?: React.ReactType<any>;
   [key: string]: any; // lame hack to allow component injection
 }
@@ -37,6 +39,7 @@ export const Touchable: React.RefForwardingComponent<
       className = "",
       delay,
       pressExpandPx,
+      terminateOnScroll = true,
       component: Component = "button",
       onPress,
       disabled = false,
@@ -49,6 +52,7 @@ export const Touchable: React.RefForwardingComponent<
       onPress,
       disabled,
       delay,
+      terminateOnScroll,
       pressExpandPx,
       behavior: isLink ? "link" : "button"
     });

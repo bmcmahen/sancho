@@ -398,6 +398,7 @@ export const Tab: React.RefForwardingComponent<
           "Tab--active": isActive
         })}
         component={Component}
+        terminateOnScroll={false}
         onPress={onPressFn}
         delay={0}
         css={[
