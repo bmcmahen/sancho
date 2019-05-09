@@ -10681,19 +10681,19 @@ react-focus-lock@^1.17.7:
     prop-types "^15.6.2"
     react-clientside-effect "^1.2.0"
 
-react-gesture-responder@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-gesture-responder/-/react-gesture-responder-2.0.0.tgz#abbfee7d77d65f93567415fccad1b80860d2967a"
-  integrity sha512-oWQSq9YQYKRp8KMu10jj3qySvOTOqgEaqcDVwf3rX7gCx4FG2a/BLQBKb3SEZbZP4DbkG5ULk1/dy2jaoR2Vlw==
+react-gesture-responder@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-gesture-responder/-/react-gesture-responder-2.0.1.tgz#39ab40424bba5dc2216b6cc86cac1ba969cff4fb"
+  integrity sha512-m7rA9IKPtsmPtC94+Q+dpbVtun5yDbm9ayMP63VMRlOTqaqIdbKfyhG+uYqaooxKeFa60Bpjw4IyQm4gi/SIvw==
   dependencies:
     "@types/react" "^16.8.10"
     "@types/react-dom" "^16.8.3"
     tslib "^1.9.3"
 
-react-gesture-view@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-gesture-view/-/react-gesture-view-1.0.2.tgz#0a051132b778e0597bfe245000b03c455fc7e48b"
-  integrity sha512-7eIJHdBmwnhbQKAsozSFE6Bp6OiYHELDoSI3hJMMev9IGCKK3kWxiEM2Y2hRiRTJmJ23O+ZyB0C+ZMJ7AZ8RxQ==
+react-gesture-view@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-gesture-view/-/react-gesture-view-1.1.0.tgz#f7b0220861185efd4e6260d751f95de3baf4ec7f"
+  integrity sha512-EVUw4jdEy+a556Y2HmwWQCkw7a7o2r5ZoGpRGj/qD9cF4kONT4ICTUHjA0/HaYyL9MrjG6QIGIoo4CD1FTOVRQ==
   dependencies:
     "@types/react" "^16.8.10"
     "@types/react-dom" "^16.8.3"
