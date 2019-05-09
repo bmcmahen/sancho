@@ -128,9 +128,6 @@ InputGroup.propTypes = {
 
 function getBaseStyles(theme: Theme) {
   const dark = theme.colors.mode === "dark";
-  const gray = dark
-    ? theme.colors.palette.gray.light
-    : theme.colors.palette.gray.base;
 
   const baseStyles = css({
     display: "block",
@@ -173,7 +170,14 @@ function getBaseStyles(theme: Theme) {
       outline: "none"
     },
     ":disabled": {
-      boxShadow: `inset 0 0 0 1px ${alpha(gray, 0.45)}`
+      opacity: dark ? 0.4 : 0.8,
+      background: theme.colors.background.tint1,
+      cursor: "not-allowed",
+      boxShadow: `0 0 0 2px transparent inset, 0 0 0 1px ${
+        dark
+          ? alpha(theme.colors.palette.gray.lightest, 0.05)
+          : alpha(theme.colors.palette.gray.dark, 0.15)
+      } inset`
     },
     ":active": {
       background: theme.colors.background.tint1
@@ -380,10 +384,17 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             backgroundClip: "padding-box",
             borderRadius: theme.radii.sm,
             margin: 0,
-            "& [disabled]": {
-              opacity: 0.8,
-              backgroundImage: "none",
-              cursor: "not-allowed"
+            ":disabled": {
+              ":disabled": {
+                opacity: dark ? 0.4 : 0.8,
+                background: theme.colors.background.tint1,
+                cursor: "not-allowed",
+                boxShadow: `0 0 0 2px transparent inset, 0 0 0 1px ${
+                  dark
+                    ? alpha(theme.colors.palette.gray.lightest, 0.05)
+                    : alpha(theme.colors.palette.gray.dark, 0.1)
+                } inset`
+              }
             },
             ":focus": {
               borderColor: theme.colors.palette.blue.base,
@@ -434,6 +445,7 @@ export interface CheckProps
 export const Check: React.FunctionComponent<CheckProps> = ({
   label,
   id,
+  disabled,
   ...other
 }) => {
   const uid = useUid(id);
@@ -445,10 +457,19 @@ export const Check: React.FunctionComponent<CheckProps> = ({
       css={{ display: "flex", alignItems: "center" }}
       {...other}
     >
-      <input className="Check__input" type="checkbox" id={uid} {...other} />
+      <input
+        disabled={disabled}
+        className="Check__input"
+        type="checkbox"
+        id={uid}
+        {...other}
+      />
       <label
         className="Check__label"
-        css={{ marginLeft: theme.spaces.xs }}
+        css={{
+          opacity: disabled ? 0.6 : undefined,
+          marginLeft: theme.spaces.xs
+        }}
         htmlFor={uid}
       >
         <Text>{label}</Text>
