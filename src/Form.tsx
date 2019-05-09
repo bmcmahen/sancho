@@ -41,6 +41,16 @@ export interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
+interface InputGroupContextType {
+  uid?: string;
+  error?: string | React.ReactNode;
+}
+
+const InputGroupContext = React.createContext<InputGroupContextType>({
+  uid: undefined,
+  error: undefined
+});
+
 export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
   id,
   label,
@@ -71,10 +81,14 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
       <Label hide={hideLabel} htmlFor={uid}>
         {label}
       </Label>
-      {React.isValidElement(children) &&
-        React.cloneElement(children as React.ReactElement<any>, {
-          id: uid
-        })}
+      <InputGroupContext.Provider
+        value={{
+          uid,
+          error
+        }}
+      >
+        {children}
+      </InputGroupContext.Provider>
 
       {error && typeof error === "string" ? (
         <div
@@ -126,6 +140,13 @@ InputGroup.propTypes = {
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 };
 
+function shadowBorder(color: string, opacity: number) {
+  return `0 0 0 2px transparent inset, 0 0 0 1px ${alpha(
+    color,
+    opacity
+  )} inset`;
+}
+
 function getBaseStyles(theme: Theme) {
   const dark = theme.colors.mode === "dark";
 
@@ -144,11 +165,9 @@ function getBaseStyles(theme: Theme) {
     touchAction: "manipulation",
     fontFamily: theme.fonts.base,
     border: "none",
-    boxShadow: `0 0 0 2px transparent inset, 0 0 0 1px ${
-      dark
-        ? alpha(theme.colors.palette.gray.lightest, 0.14)
-        : alpha(theme.colors.palette.gray.dark, 0.2)
-    } inset`,
+    boxShadow: dark
+      ? shadowBorder(theme.colors.palette.gray.lightest, 0.14)
+      : shadowBorder(theme.colors.palette.gray.dark, 0.2),
     borderRadius: theme.radii.sm,
     transition:
       "background 0.25s cubic-bezier(0.35,0,0.25,1), border-color 0.15s cubic-bezier(0.35,0,0.25,1), box-shadow 0.15s cubic-bezier(0.35,0,0.25,1)",
@@ -173,11 +192,9 @@ function getBaseStyles(theme: Theme) {
       opacity: dark ? 0.4 : 0.8,
       background: theme.colors.background.tint1,
       cursor: "not-allowed",
-      boxShadow: `0 0 0 2px transparent inset, 0 0 0 1px ${
-        dark
-          ? alpha(theme.colors.palette.gray.lightest, 0.05)
-          : alpha(theme.colors.palette.gray.dark, 0.15)
-      } inset`
+      boxShadow: dark
+        ? shadowBorder(theme.colors.palette.gray.lightest, 0.15)
+        : shadowBorder(theme.colors.palette.gray.dark, 0.12)
     },
     ":active": {
       background: theme.colors.background.tint1
@@ -200,13 +217,18 @@ function useActiveStyle() {
 
 function useSharedStyle() {
   const theme = useTheme();
+  const errorStyles = {
+    boxShadow: shadowBorder(theme.colors.intent.danger.base, 0.45)
+  };
+
   const baseStyles = React.useMemo(() => getBaseStyles(theme), [theme]);
   const inputSizes = React.useMemo(() => getInputSizes(theme), [theme]);
   const activeBackground = css({ background: theme.colors.background.tint1 });
   return {
     baseStyles,
     inputSizes,
-    activeBackground
+    activeBackground,
+    errorStyles
   };
 }
 
@@ -227,11 +249,18 @@ export const InputBase: React.FunctionComponent<InputBaseProps> = ({
   inputSize = "md",
   ...other
 }) => {
+  const { uid, error } = React.useContext(InputGroupContext);
   const { bind, active } = useActiveStyle();
-  const { baseStyles, inputSizes, activeBackground } = useSharedStyle();
+  const {
+    baseStyles,
+    inputSizes,
+    activeBackground,
+    errorStyles
+  } = useSharedStyle();
   const height = getHeight(inputSize);
   return (
     <input
+      id={uid}
       className="Input"
       autoComplete={autoComplete}
       autoFocus={autoFocus}
@@ -240,6 +269,7 @@ export const InputBase: React.FunctionComponent<InputBaseProps> = ({
         baseStyles,
         inputSizes[inputSize],
         active && activeBackground,
+        error && errorStyles,
         { height }
       ]}
       {...other}
@@ -268,11 +298,18 @@ export const TextArea: React.FunctionComponent<TextAreaProps> = ({
   ...other
 }) => {
   const { bind, active } = useActiveStyle();
-  const { baseStyles, inputSizes, activeBackground } = useSharedStyle();
+  const {
+    baseStyles,
+    inputSizes,
+    activeBackground,
+    errorStyles
+  } = useSharedStyle();
+  const { uid, error } = React.useContext(InputGroupContext);
 
   return (
     <textarea
       className="TextArea"
+      id={uid}
       {...bind}
       css={[
         baseStyles,
@@ -281,7 +318,8 @@ export const TextArea: React.FunctionComponent<TextAreaProps> = ({
           overflow: "auto",
           resize: "vertical"
         },
-        active && activeBackground
+        active && activeBackground,
+        error && errorStyles
       ]}
       {...other}
     />
@@ -347,6 +385,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
 }) => {
   const theme = useTheme();
   const inputSizes = getInputSizes(theme);
+  const { uid, error } = React.useContext(InputGroupContext);
   const selectSize = {
     sm: inputSizes.sm,
     md: inputSizes.md,
@@ -364,6 +403,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
     >
       <select
         className="Select__input"
+        id={uid}
         css={[
           selectSize[inputSize],
           {
@@ -391,8 +431,8 @@ export const Select: React.FunctionComponent<SelectProps> = ({
                 cursor: "not-allowed",
                 boxShadow: `0 0 0 2px transparent inset, 0 0 0 1px ${
                   dark
-                    ? alpha(theme.colors.palette.gray.lightest, 0.05)
-                    : alpha(theme.colors.palette.gray.dark, 0.1)
+                    ? alpha(theme.colors.palette.gray.lightest, 0.15)
+                    : alpha(theme.colors.palette.gray.dark, 0.12)
                 } inset`
               }
             },
@@ -411,6 +451,9 @@ export const Select: React.FunctionComponent<SelectProps> = ({
                   ),
               outline: 0
             }
+          },
+          error && {
+            boxShadow: shadowBorder(theme.colors.intent.danger.base, 0.45)
           }
         ]}
         multiple={multiple}
