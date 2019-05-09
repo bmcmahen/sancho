@@ -1,3 +1,9 @@
+## 3.1.0
+
+- Upgrade react-gesture-view and react-gesture-responder. This enables users to disable gestures for GestureView.
+- Fix disabled form states
+- Improve input error appearances
+
 ## 3.0.0
 
 #### Breaking changes
