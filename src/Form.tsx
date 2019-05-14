@@ -467,7 +467,8 @@ export const Select: React.FunctionComponent<SelectProps> = ({
             position: "absolute",
             top: "50%",
             right: "0.75rem",
-            transform: "translateY(-50%)"
+            transform: "translateY(-50%)",
+            pointerEvents: "none"
           }}
         />
       )}
