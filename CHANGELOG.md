@@ -1,3 +1,7 @@
+## 3.1.1
+
+- Update react-spring, react-gesture-view, toasted-notes
+
 ## 3.1.0
 
 - Upgrade react-gesture-view and react-gesture-responder. This enables users to disable gestures for GestureView.
