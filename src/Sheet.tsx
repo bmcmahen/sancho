@@ -380,16 +380,16 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
             e.stopPropagation();
           }}
           style={{
-            transform: xy.interpolate(interpolate as any)
+            transform: xy.interpolate(interpolate)
           }}
           css={[
             {
               willChange: "transform",
-              visibility: (visible ? "visible" : "hidden") as any,
+              visibility: visible ? "visible" : "hidden",
               outline: "none",
               zIndex: theme.zIndices.modal,
               opacity: 1,
-              position: "fixed" as any
+              position: "fixed"
             },
             positionsStyle[position]
           ]}
