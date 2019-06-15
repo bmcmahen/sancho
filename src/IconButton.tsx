@@ -63,7 +63,7 @@ IconButton.propTypes = {
   icon: PropTypes.node.isRequired,
   color: PropTypes.string,
   label: PropTypes.string.isRequired,
-  variant: PropTypes.oneOf(["default", "ghost"]),
+  variant: PropTypes.oneOf(["outline", "default", "ghost"]),
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
 };
 
@@ -86,6 +86,6 @@ export const CloseButton: React.FunctionComponent<CloseButtonProps> = ({
 CloseButton.propTypes = {
   label: PropTypes.string,
   color: PropTypes.string,
-  variant: PropTypes.oneOf(["default", "ghost"]),
+  variant: PropTypes.oneOf(["outline", "default", "ghost"]),
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
 };
