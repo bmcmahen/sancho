@@ -49,7 +49,7 @@ export const IconButton: React.RefForwardingComponent<
         {...other}
       >
         <VisuallyHidden>{label}</VisuallyHidden>
-        <IconWrapper color="currentColor" size={size}>
+        <IconWrapper color={color} size={size}>
           {icon}
         </IconWrapper>
       </Button>
