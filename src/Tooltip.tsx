@@ -79,6 +79,12 @@ interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
   placement?: Placements;
   /** the target element for the tooltip */
   children: React.ReactNode;
+  /** delay showing the tooltip (ms) */
+  delayIn?: number;
+  /** delay hiding the tooltip (ms) */
+  delayOut?: number;
+  /** Prevents the tooltip from disappearing when the user hovers over it */
+  hover?: boolean;
   maxWidth?: string;
 }
 
@@ -86,6 +92,9 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   placement,
   children,
   content,
+  delayIn = 0,
+  delayOut = 0,
+  hover: enableHover = true,
   maxWidth = "300px",
   ...other
 }) => {
@@ -93,6 +102,8 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
   const theme = useTheme();
   const dark = theme.colors.mode === "dark";
   const [show, setShow] = React.useState(false);
+  const [hovering, setHovering] = React.useState(false);
+  const [delayShow, setDelayShow] = React.useState(false);
 
   function renderTrigger({ ref }: ReferenceChildrenProps) {
     // We don't want tooltips to show on touch based devices
@@ -123,8 +134,45 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
     });
   }
 
+  function onMouseLeave() {
+    setHovering(false);
+  }
+
+  function onMouseEnter() {
+    setHovering(true);
+  }
+
+  React.useEffect(() => {
+    let timeoutIn: NodeJS.Timeout;
+    let timeoutOut: NodeJS.Timeout;
+
+    if (show) {
+      timeoutIn = setTimeout(() => {
+        setDelayShow(true);
+      }, delayIn);
+    } else {
+      timeoutOut = setTimeout(() => {
+        setDelayShow(false);
+      }, delayOut);
+    }
+
+    return () => {
+      if (timeoutIn) {
+        clearInterval(timeoutIn);
+      }
+
+      if (timeoutOut) {
+        clearInterval(timeoutOut);
+      }
+    };
+  }, [delayIn, delayOut, show]);
+
   return (
-    <Positioner placement={placement} isOpen={show} target={renderTrigger}>
+    <Positioner
+      placement={placement}
+      isOpen={delayShow || (hovering && enableHover)}
+      target={renderTrigger}
+    >
       {({ placement, ref, style, arrowProps }, state) => (
         <animated.div
           id={id}
@@ -140,6 +188,8 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
             zIndex: theme.zIndices.tooltip,
             margin: theme.spaces.xs
           }}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
           {...other}
         >
           <div
@@ -184,6 +234,9 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
 Tooltip.propTypes = {
   content: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
+  hover: PropTypes.bool,
+  delayIn: PropTypes.number,
+  delayOut: PropTypes.number,
   placement: PropTypes.oneOf([
     "auto-start",
     "auto",

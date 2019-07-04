@@ -43,4 +43,17 @@ export const TooltipStories = storiesOf("Tooltip", module)
         </Tooltip>
       </div>
     );
+  })
+  .add("delay show / hide", () => {
+    return (
+      <div css={{ padding: "100px" }}>
+        <Tooltip
+          delayIn={1000}
+          delayOut={800}
+          content="This is some tooltip content"
+        >
+          <Button>Hello world. Hover me!!</Button>
+        </Tooltip>
+      </div>
+    );
   });
