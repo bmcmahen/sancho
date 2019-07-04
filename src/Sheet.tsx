@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css, InterpolationWithTheme } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { animated, useSpring, SpringConfig } from "react-spring";
 import { useFocusElement } from "./Hooks/focus";
@@ -126,7 +126,6 @@ interface SheetProps {
    * 'bottom' for responsive modal popovers.
    */
   position: SheetPositions;
-  closeOnClick?: boolean;
   /** spring animation configuration */
   animationConfig?: SpringConfig;
 }
@@ -142,8 +141,6 @@ interface SheetProps {
 export const Sheet: React.FunctionComponent<SheetProps> = ({
   isOpen,
   children,
-  role = "document",
-  closeOnClick = true,
   animationConfig = { mass: 0.8, tension: 185, friction: 24 },
   position = "right",
   onRequestClose,
@@ -200,7 +197,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   // our overlay pan responder
   const { bind: bindTouchable } = useGestureResponder({
     onStartShouldSet: () => true,
-    onRelease: ({ initial, xy }, e) => {
+    onRelease: ({ initial, xy }) => {
       // ignore swipes on release
       if (initial[0] === xy[0] && initial[1] === xy[1]) {
         setTimeout(() => onRequestClose(), 0);
@@ -278,26 +275,29 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
    * @param immediate
    */
 
-  function animateToPosition(immediate = false) {
-    // when the user makes the gesture to close we start
-    // our animation with their last velocity
-    const { width, height } = bounds;
-    const velocity = startVelocity.current;
-    startVelocity.current = null;
+  const animateToPosition = React.useCallback(
+    (immediate = false) => {
+      // when the user makes the gesture to close we start
+      // our animation with their last velocity
+      const { width, height } = bounds;
+      const velocity = startVelocity.current;
+      startVelocity.current = null;
 
-    const { x, y } = getDefaultPositions(isOpen, position, width, height);
+      const { x, y } = getDefaultPositions(isOpen, position, width, height);
 
-    setSpring({
-      config: {
-        ...animationConfig,
-        velocity: velocity || 0
-      },
-      xy: [x, y],
-      immediate
-    });
+      setSpring({
+        config: {
+          ...animationConfig,
+          velocity: velocity || 0
+        },
+        xy: [x, y],
+        immediate
+      });
 
-    setOpacity({ opacity: isOpen ? 1 : 0 });
-  }
+      setOpacity({ opacity: isOpen ? 1 : 0 });
+    },
+    [animationConfig, bounds, isOpen, position, setOpacity, setSpring]
+  );
 
   /**
    * Handle close / open non-gestured controls
@@ -317,7 +317,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
     }
 
     animateToPosition(!mounted);
-  }, [position, mounted, bounds, previousBounds, isOpen]);
+  }, [animateToPosition, position, mounted, bounds, previousBounds, isOpen]);
 
   /**
    * Convert our positions to translate3d
@@ -358,19 +358,17 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
         <animated.div
           style={{ opacity }}
           {...bindTouchable}
-          css={
-            {
-              touchAction: "none",
-              position: "absolute",
-              willChange: "opacity",
-              top: 0,
-              left: 0,
-              pointerEvents: isOpen ? "auto" : "none",
-              right: 0,
-              bottom: 0,
-              background: theme.colors.background.overlay
-            } as InterpolationWithTheme<any>
-          }
+          css={{
+            touchAction: "none",
+            position: "absolute",
+            willChange: "opacity",
+            top: 0,
+            left: 0,
+            pointerEvents: isOpen ? "auto" : "none",
+            right: 0,
+            bottom: 0,
+            background: theme.colors.background.overlay
+          }}
         />
         <animated.div
           tabIndex={-1}
@@ -419,7 +417,11 @@ Sheet.propTypes = {
   onRequestClose: PropTypes.func,
   children: PropTypes.node,
   position: PropTypes.oneOf(["left", "top", "right", "bottom"]),
-  closeOnClick: PropTypes.bool
+  animationConfig: PropTypes.shape({
+    tension: PropTypes.number,
+    mass: PropTypes.number,
+    friction: PropTypes.number
+  })
 };
 
 /**
