@@ -20,11 +20,12 @@ https://twitter.com/intent/follow?screen_name=benmcmahen
 ## Features
 
 - Beautiful, generic components that you can make your own.
-- Responsive and accessible.
+- Highly responsive. Sancho takes mobile seriously, with built in support for gestures.
+- Accessible.
 - A fully customizable theme, which includes a dark and light mode.
 - Fully typed for use with Typescript.
 - Support for tree shaking. Bundle only those components that you need.
-- Included components: Alert, Avatar, Badge, Breadcrumbs, Button, Collapse, Container, Dialog, Divider, Form (and inputs), IconButton, Icons, Layer, Link, List, Menu, Navbar, Popover, Sheet, Spinner, Table, Tabs, Text, Toast, Toolbar, Tooltip, amongst others.
+- An ever-growing [list of components](https://sancho-ui.com).
 
 [View the documentation](https://sancho-ui.com) for full details.
 
@@ -59,7 +60,6 @@ function MyApp() {
   </a>
 </div>
 <br />
-
 
 [Julienne](https://julienne.app) is a small application built with Sancho and Firebase which helps you share recipes with family and friends. View the [source here](https://github.com/bmcmahen/julienne).
 
