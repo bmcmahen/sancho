@@ -26,7 +26,7 @@ export function useMeasure(ref: React.RefObject<HTMLDivElement | null>) {
   React.useEffect(() => {
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
+  }, [observer, ref]);
 
   return { bounds };
 }
