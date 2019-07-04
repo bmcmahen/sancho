@@ -94,6 +94,8 @@ const ColorMode: React.RefForwardingComponent<
   );
 });
 
+ColorMode.displayName = "ColorMode";
+
 function mergeColors(theme: Theme, colors: ThemeColors) {
   return {
     ...theme,
@@ -123,6 +125,8 @@ export const LightMode: React.RefForwardingComponent<
   );
 });
 
+LightMode.displayName = "LightMode";
+
 /**
  * Provide a dark theme
  */
@@ -138,3 +142,5 @@ export const DarkMode: React.RefForwardingComponent<
     </ColorMode>
   );
 });
+
+DarkMode.displayName = "DarkMode";

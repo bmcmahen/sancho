@@ -31,7 +31,7 @@ export const Portal: React.FunctionComponent<PortalProps> = ({ children }) => {
         container!.removeChild(target);
       }
     };
-  }, []);
+  }, [target]);
 
   return target ? ReactDOM.createPortal(children, target) : null;
 };
