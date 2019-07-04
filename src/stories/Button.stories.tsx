@@ -1,11 +1,10 @@
 /** @jsx jsx */
-import { jsx, css, SerializedStyles } from "@emotion/core";
+import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Button, ButtonIntent, ButtonVariant, ButtonSize } from "../Button";
 import { storiesOf } from "@storybook/react";
 import theme from "../Theme";
 import { DarkMode, useTheme, LightMode } from "../Theme/Providers";
-import { ToggleDarkMode } from "./ToggleDarkMode";
 import { IconArrowLeft, IconArrowRight } from "../Icons";
 
 export const ButtonStories = storiesOf("Button", module)
@@ -80,54 +79,49 @@ export const ButtonStories = storiesOf("Button", module)
     );
   })
   .add("with icons", () => (
-    <ToggleDarkMode>
-      <div
-        css={{
-          "& > *": {
-            margin: theme.spaces.md
-          }
-        }}
+    <div
+      css={{
+        "& > *": {
+          margin: theme.spaces.md
+        }
+      }}
+    >
+      <Button iconBefore={<IconArrowLeft />}>Icon before</Button>
+      <Button iconAfter={<IconArrowRight />}>Icon after</Button>
+      <Button iconBefore={<IconArrowLeft />} iconAfter={<IconArrowRight />}>
+        Icon before and after
+      </Button>
+      <Button iconAfter={<IconArrowRight />} intent="primary">
+        Icon after
+      </Button>
+      <Button
+        component="a"
+        href="#"
+        iconAfter={<IconArrowRight />}
+        intent="primary"
       >
-        <Button iconBefore={<IconArrowLeft />}>Icon before</Button>
-        <Button iconAfter={<IconArrowRight />}>Icon after</Button>
-        <Button iconBefore={<IconArrowLeft />} iconAfter={<IconArrowRight />}>
-          Icon before and after
-        </Button>
-        <Button iconAfter={<IconArrowRight />} intent="primary">
-          Icon after
-        </Button>
-        <Button
-          component="a"
-          href="#"
-          iconAfter={<IconArrowRight />}
-          intent="primary"
-        >
-          Icon after anchor
-        </Button>
-        <Button
-          iconAfter={<IconArrowRight />}
-          intent="primary"
-          variant="outline"
-        >
-          Icon after
-        </Button>
-        <Button iconAfter={<IconArrowRight />} intent="primary" variant="ghost">
-          Icon after
-        </Button>
-        {["xs", "sm", "md", "lg", "xl"].map(size => {
-          return (
-            <Button
-              size={size as ButtonSize}
-              iconAfter={<IconArrowRight />}
-              intent="primary"
-              variant="outline"
-            >
-              Icon after
-            </Button>
-          );
-        })}
-      </div>
-    </ToggleDarkMode>
+        Icon after anchor
+      </Button>
+      <Button iconAfter={<IconArrowRight />} intent="primary" variant="outline">
+        Icon after
+      </Button>
+      <Button iconAfter={<IconArrowRight />} intent="primary" variant="ghost">
+        Icon after
+      </Button>
+      {["xs", "sm", "md", "lg", "xl"].map(size => {
+        return (
+          <Button
+            key={size}
+            size={size as ButtonSize}
+            iconAfter={<IconArrowRight />}
+            intent="primary"
+            variant="outline"
+          >
+            Icon after
+          </Button>
+        );
+      })}
+    </div>
   ))
   .add("block", () => {
     return (
