@@ -14,7 +14,7 @@ export const useResponsiveContainerPadding = () => {
   });
 };
 
-interface ContainerProps extends React.HTMLAttributes<HTMLElement> {}
+type ContainerProps = React.HTMLAttributes<HTMLElement>;
 
 export const Container: React.FunctionComponent<ContainerProps> = (
   props: ContainerProps

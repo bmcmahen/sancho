@@ -137,7 +137,9 @@ InputGroup.propTypes = {
   label: PropTypes.string.isRequired,
   hideLabel: PropTypes.bool,
   helpText: PropTypes.string,
-  error: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  id: PropTypes.string,
+  children: PropTypes.node
 };
 
 function shadowBorder(color: string, opacity: number) {
@@ -278,7 +280,9 @@ export const InputBase: React.FunctionComponent<InputBaseProps> = ({
 };
 
 InputBase.propTypes = {
-  inputSize: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[])
+  inputSize: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[]),
+  autoComplete: PropTypes.bool,
+  autoFocus: PropTypes.bool
 };
 
 export const Input = InputBase;
@@ -365,7 +369,8 @@ export const Label: React.FunctionComponent<LabelProps> = ({
 };
 
 Label.propTypes = {
-  hide: PropTypes.bool
+  hide: PropTypes.bool,
+  children: PropTypes.node
 };
 
 export interface SelectProps
@@ -477,7 +482,8 @@ export const Select: React.FunctionComponent<SelectProps> = ({
 };
 
 Select.propTypes = {
-  inputSize: PropTypes.oneOf(["sm", "md", "lg"])
+  inputSize: PropTypes.oneOf(["sm", "md", "lg"]),
+  multiple: PropTypes.bool
 };
 
 export interface CheckProps
@@ -523,5 +529,7 @@ export const Check: React.FunctionComponent<CheckProps> = ({
 };
 
 Check.propTypes = {
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  disabled: PropTypes.bool
 };

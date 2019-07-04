@@ -247,5 +247,5 @@ Text.propTypes = {
   wrap: PropTypes.bool,
   muted: PropTypes.bool,
   gutter: PropTypes.bool,
-  component: PropTypes.node
+  component: PropTypes.elementType
 };

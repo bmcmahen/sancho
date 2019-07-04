@@ -189,5 +189,7 @@ Alert.propTypes = {
     "warning",
     "danger",
     "question"
-  ] as AlertIntentions[])
+  ] as AlertIntentions[]),
+  elevation: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
+  component: PropTypes.elementType
 };

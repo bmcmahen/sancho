@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
@@ -7,7 +7,6 @@ import { RequestCloseContext } from "./Sheet";
 import { useTheme } from "./Theme/Providers";
 import { noOp } from "./misc/noop";
 import { useTouchable, OnPressFunction } from "touchable-hook";
-import { mergeRefs } from "./Hooks/merge-refs";
 import cx from "classnames";
 import { safeBind } from "./Hooks/compose-bind";
 
@@ -18,11 +17,21 @@ const KeyCodes = {
   End: 35
 };
 
+interface MenuListContextType {
+  focus: boolean;
+  onKeyDown: (e: React.KeyboardEvent) => void;
+}
+
+const MenuListContext = React.createContext<MenuListContextType>({
+  focus: false,
+  onKeyDown: () => {}
+});
+
 type ChildrenType = React.ReactElement<MenuItemProps>;
 
 export interface MenuListProps extends React.HTMLAttributes<HTMLDivElement> {
   /** A combination of MenuItem, MenuLabel, and MenuDivider children */
-  children: ChildrenType | Array<ChildrenType>;
+  children: ChildrenType | ChildrenType[];
   /** Useful if you are providing your own MenuItem children */
   focusableChildren?: React.ComponentType<any>[];
 }
@@ -77,9 +86,7 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
           return kid;
         }
 
-        const k = kid as React.ReactElement<any>;
-
-        disabled.set(i, k.props.disabled);
+        disabled.set(i, kid.props.disabled);
 
         function focusDown(current: number) {
           const next = current + 1 > lastIndex ? firstIndex : current + 1;
@@ -101,29 +108,31 @@ export const MenuList: React.FunctionComponent<MenuListProps> = ({
 
         const index = focusIndex || 0;
 
-        return React.cloneElement(k, {
-          focus: i === focusIndex,
-          onFocus: () => {
-            if (i !== focusIndex) {
-              setFocusIndex(i);
-            }
-          },
-          onKeyDown: (e: React.KeyboardEvent) => {
-            if (e.keyCode === KeyCodes.ArrowDown) {
-              e.preventDefault();
-              focusDown(index);
-            } else if (e.keyCode === KeyCodes.ArrowUp) {
-              e.preventDefault();
-              focusUp(index);
-            } else if (e.keyCode === KeyCodes.Home) {
-              e.preventDefault();
-              setFocusIndex(firstIndex);
-            } else if (e.keyCode === KeyCodes.End) {
-              e.preventDefault();
-              setFocusIndex(lastIndex);
-            }
-          }
-        });
+        return (
+          <MenuListContext.Provider
+            key={i}
+            value={{
+              focus: i === focusIndex,
+              onKeyDown: (e: React.KeyboardEvent) => {
+                if (e.keyCode === KeyCodes.ArrowDown) {
+                  e.preventDefault();
+                  focusDown(index);
+                } else if (e.keyCode === KeyCodes.ArrowUp) {
+                  e.preventDefault();
+                  focusUp(index);
+                } else if (e.keyCode === KeyCodes.Home) {
+                  e.preventDefault();
+                  setFocusIndex(firstIndex);
+                } else if (e.keyCode === KeyCodes.End) {
+                  e.preventDefault();
+                  setFocusIndex(lastIndex);
+                }
+              }
+            }}
+          >
+            {kid}
+          </MenuListContext.Provider>
+        );
       })}
     </div>
   );
@@ -134,23 +143,13 @@ MenuList.propTypes = {
   focusableChildren: PropTypes.arrayOf(PropTypes.elementType)
 };
 
-export interface MenuRenderProps extends React.HTMLAttributes<Element> {
-  ref: React.RefObject<HTMLDivElement>;
-}
-
-interface MenuItemProps extends Partial<MenuItemPropsCloned> {}
-
-interface MenuItemPropsCloned extends React.HTMLAttributes<Element> {
-  focus: boolean;
-  onFocus: () => void;
+interface MenuItemProps extends React.HTMLAttributes<Element> {
   /** Called when the menu item is selected. Generally use this instead of onClick. */
   onPress?: OnPressFunction;
   /** Disable this menu item */
   disabled?: boolean;
   /** Pass in a string to use standard text styles. Otherwise, pass in any other node. */
   children: React.ReactNode;
-  onKeyDown: (e: React.KeyboardEvent) => void;
-  ref: React.RefObject<HTMLDivElement>;
   /** Provide a custom component. Eg., ReactRouter Link */
   component?: React.ReactType<any>;
   /** optional content to appear to the right of the menu text */
@@ -161,9 +160,6 @@ interface MenuItemPropsCloned extends React.HTMLAttributes<Element> {
 }
 
 export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
-  focus,
-  onFocus,
-  onKeyDown,
   contentBefore,
   contentAfter,
   onPress = noOp,
@@ -178,6 +174,7 @@ export const MenuItem: React.FunctionComponent<MenuItemProps> = ({
   const dark = theme.colors.mode === "dark";
   const localRef = React.useRef<HTMLDivElement>(null);
   const closeParent = React.useContext(RequestCloseContext);
+  const { focus, onKeyDown } = React.useContext(MenuListContext);
   const isLink = Component === "a" || other.href || other.to;
 
   const { bind, hover, active } = useTouchable({
@@ -283,10 +280,15 @@ MenuItem.propTypes = {
   onSelect: PropTypes.func,
   component: PropTypes.string,
   disabled: PropTypes.bool,
-  children: PropTypes.node
+  children: PropTypes.node,
+  contentBefore: PropTypes.node,
+  contentAfter: PropTypes.node,
+  onPress: PropTypes.func,
+  className: PropTypes.string,
+  role: PropTypes.string
 };
 
-interface MenuDividerProps extends React.HTMLAttributes<HTMLDivElement> {}
+type MenuDividerProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function MenuDivider(props: MenuDividerProps) {
   const theme = useTheme();
