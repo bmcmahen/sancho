@@ -10,6 +10,68 @@ import { isMobile } from "is-mobile";
 import { useUid } from "./Hooks/use-uid";
 import { useTheme } from "./Theme/Providers";
 
+export const arrowStyles = (color: string) =>
+  css(`
+  position: absolute;
+  width: 3em;
+  height: 3em;
+  &[data-placement*='bottom'] {
+    bottom: 100%;
+    left: 0;
+    margin-top: 0em;
+    width: 1em;
+    height: 0.25em;
+    &::before {
+      width: 10px;
+      border: none;
+      height: 10px;
+      background: ${color};
+      border-top: 1px solid ${color === "white" ? " #dee2e685" : color};
+      border-right: 1px solid ${color === "white" ? "#dee2e685" : color};
+      transform: rotate(-45deg);
+      border-radius: 2px;
+      margin-top: -1px;
+    }
+  }
+  &[data-placement*='top'] {
+    top: 100%;
+    left: 0;
+    margin-bottom: 0;
+    width: 1em;
+    height: 0.25em;
+    &::before {
+      border-width: 0.25em 0.25em 0 0.25em;
+      border-color: ${color} transparent transparent transparent;
+    }
+  }
+  &[data-placement*='right'] {
+    right: 100%;
+    height: 1em;
+    width: 0.25em;
+    &::before {
+      border-width: 0.25em 0.25em 0.25em 0;
+      border-color: transparent ${color} transparent transparent;
+    }
+  }
+  &[data-placement*='left'] {
+    left: 100%;
+    height: 1em;
+    width: 0.25em;
+    &::before {
+      border-width: 0.25em 0 0.25em 0.25em;
+      border-color: transparent transparent transparent ${color};
+    }
+  }
+  &::before {
+    content: '';
+    margin: auto;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+`);
+
 interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The content of the tooltip */
   content: React.ReactNode;
@@ -46,16 +108,16 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
     return React.cloneElement(child as React.ReactElement<any>, {
       ref,
       "aria-describedby": id,
-      onMouseEnter: (e: MouseEvent) => {
+      onMouseEnter: () => {
         if (!show) setShow(true);
       },
-      onMouseLeave: (e: MouseEvent) => {
+      onMouseLeave: () => {
         if (show) setShow(false);
       },
-      onFocus: (e: FocusEvent) => {
+      onFocus: () => {
         if (!show) setShow(true);
       },
-      onBlur: (e: FocusEvent) => {
+      onBlur: () => {
         if (show) setShow(false);
       }
     });
@@ -140,65 +202,3 @@ Tooltip.propTypes = {
     "left-start"
   ] as Placements[])
 };
-
-export const arrowStyles = (color: string) =>
-  css(`
-  position: absolute;
-  width: 3em;
-  height: 3em;
-  &[data-placement*='bottom'] {
-    bottom: 100%;
-    left: 0;
-    margin-top: 0em;
-    width: 1em;
-    height: 0.25em;
-    &::before {
-      width: 10px;
-      border: none;
-      height: 10px;
-      background: ${color};
-      border-top: 1px solid ${color === "white" ? " #dee2e685" : color};
-      border-right: 1px solid ${color === "white" ? "#dee2e685" : color};
-      transform: rotate(-45deg);
-      border-radius: 2px;
-      margin-top: -1px;
-    }
-  }
-  &[data-placement*='top'] {
-    top: 100%;
-    left: 0;
-    margin-bottom: 0;
-    width: 1em;
-    height: 0.25em;
-    &::before {
-      border-width: 0.25em 0.25em 0 0.25em;
-      border-color: ${color} transparent transparent transparent;
-    }
-  }
-  &[data-placement*='right'] {
-    right: 100%;
-    height: 1em;
-    width: 0.25em;
-    &::before {
-      border-width: 0.25em 0.25em 0.25em 0;
-      border-color: transparent ${color} transparent transparent;
-    }
-  }
-  &[data-placement*='left'] {
-    left: 100%;
-    height: 1em;
-    width: 0.25em;
-    &::before {
-      border-width: 0.25em 0 0.25em 0.25em;
-      border-color: transparent transparent transparent ${color};
-    }
-  }
-  &::before {
-    content: '';
-    margin: auto;
-    display: block;
-    width: 0;
-    height: 0;
-    border-style: solid;
-  }
-`);
