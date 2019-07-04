@@ -10,7 +10,6 @@ import { Theme } from "./Theme";
 import { IconWrapper } from "./IconWrapper";
 import { useTouchable, OnPressFunction } from "touchable-hook";
 import cx from "classnames";
-import { mergeRefs } from "./Hooks/merge-refs";
 import { safeBind } from "./Hooks/compose-bind";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";

@@ -1,11 +1,10 @@
 /** @jsx jsx */
-import { jsx, css, Global } from "@emotion/core";
+import { jsx, Global } from "@emotion/core";
 import * as React from "react";
 import { Tabs, Tab, TabPanel, TabIcon } from "../Tabs";
 import theme from "../Theme";
 import { Text } from "../Text";
 import { Container } from "../Container";
-import { Badge } from "../Badge";
 import { storiesOf } from "@storybook/react";
 import { Layer } from "../Layer";
 import { Button } from "../Button";
@@ -57,9 +56,6 @@ export const TabsExamples = storiesOf("Tabs", module)
 
   .add("Evenly spaced", () => {
     return <ParentSwipe />;
-  })
-  .add("Toggle display example", () => {
-    return <ToggleDisplayExample />;
   })
   .add("Icons", () => {
     return <IconExample />;
@@ -268,19 +264,6 @@ function EvenlySpaced({
   );
 }
 
-function ToggleDisplayExample() {
-  const [show, setShow] = React.useState(true);
-
-  return (
-    <div>
-      <Button onClick={() => setShow(!show)}>Toggle</Button>
-      <div css={{ display: show ? "block" : "none" }}>
-        <EvenlySpaced />
-      </div>
-    </div>
-  );
-}
-
 function ParentSwipe() {
   const [parentIndex, setParentIndex] = React.useState(0);
   const [childIndex, setChildIndex] = React.useState(0);
@@ -357,6 +340,7 @@ function ParentSwipe() {
               <Text
                 css={{
                   display: "flex",
+                  height: "300px",
                   alignItems: "center"
                 }}
               >

@@ -5,15 +5,12 @@ import { Text } from "./Text";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
 
-interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {}
-
 /**
  * Use a badge to indicate a count in a menu, such as unread messages.
  */
-export const Badge: React.FunctionComponent<BadgeProps> = ({
-  children,
-  ...other
-}) => {
+export const Badge: React.FunctionComponent<
+  React.HTMLAttributes<HTMLSpanElement>
+> = ({ children, ...other }) => {
   const theme = useTheme();
   return (
     <Text

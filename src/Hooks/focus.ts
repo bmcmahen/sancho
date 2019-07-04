@@ -13,7 +13,7 @@ export function useFocusElement(
 ) {
   const trapRef = React.useRef<FocusTrap | null>(null);
 
-  function focusElement() {
+  const focusElement = React.useCallback(() => {
     if (!elementRef.current) {
       console.error("No element found to found");
       return;
@@ -28,7 +28,7 @@ export function useFocusElement(
 
     trapRef.current = trap;
     trap.activate();
-  }
+  }, [elementRef, options]);
 
   function focusTrigger() {
     if (!trapRef.current) {
@@ -41,7 +41,7 @@ export function useFocusElement(
   React.useEffect(() => {
     if (showing) focusElement();
     else focusTrigger();
-  }, [showing]);
+  }, [showing, focusElement]);
 
   return {
     focusElement,

@@ -201,7 +201,6 @@ export const Text: React.FunctionComponent<TextProps> = ({
   gutter = true,
   muted,
   component,
-  css,
   ...other
 }) => {
   const Component = component || element[variant];
@@ -247,5 +246,6 @@ Text.propTypes = {
   ]),
   wrap: PropTypes.bool,
   muted: PropTypes.bool,
-  gutter: PropTypes.bool
+  gutter: PropTypes.bool,
+  component: PropTypes.elementType
 };

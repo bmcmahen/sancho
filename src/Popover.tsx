@@ -61,9 +61,8 @@ export const Popover: React.FunctionComponent<PopoverProps> = ({
     document.body.addEventListener("keydown", onBodyKeyDown, false);
   }
 
-  React.useEffect(() => {
-    return removeBodyListeners;
-  }, []);
+  const unmount = React.useCallback(removeBodyListeners, []);
+  React.useEffect(() => unmount, [unmount]);
 
   function close() {
     setShow(false);

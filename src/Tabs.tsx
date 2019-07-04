@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css, InterpolationWithTheme } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import { buttonReset } from "./Button";
@@ -244,18 +244,16 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
             <animated.div
               className="Tabs__slider"
               style={spring}
-              css={
-                {
-                  height: "4px",
-                  borderTopRightRadius: "8px",
-                  borderTopLeftRadius: "8px",
-                  marginLeft: theme.spaces.sm,
-                  marginRight: theme.spaces.sm,
-                  bottom: 0,
-                  position: "absolute",
-                  background: dark ? "white" : theme.colors.text.selected
-                } as InterpolationWithTheme<any>
-              }
+              css={{
+                height: "4px",
+                borderTopRightRadius: "8px",
+                borderTopLeftRadius: "8px",
+                marginLeft: theme.spaces.sm,
+                marginRight: theme.spaces.sm,
+                bottom: 0,
+                position: "absolute",
+                background: dark ? "white" : theme.colors.text.selected
+              }}
             />
           )}
         </div>
@@ -269,7 +267,12 @@ Tabs.propTypes = {
   onChange: PropTypes.func,
   slider: PropTypes.bool,
   variant: PropTypes.oneOf(["default", "evenly-spaced"]),
-  children: PropTypes.node
+  children: PropTypes.node,
+  animationConfig: PropTypes.shape({
+    tension: PropTypes.number,
+    friction: PropTypes.number,
+    mass: PropTypes.number
+  })
 };
 
 /**
@@ -312,7 +315,6 @@ export const Tab: React.RefForwardingComponent<
       component: Component = "button",
       badge,
       onPress = noOp,
-      disabled,
       children,
       ...other
     }: TabProps,
@@ -389,7 +391,7 @@ export const Tab: React.RefForwardingComponent<
           onParentSelect();
         }
       },
-      [onParentSelect]
+      [onParentSelect, onPress]
     );
 
     return (

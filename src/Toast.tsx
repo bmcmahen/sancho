@@ -13,7 +13,7 @@ const toastStyles = css`
   }
 `;
 
-interface renderArgs {
+interface RenderArgs {
   id: string;
   onClose: () => void;
 }
@@ -25,7 +25,7 @@ interface Toast {
   subtitle?: string;
   theme?: Theme;
   intent?: AlertIntentions;
-  render?: (options: renderArgs) => React.ReactNode;
+  render?: (options: RenderArgs) => React.ReactNode;
 }
 
 /**

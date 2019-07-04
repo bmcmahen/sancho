@@ -4,6 +4,7 @@ import * as React from "react";
 import { useGestureResponder } from "react-gesture-responder";
 import { getDirection } from "./Sheet";
 import { useSpring, SpringConfig } from "react-spring";
+import PropTypes from "prop-types";
 
 export interface ScrollViewHandles {
   ref: React.RefObject<HTMLDivElement>;
@@ -85,7 +86,7 @@ const ScrollViewForward: React.RefForwardingComponent<
         });
       }
     }),
-    [ref]
+    [setScroll, ref]
   );
 
   /**
@@ -141,6 +142,17 @@ const ScrollViewForward: React.RefForwardingComponent<
       </div>
     </div>
   );
+};
+
+ScrollViewForward.propTypes = {
+  overflowY: PropTypes.number,
+  children: PropTypes.node,
+  overflowX: PropTypes.number,
+  scrollAnimationConfig: PropTypes.shape({
+    tension: PropTypes.number,
+    mass: PropTypes.number,
+    friction: PropTypes.number
+  })
 };
 
 export const ScrollView = React.forwardRef(ScrollViewForward);

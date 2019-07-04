@@ -83,8 +83,7 @@ Table.propTypes = {
  * A TableHead is used to render column labels in a table.
  */
 
-interface TableHeadProps
-  extends React.HTMLAttributes<HTMLTableSectionElement> {}
+type TableHeadProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
 export function TableHead({ children, ...other }: TableHeadProps) {
   return (
@@ -143,7 +142,8 @@ export const TableRow: React.FunctionComponent<TableRowProps> = ({
 };
 
 TableRow.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  children: PropTypes.node
 };
 
 /**
@@ -243,15 +243,17 @@ export const TableCell: React.FunctionComponent<TableCellProps> = ({
 
 TableCell.propTypes = {
   align: PropTypes.oneOf(Object.keys(tableCellAlignments)),
-  variant: PropTypes.oneOf(["body", "head"])
+  variant: PropTypes.oneOf(["body", "head"]),
+  component: PropTypes.elementType,
+  ellipsis: PropTypes.bool,
+  children: PropTypes.node
 };
 
 /**
  * TableBody - indicates the body (and scrollable) portion of our table.
  */
 
-interface TableBodyProps
-  extends React.HTMLAttributes<HTMLTableSectionElement> {}
+type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
 export function TableBody({ children, ...other }: TableBodyProps) {
   return (
@@ -348,5 +350,6 @@ export const ExpandingRow: React.FunctionComponent<ExpandingRowProps> = ({
 };
 
 ExpandingRow.propTypes = {
-  content: PropTypes.oneOfType([PropTypes.func, PropTypes.node])
+  content: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+  children: PropTypes.node
 };

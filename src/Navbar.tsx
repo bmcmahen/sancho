@@ -69,5 +69,6 @@ export const Navbar: React.FunctionComponent<NavbarProps> = ({
 };
 
 Navbar.propTypes = {
-  position: PropTypes.oneOf(["fixed", "static"] as Positions[])
+  position: PropTypes.oneOf(["fixed", "static"] as Positions[]),
+  children: PropTypes.node
 };

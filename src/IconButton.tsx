@@ -30,7 +30,6 @@ export const IconButton: React.RefForwardingComponent<
       label,
       size = "md" as ButtonSize,
       icon,
-      children,
       onPress,
       color = "currentColor",
       ...other

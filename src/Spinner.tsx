@@ -117,5 +117,6 @@ export const Spinner: React.FunctionComponent<SpinnerProps> = ({
 Spinner.propTypes = {
   delay: PropTypes.number,
   center: PropTypes.bool,
-  label: PropTypes.string
+  label: PropTypes.string,
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"])
 };

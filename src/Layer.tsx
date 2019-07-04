@@ -90,5 +90,6 @@ export const LayerLoading: React.FunctionComponent<LayerLoadingProps> = ({
 };
 
 LayerLoading.propTypes = {
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  label: PropTypes.string
 };

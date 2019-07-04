@@ -4,12 +4,11 @@ import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import { Text } from "./Text";
 import PropTypes from "prop-types";
-import { Theme } from "./Theme";
 import { useTheme } from "./Theme/Providers";
 
 export type AvatarSizes = "xs" | "sm" | "md" | "lg" | "xl";
 
-const sizes = (theme: Theme) => ({
+const sizes = () => ({
   xs: css({ width: "1.25rem", height: "1.25rem", fontSize: "0.7rem" }),
   sm: css({ width: "2.02rem", height: "2.02rem", fontSize: "0.875rem" }),
   md: css({ width: "3.27rem", height: "3.27rem", fontSize: "1.41rem" }),
@@ -68,7 +67,7 @@ export const Avatar: React.FunctionComponent<AvatarProps> = ({
             ? theme.colors.background.tint2
             : theme.colors.palette[color][dark ? "light" : "base"]
         },
-        sizes(theme)[size]
+        sizes()[size]
       ]}
       {...other}
     >

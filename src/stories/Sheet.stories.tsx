@@ -5,7 +5,6 @@ import { storiesOf } from "@storybook/react";
 import { Sheet, SheetPositions } from "../Sheet";
 import { Button } from "../Button";
 import { MenuList, MenuItem, MenuDivider } from "../Menu";
-import { ToggleDarkMode } from "./ToggleDarkMode";
 
 export const SheetExamples = storiesOf("Sheet", module)
   .add("basic example", () => {
@@ -146,7 +145,6 @@ const Example = ({
       <Sheet
         onRequestClose={() => setShow(false)}
         isOpen={show}
-        closeOnClick={true}
         position={position}
       >
         {children}

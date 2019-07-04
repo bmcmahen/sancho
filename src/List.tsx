@@ -169,7 +169,9 @@ ListItem.propTypes = {
   contentAfter: PropTypes.node,
   wrap: PropTypes.bool,
   children: PropTypes.node,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  onPress: PropTypes.func,
+  component: PropTypes.elementType
 };
 
 interface ListSectionProps extends React.HTMLAttributes<HTMLDivElement> {
