@@ -5,6 +5,7 @@ import { useGestureResponder } from "react-gesture-responder";
 import { getDirection } from "./Sheet";
 import { useSpring, SpringConfig } from "react-spring";
 import PropTypes from "prop-types";
+import { safeBind } from "./Hooks/compose-bind";
 
 export interface ScrollViewHandles {
   scrollTo(x?: number, y?: number): void;
@@ -56,11 +57,11 @@ const ScrollViewForward: React.RefForwardingComponent<
       from: { x: 0, y: 0 },
       to: { x: 0, y: 0 },
       onFrame: (animated: any) => {
-        if (overflowX) {
-          ref.current!.scrollLeft = animated.x;
+        if (overflowX && ref.current) {
+          ref.current.scrollLeft = animated.x;
         }
 
-        if (overflowY) {
+        if (overflowY && ref.current) {
           ref.current!.scrollTop = animated.y;
         }
       }
@@ -75,16 +76,18 @@ const ScrollViewForward: React.RefForwardingComponent<
     componentRef,
     () => ({
       scrollTo: (x?: number, y?: number) => {
-        const from = {
-          x: ref.current!.scrollLeft,
-          y: ref.current!.scrollTop
-        };
+        if (ref.current) {
+          const from = {
+            x: ref.current.scrollLeft,
+            y: ref.current.scrollTop
+          };
 
-        setScroll({
-          from,
-          to: { x, y },
-          reset: true
-        });
+          setScroll({
+            from,
+            to: { x, y },
+            reset: true
+          });
+        }
       }
     }),
     [setScroll]
@@ -130,14 +133,13 @@ const ScrollViewForward: React.RefForwardingComponent<
   return (
     <div {...bind}>
       <div
-        ref={innerRef}
         css={{
           transform: "translateZ(0)",
           overflowX: overflowX ? "scroll" : undefined,
           overflowY: overflowY ? "scroll" : undefined,
           WebkitOverflowScrolling: "touch"
         }}
-        {...other}
+        {...safeBind({ ref: innerRef }, { ref: ref }, other)}
       >
         {children}
       </div>
