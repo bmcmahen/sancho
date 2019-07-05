@@ -95,7 +95,10 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
           {icon}
         </IconWrapper>
       </div>
-      <div css={{ marginLeft: theme.spaces.md }}>
+      <div
+        className="Alert__text-content"
+        css={{ marginLeft: theme.spaces.md }}
+      >
         <Text
           className="Alert__title-text"
           id={id}
@@ -115,6 +118,7 @@ export const Alert: React.FunctionComponent<AlertProps> = ({
             {subtitle}
           </Text>
         )}
+        {children}
       </div>
     </div>
   ) : (
