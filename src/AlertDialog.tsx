@@ -15,6 +15,7 @@ export interface AlertDialogProps {
   title: string;
   subtitle?: string;
   confirmLabel?: string;
+  intent?: ButtonIntent;
 }
 
 export const AlertDialog: React.FunctionComponent<AlertDialogProps> = ({
@@ -23,6 +24,7 @@ export const AlertDialog: React.FunctionComponent<AlertDialogProps> = ({
   subtitle,
   confirmLabel = "Confirm",
   onConfirm,
+  intent = "danger",
   onCancel,
   onClose
 }) => {
@@ -64,7 +66,7 @@ export const AlertDialog: React.FunctionComponent<AlertDialogProps> = ({
           <Button
             onPress={confirm}
             css={{ marginLeft: theme.spaces.sm }}
-            intent="danger"
+            intent={intent}
           >
             {confirmLabel}
           </Button>
