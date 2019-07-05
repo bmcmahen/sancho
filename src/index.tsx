@@ -36,6 +36,7 @@ export * from "./VisuallyHidden";
 export * from "./Touchable";
 export * from "./ScrollView";
 export * from "./AlertDialog";
+export * from "./Skeleton";
 
 // Theme stuff
 export * from "./Theme";
