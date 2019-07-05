@@ -1,7 +1,8 @@
 import * as React from "react";
+import rafSchd from "raf-schd";
 
 interface InfiniteScrollProps {
-  container: React.RefObject<HTMLElement | null>;
+  container?: React.RefObject<HTMLElement | null>;
   onFetch: () => Promise<any>;
   hasMore: boolean;
   triggerOffset?: number;
@@ -17,27 +18,63 @@ export const useInfiniteScroll = ({
 }: InfiniteScrollProps) => {
   const [fetching, setFetching] = React.useState(false);
 
-  const onScroll = React.useCallback(() => {
-    const el = container.current;
+  const onScroll = React.useCallback(
+    rafSchd(() => {
+      // check container
+      if (container) {
+        if (container.current) {
+          if (
+            container.current &&
+            !fetching &&
+            hasMore &&
+            container.current.scrollTop +
+              container.current.clientHeight +
+              triggerOffset >=
+              container.current.scrollHeight
+          ) {
+            setFetching(true);
+          }
+        }
 
-    if (
-      el &&
-      !fetching &&
-      hasMore &&
-      el.scrollTop + el.clientHeight + triggerOffset >= el.scrollHeight
-    ) {
-      setFetching(true);
-    }
-  }, [fetching, hasMore]);
+        // check window
+      } else {
+        if (
+          !fetching &&
+          hasMore &&
+          window.innerHeight + document.documentElement.scrollTop >=
+            document.documentElement.offsetHeight - triggerOffset
+        ) {
+          setFetching(true);
+        }
+      }
+    }),
+    [fetching, hasMore]
+  );
 
+  // bind our scroll listener
   React.useEffect(() => {
-    if (container.current && !disabled) {
-      container.current.addEventListener("scroll", onScroll);
+    if (disabled) {
+      return;
     }
 
-    return () => {
+    // this is so ugly uggh
+    // bind our scroll event to either container or window
+    if (container) {
       if (container.current) {
-        container.current.removeEventListener("scroll", onScroll);
+        container.current.addEventListener("scroll", onScroll);
+      }
+    } else {
+      window.addEventListener("scroll", onScroll);
+    }
+
+    // unbind our scroll event
+    return () => {
+      if (container) {
+        if (container.current) {
+          container.current.removeEventListener("scroll", onScroll);
+        }
+      } else {
+        window.removeEventListener("scroll", onScroll);
       }
     };
   }, [container, onScroll, disabled]);

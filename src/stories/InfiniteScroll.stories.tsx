@@ -59,11 +59,42 @@ function Example() {
   );
 }
 
-export const ThemeExamples = storiesOf("InfiniteScroll", module).add(
-  "Basic usage",
-  () => (
+function WindowExample() {
+  const [items, setItems] = React.useState(
+    Array.from(new Array(10)).map(() => faker.name.firstName())
+  );
+
+  const [page, setPage] = React.useState(0);
+
+  const [fetching] = useInfiniteScroll({
+    hasMore: page < 4,
+    onFetch: () => {
+      return fetchdata().then(() => {
+        setItems([
+          ...items,
+          ...Array.from(new Array(10)).map(() => faker.name.firstName())
+        ]);
+        setPage(page + 1);
+      });
+    }
+  });
+
+  return (
+    <div>
+      {items.map(item => (
+        <div css={{ height: "40px", border: "1px solid" }} key={item}>
+          {item}
+        </div>
+      ))}
+      {fetching && <div>Loading...</div>}
+    </div>
+  );
+}
+
+export const ThemeExamples = storiesOf("InfiniteScroll", module)
+  .add("Basic usage", () => (
     <div css={{ padding: "1rem" }}>
       <Example />
     </div>
-  )
-);
+  ))
+  .add("Window scroll", () => <WindowExample />);
