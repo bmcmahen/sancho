@@ -7,7 +7,6 @@ import { useSpring, SpringConfig } from "react-spring";
 import PropTypes from "prop-types";
 
 export interface ScrollViewHandles {
-  ref: React.RefObject<HTMLDivElement>;
   scrollTo(x?: number, y?: number): void;
 }
 
@@ -18,6 +17,8 @@ export interface ScrollViewProps extends React.HTMLAttributes<HTMLDivElement> {
   overflowX?: boolean;
   /** spring animation configuration */
   scrollAnimationConfig?: SpringConfig;
+  /** access to ref dom element */
+  innerRef?: React.RefObject<any>;
 }
 
 /**
@@ -36,6 +37,7 @@ const ScrollViewForward: React.RefForwardingComponent<
     overflowY,
     children,
     overflowX,
+    innerRef,
     scrollAnimationConfig = { tension: 190, friction: 15, mass: 0.2 },
     ...other
   },
@@ -72,7 +74,6 @@ const ScrollViewForward: React.RefForwardingComponent<
   React.useImperativeHandle(
     componentRef,
     () => ({
-      ref,
       scrollTo: (x?: number, y?: number) => {
         const from = {
           x: ref.current!.scrollLeft,
@@ -86,7 +87,7 @@ const ScrollViewForward: React.RefForwardingComponent<
         });
       }
     }),
-    [setScroll, ref]
+    [setScroll]
   );
 
   /**
@@ -129,7 +130,7 @@ const ScrollViewForward: React.RefForwardingComponent<
   return (
     <div {...bind}>
       <div
-        ref={ref}
+        ref={innerRef}
         css={{
           transform: "translateZ(0)",
           overflowX: overflowX ? "scroll" : undefined,
