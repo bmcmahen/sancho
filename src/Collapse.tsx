@@ -50,10 +50,12 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const { bounds } = useMeasure(ref);
+  const prevShow = usePrevious(show);
 
-  const { height, opacity } = useSpring({
-    from: { height: 0, opacity: 0 },
-    to: { height: show ? bounds.height : 0, opacity: show ? 1 : 0 }
+  const { height } = useSpring({
+    from: { height: 0 },
+    to: { height: show ? bounds.height : 0 },
+    immediate: prevShow !== null && prevShow === show
   });
 
   return (
@@ -63,7 +65,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
         overflow: "hidden",
         willChange: "height, opacity"
       }}
-      style={{ opacity, height }}
+      style={{ height }}
       {...other}
     >
       <div ref={ref}>{children}</div>

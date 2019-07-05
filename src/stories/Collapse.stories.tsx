@@ -15,7 +15,7 @@ const Example = () => {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [more]);
 
   return (
     <div>
@@ -32,13 +32,23 @@ const Example = () => {
   );
 };
 
-export const CollapseStories = storiesOf("Collapse", module).add(
-  "basic",
-  () => {
+export const CollapseStories = storiesOf("Collapse", module)
+  .add("basic", () => {
     return (
       <div>
         <Example />
       </div>
     );
-  }
-);
+  })
+  .add("mounted on open", () => (
+    <div>
+      <Collapse id="hi" show>
+        <div>This is some crazy content</div>
+        <div>This is some crazy content</div>
+        <div>This is some crazy content</div>
+        {new Array(0).fill(null).map((a, i) => (
+          <div key={i}>Item number {i}</div>
+        ))}
+      </Collapse>
+    </div>
+  ));

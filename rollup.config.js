@@ -2,7 +2,6 @@ import resolve from "rollup-plugin-node-resolve";
 import filesize from "rollup-plugin-filesize";
 import commonjs from "rollup-plugin-commonjs";
 import cleanup from "rollup-plugin-cleanup";
-import typescript from "rollup-plugin-typescript2";
 import { uglify } from "rollup-plugin-uglify";
 import json from "rollup-plugin-json";
 
