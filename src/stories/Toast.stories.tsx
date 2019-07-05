@@ -5,6 +5,7 @@ import { Button } from "../Button";
 import { storiesOf } from "@storybook/react";
 import { useToast } from "../Toast";
 import { ToggleDarkMode } from "./ToggleDarkMode";
+import { useConfirmation } from "../Confirmation";
 
 function Example() {
   const toast = useToast();
@@ -24,10 +25,39 @@ function Example() {
   );
 }
 
-export const ToastStories = storiesOf("Toast", module).add("basic", () => {
+function Confirmation() {
+  const confirm = useConfirmation();
+
   return (
-    <div css={{ PADDING: "3REM" }}>
-      <Example />
-    </div>
+    <Button
+      onClick={() => {
+        confirm({
+          onCancel: () => {
+            console.log("cancel");
+          },
+          onConfirm: () => {
+            window.alert("DELETE!");
+          },
+          title: "Are you sure about that?",
+          subtitle: "This action cannot be undone, so be careful!."
+        });
+      }}
+    >
+      Show toast
+    </Button>
   );
-});
+}
+
+export const ToastStories = storiesOf("Toast", module)
+  .add("basic", () => {
+    return (
+      <div css={{ PADDING: "3REM" }}>
+        <Example />
+      </div>
+    );
+  })
+  .add("confirmation", () => (
+    <div css={{ PADDING: "3REM" }}>
+      <Confirmation />
+    </div>
+  ));
