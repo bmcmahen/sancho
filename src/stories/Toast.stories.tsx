@@ -14,8 +14,7 @@ function Example() {
         toast({
           duration: null,
           title: "Hello world",
-          subtitle:
-            "Excepteur exercitation eu duis reprehenderit irure sint laboris labore id id aute nulla commodo."
+          subtitle: "Excepteur exercitation eu duis reprehenderit irure."
         });
       }}
     >

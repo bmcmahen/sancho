@@ -533,7 +533,7 @@ export const Button: React.RefForwardingComponent<
               outline: theme.outline
             },
             ":focus:not([data-focus-visible-added])": {
-              outline: "none"
+              outline: other.autoFocus ? "theme.outline" : "none"
             }
           },
           variants[variant],
