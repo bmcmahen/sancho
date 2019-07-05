@@ -35,6 +35,7 @@ export * from "./SkipNav";
 export * from "./VisuallyHidden";
 export * from "./Touchable";
 export * from "./ScrollView";
+export * from "./AlertDialog";
 
 // Theme stuff
 export * from "./Theme";
@@ -46,3 +47,4 @@ export * from "./Icons";
 // Export some hooks
 export * from "./Hooks/pan-responder";
 export * from "./Hooks/touchable-hook";
+export * from "./Hooks/use-infinite-scroll";
