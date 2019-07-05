@@ -1,3 +1,8 @@
+## 3.2.0
+
+- Added `Skeleton`, `AlertDialog`, and `useInfiniteScroll` hook.
+- Start using `useCallback` in more places to ensure better performance.
+
 ## 3.1.1
 
 - Update react-spring, react-gesture-view, toasted-notes
