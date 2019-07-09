@@ -1,3 +1,12 @@
+## 3.3.1
+
+- Fix `Stack` dropshadow in dark mode
+
+## 3.3.0
+
+- Added `Stack`
+- `ScrollView` now accepts arbitrary props (for things like styling)
+
 ## 3.2.0
 
 - Added `Skeleton`, `AlertDialog`, and `useInfiniteScroll` hook.
