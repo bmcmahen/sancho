@@ -45,7 +45,6 @@ const ScrollViewForward: React.RefForwardingComponent<
   componentRef
 ) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  const initialDirection = React.useRef<"vertical" | "horizontal" | null>(null);
 
   /**
    * A spring for animating scroll positions
@@ -101,24 +100,14 @@ const ScrollViewForward: React.RefForwardingComponent<
 
   const { bind } = useGestureResponder(
     {
-      onStartShouldSet: () => {
-        initialDirection.current = null;
-        return false;
-      },
+      onStartShouldSet: () => false,
       onTerminationRequest: () => false, // once we claim it, we keep it
-      onMoveShouldSet: ({ initial, xy }) => {
-        const gestureDirection =
-          initialDirection.current || getDirection(initial, xy);
-
-        if (!initialDirection.current) {
-          initialDirection.current = gestureDirection;
-        }
-
-        if (gestureDirection === "horizontal" && overflowX) {
+      onMoveShouldSet: ({ initial, initialDirection, xy }) => {
+        if (initialDirection[0] !== 0 && overflowX) {
           return true;
         }
 
-        if (gestureDirection === "vertical" && overflowY) {
+        if (initialDirection[1] !== 0 && overflowY) {
           return true;
         }
 
@@ -131,8 +120,9 @@ const ScrollViewForward: React.RefForwardingComponent<
   );
 
   return (
-    <div {...bind}>
+    <div className="ScrollView" {...other} {...bind}>
       <div
+        className="ScrollView__scroll-containerr"
         css={{
           transform: "translateZ(0)",
           overflowX: overflowX ? "scroll" : undefined,

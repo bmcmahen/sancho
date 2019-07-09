@@ -378,7 +378,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
             e.stopPropagation();
           }}
           style={{
-            transform: xy.interpolate(interpolate)
+            transform: xy.to(interpolate)
           }}
           css={[
             {
