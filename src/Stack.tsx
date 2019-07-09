@@ -4,14 +4,15 @@ import * as React from "react";
 import {
   StackTitle as Title,
   Stack as OriginalStack,
+  StackItem as OriginalStackItem,
   StackContext,
-  StackProps
+  StackProps,
+  StackItemProps
 } from "react-gesture-stack";
 import { Text } from "./Text";
 import { Button } from "./Button";
 import { IconChevronLeft } from "./Icons";
 import { useTheme } from "./Theme/Providers";
-export { StackItem } from "react-gesture-stack";
 
 export interface StackTitleProps {
   /** The pane title which is centered */
@@ -63,6 +64,21 @@ export function Stack(props: StackProps) {
           background: theme.colors.background.tint1,
           boxShadow: theme.shadows.xs
         }
+      }}
+      {...props}
+    />
+  );
+}
+
+export function StackItem(props: StackItemProps) {
+  const theme = useTheme();
+  return (
+    <OriginalStackItem
+      style={{
+        background: undefined
+      }}
+      css={{
+        backgroundColor: theme.colors.background.default
       }}
       {...props}
     />

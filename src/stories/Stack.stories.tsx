@@ -48,7 +48,7 @@ function ListDetail() {
     >
       <div
         style={{
-          border: "1px solid #eee",
+          border: `1px solid ${theme.colors.border.default}`,
           height: "500px",
           width: "400px",
           overflow: "hidden"
@@ -65,7 +65,7 @@ function ListDetail() {
               title: <StackTitle title="Contacts" />,
               content: (
                 <StackItem>
-                  <ScrollView overflowY>
+                  <ScrollView css={{ flex: 1 }} overflowY>
                     <List>
                       <ListItem
                         onPress={() => setIndex(index + 1)}
@@ -115,7 +115,7 @@ function ListDetail() {
                       height: "100%"
                     }}
                   >
-                    <ScrollView style={{ flex: 1 }} overflowY>
+                    <ScrollView css={{ flex: 1, height: "100%" }} overflowY>
                       <List>
                         {items.map(item => (
                           <ListItem
