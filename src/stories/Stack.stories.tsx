@@ -163,7 +163,54 @@ function ListDetail() {
   );
 }
 
-export const ThemeExamples = storiesOf("Stack", module).add(
-  "Drilldown nav",
-  () => <ListDetail />
-);
+export const ThemeExamples = storiesOf("Stack", module)
+  .add("Drilldown nav", () => <ListDetail />)
+  .add("Without header", () => <WithoutHeader />);
+
+function WithoutHeader() {
+  const [index, setIndex] = React.useState(0);
+  return (
+    <Stack
+      index={index}
+      disableNav
+      css={{ height: "400px", width: "400px" }}
+      items={[
+        {
+          title: null,
+          content: (
+            <StackItem
+              onClick={() => setIndex(index + 1)}
+              css={{
+                backgroundImage: `url(https://images.unsplash.com/photo-1556909114-44e3e70034e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)`,
+                backgroundSize: "cover"
+              }}
+            />
+          )
+        },
+        {
+          title: null,
+          content: (
+            <StackItem
+              css={{
+                backgroundImage: `url(https://images.unsplash.com/photo-1558980664-10e7170b5df9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80)`,
+                backgroundSize: "cover"
+              }}
+            />
+          )
+        },
+        {
+          title: null,
+          content: (
+            <StackItem
+              css={{
+                backgroundImage: `url(https://images.unsplash.com/photo-1562619398-e7a474328df3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)`,
+                backgroundSize: "cover"
+              }}
+            />
+          )
+        }
+      ]}
+      onIndexChange={i => setIndex(i)}
+    />
+  );
+}
