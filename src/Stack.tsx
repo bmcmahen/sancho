@@ -72,8 +72,18 @@ export function Stack(props: StackProps) {
 
 export function StackItem(props: StackItemProps) {
   const theme = useTheme();
+
+  const dark = theme.colors.mode === "dark";
+
+  function generateShadow(x: number) {
+    return dark
+      ? `rgba(0, 0, 0, ${x}) 0px 0px 12px -2px`
+      : `rgba(160, 160, 160, ${x}) 0px 0px 12px -2px`;
+  }
+
   return (
     <OriginalStackItem
+      generateShadow={generateShadow}
       style={{
         background: undefined
       }}
