@@ -37,6 +37,7 @@ export * from "./Touchable";
 export * from "./ScrollView";
 export * from "./AlertDialog";
 export * from "./Skeleton";
+export * from "./Stack";
 
 // Theme stuff
 export * from "./Theme";
