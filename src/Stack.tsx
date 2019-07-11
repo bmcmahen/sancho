@@ -88,7 +88,10 @@ export function StackItem(props: StackItemProps) {
         background: undefined
       }}
       css={{
-        backgroundColor: theme.colors.background.default
+        backgroundColor: theme.colors.background.default,
+        "& .StackItem__overlay": {
+          backgroundColor: theme.colors.background.tint1 + "!important"
+        }
       }}
       {...props}
     />
