@@ -1,3 +1,7 @@
+## 3.3.2
+
+- Update Stack to fix measurement issues
+
 ## 3.3.1
 
 - Fix `Stack` dropshadow in dark mode
