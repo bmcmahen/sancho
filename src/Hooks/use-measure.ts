@@ -24,9 +24,13 @@ export function useMeasure(ref: React.RefObject<HTMLDivElement | null>) {
   );
 
   React.useEffect(() => {
-    if (ref.current) observer.observe(ref.current);
+    if (ref.current) {
+      const { left, top, width, height } = ref.current.getBoundingClientRect();
+      setBounds({ left, top, width, height });
+      observer.observe(ref.current);
+    }
     return () => observer.disconnect();
-  }, [observer, ref]);
+  }, [observer, ref, setBounds]);
 
   return { bounds };
 }
