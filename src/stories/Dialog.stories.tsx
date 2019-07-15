@@ -14,7 +14,7 @@ function Demo(props: { mobileFullscreen?: boolean }) {
   return (
     <div>
       <Button onClick={() => setShow(true)}>Show</Button>
-
+      <div style={{ height: "150vh" }} />
       <Dialog
         isOpen={show}
         onRequestClose={() => setShow(false)}

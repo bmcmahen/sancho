@@ -7,7 +7,7 @@ import { useTransition, animated } from "react-spring";
 import { Overlay } from "./Overlay";
 import { useFocusElement } from "./Hooks/focus";
 import PropTypes from "prop-types";
-import { RemoveScroll } from "react-remove-scroll";
+import useScrollLock from "use-scroll-lock";
 import { useTheme } from "./Theme/Providers";
 
 export interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -44,9 +44,11 @@ export const Dialog: React.FunctionComponent<DialogProps> = ({
     config: { mass: 1, tension: 185, friction: 26 }
   });
 
+  const scrollableRef = React.useRef(null);
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   useFocusElement(ref, isOpen);
+  useScrollLock(isOpen, scrollableRef);
 
   return (
     <React.Fragment>
@@ -126,7 +128,7 @@ export const Dialog: React.FunctionComponent<DialogProps> = ({
                         onRequestClose={onRequestClose}
                       />
                     )}
-                    <RemoveScroll>{children}</RemoveScroll>
+                    <div ref={scrollableRef}>{children}</div>
                   </React.Fragment>
                 </animated.div>
               )
