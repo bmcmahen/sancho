@@ -1,6 +1,6 @@
 ## 3.4.0
 
-- Rename `GestureStack` to Pager
+- Rename `GestureStack` to `Pager`
 - use new scroll-lock hook
 
 ## 3.3.2
