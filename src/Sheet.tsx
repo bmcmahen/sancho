@@ -5,7 +5,7 @@ import { animated, useSpring, SpringConfig } from "react-spring";
 import { useFocusElement } from "./Hooks/focus";
 import { Portal } from "./Portal";
 import PropTypes from "prop-types";
-import useScrollLock from "use-scroll-lock";
+import { RemoveScroll } from "react-remove-scroll";
 import { useTheme } from "./Theme/Providers";
 import { Theme } from "./Theme";
 import { useMeasure, Bounds } from "./Hooks/use-measure";
@@ -153,13 +153,11 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const { bounds } = useMeasure(ref);
   const previousBounds = usePrevious(bounds);
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
+  const initialDirection = React.useRef<"vertical" | "horizontal" | null>(null);
   const { bind: bindHideBody } = useHideBody(isOpen);
-  const scrollableRef = React.useRef(null);
   const startVelocity = React.useRef<number | null>(null);
   const [visible, setVisible] = React.useState(isOpen);
   const isOpenRef = React.useRef(isOpen);
-
-  useScrollLock(isOpen, scrollableRef);
 
   // this is a weird-ass hack to allow us to access isOpen
   // state within our onRest callback. Closures!!
@@ -222,11 +220,17 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const { bind } = useGestureResponder(
     {
       onStartShouldSet: () => {
+        initialDirection.current = null;
         return false;
       },
-      onMoveShouldSet: ({ initial, initialDirection, xy }) => {
+      onMoveShouldSet: ({ initial, xy }) => {
+        // we lock in the direction when it's first provided
         const gestureDirection =
-          initialDirection[0] !== 0 ? "horizontal" : "vertical";
+          initialDirection.current || getDirection(initial, xy);
+
+        if (!initialDirection.current) {
+          initialDirection.current = gestureDirection;
+        }
 
         if (
           gestureDirection === "horizontal" &&
@@ -390,16 +394,17 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
           {...props}
         >
           <RequestCloseContext.Provider value={onRequestClose}>
-            <div
-              ref={scrollableRef}
-              className="Sheet__container"
-              css={{
-                background: theme.colors.background.layer,
-                height: "100%"
-              }}
-            >
-              {children}
-            </div>
+            <RemoveScroll enabled={isOpen} forwardProps>
+              <div
+                className="Sheet__container"
+                css={{
+                  background: theme.colors.background.layer,
+                  height: "100%"
+                }}
+              >
+                {children}
+              </div>
+            </RemoveScroll>
           </RequestCloseContext.Provider>
         </animated.div>
       </div>
