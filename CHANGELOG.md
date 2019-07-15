@@ -1,3 +1,8 @@
+## 3.4.0
+
+- Rename `GestureStack` to Pager
+- use new scroll-lock hook
+
 ## 3.3.2
 
 - Update Stack to fix measurement issues
