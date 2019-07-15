@@ -153,7 +153,6 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const { bounds } = useMeasure(ref);
   const previousBounds = usePrevious(bounds);
   const positionsStyle = React.useMemo(() => positions(theme), [theme]);
-  const initialDirection = React.useRef<"vertical" | "horizontal" | null>(null);
   const { bind: bindHideBody } = useHideBody(isOpen);
   const scrollableRef = React.useRef(null);
   const startVelocity = React.useRef<number | null>(null);
@@ -223,17 +222,11 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
   const { bind } = useGestureResponder(
     {
       onStartShouldSet: () => {
-        initialDirection.current = null;
         return false;
       },
-      onMoveShouldSet: ({ initial, xy }) => {
-        // we lock in the direction when it's first provided
+      onMoveShouldSet: ({ initial, initialDirection, xy }) => {
         const gestureDirection =
-          initialDirection.current || getDirection(initial, xy);
-
-        if (!initialDirection.current) {
-          initialDirection.current = gestureDirection;
-        }
+          initialDirection[0] !== 0 ? "horizontal" : "vertical";
 
         if (
           gestureDirection === "horizontal" &&
