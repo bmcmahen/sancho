@@ -16,6 +16,17 @@ export const SheetExamples = storiesOf("Sheet", module)
           <button>two</button>
           <button>tjree</button>
           <button>four</button>
+          <div
+            data-scroll-lock-scrollable
+            style={{
+              border: "1px solid",
+              width: "100px",
+              height: "100px",
+              overflow: "scroll"
+            }}
+          >
+            <div style={{ height: "200px" }}>scrollable</div>
+          </div>
         </div>
       </Example>
     );
