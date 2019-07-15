@@ -24,7 +24,7 @@ export * from "./Portal";
 export * from "./Positions";
 export * from "./Sheet";
 export * from "./Spinner";
-export * from "./GestureView";
+export * from "./Pager";
 export * from "./Tabs";
 export * from "./Text";
 export * from "./Toast";

@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import defaultTheme from "../Theme";
 import { IconActivity, IconAirplay, IconAlertOctagon } from "../Icons";
 import { useState, useRef } from "react";
-import { GestureView } from "../GestureView";
+import { Pager } from "../Pager";
 import { ScrollView, ScrollViewHandles } from "../ScrollView";
 import * as React from "react";
 import { Layer } from "../Layer";
@@ -28,7 +28,7 @@ function Example() {
   const [index, setIndex] = useState(0);
   return (
     <div css={{ width: "200px" }}>
-      <GestureView
+      <Pager
         css={{ height: "400px " }}
         value={index}
         onRequestChange={i => setIndex(i)}
@@ -43,7 +43,7 @@ function Example() {
         </div>
 
         <div css={{ flex: 1, background: "red" }} />
-      </GestureView>
+      </Pager>
     </div>
   );
 }
@@ -52,7 +52,7 @@ function Direction() {
   const [index, setIndex] = useState(0);
   return (
     <div css={{ width: "200px" }}>
-      <GestureView
+      <Pager
         css={{ height: "400px " }}
         value={index}
         onRequestChange={i => setIndex(i)}
@@ -67,7 +67,7 @@ function Direction() {
         </div>
 
         <div css={{ flex: 1, background: "red" }} />
-      </GestureView>
+      </Pager>
     </div>
   );
 }

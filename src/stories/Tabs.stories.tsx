@@ -21,7 +21,7 @@ import {
   IconMapPin,
   IconArrowUp
 } from "../Icons";
-import { GestureView } from "../GestureView";
+import { GestureView, Pager } from "../Pager";
 import { ExampleList } from "./List.stories";
 import { StateType } from "react-gesture-responder";
 import { IconButton } from "../IconButton";
@@ -234,7 +234,7 @@ function EvenlySpaced({
             </Tabs>
           </div>
         </DarkMode>
-        <GestureView
+        <Pager
           css={{ maxHeight: "500px" }}
           value={value}
           onTerminationRequest={onTerminationRequest}
@@ -258,7 +258,7 @@ function EvenlySpaced({
           <TabPanel id="family" css={{ flex: 1, padding: "24px" }}>
             Settings tab content
           </TabPanel>
-        </GestureView>
+        </Pager>
       </div>
     </Layer>
   );
@@ -322,7 +322,7 @@ function ParentSwipe() {
           }
         }}
       >
-        <GestureView
+        <Pager
           onTerminationRequest={onParentTerminationRequest}
           value={parentIndex}
           onRequestChange={i => setParentIndex(i)}
@@ -360,7 +360,7 @@ function ParentSwipe() {
             onRequestChange={(i: number) => setChildIndex(i)}
             onTerminationRequest={onChildTerminationRequest}
           />
-        </GestureView>
+        </Pager>
       </div>
     </div>
   );
