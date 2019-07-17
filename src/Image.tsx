@@ -21,25 +21,6 @@ export interface ImageProps extends React.HTMLAttributes<any> {
   src: string;
 }
 
-// basic strategy:
-// render image
-// when switching to zoom:
-//  - load larger image
-//  - get dimensions / placement of that image
-//  - render new image in that place usng fixed positioning and transformed sized
-//  - use visually hidden on source image
-//  - animate from initial position to full size
-
-// zoomed image should be distinct component, and we use context to pass along
-// information from the parent.
-
-const initialDimensions = {
-  w: 0,
-  h: 0,
-  x: 0,
-  y: 0
-};
-
 const initialTransform = "translateX(0px) translateY(0px) scale(1)";
 
 const getScale = linearConversion([0, 500], [1, 0.4]);
@@ -55,19 +36,25 @@ export const Image: React.FunctionComponent<ImageProps> = ({
   const ref = React.useRef<HTMLImageElement>(null);
   const prevZoom = usePrevious(zoomed);
   const cloneRef = React.useRef<any>(null);
-
   const [cloneLoaded, setCloneLoaded] = React.useState(false);
   const prevCloneLoaded = usePrevious(cloneLoaded);
+
+  /**
+   * We basically only use this to imperatively set the
+   * visibility of the thumbnail
+   */
 
   const [thumbProps, setThumbProps] = useSpring(() => ({
     opacity: 1,
     immediate: true
   }));
 
+  // set overlay opacity
   const [overlay, setOverlay] = useSpring(() => ({
     opacity: zoomed ? 1 : 0
   }));
 
+  // our cloned image spring
   const [props, set] = useSpring(() => ({
     opacity: 0,
     transform: initialTransform,
@@ -78,6 +65,10 @@ export const Image: React.FunctionComponent<ImageProps> = ({
     immediate: true,
     config: config.stiff
   }));
+
+  /**
+   * Handle drag movement
+   */
 
   function onMove({ delta }: StateType) {
     const scale = scaleClamp(getScale(Math.abs(delta[1])));
@@ -92,6 +83,11 @@ export const Image: React.FunctionComponent<ImageProps> = ({
     setOverlay({ opacity: scale, immediate: true });
   }
 
+  /**
+   * Handle release - we almost always close
+   * @param param0
+   */
+
   function onEnd({ delta }: StateType) {
     if (Math.abs(delta[1]) > 20 && onRequestClose) {
       onRequestClose();
@@ -102,6 +98,7 @@ export const Image: React.FunctionComponent<ImageProps> = ({
     }
   }
 
+  // our gesture binding helper
   const { bind } = useGestureResponder({
     onStartShouldSet: () => false,
     onMoveShouldSet: ({ initialDirection, delta }) => {
@@ -115,6 +112,12 @@ export const Image: React.FunctionComponent<ImageProps> = ({
     onRelease: onEnd,
     onTerminate: onEnd
   });
+
+  /**
+   * Basic logic for determining positions. A bit of a mess tbh,
+   * but that often comes when mixing imperative logic w/
+   * react's declarative nature.
+   */
 
   const generatePositions = React.useCallback(
     (immediate?: boolean = false) => {
@@ -149,7 +152,8 @@ export const Image: React.FunctionComponent<ImageProps> = ({
         const zoomingIn = !prevZoom && zoomed;
         const zoomingOut = prevZoom && !zoomed;
 
-        if (zoomingIn) {
+        // handle zooming in
+        if (zoomingIn && !immediate) {
           console.log("zooming in");
           setThumbProps({ opacity: 0, immediate: true });
           set({
@@ -169,8 +173,9 @@ export const Image: React.FunctionComponent<ImageProps> = ({
             transform: initialTransform,
             immediate: false
           });
+
+          // handle zooming out
         } else if (zoomingOut) {
-          console.log("zooming out");
           set({
             transform: `translateX(${initialSize.translateX}px) translateY(${
               initialSize.translateY
@@ -180,6 +185,18 @@ export const Image: React.FunctionComponent<ImageProps> = ({
               setThumbProps({ opacity: 1, immediate: true });
               set({ opacity: 0, immediate: true });
             }
+          });
+
+          // handle resizing
+        } else if (immediate) {
+          set({
+            immediate: true,
+            transform: initialTransform,
+            left: clonedDimensions.x,
+            top: clonedDimensions.y,
+            width: clonedDimensions.w,
+            height: clonedDimensions.h,
+            onRest: null
           });
         }
 
