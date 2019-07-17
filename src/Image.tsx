@@ -83,56 +83,73 @@ export const Image: React.FunctionComponent<ImageProps> = ({
 
   const prevCloneSize = usePrevious(cloneSize);
 
-  React.useEffect(() => {
-    // any time this prop changes, we update our position
-    if (ref.current && cloneSize.loaded) {
-      const rect = ref.current.getBoundingClientRect();
+  const generatePositions = React.useCallback(
+    (immediate?: boolean) => {
+      // any time this prop changes, we update our position
+      if (ref.current && cloneSize.loaded) {
+        const rect = ref.current.getBoundingClientRect();
 
-      const thumbDimensions = {
-        x: rect.left,
-        y: rect.top,
-        w: rect.width,
-        h: rect.height
-      };
+        const thumbDimensions = {
+          x: rect.left,
+          y: rect.top,
+          w: rect.width,
+          h: rect.height
+        };
 
-      const clonedDimensions = getTargetDimensions(
-        cloneSize.width,
-        cloneSize.height
-      );
-      const initialSize = getInitialClonedDimensions(
-        thumbDimensions,
-        clonedDimensions
-      );
+        const clonedDimensions = getTargetDimensions(
+          cloneSize.width,
+          cloneSize.height
+        );
 
-      const zoomingIn = !prevZoom && zoomed;
-      const zoomingOut = prevZoom && !zoomed;
+        const initialSize = getInitialClonedDimensions(
+          thumbDimensions,
+          clonedDimensions
+        );
 
-      if (zoomingIn) {
-        setThumbProps({ opacity: 0, immediate: true });
-        set({ opacity: 1, immediate: true });
+        const zoomingIn = !prevZoom && zoomed;
+        const zoomingOut = prevZoom && !zoomed;
+
+        if (zoomingIn) {
+          setThumbProps({ opacity: 0, immediate: true });
+          set({ opacity: 1, immediate: true });
+        }
+
+        setOverlay({ opacity: zoomed ? 1 : 0 });
+
+        set({
+          transform: zoomed
+            ? initialTransform
+            : `translateX(${initialSize.translateX}px) translateY(${
+                initialSize.translateY
+              }px) scale(${initialSize.scale})`,
+          left: clonedDimensions.x,
+          top: clonedDimensions.y,
+          width: clonedDimensions.w,
+          height: clonedDimensions.h,
+          immediate: immediate || (prevCloneSize && !prevCloneSize.loaded),
+          onRest: zoomingOut
+            ? () => {
+                setThumbProps({ opacity: 1, immediate: true });
+                set({ opacity: 0, immediate: true });
+              }
+            : null
+        });
       }
+    },
+    [zoomed, cloneSize, ref, prevCloneSize, prevZoom]
+  );
 
-      setOverlay({ opacity: zoomed ? 1 : 0 });
+  const onResize = React.useCallback(() => {
+    generatePositions(true);
+  }, [zoomed, cloneSize, ref, prevCloneSize, prevZoom]);
 
-      set({
-        transform: zoomed
-          ? initialTransform
-          : `translateX(${initialSize.translateX}px) translateY(${
-              initialSize.translateY
-            }px) scale(${initialSize.scale})`,
-        left: clonedDimensions.x,
-        top: clonedDimensions.y,
-        width: clonedDimensions.w,
-        height: clonedDimensions.h,
-        immediate: prevCloneSize && !prevCloneSize.loaded,
-        onRest: zoomingOut
-          ? () => {
-              setThumbProps({ opacity: 1, immediate: true });
-              set({ opacity: 0, immediate: true });
-            }
-          : null
-      });
-    }
+  // update our various positions
+  React.useEffect(() => {
+    generatePositions();
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
   }, [zoomed, cloneSize, ref, prevCloneSize, prevZoom]);
 
   return (
