@@ -39,6 +39,14 @@ export const Image: React.FunctionComponent<ImageProps> = ({
   const cloneRef = React.useRef<any>(null);
   const [cloneLoaded, setCloneLoaded] = React.useState(false);
   const prevCloneLoaded = usePrevious(cloneLoaded);
+  const [hasRequestedZoom, setHasRequestedZoom] = React.useState(zoomed);
+
+  // this allows us to lazily load our cloned image
+  React.useEffect(() => {
+    if (!hasRequestedZoom && zoomed) {
+      setHasRequestedZoom(true);
+    }
+  }, [hasRequestedZoom, zoomed]);
 
   useScrollLock(zoomed);
 
@@ -150,14 +158,14 @@ export const Image: React.FunctionComponent<ImageProps> = ({
           clonedDimensions
         );
 
-        console.log(thumbDimensions, initialSize);
-
-        const zoomingIn = !prevZoom && zoomed;
+        const zoomingIn =
+          (!prevZoom && zoomed) || (!prevCloneLoaded && cloneLoaded);
         const zoomingOut = prevZoom && !zoomed;
+
+        console.log("zooming in?", zoomingIn);
 
         // handle zooming in
         if (zoomingIn && !immediate) {
-          console.log("zooming in");
           setThumbProps({ opacity: 0, immediate: true });
           set({
             opacity: 1,
@@ -206,9 +214,19 @@ export const Image: React.FunctionComponent<ImageProps> = ({
         setOverlay({ opacity: zoomed ? 1 : 0 });
       }
     },
-    [zoomed, cloneLoaded, ref, cloneRef, prevCloneLoaded, prevZoom]
+    [
+      zoomed,
+      cloneLoaded,
+      ref,
+      cloneRef,
+      prevCloneLoaded,
+      hasRequestedZoom,
+      prevZoom
+    ]
   );
 
+  // we need to update our fixed positioning when resizing
+  // this should probably be debounced
   const onResize = React.useCallback(() => {
     generatePositions(true);
   }, [zoomed, cloneLoaded, ref, prevCloneLoaded, prevZoom]);
@@ -231,42 +249,47 @@ export const Image: React.FunctionComponent<ImageProps> = ({
         ref={ref}
         {...other}
       />
-      <animated.div
-        {...bind}
-        style={{
-          opacity: overlay.opacity
-        }}
-        aria-hidden={!zoomed}
-        onClick={onRequestClose}
-        css={{
-          pointerEvents: zoomed ? "auto" : "none",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          zIndex: 90,
-          background: theme.colors.background.default
-        }}
-      />
-      <animated.img
-        css={{ pointerEvents: "none" }}
-        onLoad={() => {
-          setCloneLoaded(true);
-        }}
-        style={{
-          zIndex: 100,
-          position: "fixed",
-          opacity: props.opacity,
-          transform: props.transform,
-          left: props.left,
-          top: props.top,
-          width: props.width,
-          height: props.height
-        }}
-        ref={cloneRef}
-        {...other}
-      />
+      {hasRequestedZoom && (
+        <React.Fragment>
+          <animated.div
+            {...bind}
+            style={{
+              opacity: overlay.opacity
+            }}
+            aria-hidden={!zoomed}
+            onClick={onRequestClose}
+            css={{
+              pointerEvents: zoomed ? "auto" : "none",
+              position: "fixed",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+              zIndex: 90,
+              background: theme.colors.background.default
+            }}
+          />
+
+          <animated.img
+            css={{ pointerEvents: "none" }}
+            onLoad={() => {
+              setCloneLoaded(true);
+            }}
+            style={{
+              zIndex: 100,
+              position: "fixed",
+              opacity: props.opacity,
+              transform: props.transform,
+              left: props.left,
+              top: props.top,
+              width: props.width,
+              height: props.height
+            }}
+            ref={cloneRef}
+            {...other}
+          />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };
