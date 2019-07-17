@@ -5,6 +5,7 @@ import { useSpring, animated, config } from "react-spring";
 import { usePrevious } from "./Collapse";
 import { useGestureResponder, StateType } from "react-gesture-responder";
 import { useTheme } from "./Theme/Providers";
+import useScrollLock from "use-scroll-lock";
 
 interface PositionType {
   x: number;
@@ -38,6 +39,8 @@ export const Image: React.FunctionComponent<ImageProps> = ({
   const cloneRef = React.useRef<any>(null);
   const [cloneLoaded, setCloneLoaded] = React.useState(false);
   const prevCloneLoaded = usePrevious(cloneLoaded);
+
+  useScrollLock(zoomed);
 
   /**
    * We basically only use this to imperatively set the
