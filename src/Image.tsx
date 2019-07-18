@@ -6,6 +6,9 @@ import { usePrevious } from "./Collapse";
 import { useGestureResponder, StateType } from "react-gesture-responder";
 import { useTheme } from "./Theme/Providers";
 import useScrollLock from "use-scroll-lock";
+import { Text } from "./Text";
+import { Spinner } from "./Spinner";
+import { LayerLoading } from "./Layer";
 
 interface PositionType {
   x: number;
@@ -17,7 +20,9 @@ interface PositionType {
 export interface ImageProps extends React.HTMLAttributes<any> {
   fadeIn?: boolean;
   zoomed?: boolean;
+  caption?: string;
   onClick: () => void;
+  fullscreenSrc?: string;
   onRequestClose?: () => void;
   src: string;
 }
@@ -29,13 +34,17 @@ const scaleClamp = clamp(0.4, 1);
 
 export const Image: React.FunctionComponent<ImageProps> = ({
   fadeIn,
-  zoomed,
+  zoomed = false,
+  caption,
+  fullscreenSrc,
   onRequestClose,
+  src,
   ...other
 }) => {
   const theme = useTheme();
   const ref = React.useRef<HTMLImageElement>(null);
   const prevZoom = usePrevious(zoomed);
+  const [animating, setAnimating] = React.useState(false);
   const cloneRef = React.useRef<any>(null);
   const [cloneLoaded, setCloneLoaded] = React.useState(false);
   const prevCloneLoaded = usePrevious(cloneLoaded);
@@ -48,7 +57,8 @@ export const Image: React.FunctionComponent<ImageProps> = ({
     }
   }, [hasRequestedZoom, zoomed]);
 
-  useScrollLock(zoomed);
+  // disable scrolling while zooming is taking place
+  useScrollLock(zoomed || animating);
 
   /**
    * We basically only use this to imperatively set the
@@ -131,7 +141,7 @@ export const Image: React.FunctionComponent<ImageProps> = ({
    */
 
   const generatePositions = React.useCallback(
-    (immediate?: boolean = false) => {
+    (immediate: boolean = false) => {
       // any time this prop changes, we update our position
       if (ref.current && cloneLoaded) {
         const rect = ref.current.getBoundingClientRect();
@@ -162,8 +172,6 @@ export const Image: React.FunctionComponent<ImageProps> = ({
           (!prevZoom && zoomed) || (!prevCloneLoaded && cloneLoaded);
         const zoomingOut = prevZoom && !zoomed;
 
-        console.log("zooming in?", zoomingIn);
-
         // handle zooming in
         if (zoomingIn && !immediate) {
           setThumbProps({ opacity: 0, immediate: true });
@@ -187,6 +195,8 @@ export const Image: React.FunctionComponent<ImageProps> = ({
 
           // handle zooming out
         } else if (zoomingOut) {
+          setAnimating(true);
+
           set({
             transform: `translateX(${initialSize.translateX}px) translateY(${
               initialSize.translateY
@@ -195,6 +205,7 @@ export const Image: React.FunctionComponent<ImageProps> = ({
             onRest: () => {
               setThumbProps({ opacity: 1, immediate: true });
               set({ opacity: 0, immediate: true });
+              setAnimating(false);
             }
           });
 
@@ -242,13 +253,34 @@ export const Image: React.FunctionComponent<ImageProps> = ({
 
   return (
     <React.Fragment>
-      <animated.img
-        style={{
-          opacity: thumbProps.opacity
-        }}
-        ref={ref}
-        {...other}
-      />
+      <div className="Image">
+        <div css={{ position: "relative" }}>
+          <animated.img
+            src={src}
+            style={{
+              opacity: thumbProps.opacity
+            }}
+            ref={ref}
+            {...other}
+          />
+          <LayerLoading
+            css={{ borderRadius: 0 }}
+            loading={!cloneLoaded && zoomed}
+          />
+        </div>
+        {caption && (
+          <Text
+            css={{
+              display: "inline",
+              marginTop: theme.spaces.sm,
+              marginBottom: theme.spaces.md
+            }}
+            variant="subtitle"
+          >
+            {caption}
+          </Text>
+        )}
+      </div>
       {hasRequestedZoom && (
         <React.Fragment>
           <animated.div
@@ -286,7 +318,7 @@ export const Image: React.FunctionComponent<ImageProps> = ({
               height: props.height
             }}
             ref={cloneRef}
-            {...other}
+            src={fullscreenSrc || src}
           />
         </React.Fragment>
       )}

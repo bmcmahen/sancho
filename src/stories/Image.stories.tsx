@@ -22,14 +22,14 @@ function ZoomedExample() {
           aute Lorem reprehenderit nulla officia.
         </Text>
         <Text css={{ marginTop: "1rem" }} variant="paragraph">
-          Ipsum elit duis minim sint adipisicing reprehenderit aliqua ut
-          excepteur velit adipisicing. Ea officia do ullamco commodo esse
+          cut excepteur velit adipisicing. Ea officia do ullamco commodo esse
           consectetur elit enim elit elit et. Aute aliqua quis minim tempor id
           commodo magna.
         </Text>
 
         <div css={{ marginRight: "1rem", marginLeft: 0, float: "left" }}>
           <Image
+            caption={"Duis cupidatat ea do aliqua nostrud incididunt fugiat."}
             css={{
               width: "300px",
               height: "auto"
