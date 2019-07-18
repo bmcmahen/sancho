@@ -29,7 +29,7 @@ export interface ImageProps extends React.HTMLAttributes<any> {
 
 const initialTransform = "translateX(0px) translateY(0px) scale(1)";
 
-const getScale = linearConversion([0, 500], [1, 0.4]);
+const getScale = linearConversion([0, 400], [1, 0.4]);
 const scaleClamp = clamp(0.4, 1);
 
 export const Image: React.FunctionComponent<ImageProps> = ({
@@ -282,22 +282,30 @@ export const Image: React.FunctionComponent<ImageProps> = ({
         )}
       </div>
       {hasRequestedZoom && (
-        <React.Fragment>
+        <div
+          {...bind}
+          aria-hidden={!zoomed}
+          onClick={onRequestClose}
+          css={{
+            pointerEvents: zoomed ? "auto" : "none",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            zIndex: 90
+          }}
+        >
           <animated.div
-            {...bind}
             style={{
-              opacity: overlay.opacity
-            }}
-            aria-hidden={!zoomed}
-            onClick={onRequestClose}
-            css={{
-              pointerEvents: zoomed ? "auto" : "none",
-              position: "fixed",
+              opacity: overlay.opacity,
+              position: "absolute",
               top: 0,
               left: 0,
-              bottom: 0,
               right: 0,
-              zIndex: 90,
+              bottom: 0
+            }}
+            css={{
               background: theme.colors.background.default
             }}
           />
@@ -309,7 +317,7 @@ export const Image: React.FunctionComponent<ImageProps> = ({
             }}
             style={{
               zIndex: 100,
-              position: "fixed",
+              position: "absolute",
               opacity: props.opacity,
               transform: props.transform,
               left: props.left,
@@ -320,7 +328,7 @@ export const Image: React.FunctionComponent<ImageProps> = ({
             ref={cloneRef}
             src={fullscreenSrc || src}
           />
-        </React.Fragment>
+        </div>
       )}
     </React.Fragment>
   );
