@@ -6,6 +6,7 @@ import { Image } from "../Image";
 import * as React from "react";
 import { Container } from "../Container";
 import { Text } from "../Text";
+import { Embed } from "../Embed";
 
 const images = [
   "https://images.unsplash.com/photo-1563285851-d81750ac22fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80",
@@ -19,20 +20,17 @@ function ZoomedExample() {
   const [zoom, setZoom] = React.useState(null);
 
   return (
-    <div css={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
+    <div css={{ maxWidth: "400px" }}>
       {images.map(src => (
-        <Image
-          key={src}
-          css={{
-            margin: "1rem",
-            width: "300px",
-            height: "auto"
-          }}
-          src={src}
-          zoomed={src === zoom}
-          onClick={() => setZoom(src)}
-          onRequestClose={() => setZoom(null)}
-        />
+        <Embed width={4} height={3}>
+          <Image
+            key={src}
+            src={src}
+            zoomed={src === zoom}
+            onClick={() => setZoom(src)}
+            onRequestClose={() => setZoom(null)}
+          />
+        </Embed>
       ))}
     </div>
   );

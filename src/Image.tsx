@@ -258,6 +258,8 @@ export const Image: React.FunctionComponent<ImageProps> = ({
           <animated.img
             src={src}
             style={{
+              maxWidth: "100%",
+              height: "auto",
               opacity: thumbProps.opacity
             }}
             ref={ref}
@@ -281,55 +283,56 @@ export const Image: React.FunctionComponent<ImageProps> = ({
           </Text>
         )}
       </div>
-      {hasRequestedZoom && (
-        <div
-          {...bind}
-          aria-hidden={!zoomed}
-          onClick={onRequestClose}
-          css={{
-            pointerEvents: zoomed ? "auto" : "none",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            zIndex: 90
-          }}
-        >
-          <animated.div
-            style={{
-              opacity: overlay.opacity,
-              position: "absolute",
+      {hasRequestedZoom ||
+        (src !== fullscreenSrc && (
+          <div
+            {...bind}
+            aria-hidden={!zoomed}
+            onClick={onRequestClose}
+            css={{
+              pointerEvents: zoomed ? "auto" : "none",
+              position: "fixed",
               top: 0,
               left: 0,
+              bottom: 0,
               right: 0,
-              bottom: 0
+              zIndex: 90
             }}
-            css={{
-              background: theme.colors.background.default
-            }}
-          />
+          >
+            <animated.div
+              style={{
+                opacity: overlay.opacity,
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0
+              }}
+              css={{
+                background: theme.colors.background.default
+              }}
+            />
 
-          <animated.img
-            css={{ pointerEvents: "none" }}
-            onLoad={() => {
-              setCloneLoaded(true);
-            }}
-            style={{
-              zIndex: 100,
-              position: "absolute",
-              opacity: props.opacity,
-              transform: props.transform,
-              left: props.left,
-              top: props.top,
-              width: props.width,
-              height: props.height
-            }}
-            ref={cloneRef}
-            src={fullscreenSrc || src}
-          />
-        </div>
-      )}
+            <animated.img
+              css={{ pointerEvents: "none" }}
+              onLoad={() => {
+                setCloneLoaded(true);
+              }}
+              style={{
+                zIndex: 100,
+                position: "absolute",
+                opacity: props.opacity,
+                transform: props.transform,
+                left: props.left,
+                top: props.top,
+                width: props.width,
+                height: props.height
+              }}
+              ref={cloneRef}
+              src={fullscreenSrc || src}
+            />
+          </div>
+        ))}
     </React.Fragment>
   );
 };
