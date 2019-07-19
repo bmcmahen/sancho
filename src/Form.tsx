@@ -10,6 +10,7 @@ import { Theme } from "./Theme";
 import { useTheme } from "./Theme/Providers";
 import { getHeight, focusShadow } from "./Button";
 import { IconAlertCircle, IconChevronDown } from "./Icons";
+import { safeBind } from "./Hooks/compose-bind";
 
 const getInputSizes = (theme: Theme) => ({
   sm: css({
@@ -245,39 +246,42 @@ export interface InputBaseProps
  * forms. Otherwise, stick with InputGroup
  */
 
-export const InputBase: React.FunctionComponent<InputBaseProps> = ({
-  autoComplete,
-  autoFocus,
-  inputSize = "md",
-  ...other
-}) => {
-  const { uid, error } = React.useContext(InputGroupContext);
-  const { bind, active } = useActiveStyle();
-  const {
-    baseStyles,
-    inputSizes,
-    activeBackground,
-    errorStyles
-  } = useSharedStyle();
-  const height = getHeight(inputSize);
-  return (
-    <input
-      id={uid}
-      className="Input"
-      autoComplete={autoComplete}
-      autoFocus={autoFocus}
-      {...bind}
-      css={[
-        baseStyles,
-        inputSizes[inputSize],
-        active && activeBackground,
-        error && errorStyles,
-        { height }
-      ]}
-      {...other}
-    />
-  );
-};
+export const InputBase: React.RefForwardingComponent<
+  React.Ref<HTMLInputElement>,
+  InputBaseProps
+> = React.forwardRef(
+  (
+    { autoComplete, autoFocus, inputSize = "md", ...other }: InputBaseProps,
+    ref: React.Ref<HTMLInputElement>
+  ) => {
+    const { uid, error } = React.useContext(InputGroupContext);
+    const { bind, active } = useActiveStyle();
+    const {
+      baseStyles,
+      inputSizes,
+      activeBackground,
+      errorStyles
+    } = useSharedStyle();
+    const height = getHeight(inputSize);
+    return (
+      <input
+        id={uid}
+        className="Input"
+        autoComplete={autoComplete}
+        autoFocus={autoFocus}
+        {...bind}
+        css={[
+          baseStyles,
+          inputSizes[inputSize],
+          active && activeBackground,
+          error && errorStyles,
+          { height }
+        ]}
+        {...safeBind({ ref }, other)}
+      />
+    );
+  }
+);
 
 InputBase.propTypes = {
   inputSize: PropTypes.oneOf(["sm", "md", "lg"] as InputSize[]),
