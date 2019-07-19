@@ -23,7 +23,11 @@ function Example() {
   const [query, setQuery] = React.useState("");
 
   return (
-    <ComboBox>
+    <ComboBox
+      onSelect={v => {
+        console.log("selected cb", v);
+      }}
+    >
       <ComboBoxInput
         aria-label="Query users"
         value={query}

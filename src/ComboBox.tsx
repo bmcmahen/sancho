@@ -195,9 +195,11 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
     setShowPopover(true);
   }, []);
 
+  // handle clicks
   const handleSelect = React.useCallback((value: string) => {
-    // pass to parent
-    console.log("SLECTED");
+    onSelect && onSelect(value);
+    setShowPopover(false);
+    setSelected(null);
   }, []);
 
   return (
