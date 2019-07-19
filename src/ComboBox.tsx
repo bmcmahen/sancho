@@ -51,27 +51,56 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   const options = React.useRef<string[] | null>([]);
   const [expanded, setExpanded] = React.useState(false);
   const { reference, popper, arrow } = usePopper({ placement: "bottom" });
-  const [selected, setSelected] = React.useState(null);
+  const [selected, setSelected] = React.useState<string | null>(null);
+
+  const getSelectedIndex = React.useCallback(() => {
+    if (!selected) return -1;
+    return options.current!.indexOf(selected || "");
+  }, [options, selected]);
 
   // pressing down arrow
-  const highlightNext = React.useCallback(() => {
+  const onArrowDown = React.useCallback(() => {
     console.log("select next");
-  }, []);
+    const opts = options.current!;
+    const i = getSelectedIndex();
+    // if last, cycle to first
+    if (i + 1 === opts.length) {
+      setSelected(opts[0]);
+
+      // or next
+    } else {
+      setSelected(opts[i + 1]);
+    }
+  }, [getSelectedIndex]);
 
   // pressing up arrow
-  const highlightPrev = React.useCallback(() => {
+  const onArrowUp = React.useCallback(() => {
     console.log("select prev");
-  }, []);
+    const opts = options.current!;
+    const i = getSelectedIndex();
+
+    // on input? cycle to bottom
+    if (i === -1) {
+      setSelected(opts[opts.length - 1]);
+
+      // select prev
+    } else {
+      setSelected(opts[i - 1]);
+    }
+  }, [getSelectedIndex]);
 
   // enter pressed while highlighted
   // or clicked a list option
   const onSelect = React.useCallback(() => {
+    // call the parent with the selected value?
     console.log("selected");
   }, []);
 
   // escape key pressed
   const onEscape = React.useCallback(() => {
+    // request to close
     console.log("escape");
+    setSelected(null);
   }, []);
 
   const makeHash = React.useCallback(
