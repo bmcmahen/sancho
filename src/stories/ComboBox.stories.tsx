@@ -4,7 +4,12 @@ import * as React from "react";
 import { Avatar, AvatarSizes } from "../Avatar";
 import faker from "faker";
 import { storiesOf } from "@storybook/react";
-import { ComboBox, ComboBoxInput, ComboBoxList } from "../ComboBox";
+import {
+  ComboBox,
+  ComboBoxInput,
+  ComboBoxList,
+  ComboBoxOption
+} from "../ComboBox";
 import { Input, InputBase } from "../Form";
 
 export const ComboBoxStories = storiesOf("ComboBox", module).add(
@@ -25,7 +30,12 @@ function Example() {
         component={InputBase}
         onChange={e => setQuery(e.target.value)}
       />
-      <ComboBoxList>Helloooo</ComboBoxList>
+      {query && (
+        <ComboBoxList>
+          <ComboBoxOption value="Ben">Ben</ComboBoxOption>
+          <ComboBoxOption value="McMahen">McMahen</ComboBoxOption>
+        </ComboBoxList>
+      )}
     </ComboBox>
   );
 }

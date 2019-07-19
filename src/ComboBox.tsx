@@ -6,12 +6,22 @@ import { safeBind } from "./Hooks/compose-bind";
 import usePopper from "./Hooks/use-popper";
 import Popper from "popper.js";
 
+/**
+ * The goal is to provide something flexible enough that you can provide
+ * something along the lines of twitter's search, or more
+ * of an autocomplete style form element.
+ *
+ * Ryan florence's combobox was a big source of inspiration here.
+ * https://ui.reach.tech/combobox
+ */
+
 interface ContextType {
   inputRef: React.RefObject<HTMLInputElement>;
   targetRef: React.RefObject<HTMLElement>;
+  options: React.MutableRefObject<string[] | null>;
+  selected: string | null;
   listId: string;
-  selectedIndex?: number;
-  makeHash: (i: number) => string;
+  makeHash: (i: string) => string;
   expanded: boolean;
   setExpanded: (expanded: boolean) => void;
   popper: {
@@ -38,11 +48,34 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
 }) => {
   const inputRef = React.useRef(null);
   const listId = `list${useUid()}`;
+  const options = React.useRef<string[] | null>([]);
   const [expanded, setExpanded] = React.useState(false);
   const { reference, popper, arrow } = usePopper({ placement: "bottom" });
+  const [selected, setSelected] = React.useState(null);
+
+  // pressing down arrow
+  const highlightNext = React.useCallback(() => {
+    console.log("select next");
+  }, []);
+
+  // pressing up arrow
+  const highlightPrev = React.useCallback(() => {
+    console.log("select prev");
+  }, []);
+
+  // enter pressed while highlighted
+  // or clicked a list option
+  const onSelect = React.useCallback(() => {
+    console.log("selected");
+  }, []);
+
+  // escape key pressed
+  const onEscape = React.useCallback(() => {
+    console.log("escape");
+  }, []);
 
   const makeHash = React.useCallback(
-    (i: number) => {
+    (i: string) => {
       return listId + i;
     },
     [listId]
@@ -54,7 +87,9 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
         inputRef,
         targetRef: reference.ref,
         popper,
+        selected,
         arrow,
+        options,
         listId,
         makeHash,
         expanded,
@@ -90,7 +125,7 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const { targetRef, makeHash, selectedIndex, listId, inputRef } = context;
+  const { targetRef, makeHash, selected, listId, inputRef } = context;
 
   const onKeyDown = React.useCallback((e: React.KeyboardEvent) => {
     console.log("key down!");
@@ -106,9 +141,7 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
       aria-readonly
       aria-autocomplete="list"
       role="textbox"
-      aria-activedescendant={
-        selectedIndex ? makeHash(selectedIndex) : undefined
-      }
+      aria-activedescendant={selected ? makeHash(selected) : undefined}
       {...safeBind(
         {
           ref: inputRef
@@ -128,6 +161,14 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
 
 export interface ComboBoxListProps {}
 
+interface ChildrenContextType {
+  index: number;
+}
+
+const ComboChildrenContext = React.createContext<ChildrenContextType | null>(
+  null
+);
+
 export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
   children
 }) => {
@@ -137,11 +178,19 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const { listId, popper, arrow } = context;
+  const { listId, popper, options, arrow } = context;
+
+  React.useLayoutEffect(() => {
+    options.current = [];
+    return () => {
+      options.current = [];
+    };
+  });
 
   return (
     <ul
       ref={popper.ref as any}
+      tabIndex={-1}
       style={popper.styles}
       data-placement={popper.placement}
       id={listId}
@@ -160,20 +209,41 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
 };
 
 /**
- * API: Ryan's from ReachUI is really nice
- *
- * <ComboBox> // context providerr
- *   <ComboBoxInput
- *      aria-label='Cities'
- *      component={Input}
- *      onChange={saveValue}
- *    />
- *
- *   {results && (
- *      <ComboBoxPopover>
- *         {results.map => <ComboBoxOption value={text} />} // allow custom render
- *      </ComboBoxPopover>
- *    )}
- * </ComboBox>
- *
+ * Individual combo box options
  */
+
+export interface ComboBoxOptionProps {
+  value: string;
+}
+
+export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
+  value,
+  children,
+  ...other
+}) => {
+  const context = React.useContext(ComboBoxContext);
+
+  if (!context) {
+    throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
+  }
+
+  const { makeHash, options, selected } = context;
+
+  React.useEffect(() => {
+    if (options.current) {
+      options.current.push(value);
+    }
+  });
+
+  return (
+    <div
+      tabIndex={-1}
+      id={makeHash(value)}
+      role="option"
+      aria-selected={selected ? "true" : "false"}
+      {...other}
+    >
+      {children || value}
+    </div>
+  );
+};
