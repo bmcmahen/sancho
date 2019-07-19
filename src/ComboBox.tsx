@@ -24,6 +24,7 @@ interface ContextType {
   makeHash: (i: string) => string;
   expanded: boolean;
   setExpanded: (expanded: boolean) => void;
+  onKeyDown: (e: React.KeyboardEvent) => void;
   popper: {
     ref: React.RefObject<HTMLElement>;
     styles: React.CSSProperties;
@@ -54,13 +55,15 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   const [selected, setSelected] = React.useState<string | null>(null);
 
   const getSelectedIndex = React.useCallback(() => {
+    console.log("selected", selected);
     if (!selected) return -1;
     return options.current!.indexOf(selected || "");
   }, [options, selected]);
 
   // pressing down arrow
   const onArrowDown = React.useCallback(() => {
-    console.log("select next");
+    console.log("select next", options.current);
+
     const opts = options.current!;
     const i = getSelectedIndex();
     // if last, cycle to first
@@ -69,9 +72,10 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
 
       // or next
     } else {
+      console.log("select next", i + 1, opts[i + 1]);
       setSelected(opts[i + 1]);
     }
-  }, [getSelectedIndex]);
+  }, [getSelectedIndex, selected]);
 
   // pressing up arrow
   const onArrowUp = React.useCallback(() => {
@@ -93,13 +97,11 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   // or clicked a list option
   const onSelect = React.useCallback(() => {
     // call the parent with the selected value?
-    console.log("selected");
-  }, []);
+    console.log("selected", selected);
+  }, [selected]);
 
   // escape key pressed
   const onEscape = React.useCallback(() => {
-    // request to close
-    console.log("escape");
     setSelected(null);
   }, []);
 
@@ -108,6 +110,30 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
       return listId + i;
     },
     [listId]
+  );
+
+  const onKeyDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      switch (e.key) {
+        case "ArrowUp":
+          e.preventDefault();
+          onArrowUp();
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          onArrowDown();
+          break;
+        case "Escape":
+          e.preventDefault();
+          onEscape();
+          break;
+        case "Enter":
+          e.preventDefault();
+          onSelect();
+          break;
+      }
+    },
+    [onArrowDown, onArrowUp, onEscape, onSelect]
   );
 
   return (
@@ -122,7 +148,8 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
         listId,
         makeHash,
         expanded,
-        setExpanded
+        setExpanded,
+        onKeyDown
       }}
     >
       {children}
@@ -154,11 +181,14 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const { targetRef, makeHash, selected, listId, inputRef } = context;
-
-  const onKeyDown = React.useCallback((e: React.KeyboardEvent) => {
-    console.log("key down!");
-  }, []);
+  const {
+    onKeyDown,
+    targetRef,
+    makeHash,
+    selected,
+    listId,
+    inputRef
+  } = context;
 
   return (
     <Component
@@ -264,12 +294,17 @@ export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
     }
   });
 
+  const isSelected = selected === value;
+
   return (
     <div
       tabIndex={-1}
       id={makeHash(value)}
       role="option"
-      aria-selected={selected ? "true" : "false"}
+      aria-selected={isSelected ? "true" : "false"}
+      css={{
+        background: isSelected ? "blue" : "none"
+      }}
       {...other}
     >
       {children || value}

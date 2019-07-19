@@ -30,12 +30,17 @@ function Example() {
         component={InputBase}
         onChange={e => setQuery(e.target.value)}
       />
-      {query && (
-        <ComboBoxList>
-          <ComboBoxOption value="Ben">Ben</ComboBoxOption>
-          <ComboBoxOption value="McMahen">McMahen</ComboBoxOption>
-        </ComboBoxList>
-      )}
+
+      <ComboBoxList aria-label="Query users">
+        {query ? (
+          <React.Fragment>
+            <ComboBoxOption value="Ben">Ben</ComboBoxOption>
+            <ComboBoxOption value="McMahen">McMahen</ComboBoxOption>
+          </React.Fragment>
+        ) : (
+          <div>Try searching for some stuff</div>
+        )}
+      </ComboBoxList>
     </ComboBox>
   );
 }

@@ -24,7 +24,6 @@ function usePopper<R = HTMLElement, P = HTMLElement, A = HTMLElement>({
   const [arrowNode, arrowRef] = useCallbackRef<A>();
 
   useDeepCompareEffect(() => {
-    console.log(referenceNode, popperNode);
     if (popperInstance.current !== null) {
       popperInstance.current.destroy();
     }
