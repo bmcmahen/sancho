@@ -23,6 +23,7 @@ interface ContextType {
   onInputChange: (e: React.ChangeEvent) => void;
   handleBlur: () => void;
   handleFocus: () => void;
+  handleSelect: (value: string) => void;
   selected: string | null;
   showPopover: boolean;
   listId: string;
@@ -194,6 +195,11 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
     setShowPopover(true);
   }, []);
 
+  const handleSelect = React.useCallback((value: string) => {
+    // pass to parent
+    console.log("SLECTED");
+  }, []);
+
   return (
     <ComboBoxContext.Provider
       value={{
@@ -204,6 +210,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
         selected,
         handleBlur,
         handleFocus,
+        handleSelect,
         arrow,
         options,
         showPopover,
@@ -360,7 +367,7 @@ export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const { makeHash, options, selected } = context;
+  const { makeHash, handleSelect, options, selected } = context;
 
   React.useEffect(() => {
     if (options.current) {
@@ -370,11 +377,16 @@ export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
 
   const isSelected = selected === value;
 
+  const onClick = React.useCallback(() => {
+    handleSelect(value);
+  }, [value]);
+
   return (
     <div
       tabIndex={-1}
       id={makeHash(value)}
       role="option"
+      onClick={onClick}
       aria-selected={isSelected ? "true" : "false"}
       css={{
         background: isSelected ? "blue" : "none"
