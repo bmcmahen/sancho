@@ -5,6 +5,7 @@ import { useUid } from "./Hooks/use-uid";
 import { safeBind } from "./Hooks/compose-bind";
 import usePopper from "./Hooks/use-popper";
 import Popper from "popper.js";
+import { request } from "http";
 
 /**
  * The goal is to provide something flexible enough that you can provide
@@ -19,7 +20,11 @@ interface ContextType {
   inputRef: React.RefObject<HTMLInputElement>;
   targetRef: React.RefObject<HTMLElement>;
   options: React.MutableRefObject<string[] | null>;
+  onInputChange: (e: React.ChangeEvent) => void;
+  handleBlur: () => void;
+  handleFocus: () => void;
   selected: string | null;
+  showPopover: boolean;
   listId: string;
   makeHash: (i: string) => string;
   expanded: boolean;
@@ -42,10 +47,14 @@ export const ComboBoxContext = React.createContext<ContextType | null>(null);
  * Context provider
  */
 
-export interface ComboBoxProps {}
+export interface ComboBoxProps {
+  autocomplete?: boolean;
+  onSelect?: (selected: string) => void;
+}
 
 export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
-  children
+  children,
+  onSelect
 }) => {
   const inputRef = React.useRef(null);
   const listId = `list${useUid()}`;
@@ -53,6 +62,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   const [expanded, setExpanded] = React.useState(false);
   const { reference, popper, arrow } = usePopper({ placement: "bottom" });
   const [selected, setSelected] = React.useState<string | null>(null);
+  const [showPopover, setShowPopover] = React.useState(false);
 
   const getSelectedIndex = React.useCallback(() => {
     console.log("selected", selected);
@@ -95,13 +105,16 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
 
   // enter pressed while highlighted
   // or clicked a list option
-  const onSelect = React.useCallback(() => {
+  const onItemSelect = React.useCallback(() => {
     // call the parent with the selected value?
-    console.log("selected", selected);
+    setShowPopover(false);
+    onSelect && onSelect(selected as string);
+    setSelected(null);
   }, [selected]);
 
   // escape key pressed
   const onEscape = React.useCallback(() => {
+    setShowPopover(false);
     setSelected(null);
   }, []);
 
@@ -129,12 +142,57 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
           break;
         case "Enter":
           e.preventDefault();
-          onSelect();
+          onItemSelect();
           break;
       }
     },
-    [onArrowDown, onArrowUp, onEscape, onSelect]
+    [onArrowDown, onArrowUp, onEscape, onItemSelect]
   );
+
+  const onInputChange = React.useCallback(
+    (e: React.ChangeEvent) => {
+      // potentially show popover
+      setSelected(null);
+      if (!showPopover) {
+        setShowPopover(true);
+      }
+    },
+    [showPopover]
+  );
+
+  /**
+   * Handle blur events
+   */
+
+  const handleBlur = React.useCallback(() => {
+    requestAnimationFrame(() => {
+      const focusedElement = document.activeElement;
+      if (
+        focusedElement == inputRef.current ||
+        focusedElement == reference.ref.current
+      ) {
+        // ignore
+        return;
+      }
+
+      // ignore if our popover contains the focused element
+      if (
+        reference.ref.current &&
+        reference.ref.current.contains(focusedElement)
+      ) {
+        return;
+      }
+
+      // hide popover
+      console.log("hide");
+      setShowPopover(false);
+      setSelected(null);
+    });
+  }, [setSelected]);
+
+  const handleFocus = React.useCallback(() => {
+    setShowPopover(true);
+  }, []);
 
   return (
     <ComboBoxContext.Provider
@@ -142,9 +200,13 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
         inputRef,
         targetRef: reference.ref,
         popper,
+        onInputChange,
         selected,
+        handleBlur,
+        handleFocus,
         arrow,
         options,
+        showPopover,
         listId,
         makeHash,
         expanded,
@@ -186,16 +248,27 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
     targetRef,
     makeHash,
     selected,
+    handleBlur,
+    handleFocus,
+    onInputChange,
     listId,
     inputRef
   } = context;
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    onChange && onChange(e);
+    onInputChange(e);
+  }
 
   return (
     <Component
       id={listId}
       onKeyDown={onKeyDown}
-      onChange={onChange}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
       aria-controls={listId}
+      autocomplete="off"
       value={value}
       aria-readonly
       aria-autocomplete="list"
@@ -237,7 +310,7 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const { listId, popper, options, arrow } = context;
+  const { showPopover, listId, popper, options, arrow } = context;
 
   React.useLayoutEffect(() => {
     options.current = [];
@@ -248,6 +321,7 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
 
   return (
     <ul
+      hidden={!showPopover}
       ref={popper.ref as any}
       tabIndex={-1}
       style={popper.styles}
