@@ -55,6 +55,7 @@ export function usePositioner({
     const pop = new Popper(target, popover, {
       placement: defaultPlacement,
       positionFixed,
+      eventsEnabled,
       modifiers: {
         ...modifiers,
         arrow: {
@@ -76,7 +77,7 @@ export function usePositioner({
         pop.destroy();
       }
     };
-  }, [target, popover, defaultPlacement, positionFixed, arrow]);
+  }, [target, popover, defaultPlacement, eventsEnabled, positionFixed, arrow]);
 
   return {
     target: {
