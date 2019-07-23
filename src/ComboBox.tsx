@@ -1,56 +1,48 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import * as React from "react";
+import { usePositioner } from "./Hooks/use-positioner";
 import { useUid } from "./Hooks/use-uid";
 import { safeBind } from "./Hooks/compose-bind";
-import usePopper from "use-popper";
-import Popper from "popper.js";
-import { request } from "http";
+import { usePrevious } from "./Hooks/previous";
 
 /**
- * The goal is to provide something flexible enough that you can provide
- * something along the lines of twitter's search, or more
- * of an autocomplete style form element.
- *
- * Ryan florence's combobox was a big source of inspiration here.
- * https://ui.reach.tech/combobox
+ * Combobox context
  */
 
-interface ContextType {
+interface ComboBoxContextType {
+  /** element refs */
   inputRef: React.RefObject<HTMLInputElement>;
-  targetRef: React.RefObject<HTMLElement>;
   listRef: React.RefObject<HTMLElement>;
+
+  /** list options */
   options: React.MutableRefObject<string[] | null>;
+  makeHash: (i: string) => string;
+  selected: string | null;
+  expanded: boolean;
+
+  /** event handlers */
   onInputChange: (e: React.ChangeEvent) => void;
   handleBlur: () => void;
   handleFocus: () => void;
-  handleSelect: (value: string) => void;
-  selected: string | null;
-  showPopover: boolean;
-  listId: string;
-  makeHash: (i: string) => string;
-  expanded: boolean;
-  setExpanded: (expanded: boolean) => void;
+  handleOptionSelect: (value: string) => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
-  popper: {
-    ref: React.RefObject<HTMLElement>;
-    styles: React.CSSProperties;
-    placement: Popper.Placement;
-  };
-  arrow: {
-    ref: React.RefObject<HTMLElement>;
-    styles: React.CSSProperties;
-  };
+
+  /** popover positions */
+  position: any;
+
+  listId: string;
 }
 
-export const ComboBoxContext = React.createContext<ContextType | null>(null);
+export const ComboBoxContext = React.createContext<ComboBoxContextType | null>(
+  null
+);
 
 /**
- * Context provider
+ * Context provider / manager
  */
 
 export interface ComboBoxProps {
-  autocomplete?: boolean;
   onSelect?: (selected: string) => void;
 }
 
@@ -62,38 +54,60 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   const listRef = React.useRef(null);
   const listId = `list${useUid()}`;
   const options = React.useRef<string[] | null>([]);
+  const position = usePositioner();
   const [expanded, setExpanded] = React.useState(false);
-  const { reference, popper, arrow } = usePopper({ placement: "bottom" });
   const [selected, setSelected] = React.useState<string | null>(null);
-  const [showPopover, setShowPopover] = React.useState(false);
+  const lastQuery = React.useRef<string | null>(null);
+
+  /**
+   * Handle input change
+   */
+
+  const onInputChange = React.useCallback(
+    (e: React.ChangeEvent) => {
+      // potentially show popover
+      setSelected(null);
+      if (!expanded) {
+        setExpanded(true);
+      }
+    },
+    [expanded]
+  );
+
+  /**
+   * Escape key pressed
+   */
+
+  const onEscape = React.useCallback(() => {
+    setExpanded(false);
+    setSelected(null);
+  }, []);
+
+  /**
+   * Enter pressed or item clicked
+   */
+
+  const onItemSelect = React.useCallback(() => {
+    // call the parent with the selected value?
+    setExpanded(false);
+    onSelect && onSelect(selected as string);
+    setSelected(null);
+  }, [selected]);
+
+  /**
+   * Get the currently active option index
+   * */
 
   const getSelectedIndex = React.useCallback(() => {
-    console.log("selected", selected);
     if (!selected) return -1;
     return options.current!.indexOf(selected || "");
   }, [options, selected]);
 
-  // pressing down arrow
-  const onArrowDown = React.useCallback(() => {
-    console.log("select next", options.current);
-    console.log(reference.ref.current);
+  /**
+   * Arrow up pressed
+   */
 
-    const opts = options.current!;
-    const i = getSelectedIndex();
-    // if last, cycle to first
-    if (i + 1 === opts.length) {
-      setSelected(opts[0]);
-
-      // or next
-    } else {
-      console.log("select next", i + 1, opts[i + 1]);
-      setSelected(opts[i + 1]);
-    }
-  }, [getSelectedIndex, selected]);
-
-  // pressing up arrow
   const onArrowUp = React.useCallback(() => {
-    console.log("select prev");
     const opts = options.current!;
     const i = getSelectedIndex();
 
@@ -107,32 +121,28 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
     }
   }, [getSelectedIndex]);
 
-  // enter pressed while highlighted
-  // or clicked a list option
-  const onItemSelect = React.useCallback(() => {
-    // call the parent with the selected value?
-    setShowPopover(false);
-    onSelect && onSelect(selected as string);
-    setSelected(null);
-  }, [selected]);
+  /**
+   * Arrow down pressed
+   */
+  const onArrowDown = React.useCallback(() => {
+    const opts = options.current!;
+    const i = getSelectedIndex();
+    // if last, cycle to first
+    if (i + 1 === opts.length) {
+      setSelected(opts[0]);
 
-  // escape key pressed
-  const onEscape = React.useCallback(() => {
-    setShowPopover(false);
-    setSelected(null);
-  }, []);
+      // or next
+    } else {
+      setSelected(opts[i + 1]);
+    }
+  }, [getSelectedIndex, selected]);
 
-  const makeHash = React.useCallback(
-    (i: string) => {
-      return listId + i;
-    },
-    [listId]
-  );
+  /**
+   * Handle keydown events
+   */
 
   const onKeyDown = React.useCallback(
     (e: React.KeyboardEvent) => {
-      console.log(popper.ref.current, reference.ref.current);
-
       switch (e.key) {
         case "ArrowUp":
           e.preventDefault();
@@ -155,17 +165,6 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
     [onArrowDown, onArrowUp, onEscape, onItemSelect]
   );
 
-  const onInputChange = React.useCallback(
-    (e: React.ChangeEvent) => {
-      // potentially show popover
-      setSelected(null);
-      if (!showPopover) {
-        setShowPopover(true);
-      }
-    },
-    [showPopover]
-  );
-
   /**
    * Handle blur events
    */
@@ -186,43 +185,56 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
       }
 
       // hide popover
-      console.log("hide");
-      setShowPopover(false);
+      setExpanded(false);
       setSelected(null);
     });
   }, []);
 
+  /**
+   * handle input focus
+   */
+
   const handleFocus = React.useCallback(() => {
-    setShowPopover(true);
+    setExpanded(true);
   }, []);
 
-  // handle clicks
-  const handleSelect = React.useCallback((value: string) => {
+  /**
+   * Handle item clicks
+   */
+
+  const handleOptionSelect = React.useCallback((value: string) => {
     onSelect && onSelect(value);
-    setShowPopover(false);
+    setExpanded(false);
     setSelected(null);
   }, []);
+
+  /**
+   * Make a unique hash for list + option
+   */
+
+  const makeHash = React.useCallback(
+    (i: string) => {
+      return listId + i;
+    },
+    [listId]
+  );
 
   return (
     <ComboBoxContext.Provider
       value={{
+        listId,
         inputRef,
-        targetRef: reference.ref,
         listRef,
-        popper,
+        options,
         onInputChange,
         selected,
+        onKeyDown,
         handleBlur,
         handleFocus,
-        handleSelect,
-        arrow,
-        options,
-        showPopover,
-        listId,
+        handleOptionSelect,
+        position,
         makeHash,
-        expanded,
-        setExpanded,
-        onKeyDown
+        expanded
       }}
     >
       {children}
@@ -236,19 +248,22 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
 
 export interface ComboBoxInputProps {
   value?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   "aria-label": string;
   component?: React.ReactType<any>;
+  autocomplete?: boolean;
   [key: string]: any;
 }
 
 export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
   component: Component = "input",
   onChange,
+  autocomplete = false,
   value,
   ...other
 }) => {
   const context = React.useContext(ComboBoxContext);
+  const [localValue, setLocalValue] = React.useState("");
 
   if (!context) {
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
@@ -256,9 +271,9 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
 
   const {
     onKeyDown,
-    targetRef,
     makeHash,
     selected,
+    position,
     handleBlur,
     handleFocus,
     onInputChange,
@@ -266,10 +281,31 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
     inputRef
   } = context;
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    onChange && onChange(e);
-    onInputChange(e);
-  }
+  /** support autocomplete on selection */
+
+  React.useEffect(() => {
+    if (!autocomplete) {
+      return;
+    }
+
+    if (selected) {
+      setLocalValue(selected);
+    } else {
+      setLocalValue("");
+    }
+  }, [selected, value, autocomplete]);
+
+  /**
+   * Update input value
+   */
+
+  const handleChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange && onChange(e);
+      onInputChange(e);
+    },
+    [onInputChange, onChange]
+  );
 
   return (
     <Component
@@ -280,7 +316,7 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
       onFocus={handleFocus}
       aria-controls={listId}
       autocomplete="off"
-      value={value}
+      value={localValue || value}
       aria-readonly
       aria-autocomplete="list"
       role="textbox"
@@ -290,7 +326,7 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
           ref: inputRef
         },
         {
-          ref: targetRef
+          ref: position.target.ref
         },
         other
       )}
@@ -313,15 +349,7 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const {
-    showPopover,
-    listId,
-    handleBlur,
-    listRef,
-    popper,
-    options,
-    arrow
-  } = context;
+  const { expanded, listId, handleBlur, listRef, position, options } = context;
 
   React.useLayoutEffect(() => {
     options.current = [];
@@ -331,35 +359,36 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
   });
 
   return (
-    <ul
-      tabIndex={-1}
-      key="1"
-      style={popper.styles}
-      data-placement={popper.placement}
-      id={listId}
-      role="listbox"
-      aria-hidden={!showPopover}
-      onBlur={handleBlur}
-      className="ComboBoxList"
-      css={{
-        opacity: showPopover ? 1 : 0,
-        pointerEvents: showPopover ? "auto" : "none",
-        width: "200px",
-        height: "200px",
-        border: "1px solid black"
-      }}
-      {...safeBind(
-        {
-          ref: listRef
-        },
-        {
-          ref: popper.ref
-        }
+    <React.Fragment>
+      {expanded && (
+        <ul
+          tabIndex={-1}
+          key="1"
+          style={position.popover.style}
+          data-placement={position.popover.placement}
+          id={listId}
+          role="listbox"
+          onBlur={handleBlur}
+          className="ComboBoxList"
+          css={{
+            width: "200px",
+            height: "200px",
+            border: "1px solid black"
+          }}
+          {...safeBind(
+            {
+              ref: listRef
+            },
+            {
+              ref: position.popover.ref
+            }
+          )}
+        >
+          {children}
+          <div ref={position.arrow.ref} style={position.arrow.style} />
+        </ul>
       )}
-    >
-      {children}
-      <div ref={arrow.ref as any} style={arrow.styles} />
-    </ul>
+    </React.Fragment>
   );
 };
 
@@ -382,7 +411,7 @@ export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const { makeHash, handleSelect, options, selected } = context;
+  const { makeHash, handleOptionSelect, options, selected } = context;
 
   React.useEffect(() => {
     if (options.current) {
@@ -393,7 +422,7 @@ export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
   const isSelected = selected === value;
 
   const onClick = React.useCallback(() => {
-    handleSelect(value);
+    handleOptionSelect(value);
   }, [value]);
 
   return (

@@ -29,20 +29,21 @@ function Example() {
   ]);
   const [query, setQuery] = React.useState("");
 
-  const toRender = entries.filter(entry => entry.indexOf(query) > -1);
-
-  console.log(toRender);
+  const toRender = !query
+    ? []
+    : entries.filter(entry => entry.indexOf(query) > -1);
 
   return (
     <ComboBox
       onSelect={v => {
-        console.log("selected cb", v);
+        setQuery(v);
       }}
     >
       <ComboBoxInput
         aria-label="Query users"
         value={query}
         component={InputBase}
+        autocomplete
         onChange={e => setQuery(e.target.value)}
       />
 
@@ -57,7 +58,7 @@ function Example() {
           })
         ) : (
           <div>
-            {query && entries.length === 0 ? (
+            {query && toRender.length === 0 ? (
               <span>No entries found.</span>
             ) : (
               <span>Try searching for some stuff</span>

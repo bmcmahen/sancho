@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/core";
 import * as React from "react";
 import { animated, useSpring, SpringConfig } from "react-spring";
-import { useFocusElement } from "./Hooks/focus";
+import { useFocusElement } from "./Hooks/use-focus-trap";
 import { Portal } from "./Portal";
 import PropTypes from "prop-types";
 import { RemoveScroll } from "react-remove-scroll";
