@@ -20,7 +20,18 @@ export const ComboBoxStories = storiesOf("ComboBox", module).add(
 );
 
 function Example() {
+  const [entries, setEntries] = React.useState([
+    "ben",
+    "mcmahen",
+    "joe",
+    "johnson",
+    "cary"
+  ]);
   const [query, setQuery] = React.useState("");
+
+  const toRender = entries.filter(entry => entry.indexOf(query) > -1);
+
+  console.log(toRender);
 
   return (
     <ComboBox
@@ -36,13 +47,22 @@ function Example() {
       />
 
       <ComboBoxList aria-label="Query users">
-        {query ? (
-          <React.Fragment>
-            <ComboBoxOption value="Ben">Ben</ComboBoxOption>
-            <ComboBoxOption value="McMahen">McMahen</ComboBoxOption>
-          </React.Fragment>
+        {toRender.length ? (
+          toRender.map(entry => {
+            return (
+              <ComboBoxOption value={entry} key={entry}>
+                {entry}
+              </ComboBoxOption>
+            );
+          })
         ) : (
-          <div>Try searching for some stuff</div>
+          <div>
+            {query && entries.length === 0 ? (
+              <span>No entries found.</span>
+            ) : (
+              <span>Try searching for some stuff</span>
+            )}
+          </div>
         )}
       </ComboBoxList>
     </ComboBox>

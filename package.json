@@ -28,6 +28,7 @@
     "classnames": "^2.2.6",
     "color": "^3.1.0",
     "compute-scroll-into-view": "^1.0.11",
+    "downshift": "^3.2.10",
     "focus-trap": "5",
     "is-mobile": "^2.0.0",
     "open-color": "^1.6.3",
@@ -46,6 +47,7 @@
     "tslib": "^1.9.3",
     "use-deep-compare": "^0.1.0",
     "use-media": "^1.2.0",
+    "use-popper": "^1.1.5",
     "use-scroll-lock": "^1.0.0"
   },
   "peerDependencies": {

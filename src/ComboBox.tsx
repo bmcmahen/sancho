@@ -3,7 +3,7 @@ import { jsx } from "@emotion/core";
 import * as React from "react";
 import { useUid } from "./Hooks/use-uid";
 import { safeBind } from "./Hooks/compose-bind";
-import usePopper from "./Hooks/use-popper";
+import usePopper from "use-popper";
 import Popper from "popper.js";
 import { request } from "http";
 
@@ -19,6 +19,7 @@ import { request } from "http";
 interface ContextType {
   inputRef: React.RefObject<HTMLInputElement>;
   targetRef: React.RefObject<HTMLElement>;
+  listRef: React.RefObject<HTMLElement>;
   options: React.MutableRefObject<string[] | null>;
   onInputChange: (e: React.ChangeEvent) => void;
   handleBlur: () => void;
@@ -58,6 +59,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   onSelect
 }) => {
   const inputRef = React.useRef(null);
+  const listRef = React.useRef(null);
   const listId = `list${useUid()}`;
   const options = React.useRef<string[] | null>([]);
   const [expanded, setExpanded] = React.useState(false);
@@ -74,6 +76,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   // pressing down arrow
   const onArrowDown = React.useCallback(() => {
     console.log("select next", options.current);
+    console.log(reference.ref.current);
 
     const opts = options.current!;
     const i = getSelectedIndex();
@@ -128,6 +131,8 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
 
   const onKeyDown = React.useCallback(
     (e: React.KeyboardEvent) => {
+      console.log(popper.ref.current, reference.ref.current);
+
       switch (e.key) {
         case "ArrowUp":
           e.preventDefault();
@@ -168,19 +173,15 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   const handleBlur = React.useCallback(() => {
     requestAnimationFrame(() => {
       const focusedElement = document.activeElement;
-      if (
-        focusedElement == inputRef.current ||
-        focusedElement == reference.ref.current
-      ) {
+      const list = listRef.current as any;
+
+      if (focusedElement == inputRef.current || focusedElement == list) {
         // ignore
         return;
       }
 
       // ignore if our popover contains the focused element
-      if (
-        reference.ref.current &&
-        reference.ref.current.contains(focusedElement)
-      ) {
+      if (list && list.contains(focusedElement)) {
         return;
       }
 
@@ -189,7 +190,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
       setShowPopover(false);
       setSelected(null);
     });
-  }, [setSelected]);
+  }, []);
 
   const handleFocus = React.useCallback(() => {
     setShowPopover(true);
@@ -207,6 +208,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
       value={{
         inputRef,
         targetRef: reference.ref,
+        listRef,
         popper,
         onInputChange,
         selected,
@@ -302,14 +304,6 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
 
 export interface ComboBoxListProps {}
 
-interface ChildrenContextType {
-  index: number;
-}
-
-const ComboChildrenContext = React.createContext<ChildrenContextType | null>(
-  null
-);
-
 export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
   children
 }) => {
@@ -319,7 +313,15 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const { showPopover, listId, popper, options, arrow } = context;
+  const {
+    showPopover,
+    listId,
+    handleBlur,
+    listRef,
+    popper,
+    options,
+    arrow
+  } = context;
 
   React.useLayoutEffect(() => {
     options.current = [];
@@ -330,19 +332,30 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
 
   return (
     <ul
-      hidden={!showPopover}
-      ref={popper.ref as any}
       tabIndex={-1}
+      key="1"
       style={popper.styles}
       data-placement={popper.placement}
       id={listId}
       role="listbox"
+      aria-hidden={!showPopover}
+      onBlur={handleBlur}
       className="ComboBoxList"
       css={{
+        opacity: showPopover ? 1 : 0,
+        pointerEvents: showPopover ? "auto" : "none",
         width: "200px",
         height: "200px",
         border: "1px solid black"
       }}
+      {...safeBind(
+        {
+          ref: listRef
+        },
+        {
+          ref: popper.ref
+        }
+      )}
     >
       {children}
       <div ref={arrow.ref as any} style={arrow.styles} />
