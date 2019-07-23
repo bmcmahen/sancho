@@ -11,40 +11,34 @@ export function useFocusElement(
   showing: boolean,
   options: Options = {}
 ) {
-  const trapRef = React.useRef<FocusTrap | null>(null);
-
-  const focusElement = React.useCallback(() => {
-    if (!elementRef.current) {
-      console.error("No element found to found");
-      return;
-    }
-
-    const trap = createFocusTrap(elementRef.current, {
-      escapeDeactivates: false,
-      clickOutsideDeactivates: true,
-      fallbackFocus: '[tabindex="-1"]',
-      ...options
-    });
-
-    trapRef.current = trap;
-    trap.activate();
-  }, [elementRef, options]);
-
-  function focusTrigger() {
-    if (!trapRef.current) {
-      return;
-    }
-
-    trapRef.current.deactivate();
-  }
-
   React.useEffect(() => {
+    let trap: FocusTrap;
+
+    function focusElement() {
+      if (!elementRef.current) {
+        console.error("No element found to found");
+        return;
+      }
+
+      trap = createFocusTrap(elementRef.current, {
+        escapeDeactivates: false,
+        clickOutsideDeactivates: true,
+        fallbackFocus: '[tabindex="-1"]',
+        ...options
+      });
+
+      trap.activate();
+    }
+
+    function focusTrigger() {
+      if (!trap) {
+        return;
+      }
+
+      trap.deactivate();
+    }
+
     if (showing) focusElement();
     else focusTrigger();
-  }, [showing, focusElement]);
-
-  return {
-    focusElement,
-    focusTrigger
-  };
+  }, [showing]);
 }
