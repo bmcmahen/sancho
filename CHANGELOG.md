@@ -1,3 +1,7 @@
+## 3.5.0
+
+- Add `ComboBox`, `usePositioner` and improve `useMeasure`.
+
 ## 3.4.0
 
 - Rename `GestureStack` to `Pager`
