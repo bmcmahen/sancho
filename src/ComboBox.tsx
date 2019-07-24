@@ -4,7 +4,12 @@ import * as React from "react";
 import { usePositioner } from "./Hooks/use-positioner";
 import { useUid } from "./Hooks/use-uid";
 import { safeBind } from "./Hooks/compose-bind";
-import { usePrevious } from "./Hooks/previous";
+import { useTheme } from "./Theme/Providers";
+import { Text } from "./Text";
+import { Touchable } from "./Touchable";
+import { useMeasure, Bounds } from "./Hooks/use-measure";
+import { Layer } from "./Layer";
+import Highlighter from "react-highlight-words";
 
 /**
  * Combobox context
@@ -22,7 +27,7 @@ interface ComboBoxContextType {
   expanded: boolean;
 
   /** event handlers */
-  onInputChange: (e: React.ChangeEvent) => void;
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: () => void;
   handleFocus: () => void;
   handleOptionSelect: (value: string) => void;
@@ -30,8 +35,9 @@ interface ComboBoxContextType {
 
   /** popover positions */
   position: any;
-
+  inputSize: Bounds;
   listId: string;
+  query: string;
 }
 
 export const ComboBoxContext = React.createContext<ComboBoxContextType | null>(
@@ -44,11 +50,15 @@ export const ComboBoxContext = React.createContext<ComboBoxContextType | null>(
 
 export interface ComboBoxProps {
   onSelect?: (selected: string) => void;
+  query: string;
+  onQueryChange: (value: string) => void;
 }
 
 export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   children,
-  onSelect
+  onSelect,
+  query,
+  onQueryChange
 }) => {
   const inputRef = React.useRef(null);
   const listRef = React.useRef(null);
@@ -57,19 +67,21 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   const position = usePositioner();
   const [expanded, setExpanded] = React.useState(false);
   const [selected, setSelected] = React.useState<string | null>(null);
-  const lastQuery = React.useRef<string | null>(null);
+  const inputSize = useMeasure(inputRef);
 
   /**
    * Handle input change
    */
 
   const onInputChange = React.useCallback(
-    (e: React.ChangeEvent) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       // potentially show popover
       setSelected(null);
       if (!expanded) {
         setExpanded(true);
       }
+
+      onQueryChange(e.target.value);
     },
     [expanded]
   );
@@ -234,7 +246,9 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
         handleOptionSelect,
         position,
         makeHash,
-        expanded
+        expanded,
+        inputSize: inputSize.bounds,
+        query
       }}
     >
       {children}
@@ -246,9 +260,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
  * Input element
  */
 
-export interface ComboBoxInputProps {
-  value?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+export interface ComboBoxInputProps extends React.HTMLAttributes<any> {
   "aria-label": string;
   component?: React.ReactType<any>;
   autocomplete?: boolean;
@@ -257,9 +269,7 @@ export interface ComboBoxInputProps {
 
 export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
   component: Component = "input",
-  onChange,
   autocomplete = false,
-  value,
   ...other
 }) => {
   const context = React.useContext(ComboBoxContext);
@@ -275,6 +285,7 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
     selected,
     position,
     handleBlur,
+    query,
     handleFocus,
     onInputChange,
     listId,
@@ -293,30 +304,18 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
     } else {
       setLocalValue("");
     }
-  }, [selected, value, autocomplete]);
-
-  /**
-   * Update input value
-   */
-
-  const handleChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange && onChange(e);
-      onInputChange(e);
-    },
-    [onInputChange, onChange]
-  );
+  }, [selected, autocomplete]);
 
   return (
     <Component
       id={listId}
       onKeyDown={onKeyDown}
-      onChange={handleChange}
+      onChange={onInputChange}
       onBlur={handleBlur}
       onFocus={handleFocus}
       aria-controls={listId}
-      autocomplete="off"
-      value={localValue || value}
+      autoComplete="off"
+      value={localValue || query}
       aria-readonly
       aria-autocomplete="list"
       role="textbox"
@@ -338,18 +337,32 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
  * Popover container
  */
 
-export interface ComboBoxListProps {}
+export interface ComboBoxListProps
+  extends React.HTMLAttributes<HTMLUListElement> {
+  autoHide?: boolean;
+}
 
 export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
-  children
+  children,
+  autoHide = true,
+  ...other
 }) => {
   const context = React.useContext(ComboBoxContext);
+  const theme = useTheme();
 
   if (!context) {
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
   }
 
-  const { expanded, listId, handleBlur, listRef, position, options } = context;
+  const {
+    inputSize,
+    expanded,
+    listId,
+    handleBlur,
+    listRef,
+    position,
+    options
+  } = context;
 
   React.useLayoutEffect(() => {
     options.current = [];
@@ -360,9 +373,10 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
 
   return (
     <React.Fragment>
-      {expanded && (
-        <ul
+      {(expanded || !autoHide) && (
+        <Layer
           tabIndex={-1}
+          elevation="sm"
           key="1"
           style={position.popover.style}
           data-placement={position.popover.placement}
@@ -371,9 +385,16 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
           onBlur={handleBlur}
           className="ComboBoxList"
           css={{
-            width: "200px",
-            height: "200px",
-            border: "1px solid black"
+            overflow: "hidden",
+            borderRadius: theme.radii.sm,
+            outline: "none",
+            width:
+              inputSize.width +
+              inputSize.left +
+              (inputSize.right - inputSize.width) +
+              "px",
+            margin: 0,
+            padding: 0
           }}
           {...safeBind(
             {
@@ -381,12 +402,13 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
             },
             {
               ref: position.popover.ref
-            }
+            },
+            other
           )}
         >
           {children}
           <div ref={position.arrow.ref} style={position.arrow.style} />
-        </ul>
+        </Layer>
       )}
     </React.Fragment>
   );
@@ -396,7 +418,8 @@ export const ComboBoxList: React.FunctionComponent<ComboBoxListProps> = ({
  * Individual combo box options
  */
 
-export interface ComboBoxOptionProps {
+export interface ComboBoxOptionProps
+  extends React.HTMLAttributes<HTMLLIElement> {
   value: string;
 }
 
@@ -406,6 +429,7 @@ export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
   ...other
 }) => {
   const context = React.useContext(ComboBoxContext);
+  const theme = useTheme();
 
   if (!context) {
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
@@ -426,18 +450,65 @@ export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
   }, [value]);
 
   return (
-    <div
+    <Touchable
       tabIndex={-1}
       id={makeHash(value)}
       role="option"
-      onClick={onClick}
+      component="li"
+      onPress={onClick}
       aria-selected={isSelected ? "true" : "false"}
       css={{
-        background: isSelected ? "blue" : "none"
+        outline: "none",
+        width: "100%",
+        boxSizing: "border-box",
+        display: "block",
+        listStyleType: "none",
+        margin: 0,
+        padding: `0.25rem 0.75rem`,
+        cursor: "pointer",
+        background: isSelected ? theme.colors.background.tint1 : "none",
+        "&.Touchable--hover": {
+          background: theme.colors.background.tint1
+        },
+        "&.Touchable--active": {
+          background: theme.colors.background.tint2
+        }
       }}
       {...other}
     >
-      {children || value}
-    </div>
+      {children || <ComboBoxOptionText value={value} />}
+    </Touchable>
+  );
+};
+
+/**
+ * ComboBox Item text with highlighting
+ */
+
+export interface ComboBoxOptionTextProps {
+  value: string;
+}
+
+export const ComboBoxOptionText: React.FunctionComponent<
+  ComboBoxOptionTextProps
+> = ({ value, ...other }) => {
+  const context = React.useContext(ComboBoxContext);
+
+  if (!context) {
+    throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
+  }
+
+  const { query } = context;
+
+  return (
+    <Text className="ComboBoxOptionText" {...other}>
+      <Highlighter
+        highlightStyle={{ fontWeight: 500, background: "transparent" }}
+        className="ComboBoxOptionText__Highlighter"
+        searchWords={[query]}
+        autoEscape={true}
+        textToHighlight={value}
+      />
+    </Text>
   );
 };

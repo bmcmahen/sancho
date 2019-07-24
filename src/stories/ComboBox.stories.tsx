@@ -11,6 +11,7 @@ import {
   ComboBoxOption
 } from "../ComboBox";
 import { Input, InputBase } from "../Form";
+import { Text } from "../Text";
 
 export const ComboBoxStories = storiesOf("ComboBox", module).add(
   "basic",
@@ -23,6 +24,11 @@ function Example() {
   const [entries, setEntries] = React.useState([
     "ben",
     "mcmahen",
+    "mcmahen2",
+    "mcmahen3",
+    "mcjohn",
+    "mcjoe",
+    "allthe micc",
     "joe",
     "johnson",
     "cary"
@@ -34,38 +40,44 @@ function Example() {
     : entries.filter(entry => entry.indexOf(query) > -1);
 
   return (
-    <ComboBox
-      onSelect={v => {
-        setQuery(v);
-      }}
-    >
-      <ComboBoxInput
-        aria-label="Query users"
-        value={query}
-        component={InputBase}
-        autocomplete
-        onChange={e => setQuery(e.target.value)}
-      />
+    <div css={{ margin: "3rem auto", width: "30rem" }}>
+      <ComboBox
+        query={query}
+        onQueryChange={v => {
+          setQuery(v);
+        }}
+        onSelect={v => {
+          setQuery(v);
+        }}
+      >
+        <ComboBoxInput
+          aria-label="Query users"
+          placeholder="Search for users"
+          component={InputBase}
+          autocomplete
+        />
 
-      <ComboBoxList aria-label="Query users">
-        {toRender.length ? (
-          toRender.map(entry => {
-            return (
-              <ComboBoxOption value={entry} key={entry}>
-                {entry}
-              </ComboBoxOption>
-            );
-          })
-        ) : (
-          <div>
-            {query && toRender.length === 0 ? (
-              <span>No entries found.</span>
-            ) : (
-              <span>Try searching for some stuff</span>
-            )}
-          </div>
-        )}
-      </ComboBoxList>
-    </ComboBox>
+        <ComboBoxList aria-label="Query users">
+          {toRender.length ? (
+            toRender.map(entry => {
+              return <ComboBoxOption value={entry} key={entry} />;
+            })
+          ) : (
+            <div>
+              <Text
+                muted
+                css={{ display: "block", padding: "0.25rem 0.75rem" }}
+              >
+                {query && toRender.length === 0 ? (
+                  <span>No entries found.</span>
+                ) : (
+                  <span>Try searching for users by email or name.</span>
+                )}
+              </Text>
+            </div>
+          )}
+        </ComboBoxList>
+      </ComboBox>
+    </div>
   );
 }
