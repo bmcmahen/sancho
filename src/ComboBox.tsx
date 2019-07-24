@@ -10,6 +10,7 @@ import { Touchable } from "./Touchable";
 import { useMeasure, Bounds } from "./Hooks/use-measure";
 import { Layer } from "./Layer";
 import Highlighter from "react-highlight-words";
+import { InputBase } from "./Form";
 
 /**
  * Combobox context
@@ -274,7 +275,7 @@ export interface ComboBoxInputProps extends React.HTMLAttributes<any> {
 }
 
 export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
-  component: Component = "input",
+  component: Component = InputBase,
   autocomplete = false,
   ...other
 }) => {

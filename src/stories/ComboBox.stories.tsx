@@ -53,8 +53,6 @@ function Example() {
         <ComboBoxInput
           aria-label="Query users"
           placeholder="Search for users"
-          component={InputBase}
-          autocomplete
         />
 
         {query && (
