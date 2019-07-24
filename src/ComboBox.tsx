@@ -464,7 +464,7 @@ export const ComboBoxOption: React.FunctionComponent<ComboBoxOptionProps> = ({
         display: "block",
         listStyleType: "none",
         margin: 0,
-        padding: `0.25rem 0.75rem`,
+        padding: `0.5rem 0.75rem`,
         cursor: "pointer",
         background: isSelected ? theme.colors.background.tint1 : "none",
         "&.Touchable--hover": {
@@ -493,6 +493,7 @@ export const ComboBoxOptionText: React.FunctionComponent<
   ComboBoxOptionTextProps
 > = ({ value, ...other }) => {
   const context = React.useContext(ComboBoxContext);
+  const theme = useTheme();
 
   if (!context) {
     throw new Error("ComboBoxInput must be wrapped in a ComboBox component");
@@ -501,9 +502,16 @@ export const ComboBoxOptionText: React.FunctionComponent<
   const { query } = context;
 
   return (
-    <Text className="ComboBoxOptionText" {...other}>
+    <Text
+      className="ComboBoxOptionText"
+      css={{ fontWeight: theme.fontWeights.heading }}
+      {...other}
+    >
       <Highlighter
-        highlightStyle={{ fontWeight: 500, background: "transparent" }}
+        highlightStyle={{
+          color: theme.colors.text.selected,
+          background: "transparent"
+        }}
         className="ComboBoxOptionText__Highlighter"
         searchWords={[query]}
         autoEscape={true}

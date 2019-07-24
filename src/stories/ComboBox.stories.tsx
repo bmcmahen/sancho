@@ -22,22 +22,24 @@ export const ComboBoxStories = storiesOf("ComboBox", module).add(
 
 function Example() {
   const [entries, setEntries] = React.useState([
-    "ben",
-    "mcmahen",
-    "mcmahen2",
-    "mcmahen3",
-    "mcjohn",
-    "mcjoe",
-    "allthe micc",
-    "joe",
-    "johnson",
-    "cary"
+    "Ben McMahen",
+    "Heather McMahen",
+    "Emily McMahen",
+    "Chris McMahen",
+    "Joe Johnson",
+    "Heather Fischer",
+    "Albert Einstein",
+    "Albert Camus",
+    "Simone de Beauvoir",
+    "Plato"
   ]);
   const [query, setQuery] = React.useState("");
 
   const toRender = !query
     ? []
-    : entries.filter(entry => entry.indexOf(query) > -1);
+    : entries.filter(
+        entry => entry.toLowerCase().indexOf(query.toLowerCase()) > -1
+      );
 
   return (
     <div css={{ margin: "3rem auto", width: "30rem" }}>
@@ -57,26 +59,28 @@ function Example() {
           autocomplete
         />
 
-        <ComboBoxList aria-label="Query users">
-          {toRender.length ? (
-            toRender.map(entry => {
-              return <ComboBoxOption value={entry} key={entry} />;
-            })
-          ) : (
-            <div>
-              <Text
-                muted
-                css={{ display: "block", padding: "0.25rem 0.75rem" }}
-              >
-                {query && toRender.length === 0 ? (
-                  <span>No entries found.</span>
-                ) : (
-                  <span>Try searching for users by email or name.</span>
-                )}
-              </Text>
-            </div>
-          )}
-        </ComboBoxList>
+        {query && (
+          <ComboBoxList aria-label="Query users">
+            {toRender.length ? (
+              toRender.map(entry => {
+                return <ComboBoxOption value={entry} key={entry} />;
+              })
+            ) : (
+              <div>
+                <Text
+                  muted
+                  css={{ display: "block", padding: "0.5rem 0.75rem" }}
+                >
+                  {query && toRender.length === 0 ? (
+                    <span>No entries found.</span>
+                  ) : (
+                    <span>Try searching for users by email or name.</span>
+                  )}
+                </Text>
+              </div>
+            )}
+          </ComboBoxList>
+        )}
       </ComboBox>
     </div>
   );
