@@ -38,6 +38,7 @@ export * from "./ScrollView";
 export * from "./AlertDialog";
 export * from "./Skeleton";
 export * from "./Stack";
+export * from "./ComboBox";
 
 // Theme stuff
 export * from "./Theme";
