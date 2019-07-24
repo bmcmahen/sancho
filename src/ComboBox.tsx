@@ -64,7 +64,13 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   const listRef = React.useRef(null);
   const listId = `list${useUid()}`;
   const options = React.useRef<string[] | null>([]);
-  const position = usePositioner();
+  const position = usePositioner({
+    modifiers: {
+      flip: {
+        enabled: false
+      }
+    }
+  });
   const [expanded, setExpanded] = React.useState(false);
   const [selected, setSelected] = React.useState<string | null>(null);
   const inputSize = useMeasure(inputRef);
