@@ -39,6 +39,7 @@ interface ComboBoxContextType {
   inputSize: Bounds;
   listId: string;
   query: string;
+  autocomplete: boolean;
 }
 
 export const ComboBoxContext = React.createContext<ComboBoxContextType | null>(
@@ -53,11 +54,13 @@ export interface ComboBoxProps {
   onSelect?: (selected: string) => void;
   query: string;
   onQueryChange: (value: string) => void;
+  autocomplete?: boolean;
 }
 
 export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
   children,
   onSelect,
+  autocomplete = false,
   query,
   onQueryChange
 }) => {
@@ -255,7 +258,8 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
         makeHash,
         expanded,
         inputSize: inputSize.bounds,
-        query
+        query,
+        autocomplete
       }}
     >
       {children}
@@ -270,13 +274,11 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
 export interface ComboBoxInputProps extends React.HTMLAttributes<any> {
   "aria-label": string;
   component?: React.ReactType<any>;
-  autocomplete?: boolean;
   [key: string]: any;
 }
 
 export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
   component: Component = InputBase,
-  autocomplete = false,
   ...other
 }) => {
   const context = React.useContext(ComboBoxContext);
@@ -293,6 +295,7 @@ export const ComboBoxInput: React.FunctionComponent<ComboBoxInputProps> = ({
     position,
     handleBlur,
     query,
+    autocomplete,
     handleFocus,
     onInputChange,
     listId,
