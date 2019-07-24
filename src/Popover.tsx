@@ -7,7 +7,7 @@ import { Layer } from "./Layer";
 import { Positioner, Placements } from "./Positions";
 import { ReferenceChildrenProps } from "react-popper";
 import { arrowStyles } from "./Tooltip";
-import { useFocusElement } from "./Hooks/focus";
+import { useFocusElement } from "./Hooks/use-focus-trap";
 import { animated } from "react-spring";
 import { Sheet } from "./Sheet";
 import { useMedia } from "use-media";

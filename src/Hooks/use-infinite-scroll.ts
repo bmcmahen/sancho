@@ -77,7 +77,7 @@ export const useInfiniteScroll = ({
         window.removeEventListener("scroll", onScroll);
       }
     };
-  }, [container, onScroll, disabled]);
+  }, [onScroll, disabled]);
 
   React.useEffect(() => {
     if (fetching) {

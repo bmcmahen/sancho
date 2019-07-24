@@ -5,7 +5,7 @@ import { Text } from "./Text";
 import { CloseButton } from "./IconButton";
 import { useTransition, animated } from "react-spring";
 import { Overlay } from "./Overlay";
-import { useFocusElement } from "./Hooks/focus";
+import { useFocusElement } from "./Hooks/use-focus-trap";
 import PropTypes from "prop-types";
 import useScrollLock from "use-scroll-lock";
 import { useTheme } from "./Theme/Providers";
