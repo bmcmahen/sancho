@@ -109,7 +109,7 @@ export const ListItem: React.FunctionComponent<ListItemProps> = ({
           }
       ]}
       {...interactiveProps}
-      {...safeBind(bind, other)}
+      {...safeBind(interactive ? bind : {}, other)}
     >
       <div
         className="ListItem__container"
