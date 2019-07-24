@@ -46,9 +46,7 @@
     "toasted-notes": "^2.1.6",
     "touchable-hook": "^1.2.1",
     "tslib": "^1.9.3",
-    "use-deep-compare": "^0.1.0",
     "use-media": "^1.2.0",
-    "use-popper": "^1.1.5",
     "use-scroll-lock": "^1.0.0"
   },
   "peerDependencies": {
