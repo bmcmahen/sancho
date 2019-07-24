@@ -1,3 +1,7 @@
+## 3.5.1
+
+- `ComboBox` now accepts an autocomlete prop, and `ComboBoxInput` uses a `BaseInput` by default.
+
 ## 3.5.0
 
 - Add `ComboBox`, `usePositioner` and improve `useMeasure`.
