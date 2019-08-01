@@ -38,7 +38,11 @@ export function useFocusElement(
       trap.deactivate();
     }
 
-    if (showing) focusElement();
-    else focusTrigger();
+    if (showing) {
+      focusElement();
+      return () => {
+        focusTrigger();
+      };
+    }
   }, [showing]);
 }
