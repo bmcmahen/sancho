@@ -1,3 +1,7 @@
+## 3.5.2
+
+- Fix `useFocusLock` hook to prevent unwanted focusing.
+
 ## 3.5.1
 
 - `ComboBox` now accepts an autocomlete prop, and `ComboBoxInput` uses a `BaseInput` by default.
