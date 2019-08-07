@@ -507,6 +507,10 @@ export const Button: React.RefForwardingComponent<
       [variant, intent, theme, hover, active]
     );
 
+    if (other.type === "submit" && Component === "div") {
+      Component = "button";
+    }
+
     return (
       <Component
         className={cx("Button", "Touchable", className, {

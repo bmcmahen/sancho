@@ -8,6 +8,19 @@ import { DarkMode, useTheme, LightMode } from "../Theme/Providers";
 import { IconArrowLeft, IconArrowRight } from "../Icons";
 
 export const ButtonStories = storiesOf("Button", module)
+  .add("submit", () => {
+    return (
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          console.log("submit");
+        }}
+      >
+        <input type="text" />
+        <Button type="submit">Submit</Button>
+      </form>
+    );
+  })
   .add("variants", () => {
     const sizes: Array<ButtonSize> = ["xs", "sm", "md", "lg", "xl"];
 
