@@ -1,3 +1,7 @@
+## 3.5.3
+
+- Use a `button` tag when `type=submit` is used on a `Button`.
+
 ## 3.5.2
 
 - Fix `useFocusLock` hook to prevent unwanted focusing.
