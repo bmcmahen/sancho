@@ -1,3 +1,7 @@
+## 3.5.4
+
+- Update `Stack` to better support gestures.
+
 ## 3.5.3
 
 - Use a `button` tag when `type=submit` is used on a `Button`.
