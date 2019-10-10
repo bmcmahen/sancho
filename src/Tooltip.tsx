@@ -180,10 +180,12 @@ export const Tooltip: React.FunctionComponent<TooltipProps> = ({
           role="tooltip"
           className="Tooltip"
           ref={ref}
-          style={{
-            ...style,
-            opacity: state.opacity
-          }}
+          style={
+            {
+              ...style,
+              opacity: state.opacity
+            } as any
+          }
           css={{
             zIndex: theme.zIndices.tooltip,
             margin: theme.spaces.xs

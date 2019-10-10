@@ -66,10 +66,12 @@ export const Dialog: React.FunctionComponent<DialogProps> = ({
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation();
                   }}
-                  style={{
-                    opacity: animationProps.opacity,
-                    transform: animationProps.transform
-                  }}
+                  style={
+                    {
+                      opacity: animationProps.opacity,
+                      transform: animationProps.transform
+                    } as any
+                  }
                   css={[
                     {
                       zIndex: theme.zIndices.modal,

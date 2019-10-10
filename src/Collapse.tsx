@@ -65,7 +65,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
         overflow: "hidden",
         willChange: "height, opacity"
       }}
-      style={{ height }}
+      style={{ height } as any}
       {...other}
     >
       <div ref={ref}>{children}</div>
