@@ -9,7 +9,7 @@ import {
   PopperChildrenProps
 } from "react-popper";
 import { Portal } from "./Portal";
-import { useTransition, SpringValue } from "react-spring";
+import { useTransition } from "react-spring";
 import PropTypes from "prop-types";
 
 export type Placements =
@@ -41,10 +41,7 @@ interface PositionsProps {
   /** The render callback which contains positioning and animation info */
   children: (
     props: PopperChildrenProps,
-    state: {
-      [x: string]: SpringValue<any>;
-      opacity: SpringValue<number>;
-    }
+    state: any
   ) => React.ReactNode;
 }
 
@@ -70,7 +67,7 @@ export const Positioner: React.FunctionComponent<PositionsProps> = ({
           item && (
             <Portal key={key}>
               <Popper placement={placement} positionFixed={positionFixed}>
-                {props => children(props, animatedProps)}
+                {props => children(props, animatedProps as any)}
               </Popper>
             </Portal>
           )

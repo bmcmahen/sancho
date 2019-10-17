@@ -13,7 +13,7 @@ import { usePrevious } from "./Hooks/previous";
 import { useHideBody } from "./Hooks/hide-body";
 import { useGestureResponder, StateType } from "react-gesture-responder";
 
-export const RequestCloseContext = React.createContext(() => {});
+export const RequestCloseContext = React.createContext(() => { });
 
 const positions = (theme: Theme) => ({
   left: css`
@@ -378,7 +378,7 @@ export const Sheet: React.FunctionComponent<SheetProps> = ({
             e.stopPropagation();
           }}
           style={{
-            transform: xy.to(interpolate)
+            transform: xy.interpolate(interpolate as any) as any
           }}
           css={[
             {

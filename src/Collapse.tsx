@@ -56,7 +56,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
     from: { height: 0 },
     to: { height: show ? bounds.height : 0 },
     immediate: prevShow !== null && prevShow === show
-  });
+  }) as any;
 
   return (
     <animated.div
