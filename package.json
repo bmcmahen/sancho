@@ -41,7 +41,7 @@
     "react-page-controller": "^3.0.1",
     "react-popper": "^1.3.3",
     "react-remove-scroll": "^2.0.4",
-    "react-spring": "^8.0.27",
+    "react-spring": "9.0.0-beta.34",
     "resize-observer-polyfill": "^1.5.1",
     "toasted-notes": "^2.1.6",
     "touchable-hook": "^1.2.1",
