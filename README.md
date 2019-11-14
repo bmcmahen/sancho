@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://sancho-ui.com/">
-    <img 
+    <img
     max-width="600px"
     alt="Sancho is a responsive and accessible design system built with React, Typescript and Emotion. Named after the ever-faithful, hilariously acerbic sidekick of Don Quixote, Sancho is designed to help you no matter how quixotic your dreams may be."
      src="https://raw.githubusercontent.com/bmcmahen/sancho/master/hero.jpg">
@@ -8,7 +8,7 @@
 </div>
 <br />
 <div align="center">
-  
+
 [![npm package](https://img.shields.io/npm/v/sancho/latest.svg)](https://www.npmjs.com/package/sancho)
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Sancho%20is%20a%20responsive%20and%20accessible%20design%20system%20built%20with%20React%2C%20Typescript%20and%20Emotion&url=https://sancho-ui.com&hashtags=react,design,javascript)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/benmcmahen.svg?style=social&logo=twitter)](
@@ -18,7 +18,7 @@ https://twitter.com/intent/follow?screen_name=benmcmahen
 </div>
 
 ## Features
-
+- The package is ported from Sancho and is currently for your own use only. 该包从sancho移植来的，目前仅供自己使用的。
 - Beautiful, generic components that you can make your own.
 - Highly responsive. Sancho takes mobile seriously, with built in support for gestures.
 - Accessible.
