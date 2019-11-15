@@ -127,7 +127,7 @@
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.20.1",
     "rollup-plugin-uglify": "^6.0.2",
-    "react-spring": "8.0.27",
+    "react-spring": "9.0.0-beta.34",
 
     "typescript": "^3.5.3",
     "uppercamelcase": "^3.0.0"
