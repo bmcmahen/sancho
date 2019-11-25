@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/core";
+import { jsx, css, SerializedStyles } from "@emotion/core";
 import * as React from "react";
 import { Text } from "./Text";
 import VisuallyHidden from "@reach/visually-hidden";
@@ -40,6 +40,7 @@ export interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   helpText?: string;
   /** A single input element */
   children?: React.ReactNode;
+  labelStyle?: SerializedStyles;
 }
 
 interface InputGroupContextType {
@@ -59,6 +60,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
   error,
   helpText,
   hideLabel,
+  labelStyle,
   ...other
 }) => {
   const uid = useUid(id);
@@ -79,7 +81,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
       }}
       {...other}
     >
-      <Label hide={hideLabel} htmlFor={uid}>
+      <Label hide={hideLabel} htmlFor={uid} css={[labelStyle]}>
         {label}
       </Label>
       <InputGroupContext.Provider
