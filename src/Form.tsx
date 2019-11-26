@@ -41,6 +41,7 @@ export interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   /** A single input element */
   children?: React.ReactNode;
   labelStyle?: SerializedStyles;
+  labelTextStyle?: SerializedStyles;
 }
 
 interface InputGroupContextType {
@@ -61,6 +62,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
   helpText,
   hideLabel,
   labelStyle,
+  labelTextStyle,
   ...other
 }) => {
   const uid = useUid(id);
@@ -81,7 +83,7 @@ export const InputGroup: React.FunctionComponent<InputGroupProps> = ({
       }}
       {...other}
     >
-      <Label hide={hideLabel} htmlFor={uid} css={[labelStyle]}>
+      <Label hide={hideLabel} htmlFor={uid} css={labelStyle} textStyle={labelTextStyle} >
         {label}
       </Label>
       <InputGroupContext.Provider
@@ -344,6 +346,7 @@ export interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
   hide?: boolean;
   htmlFor: string;
+  textStyle?: SerializedStyles;
 }
 
 /**
@@ -353,6 +356,7 @@ export interface LabelProps
 export const Label: React.FunctionComponent<LabelProps> = ({
   children,
   hide,
+  textStyle,
   ...other
 }) => {
   const theme = useTheme();
@@ -365,7 +369,7 @@ export const Label: React.FunctionComponent<LabelProps> = ({
       }}
       {...other}
     >
-      <Text className="Label__text" variant={"subtitle"}>
+      <Text className="Label__text" variant={"subtitle"} css={textStyle}>
         {children}
       </Text>
     </label>
@@ -383,6 +387,7 @@ export interface SelectProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
   /** The size of the select box */
   inputSize?: InputSize;
+  divStyle?: SerializedStyles;
 }
 
 /**
@@ -392,6 +397,7 @@ export interface SelectProps
 export const Select: React.FunctionComponent<SelectProps> = ({
   multiple,
   inputSize = "md",
+  divStyle,
   ...other
 }) => {
   const theme = useTheme();
@@ -408,9 +414,12 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   return (
     <div
       className="Select"
-      css={{
+      css={[
+        {
         position: "relative"
-      }}
+        },
+        divStyle
+      ]}
     >
       <select
         className="Select__input"
