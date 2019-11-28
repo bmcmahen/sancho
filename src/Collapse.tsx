@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { jsx, SerializedStyles } from "@emotion/core";
 import * as React from "react";
 import { animated, useSpring } from "react-spring";
 import PropTypes from "prop-types";
@@ -36,6 +36,7 @@ interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
   show: boolean;
   /** Any element that you want to reveal */
   children: React.ReactNode;
+  divStyle?: SerializedStyles;
 }
 
 /**
@@ -46,6 +47,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   children,
   id,
   show,
+  divStyle,
   ...other
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
@@ -68,7 +70,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
       style={{ height } as any}
       {...other}
     >
-      <div ref={ref}>{children}</div>
+      <div ref={ref}  css={divStyle} >{children}</div>
     </animated.div>
   );
 };
