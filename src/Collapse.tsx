@@ -37,6 +37,7 @@ interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Any element that you want to reveal */
   children: React.ReactNode;
   divStyle?: SerializedStyles;
+  paddingSpring?: number;
 }
 
 /**
@@ -48,15 +49,16 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   id,
   show,
   divStyle,
+  paddingSpring,
   ...other
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const { bounds } = useMeasure(ref);
   const prevShow = usePrevious(show);
-
+  //高度 动画副作用，导致计算问题？ 旧的to: { height: show ? bounds.height : 0 },
   const { height } = useSpring({
     from: { height: 0 },
-    to: { height: show ? bounds.height : 0 },
+    to: { height: show ? bounds.height+60 : 0 },
     immediate: prevShow !== null && prevShow === show
   }) as any;
 
@@ -70,7 +72,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
       style={{ height } as any}
       {...other}
     >
-      <div ref={ref}  css={divStyle} >{children}</div>
+      <div ref={ref}   css={{ height: '${bounds.height}px'}} >{children}</div>
     </animated.div>
   );
 };
