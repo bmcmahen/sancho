@@ -63,7 +63,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   const { height } = useSpring({
     from: { height: 0 },
     to: { height: show ? bounds.height : 0 },
-    immediate: prevShow !== null && prevShow === show
+    immediate: true
   }) as any;
   //实际打印预览会捕获3次的render这里，Collapse-捕获height=，前面2次纸张缩放调整，缩小了，后面第三次是屏幕页面的。
   console.log("Collapse-捕获height=", height&&height.value,";bounds =",bounds);
@@ -74,6 +74,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
           id={id}
           css={{
             overflow: "hidden",
+            display: show ? "unset" : "none"
           }}
           {...other}
           >
