@@ -62,11 +62,12 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   //这里useSpring({）的参数 实际是初始化用的，后面输出的对象height.value实际是动画编制的起始数值，而不是目标数值。
   const { height } = useSpring({
     from: { height: 0 },
-    to: { height: show ? bounds.height+70 : 0 },
+    to: { height: show ? bounds.height : 0 },
     immediate: true
   }) as any;
   //实际打印预览会捕获3次的render这里，Collapse-捕获height=，前面2次纸张缩放调整，缩小了，后面第三次是屏幕页面的。
-  console.log("Collapse-捕获height=", height&&height.value,";bounds =",bounds);
+  const dynamicHeight = (bounds.height > (height&&height.value)) ? (bounds.height): (height&&height.value)>0? (height&&height.value) : undefined;
+  console.log("Collapse-捕获height=", height&&height.value,";bounds =",bounds,"dynamicHeight=",dynamicHeight);
   return (
     <React.Fragment>
     {
@@ -80,22 +81,23 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
           <div ref={ref}>{children}</div>
         </div> )
         :
-        ( <animated.div
-          id={id}
-          css={{
-            overflow: "hidden",
-            willChange: "height, opacity"
-          }}
-          style={{ height } as any}
-          {...other}
-        >
-          <div ref={ref}
-               css={{
-                 // overflow: "hidden",
-                 //willChange: "height, opacity"
-               }}
-          >{children}</div>
-        </animated.div> )
+        (
+        <div css={{ height: dynamicHeight }} >
+           <animated.div
+            id={id}
+            style={{ height } as any}
+            css={{
+             // overflow: "hidden",
+              willChange: "height, opacity",
+            }}
+            {...other}
+          >
+
+              <div ref={ref}>{children}</div>
+
+          </animated.div>
+        </div>
+        )
     }
     </React.Fragment>
   );
