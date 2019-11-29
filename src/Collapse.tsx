@@ -62,7 +62,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   //这里useSpring({）的参数 实际是初始化用的，后面输出的对象height.value实际是动画编制的起始数值，而不是目标数值。
   const { height } = useSpring({
     from: { height: 0 },
-    to: { height: show ? bounds.height : 0 },
+    to: { height: show ? bounds.height+70 : 0 },
     immediate: true
   }) as any;
   //实际打印预览会捕获3次的render这里，Collapse-捕获height=，前面2次纸张缩放调整，缩小了，后面第三次是屏幕页面的。
@@ -74,7 +74,6 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
           id={id}
           css={{
             overflow: "hidden",
-            display: show ? "unset" : "none"
           }}
           {...other}
           >
@@ -90,7 +89,12 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
           style={{ height } as any}
           {...other}
         >
-          <div ref={ref}>{children}</div>
+          <div ref={ref}
+               css={{
+                 // overflow: "hidden",
+                 //willChange: "height, opacity"
+               }}
+          >{children}</div>
         </animated.div> )
     }
     </React.Fragment>
