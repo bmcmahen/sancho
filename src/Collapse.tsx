@@ -5,6 +5,7 @@ import { animated, useSpring } from "react-spring";
 import PropTypes from "prop-types";
 import { useMeasure } from "./Hooks/use-measure";
 import { useUid } from "./Hooks/use-uid";
+import { useTheme } from "./Theme/Providers";
 
 export function useCollapse(defaultShow: boolean = false) {
   const [show, setShow] = React.useState(defaultShow);
@@ -37,7 +38,6 @@ interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Any element that you want to reveal */
   children: React.ReactNode;
   divStyle?: SerializedStyles;
-  paddingSpring?: number;
   noAnimated?: boolean;
 }
 
@@ -50,7 +50,6 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   id,
   show,
   divStyle,
-  paddingSpring,
   noAnimated =false,
   ...other
 }) => {
@@ -67,7 +66,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   }) as any;
   //实际打印预览会捕获3次的render这里，Collapse-捕获height=，前面2次纸张缩放调整，缩小了，后面第三次是屏幕页面的。
   const dynamicHeight = (bounds.height > (height&&height.value)) ? (bounds.height): (height&&height.value)>0? (height&&height.value) : undefined;
-  console.log("Collapse-捕获height=", height&&height.value,";bounds =",bounds,"dynamicHeight=",dynamicHeight);
+
   return (
     <React.Fragment>
     {
@@ -78,25 +77,32 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
           }}
           {...other}
           >
-          <div ref={ref}>{children}</div>
+          <div ref={ref}  css={divStyle} >{children}</div>
         </div> )
         :
         (
-        <div css={{
-            height: show? dynamicHeight : 0,
-            display: !show?  'none' : 'unset'
-          }} >
+        <div  css={[
+           {
+             height: show? dynamicHeight : 0,
+             ["@media screen"]: {
+               display: show ?  undefined : 'none',
+             },
+             ["@media print"]: {
+               overflow: "hidden",
+             },
+           },
+         ]}
+        >
            <animated.div
             id={id}
             style={{ height } as any}
             css={{
-              overflow: "hidden",
               willChange: "height, opacity",
             }}
             {...other}
           >
 
-              <div ref={ref}>{children}</div>
+             <div ref={ref}  css={divStyle} >{children}</div>
 
           </animated.div>
         </div>
