@@ -82,12 +82,15 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
         </div> )
         :
         (
-        <div css={{ height: dynamicHeight }} >
+        <div css={{
+            height: show? dynamicHeight : 0,
+            display: !show?  'none' : 'unset'
+          }} >
            <animated.div
             id={id}
             style={{ height } as any}
             css={{
-             // overflow: "hidden",
+              overflow: "hidden",
               willChange: "height, opacity",
             }}
             {...other}
