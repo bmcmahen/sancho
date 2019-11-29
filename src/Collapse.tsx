@@ -59,18 +59,21 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   //高度 动画副作用，导致计算问题？ 旧的to: { height: show ? bounds.height : 0 },
   //这个height实际是一个对象的。  const { animationObj } = useSpring ；注意两个height不是一个东西。
   //这里useSpring({）的参数 实际是初始化用的，后面输出的对象height.value实际是动画编制的起始数值，而不是目标数值。
+
+  //[问题！] 这里的useSpring（）没有处理内部DIV高度变化的副作用；打印机场景div高度会缩放调整，应该被缩小的<animated.div却没有被缩小。
   const { height } = useSpring({
     from: { height: 0 },
     to: { height: show ? bounds.height : 0 },
-    immediate: true
+    immediate: prevShow !== null && prevShow === show
   }) as any;
-  //实际打印预览会捕获3次的render这里，Collapse-捕获height=，前面2次纸张缩放调整，缩小了，后面第三次是屏幕页面的。
+  //实际打印预览会捕获3次的render这里，Collapse-捕获height=，前面2次纸张缩放调整，缩小了，div就会变矮化，后面第三次却是屏幕的。
   const dynamicHeight = (bounds.height > (height&&height.value)) ? (bounds.height): (height&&height.value)>0? (height&&height.value) : undefined;
 
   return (
     <React.Fragment>
     {
-      noAnimated? ( <div
+      noAnimated? (
+        <div
           id={id}
           css={{
             overflow: "hidden",
@@ -78,7 +81,8 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
           {...other}
           >
           <div ref={ref}  css={divStyle} >{children}</div>
-        </div> )
+        </div>
+        )
         :
         (
         <div  css={[
