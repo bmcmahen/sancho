@@ -76,6 +76,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
         <div
           id={id}
           css={{
+            display: show ?  undefined : 'none',
             overflow: "hidden",
           }}
           {...other}
