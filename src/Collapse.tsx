@@ -38,6 +38,7 @@ interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   divStyle?: SerializedStyles;
   paddingSpring?: number;
+  noAnimated?: boolean;
 }
 
 /**
@@ -50,30 +51,48 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
   show,
   divStyle,
   paddingSpring,
+  noAnimated =false,
   ...other
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const { bounds } = useMeasure(ref);
   const prevShow = usePrevious(show);
   //高度 动画副作用，导致计算问题？ 旧的to: { height: show ? bounds.height : 0 },
+  //这个height实际是一个对象的。  const { animationObj } = useSpring ；注意两个height不是一个东西。
+  //这里useSpring({）的参数 实际是初始化用的，后面输出的对象height.value实际是动画编制的起始数值，而不是目标数值。
   const { height } = useSpring({
     from: { height: 0 },
-    to: { height: show ? bounds.height+60 : 0 },
+    to: { height: show ? bounds.height : 0 },
     immediate: prevShow !== null && prevShow === show
   }) as any;
-
+  //实际打印预览会捕获3次的render这里，Collapse-捕获height=，前面2次纸张缩放调整，缩小了，后面第三次是屏幕页面的。
+  console.log("Collapse-捕获height=", height&&height.value,";bounds =",bounds);
   return (
-    <animated.div
-      id={id}
-      css={{
-        overflow: "hidden",
-        willChange: "height, opacity"
-      }}
-      style={{ height } as any}
-      {...other}
-    >
-      <div ref={ref}   css={{ height: '${bounds.height}px'}} >{children}</div>
-    </animated.div>
+    <React.Fragment>
+    {
+      noAnimated? ( <div
+          id={id}
+          css={{
+            overflow: "hidden",
+          }}
+          {...other}
+          >
+          <div ref={ref}>{children}</div>
+        </div> )
+        :
+        ( <animated.div
+          id={id}
+          css={{
+            overflow: "hidden",
+            willChange: "height, opacity"
+          }}
+          style={{ height } as any}
+          {...other}
+        >
+          <div ref={ref}>{children}</div>
+        </animated.div> )
+    }
+    </React.Fragment>
   );
 };
 
