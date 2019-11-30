@@ -67,6 +67,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
     immediate: prevShow !== null && prevShow === show
   }) as any;
   //实际打印预览会捕获3次的render这里，Collapse-捕获height=，前面2次纸张缩放调整，缩小了，div就会变矮化，后面第三次却是屏幕的。
+  //只好先预留大一点的高度。 有待改进。
   const dynamicHeight = (bounds.height > (height&&height.value)) ? (bounds.height): (height&&height.value)>0? (height&&height.value) : undefined;
 
   return (
@@ -89,7 +90,7 @@ export const Collapse: React.FunctionComponent<CollapseProps> = ({
         <div  css={[
            {
              height: show? dynamicHeight : 0,
-             ["@media screen"]: {
+             ["@media not print"]: {
                display: show ?  undefined : 'none',
              },
              ["@media print"]: {
