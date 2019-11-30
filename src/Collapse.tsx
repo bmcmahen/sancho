@@ -17,6 +17,7 @@ export function useCollapse(defaultShow: boolean = false) {
 
   return {
     show,
+    setShow,
     id,
     buttonProps: {
       onClick,
