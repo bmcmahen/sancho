@@ -7,7 +7,7 @@ import { useMeasure } from "./Hooks/use-measure";
 import { useUid } from "./Hooks/use-uid";
 import { useTheme } from "./Theme/Providers";
 
-export function useCollapse(defaultShow: boolean = false) {
+export function useCollapse(defaultShow: boolean = false, press:boolean=false) {
   const [show, setShow] = React.useState(defaultShow);
   const id = useUid();
 
@@ -20,7 +20,8 @@ export function useCollapse(defaultShow: boolean = false) {
     setShow,
     id,
     buttonProps: {
-      onClick,
+      onClick : press? undefined : onClick,
+      onPress : press? onClick : undefined,
       "aria-controls": id,
       "aria-expanded": show ? true : false
     },
