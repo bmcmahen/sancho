@@ -27,7 +27,9 @@ const MenuListContext = React.createContext<MenuListContextType>({
   onKeyDown: () => {}
 });
 
-type ChildrenType = React.ReactElement<MenuItemProps>;
+// This type definition including boolean, null and undefined is based on
+// https://github.com/DefinitelyTyped/DefinitelyTyped/blob/24f1d0c82da2d898acd03fbb3e692eba3c431f82/types/react/index.d.ts#L202
+type ChildrenType = React.ReactElement<MenuItemProps> | boolean | null | undefined;
 
 export interface MenuListProps extends React.HTMLAttributes<HTMLDivElement> {
   /** A combination of MenuItem, MenuLabel, and MenuDivider children */
