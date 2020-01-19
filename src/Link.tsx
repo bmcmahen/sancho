@@ -4,7 +4,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** The content of the link */
   children: React.ReactNode;
   /** Use a custom component. E.g., ReactRouter Link */

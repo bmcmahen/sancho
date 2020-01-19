@@ -17,7 +17,7 @@ const KeyCodes = {
   End: 35
 };
 
-interface MenuListContextType {
+export interface MenuListContextType {
   focus: boolean;
   onKeyDown: (e: React.KeyboardEvent) => void;
 }

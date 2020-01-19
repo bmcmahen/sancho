@@ -7,7 +7,7 @@ import { useHideBody } from "./Hooks/hide-body";
 import PropTypes from "prop-types";
 import { useTheme } from "./Theme/Providers";
 
-interface OverlayProps {
+export interface OverlayProps {
   /** Whether the overlay is open */
   isOpen: boolean;
   /** Whatever you'd like to appear on top */

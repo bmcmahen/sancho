@@ -7,8 +7,8 @@ import { Text } from "./Text";
 import { useTheme } from "./Theme/Providers";
 
 const spin = keyframes`
-  to { 
-    transform: rotate(360deg); 
+  to {
+    transform: rotate(360deg);
   }
 `;
 
@@ -20,7 +20,7 @@ const sizeStyles = {
   xl: css({ width: "1.5rem", height: "1.5rem" })
 };
 
-interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The delay (in ms) before the spinner will appear */
   delay?: number;
   size?: "xs" | "sm" | "md" | "lg" | "xl";

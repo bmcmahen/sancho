@@ -18,7 +18,7 @@ import { mergeRefs } from "./Hooks/merge-refs";
 
 const AnimatedLayer = animated(Layer) as React.FunctionComponent<any>;
 
-interface PopoverProps {
+export interface PopoverProps {
   /** Whether the popover is currently open */
   isOpen?: boolean;
   /** The trigger of the popover */

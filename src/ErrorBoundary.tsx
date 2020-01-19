@@ -4,7 +4,7 @@ import * as React from "react";
 import { Alert } from "./Alert";
 import PropTypes from "prop-types";
 
-interface ErrorBoundaryProps {
+export interface ErrorBoundaryProps {
   /** The title of the error message. */
   title?: string;
   /** The subtitle of the error message. */

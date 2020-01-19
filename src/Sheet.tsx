@@ -112,7 +112,7 @@ const positions = (theme: Theme) => ({
 
 export type SheetPositions = "left" | "top" | "bottom" | "right";
 
-interface SheetProps {
+export interface SheetProps {
   /** Whether the sheet is visible */
   isOpen: boolean;
   /** A callback to handle closing the sheet */

@@ -16,7 +16,7 @@ const sizes = () => ({
   xl: css({ width: "8.57rem", height: "8.57rem", fontSize: "3.70rem" })
 });
 
-interface AvatarProps {
+export interface AvatarProps {
   /** Determine the size of the avatar */
   size?: AvatarSizes;
   /** The image source */

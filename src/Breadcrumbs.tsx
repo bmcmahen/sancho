@@ -13,7 +13,7 @@ const hideScrollbar = css`
   }
 `;
 
-interface BreadcrumbsProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface BreadcrumbsProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "md" | "lg";
   /** A list of BreadcrumbItem children */
   children:
