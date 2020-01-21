@@ -9,7 +9,7 @@ import { useTheme } from "./Theme/Providers";
  * It provides some basic horizontal padding and maintains responsive height.
  */
 
-interface ToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Reduce the height of the toolbar */
   compressed?: boolean;
 }

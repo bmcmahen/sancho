@@ -21,7 +21,7 @@ const TableContext = React.createContext({ fixed: false });
  * A Table provides a useful abstraction for managing rows and columns.
  */
 
-interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
+export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   /** An optional minimum width for table content. */
   minWidth?: string;
   /** An optional array of fixed layout widths for each column */

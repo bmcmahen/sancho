@@ -29,7 +29,7 @@ export type Placements =
   | "left"
   | "left-start";
 
-interface PositionsProps {
+export interface PositionerProps {
   /** Whether the item being positioned is visible */
   isOpen?: boolean;
   /** The placement of children */
@@ -45,7 +45,7 @@ interface PositionsProps {
   ) => React.ReactNode;
 }
 
-export const Positioner: React.FunctionComponent<PositionsProps> = ({
+export const Positioner: React.FunctionComponent<PositionerProps> = ({
   target,
   positionFixed,
   isOpen = true,

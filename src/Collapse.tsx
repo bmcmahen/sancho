@@ -29,7 +29,7 @@ export function useCollapse(defaultShow: boolean = false) {
   };
 }
 
-interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
   /** A unique id required for accessibility purposes. */
   id: string;
   /** Controls whether the children should be visible */

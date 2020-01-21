@@ -7,7 +7,7 @@ import { useTheme } from "./Theme/Providers";
 
 export type LayerElevations = "xs" | "sm" | "md" | "lg" | "xl";
 
-interface LayerProps extends React.HTMLAttributes<HTMLElement> {
+export interface LayerProps extends React.HTMLAttributes<HTMLElement> {
   /** The size of the shadow to use */
   elevation?: LayerElevations;
   /** The contents of the layer */
