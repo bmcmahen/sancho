@@ -1,10 +1,9 @@
 /** @jsx jsx */
+import { useState } from 'react';
 import { jsx } from "@emotion/core";
-import * as React from "react";
 import { MenuList, MenuItem, MenuDivider, MenuLabel } from "../Menu";
+import { Button } from "../Button";
 import { storiesOf } from "@storybook/react";
-import { ToggleDarkMode } from "./ToggleDarkMode";
-import { Text } from "../Text";
 import { IconAirplay, IconUser, IconAlertCircle, IconDelete } from "../Icons";
 
 export const MenuStories = storiesOf("MenuList", module)
@@ -47,4 +46,21 @@ export const MenuStories = storiesOf("MenuList", module)
         </MenuItem>
       </MenuList>
     );
+  })
+  .add("Conditional items", () => {
+    return <ConditionalMenuList />;
   });
+
+  const ConditionalMenuList = () => {
+    const [showItem, setShowItem] = useState(false);
+
+    return (
+      <div>
+        <Button onClick={() => setShowItem(!showItem)}>Toggle list item appearance</Button>
+        <MenuList css={{ maxWidth: "340px" }}>
+          <MenuItem>Stable list item</MenuItem>
+          {showItem && <MenuItem>Toggled list item</MenuItem>}
+        </MenuList>
+      </div>
+    )
+  }
