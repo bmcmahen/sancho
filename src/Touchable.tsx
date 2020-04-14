@@ -29,10 +29,7 @@ export interface TouchableProps {
   [key: string]: any; // lame hack to allow component injection
 }
 
-export const Touchable: React.RefForwardingComponent<
-  React.Ref<any>,
-  TouchableProps
-> = React.forwardRef(
+export const Touchable = React.forwardRef<any, TouchableProps>(
   (
     {
       children,

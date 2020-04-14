@@ -463,14 +463,15 @@ export interface ButtonProps
   [key: string]: any; // bad hack to permit component injection
 }
 
+interface Button extends React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>> {
+  propTypes?: React.WeakValidationMap<ButtonProps>;
+}
+
 /**
  * Your standard Button element
  */
 
-export const Button: React.RefForwardingComponent<
-  React.Ref<HTMLButtonElement>,
-  ButtonProps
-> = React.forwardRef(
+export const Button: Button = React.forwardRef(
   (
     {
       size = "md",
@@ -489,7 +490,7 @@ export const Button: React.RefForwardingComponent<
       onPress,
       ...other
     }: ButtonProps,
-    ref: React.Ref<any>
+    ref: React.Ref<HTMLButtonElement>
   ) => {
     const theme = useTheme();
     const isLink = other.to || other.href;

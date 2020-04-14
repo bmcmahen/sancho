@@ -299,14 +299,15 @@ export interface TabProps
   badge?: React.ReactNode | string | number;
 }
 
+interface Tab extends React.ForwardRefExoticComponent<TabProps & React.RefAttributes<HTMLButtonElement>> {
+  propTypes?: React.WeakValidationMap<TabProps>;
+}
+
 /**
  * A clickable tab item
  */
 
-export const Tab: React.RefForwardingComponent<
-  React.Ref<HTMLButtonElement>,
-  TabProps
-> = React.forwardRef(
+export const Tab: Tab = React.forwardRef(
   (
     {
       onParentSelect,
