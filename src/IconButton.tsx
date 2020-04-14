@@ -17,14 +17,15 @@ export interface IconButtonProps extends Partial<ButtonProps> {
   children?: React.ReactNode;
 }
 
+interface IconButton extends React.ForwardRefExoticComponent<IconButtonProps & React.RefAttributes<HTMLButtonElement>> {
+  propTypes?: React.WeakValidationMap<IconButtonProps>;
+}
+
 /**
  * A component which composes Button and Icon to provide
  * interactive icon elements.
  */
-export const IconButton: React.RefForwardingComponent<
-  React.Ref<HTMLButtonElement>,
-  IconButtonProps
-> = React.forwardRef(
+export const IconButton: IconButton = React.forwardRef(
   (
     {
       label,

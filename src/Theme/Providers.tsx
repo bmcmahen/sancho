@@ -67,10 +67,7 @@ export interface ColorModeProps {
   ref: React.Ref<any>;
 }
 
-const ColorMode: React.RefForwardingComponent<
-  React.Ref<any>,
-  ColorModeProps
-> = React.forwardRef(({ colors, children, ...other }: ColorModeProps, ref) => {
+const ColorMode = React.forwardRef<any, ColorModeProps>(({ colors, children, ...other }: ColorModeProps, ref) => {
   const theme = useTheme();
   // memo is necessary to prevent unnecessary rerenders
   // https://reactjs.org/docs/context.html#caveats
@@ -113,10 +110,7 @@ interface ModeProps {
   ref?: any;
 }
 
-export const LightMode: React.RefForwardingComponent<
-  React.Ref<any>,
-  ModeProps
-> = React.forwardRef(({ children, ...other }: ModeProps, ref) => {
+export const LightMode = React.forwardRef<any, ModeProps>(({ children, ...other }: ModeProps, ref) => {
   const theme = useTheme();
   return (
     <ColorMode colors={theme.modes.light} ref={ref} {...other}>
@@ -131,10 +125,7 @@ LightMode.displayName = "LightMode";
  * Provide a dark theme
  */
 
-export const DarkMode: React.RefForwardingComponent<
-  React.Ref<any>,
-  ModeProps
-> = React.forwardRef(({ children, ...other }: ModeProps, ref) => {
+export const DarkMode = React.forwardRef<any, ModeProps>(({ children, ...other }: ModeProps, ref) => {
   const theme = useTheme();
   return (
     <ColorMode colors={theme.modes.dark} ref={ref} {...other}>

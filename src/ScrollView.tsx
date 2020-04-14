@@ -22,6 +22,10 @@ export interface ScrollViewProps extends React.HTMLAttributes<HTMLDivElement> {
   innerRef?: React.RefObject<any>;
 }
 
+interface ScrollViewForward extends React.ForwardRefExoticComponent<ScrollViewProps & React.RefAttributes<ScrollViewHandles>> {
+  propTypes?: React.WeakValidationMap<ScrollViewProps>;
+}
+
 /**
  * A scroll view with some helpers, including:
  *  - smooth scrolling
@@ -30,20 +34,18 @@ export interface ScrollViewProps extends React.HTMLAttributes<HTMLDivElement> {
  * @param componentRef
  */
 
-const ScrollViewForward: React.RefForwardingComponent<
-  ScrollViewHandles,
-  ScrollViewProps
-> = (
-  {
-    overflowY,
-    children,
-    overflowX,
-    innerRef,
-    scrollAnimationConfig = { tension: 190, friction: 15, mass: 0.2 },
-    ...other
-  },
-  componentRef
-) => {
+const ScrollViewForward: ScrollViewForward = React.forwardRef<ScrollViewHandles, ScrollViewProps>(
+  (
+    {
+      overflowY,
+      children,
+      overflowX,
+      innerRef,
+      scrollAnimationConfig = { tension: 190, friction: 15, mass: 0.2 },
+      ...other
+    },
+    componentRef
+  ) => {
     const ref = React.useRef<HTMLDivElement>(null);
 
     /**
@@ -135,7 +137,8 @@ const ScrollViewForward: React.RefForwardingComponent<
         </div>
       </div>
     );
-  };
+  }
+);
 
 ScrollViewForward.propTypes = {
   overflowY: PropTypes.number,

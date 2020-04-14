@@ -241,15 +241,16 @@ export interface InputBaseProps
   inputSize?: InputSize;
 }
 
+interface InputBase extends React.ForwardRefExoticComponent<InputBaseProps & React.RefAttributes<HTMLInputElement>> {
+  propTypes?: React.WeakValidationMap<InputBaseProps>;
+}
+
 /**
  * Our basic Input element. Use this when building customized
  * forms. Otherwise, stick with InputGroup
  */
 
-export const InputBase: React.RefForwardingComponent<
-  React.Ref<HTMLInputElement>,
-  InputBaseProps
-> = React.forwardRef(
+export const InputBase: InputBase = React.forwardRef(
   (
     { autoComplete, autoFocus, inputSize = "md", ...other }: InputBaseProps,
     ref: React.Ref<HTMLInputElement>

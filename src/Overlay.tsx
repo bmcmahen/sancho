@@ -16,10 +16,11 @@ export interface OverlayProps {
   onRequestClose: () => void;
 }
 
-export const Overlay: React.RefForwardingComponent<
-  React.Ref<HTMLDivElement>,
-  OverlayProps
-> = React.forwardRef(
+interface Overlay extends React.ForwardRefExoticComponent<OverlayProps & React.RefAttributes<HTMLDivElement>> {
+  propTypes?: React.WeakValidationMap<OverlayProps>;
+}
+
+export const Overlay: Overlay = React.forwardRef(
   (
     { isOpen, onRequestClose, children }: OverlayProps,
     ref: React.Ref<HTMLDivElement>

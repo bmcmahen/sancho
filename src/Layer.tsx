@@ -14,10 +14,11 @@ export interface LayerProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
 }
 
-export const Layer: React.RefForwardingComponent<
-  React.Ref<HTMLDivElement>,
-  LayerProps
-> = React.forwardRef(
+interface Layer extends React.ForwardRefExoticComponent<LayerProps & React.RefAttributes<HTMLDivElement>> {
+  propTypes?: React.WeakValidationMap<LayerProps>;
+}
+
+export const Layer: Layer = React.forwardRef(
   (
     { elevation = "md", children, ...other }: LayerProps,
     ref: React.Ref<HTMLDivElement>
