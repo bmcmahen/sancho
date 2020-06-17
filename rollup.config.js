@@ -33,7 +33,7 @@ const plugins = [
 
 const globals = {
   react: "React",
-  "react-doc": "ReactDOM"
+  "react-dom": "ReactDOM"
 };
 
 export default [
