@@ -17,6 +17,7 @@ export const useInfiniteScroll = ({
   triggerOffset = 300
 }: InfiniteScrollProps) => {
   const [fetching, setFetching] = React.useState(false);
+  const target = (container && container.current) ? container.current : window;
 
   const onScroll = React.useCallback(
     rafSchd(() => {
@@ -57,25 +58,11 @@ export const useInfiniteScroll = ({
       return;
     }
 
-    // this is so ugly uggh
-    // bind our scroll event to either container or window
-    if (container) {
-      if (container.current) {
-        container.current.addEventListener("scroll", onScroll);
-      }
-    } else {
-      window.addEventListener("scroll", onScroll);
-    }
+    target.addEventListener("scroll", onScroll);
 
     // unbind our scroll event
     return () => {
-      if (container) {
-        if (container.current) {
-          container.current.removeEventListener("scroll", onScroll);
-        }
-      } else {
-        window.removeEventListener("scroll", onScroll);
-      }
+        target.removeEventListener("scroll", onScroll);
     };
   }, [onScroll, disabled]);
 
