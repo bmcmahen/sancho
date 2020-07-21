@@ -114,7 +114,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
     setExpanded(false);
     onSelect && onSelect(selected as string);
     setSelected(null);
-  }, [selected]);
+  }, [selected, onSelect]);
 
   /**
    * Get the currently active option index
@@ -228,7 +228,7 @@ export const ComboBox: React.FunctionComponent<ComboBoxProps> = ({
     onSelect && onSelect(value);
     setExpanded(false);
     setSelected(null);
-  }, []);
+  }, [onSelect]);
 
   /**
    * Make a unique hash for list + option
