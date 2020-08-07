@@ -16,7 +16,7 @@ export function useFocusElement(
 
     function focusElement() {
       if (!elementRef.current) {
-        console.error("No element found to found");
+        console.error("No element found to focus");
         return;
       }
 
